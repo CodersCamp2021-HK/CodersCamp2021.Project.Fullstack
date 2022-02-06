@@ -1,0 +1,18 @@
+
+### get all articles
+GET {{baseUrl}}/
+
+### create article
+# @name create_article
+POST {{baseUrl}}/
+
+{
+  "title": "Article title",
+  "content": "Article content"
+}
+
+###
+@article_id = {{create_article.response.body.id}}
+
+### get article by id
+GET {{baseUrl}}/{{article_id}}

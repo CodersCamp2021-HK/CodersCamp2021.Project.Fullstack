@@ -1,0 +1,9 @@
+{
+  "references": [
+    { "path": "./packages/database/tsconfig.build.json" },
+    { "path": "./packages/server/tsconfig.build.json" }
+  ],
+  "files": [],
+  "include": [],
+  "exclude": ["**/node_modules/**", "**/.yarn/**", "**/dist/**"]
+}

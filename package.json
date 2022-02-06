@@ -1,9 +1,10 @@
 {
   "name": "coderscamp2021.project.fullstack",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "author": "",
   "license": "ISC",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack.git"
@@ -20,7 +21,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
+  "scripts": {
+    "server:dev": "yarn workspaces foreach -pi --from \"{@fullstack/server,@fullstack/database}\" run start:dev"
+  },
   "devDependencies": {
     "@types/node": "^17.0.14",
     "ts-node": "^10.4.0",

@@ -1,0 +1,31 @@
+{
+  "name": "@fullstack/database",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "main": "dist/src/index.js",
+  "types": "src",
+  "engines": {
+    "yarn": "3.1.1",
+    "node": "16.x"
+  },
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "tsc -b -w"
+  },
+  "dependencies": {
+    "@nestjs/common": "^8.2.6",
+    "@nestjs/core": "^8.2.6",
+    "@nestjs/mongoose": "^9.0.2",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.2.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.15",
+    "typescript": "^4.5.5"
+  }
+}
