@@ -1,7 +1,8 @@
 {
   "references": [
     { "path": "./packages/database/tsconfig.build.json" },
-    { "path": "./packages/server/tsconfig.build.json" }
+    { "path": "./packages/server/tsconfig.build.json" },
+    { "path": "./packages/sdk/tsconfig.json" }
   ],
   "files": [],
   "include": [],

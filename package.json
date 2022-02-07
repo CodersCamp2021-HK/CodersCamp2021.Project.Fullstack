@@ -22,7 +22,7 @@
     "packages/*"
   ],
   "scripts": {
-    "server:dev": "yarn workspaces foreach -pi --from \"{@fullstack/server,@fullstack/database}\" run start:dev"
+    "server:dev": "yarn workspaces foreach -pi --from \"{@fullstack/server,@fullstack/database}\" run dev"
   },
   "devDependencies": {
     "@types/node": "^17.0.14",

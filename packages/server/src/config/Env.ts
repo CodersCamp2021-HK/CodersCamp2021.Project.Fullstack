@@ -9,17 +9,22 @@ const NODE_ENV_VALUES = ['development', 'test', 'production'] as const;
 class EnvVariables {
   @Expose()
   @IsIn(NODE_ENV_VALUES)
-  NODE_ENV: typeof NODE_ENV_VALUES[number];
+  readonly NODE_ENV: typeof NODE_ENV_VALUES[number];
 
   @Expose()
   @IsString()
   @IsNotEmpty()
-  MONGO_URL: string;
+  readonly MONGO_URL: string;
 
   @Expose()
   @IsInt()
   @IsPositive()
-  PORT: number;
+  readonly PORT: number;
+  
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  readonly HOST: string;
 };
 
 

@@ -1,0 +1,53 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/articles": {
+      "get": {
+        "operationId": "ArticlesController_getArticles",
+        "parameters": [],
+        "responses": { "200": { "description": "" } }
+      },
+      "post": {
+        "operationId": "ArticlesController_createArticle",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateArticleDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } }
+      }
+    },
+    "/api/articles/{id}": {
+      "get": {
+        "operationId": "ArticlesController_getArticle",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } }
+      }
+    }
+  },
+  "info": {
+    "title": "App example",
+    "description": "The app API description",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+    },
+    "schemas": { "CreateArticleDto": { "type": "object", "properties": {} } }
+  }
+}

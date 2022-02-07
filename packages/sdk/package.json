@@ -1,0 +1,22 @@
+{
+  "name": "@fullstack/sdk",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "main": "dist/src/index.js",
+  "types": "src",
+  "engines": {
+    "yarn": "3.1.1",
+    "node": "16.x"
+  },
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b -w",
+    "gen": "docker run --rm -v \"$INIT_CWD:/local\" openapitools/openapi-generator-cli generate -i /local/api.spec.json -g typescript-fetch -o /local/src --ignore-file-override /local/src --additional-properties=typescriptThreePlus=true"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}

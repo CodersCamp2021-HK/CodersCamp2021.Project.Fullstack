@@ -12,8 +12,8 @@
   },
   "packageManager": "yarn@3.1.1",
   "scripts": {
-    "build": "tsc",
-    "start:dev": "tsc -b -w"
+    "build": "tsc -b",
+    "dev": "tsc -b -w"
   },
   "dependencies": {
     "@nestjs/common": "^8.2.6",

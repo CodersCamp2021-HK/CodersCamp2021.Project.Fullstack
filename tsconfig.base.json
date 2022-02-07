@@ -3,7 +3,8 @@
     "allowSyntheticDefaultImports": true,
     "composite": true,
     "declaration": true,
-    "declarationMap": true,
+    "sourceMap": false,
+    "declarationMap": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
@@ -20,7 +21,6 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "target": "ESNext"

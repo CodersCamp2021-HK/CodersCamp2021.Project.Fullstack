@@ -8,8 +8,8 @@ class CreateArticleDto {
   content: string;
 }
 
-@Controller()
-export class AppController {
+@Controller('articles')
+class ArticlesController {
   constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
   @Get() 
@@ -29,3 +29,5 @@ export class AppController {
     return { id: article._id }; 
   }
 }
+
+export { ArticlesController };
