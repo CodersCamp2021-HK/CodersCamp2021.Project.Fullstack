@@ -1,7 +1,7 @@
 import { DatabaseModule } from "@fullstack/database";
 import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { env } from "./Env";
+import { env } from "./env";
 
 @Global()
 @Module({

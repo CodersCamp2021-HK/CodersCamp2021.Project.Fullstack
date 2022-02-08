@@ -31,7 +31,7 @@ const defaultSwaggerConfig: SwaggerConfig = Object.freeze({
 
 function createSwaggerDocument(
   app: INestApplication,
-  config: SwaggerDocumentConfig
+  config: SwaggerDocumentConfig = defaultSwaggerDocumentConfig
 ) {
   const document = new DocumentBuilder()
     .addBearerAuth()

@@ -1,4 +1,4 @@
-import { Expose, plainToClass } from 'class-transformer';
+import { Expose, plainToInstance } from 'class-transformer';
 import { IsIn, IsInt, IsNotEmpty, IsPositive, IsString, validateSync } from 'class-validator';
 import dotenv from 'dotenv';
 
@@ -28,7 +28,7 @@ class EnvVariables {
 };
 
 
-const env = plainToClass(EnvVariables, process.env, {
+const env = plainToInstance(EnvVariables, process.env, {
   excludeExtraneousValues: true,
   enableImplicitConversion: true
 });

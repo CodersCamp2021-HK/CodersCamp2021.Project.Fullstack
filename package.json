@@ -22,11 +22,12 @@
     "packages/*"
   ],
   "scripts": {
+    "gen:sdk": "yarn workspace @fullstack/server tools:gen && yarn workspace @fullstack/sdk gen",
     "server:dev": "yarn workspaces foreach -pi --from \"{@fullstack/server,@fullstack/database}\" run dev"
   },
   "devDependencies": {
     "@types/node": "^17.0.14",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   }
 }

@@ -1,5 +1,8 @@
-.openapi-generator-ignore
-apis/DefaultApi.ts
+apis/ArticlesApi.ts
 apis/index.ts
 index.ts
+models/ArticleDto.ts
+models/ArticleListDto.ts
+models/CreateArticleDto.ts
+models/index.ts
 runtime.ts

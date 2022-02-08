@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
-type ArticleDocument = Article & Document;
+type ArticleDocument = Article & Document<ObjectId>;
 
 @Schema()
 class Article {

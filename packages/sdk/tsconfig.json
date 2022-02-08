@@ -1,9 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "strict": false,
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "outDir": "./dist",
     "baseUrl": "./",
     "lib": ["DOM"]
   },
-  "include": ["**/*.ts"]
+  "include": ["./src"]
 }
