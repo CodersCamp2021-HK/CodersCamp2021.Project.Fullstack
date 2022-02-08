@@ -6,7 +6,7 @@ import { appFactory } from './app.factory';
 async function bootstrap() {
   const app = await appFactory();
   await app.listen(env.PORT).then(() => {
-    Logger.log(`Nest application listening at ${env.HOST}:${env.PORT}/api`, 'NestApplication');
+    Logger.log(`Nest application listening at ${env.SERVER_URL}/api`, 'NestApplication');
   });
 }
 

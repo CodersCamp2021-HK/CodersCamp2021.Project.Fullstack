@@ -7,7 +7,8 @@
     "noUnusedParameters": false,
     "outDir": "./dist",
     "baseUrl": "./",
-    "lib": ["DOM"]
+    "module": "ESNext",
+    "lib": ["ESNext", "dom"]
   },
   "include": ["./src"]
 }

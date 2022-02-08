@@ -20,6 +20,7 @@ build
 dist
 dist-ssr
 storybook-static
+*.tsbuildinfo
 
 # npm
 .npm

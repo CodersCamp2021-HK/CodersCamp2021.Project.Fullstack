@@ -24,7 +24,7 @@ class EnvVariables {
   @Expose()
   @IsString()
   @IsNotEmpty()
-  readonly HOST: string;
+  readonly SERVER_URL: string;
 };
 
 
