@@ -20,22 +20,21 @@ class EnvVariables {
   @IsInt()
   @IsPositive()
   readonly PORT: number;
-  
+
   @Expose()
   @IsString()
   @IsNotEmpty()
   readonly SERVER_URL: string;
-};
-
+}
 
 const env = plainToInstance(EnvVariables, process.env, {
   excludeExtraneousValues: true,
-  enableImplicitConversion: true
+  enableImplicitConversion: true,
 });
 
 const errors = validateSync(env);
 
-if(errors.length > 0) {
+if (errors.length > 0) {
   throw errors;
 }
 

@@ -9,30 +9,27 @@ type SwaggerDocumentConfig = Readonly<{
 }>;
 
 type SwaggerConfig = Readonly<{
-  document: SwaggerDocumentConfig,
-  ui: SwaggerCustomOptions
-}>
+  document: SwaggerDocumentConfig;
+  ui: SwaggerCustomOptions;
+}>;
 
 const defaultSwaggerDocumentConfig: SwaggerDocumentConfig = Object.freeze({
   title: 'App example',
   description: 'The app API description',
   version: '1.0.0',
-  path: 'api'
+  path: 'api',
 });
 
 const defaultSwaggerCustomOptions: SwaggerCustomOptions = Object.freeze({
-  customSiteTitle: 'Fullstack API Docs'
+  customSiteTitle: 'Fullstack API Docs',
 });
 
 const defaultSwaggerConfig: SwaggerConfig = Object.freeze({
   document: defaultSwaggerDocumentConfig,
-  ui: defaultSwaggerCustomOptions
+  ui: defaultSwaggerCustomOptions,
 });
 
-function createSwaggerDocument(
-  app: INestApplication,
-  config: SwaggerDocumentConfig = defaultSwaggerDocumentConfig
-) {
+function createSwaggerDocument(app: INestApplication, config: SwaggerDocumentConfig = defaultSwaggerDocumentConfig) {
   const document = new DocumentBuilder()
     .addBearerAuth()
     .setTitle(config.title)
@@ -42,10 +39,7 @@ function createSwaggerDocument(
   return SwaggerModule.createDocument(app, document);
 }
 
-function setupSwagger(
-  app: INestApplication,
-  config: SwaggerConfig = defaultSwaggerConfig
-) {
+function setupSwagger(app: INestApplication, config: SwaggerConfig = defaultSwaggerConfig) {
   app.setGlobalPrefix(config.document.path);
   const document = createSwaggerDocument(app, config.document);
   SwaggerModule.setup(config.document.path, app, document, config.ui);

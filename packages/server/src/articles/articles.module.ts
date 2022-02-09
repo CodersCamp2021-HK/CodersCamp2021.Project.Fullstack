@@ -10,11 +10,8 @@ const QueryHandlers = [GetArticleQueryHandler, GetArticlesQueryHandler];
 @Module({
   imports: [CqrsModule],
   controllers: [ArticlesController],
-  providers: [
-    ...CommandHandlers,
-    ...QueryHandlers
-  ]
+  providers: [...CommandHandlers, ...QueryHandlers],
 })
-class ArticlesModule { }
+class ArticlesModule {}
 
 export { ArticlesModule };
