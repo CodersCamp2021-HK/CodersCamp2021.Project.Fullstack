@@ -1,1 +1,1 @@
-export * from './articles.module';
+export * from './ArticlesModule';

@@ -8,10 +8,5 @@
     "strictBindCallApply": false,
     "allowJs": true
   },
-  "references": [
-    {
-      "path": "../database"
-    }
-  ],
   "include": ["**/*.ts", ".eslintrc.js"]
 }

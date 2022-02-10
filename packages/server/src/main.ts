@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Logger } from '@nestjs/common';
 
-import { appFactory } from './app.factory';
+import { appFactory } from './AppFactory';
 import { env } from './config';
 
 async function bootstrap() {

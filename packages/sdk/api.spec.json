@@ -52,8 +52,8 @@
     "schemas": {
       "ArticleDto": {
         "type": "object",
-        "properties": { "title": { "type": "string" }, "content": { "type": "string" }, "id": { "type": "string" } },
-        "required": ["title", "content", "id"]
+        "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "content": { "type": "string" } },
+        "required": ["id", "title", "content"]
       },
       "ArticleListDto": {
         "type": "object",

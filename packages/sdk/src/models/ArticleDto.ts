@@ -24,6 +24,12 @@ export interface ArticleDto {
    * @type {string}
    * @memberof ArticleDto
    */
+  id: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ArticleDto
+   */
   title: string;
   /**
    *
@@ -31,12 +37,6 @@ export interface ArticleDto {
    * @memberof ArticleDto
    */
   content: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ArticleDto
-   */
-  id: string;
 }
 
 export function ArticleDtoFromJSON(json: any): ArticleDto {
@@ -48,9 +48,9 @@ export function ArticleDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return json;
   }
   return {
+    id: json['id'],
     title: json['title'],
     content: json['content'],
-    id: json['id'],
   };
 }
 
@@ -62,8 +62,8 @@ export function ArticleDtoToJSON(value?: ArticleDto | null): any {
     return null;
   }
   return {
+    id: value.id,
     title: value.title,
     content: value.content,
-    id: value.id,
   };
 }

@@ -1,1 +1,1 @@
-export * from './articles.controller';
+export * from './ArticlesController';

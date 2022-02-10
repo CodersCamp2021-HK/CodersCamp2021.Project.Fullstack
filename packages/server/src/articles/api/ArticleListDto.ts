@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { ArticleDto } from './article.dto';
+import { ArticleDto } from './ArticleDto';
 
 class ArticleListDto {
   @ApiProperty({ type: [ArticleDto] })

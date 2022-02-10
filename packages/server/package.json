@@ -21,13 +21,11 @@
     "test:unit:watch": "jest --watch",
     "test:unit:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "tools:gen": "ts-node -r tsconfig-paths/register tools/generate-openapi-spec.ts"
+    "tools:gen": "ts-node -r tsconfig-paths/register tools/GenerateOpenApiSpec.ts"
   },
   "dependencies": {
-    "@fullstack/database": "workspace:^",
     "@nestjs/common": "^8.2.6",
     "@nestjs/core": "^8.2.6",
-    "@nestjs/cqrs": "^8.0.1",
     "@nestjs/mongoose": "^9.0.2",
     "@nestjs/platform-express": "^8.2.6",
     "@nestjs/serve-static": "^2.2.2",

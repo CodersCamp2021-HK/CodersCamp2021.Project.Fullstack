@@ -24,11 +24,11 @@
   "scripts": {
     "build": "yarn workspaces foreach -tpi run build",
     "start": "yarn workspace @fullstack/server run start",
-    "dev": "yarn workspaces foreach -tpi run dev",
+    "dev": "yarn workspaces foreach -pi -j 3 run dev",
     "test": "yarn workspaces foreach -tpi run test",
     "lint": "yarn workspaces foreach -tpi run lint",
     "format": "yarn workspaces foreach -tpi run format",
-    "dev:server": "yarn workspaces foreach -tpi --from \"{@fullstack/server,@fullstack/database}\" run dev",
+    "dev:server": "yarn workspace @fullstack/server run dev",
     "gen:sdk": "yarn workspace @fullstack/server tools:gen && yarn workspace @fullstack/sdk gen"
   },
   "devDependencies": {

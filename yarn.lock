@@ -700,31 +700,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fullstack/database@workspace:^, @fullstack/database@workspace:packages/database":
-  version: 0.0.0-use.local
-  resolution: "@fullstack/database@workspace:packages/database"
-  dependencies:
-    "@nestjs/common": ^8.2.6
-    "@nestjs/core": ^8.2.6
-    "@nestjs/mongoose": ^9.0.2
-    "@types/node": ^17.0.17
-    "@typescript-eslint/eslint-plugin": ^5.11.0
-    "@typescript-eslint/parser": ^5.11.0
-    eslint: ^8.8.0
-    eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-typescript: ^2.5.0
-    eslint-plugin-import: ^2.25.4
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-simple-import-sort: ^7.0.0
-    mongodb: ^4.3.1
-    mongoose: ^6.2.1
-    prettier: ^2.5.1
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.5.4
-    typescript: ^4.5.5
-  languageName: unknown
-  linkType: soft
-
 "@fullstack/sdk@workspace:^, @fullstack/sdk@workspace:packages/sdk":
   version: 0.0.0-use.local
   resolution: "@fullstack/sdk@workspace:packages/sdk"
@@ -738,11 +713,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fullstack/server@workspace:packages/server"
   dependencies:
-    "@fullstack/database": "workspace:^"
     "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
     "@nestjs/core": ^8.2.6
-    "@nestjs/cqrs": ^8.0.1
     "@nestjs/mongoose": ^9.0.2
     "@nestjs/platform-express": ^8.2.6
     "@nestjs/schematics": ^8.0.6
@@ -1141,20 +1114,6 @@ __metadata:
     "@nestjs/websockets":
       optional: true
   checksum: abf275dbe309302a16fa77132e362d30ed275ffbca46e51a93bdafdd99daa12a970af3f903a09f9e034af9f4372fe436b7a68bd09c81e9ea7aab00d939482ff2
-  languageName: node
-  linkType: hard
-
-"@nestjs/cqrs@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "@nestjs/cqrs@npm:8.0.1"
-  dependencies:
-    uuid: 8.3.2
-  peerDependencies:
-    "@nestjs/common": ^8.0.0
-    "@nestjs/core": ^8.0.0
-    reflect-metadata: 0.1.13
-    rxjs: ^7.2.0
-  checksum: b51840933e9dcaa10dd7539970305a864aaba7db85039b1704d188e18c45873bf4ab7b64149f7ae8e2bbc938556db671d773c027c658d2f310a37196b474a619
   languageName: node
   linkType: hard
 
@@ -6452,7 +6411,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:4.3.1, mongodb@npm:^4.3.1":
+"mongodb@npm:4.3.1":
   version: 4.3.1
   resolution: "mongodb@npm:4.3.1"
   dependencies:
