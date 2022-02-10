@@ -1,7 +1,9 @@
 import 'reflect-metadata';
-import { env } from './config';
+
 import { Logger } from '@nestjs/common';
+
 import { appFactory } from './app.factory';
+import { env } from './config';
 
 async function bootstrap() {
   const app = await appFactory();

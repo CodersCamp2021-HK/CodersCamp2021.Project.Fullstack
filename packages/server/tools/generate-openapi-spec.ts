@@ -1,9 +1,11 @@
 import 'reflect-metadata';
-import { createSwaggerDocument } from '../src/config';
-import * as path from 'path';
-import { appFactory } from '../src/app.factory';
+
 import * as fs from 'fs/promises';
+import * as path from 'path';
 import * as prettier from 'prettier';
+
+import { appFactory } from '../src/app.factory';
+import { createSwaggerDocument } from '../src/config';
 
 const GENERATED_FILENAME = 'api.spec.json';
 const GENERATED_PATH = path.join(__dirname, '..', '..', 'sdk', GENERATED_FILENAME);

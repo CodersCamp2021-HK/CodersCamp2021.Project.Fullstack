@@ -1,7 +1,8 @@
 import { Article, ArticleDocument } from '@fullstack/database';
-import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import { ArticleViewModel } from '../shared';
 
 class GetArticleQuery {
@@ -22,4 +23,4 @@ class GetArticleQueryHandler implements IQueryHandler<GetArticleQuery, ArticleVi
   }
 }
 
-export { GetArticleQueryHandler, GetArticleQuery };
+export { GetArticleQuery, GetArticleQueryHandler };

@@ -13,5 +13,5 @@
       "path": "../database"
     }
   ],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", ".eslintrc.js"]
 }

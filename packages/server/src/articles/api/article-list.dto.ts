@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+
 import { ArticleDto } from './article.dto';
 
 class ArticleListDto {

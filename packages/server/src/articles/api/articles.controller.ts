@@ -3,11 +3,12 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
+
 import { CreateArticleCommand } from '../command';
 import { GetArticleQuery, GetArticlesQuery } from '../query';
 import { ArticleViewModel } from '../shared';
-import { ArticleListDto } from './article-list.dto';
 import { ArticleDto } from './article.dto';
+import { ArticleListDto } from './article-list.dto';
 import { CreateArticleDto } from './create-article.dto';
 
 @ApiTags('articles')

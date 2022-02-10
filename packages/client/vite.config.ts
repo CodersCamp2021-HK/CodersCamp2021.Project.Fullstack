@@ -1,22 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
-export default defineConfig({resolve: {
-  alias: {
-    'react/jsx-runtime': 'react/jsx-runtime.js',
+export default defineConfig({
+  resolve: {
+    alias: {
+      'react/jsx-runtime': 'react/jsx-runtime.js',
+    },
   },
-},
-plugins: [react({
-  babel: {
-    plugins: [
-      ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
-    ]
-  },
-})],
+  plugins: [
+    react({
+      babel: {
+        plugins: [['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]],
+      },
+    }),
+  ],
   server: {
     fs: {
       strict: true,
     },
   },
-})
+});

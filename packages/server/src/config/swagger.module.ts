@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 type SwaggerDocumentConfig = Readonly<{
   title: string;
@@ -46,4 +46,4 @@ function setupSwagger(app: INestApplication, config: SwaggerConfig = defaultSwag
   return app;
 }
 
-export { setupSwagger, createSwaggerDocument };
+export { createSwaggerDocument, setupSwagger };
