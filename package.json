@@ -22,9 +22,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspaces foreach -pi run dev",
     "build": "yarn workspaces foreach -pi --from \"{@fullstack/sdk,@fullstack/database}\" run build && yarn workspaces foreach -pi --from \"{@fullstack/server,@fullstack/client}\" run build",
     "start": "yarn workspace @fullstack/server run start",
+    "dev": "yarn workspaces foreach -pi run dev",
     "test": "yarn workspaces foreach -pi run test",
     "lint": "yarn workspaces foreach -pi run lint",
     "format": "yarn workspaces foreach -pi run format",

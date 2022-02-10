@@ -14,9 +14,13 @@
   "scripts": {
     "build": "tsc -b",
     "dev": "tsc -b -w",
-    "gen": "docker run --rm -v \"$INIT_CWD:/local\" openapitools/openapi-generator-cli generate -i /local/api.spec.json -g typescript-fetch -o /local/src --ignore-file-override /local/src --additional-properties=typescriptThreePlus=true --remove-operation-id-prefix"
+    "test": "",
+    "lint": "",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "gen": "docker run --rm -v \"$INIT_CWD:/local\" openapitools/openapi-generator-cli generate -i /local/api.spec.json -g typescript-fetch -o /local/src --ignore-file-override /local/src --additional-properties=typescriptThreePlus=true --remove-operation-id-prefix && yarn format"
   },
   "devDependencies": {
+    "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   }
 }
