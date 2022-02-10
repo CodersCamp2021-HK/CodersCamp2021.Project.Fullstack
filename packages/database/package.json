@@ -13,7 +13,10 @@
   "packageManager": "yarn@3.1.1",
   "scripts": {
     "build": "tsc -b",
-    "dev": "tsc -b -w"
+    "dev": "tsc -b -w",
+    "test": "",
+    "lint": "eslint \"{src,test,cli}/**/*.ts\" --fix",
+    "format": "prettier --write \"{src,test,cli}/**/*.ts\""
   },
   "dependencies": {
     "@nestjs/common": "^8.2.6",
@@ -26,6 +29,12 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.16",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   }
 }
