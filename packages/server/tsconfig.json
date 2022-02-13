@@ -8,5 +8,6 @@
     "strictBindCallApply": false,
     "allowJs": true
   },
-  "include": ["**/*.ts", ".eslintrc.js"]
+  "include": ["**/*.ts", ".eslintrc.js"],
+  "files": ["./src/api.spec.json"]
 }

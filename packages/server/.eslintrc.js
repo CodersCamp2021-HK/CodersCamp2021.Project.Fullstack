@@ -33,5 +33,13 @@ module.exports = {
       files: ['*.config.[jt]s'],
       rules: { 'import/no-default-export': 0, 'import/no-extraneous-dependencies': 0 },
     },
+    {
+      files: ['**/?(*.)+(spec|test).[jt]s'],
+      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended'],
+      rules: {
+        'import/no-extraneous-dependencies': [2, { devDependencies: true }],
+        'jest/expect-expect': [2, { assertFunctionNames: ['expect'] }],
+      },
+    },
   ],
 };

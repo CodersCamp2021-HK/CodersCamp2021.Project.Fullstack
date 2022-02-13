@@ -11,6 +11,7 @@
     "yarn.lock": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "relative",
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
@@ -30,12 +31,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "eslint.format.enable": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "eslint.packageManager": "yarn",
   "files.eol": "\n",
   "rest-client.defaultHeaders": {

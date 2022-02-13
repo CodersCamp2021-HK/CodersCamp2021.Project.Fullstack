@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/articles": {
+      "get": {
+        "operationId": "ArticlesController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleListDto" } } }
+          }
+        },
+        "tags": ["articles"]
+      },
+      "post": {
+        "operationId": "ArticlesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateArticleDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The record has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+          }
+        },
+        "tags": ["articles"]
+      }
+    },
+    "/api/articles/{id}": {
+      "get": {
+        "operationId": "ArticlesController_findOne",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+          }
+        },
+        "tags": ["articles"]
+      }
+    }
+  },
+  "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "ArticleDto": {
+        "type": "object",
+        "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "content": { "type": "string" } },
+        "required": ["id", "title", "content"]
+      },
+      "ArticleListDto": {
+        "type": "object",
+        "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/ArticleDto" } } },
+        "required": ["data"]
+      },
+      "CreateArticleDto": {
+        "type": "object",
+        "properties": { "title": { "type": "string" }, "content": { "type": "string" } },
+        "required": ["title", "content"]
+      }
+    }
+  }
+}
