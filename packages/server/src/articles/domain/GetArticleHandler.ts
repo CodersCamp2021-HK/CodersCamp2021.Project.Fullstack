@@ -9,11 +9,12 @@ interface GetArticleRequest {
   readonly id: string;
 }
 
-class GetArticleHandler implements IHandler<GetArticleRequest, Article> {
+class GetArticleHandler implements IHandler<GetArticleRequest, Article | null> {
   constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
-  async exec(req: GetArticleRequest): Promise<Article> {
+  async exec(req: GetArticleRequest): Promise<Article | null> {
     const article = await this.articleModel.findById(req.id);
+    if (!article) return null;
     return plainToInstance(Article, article);
   }
 }

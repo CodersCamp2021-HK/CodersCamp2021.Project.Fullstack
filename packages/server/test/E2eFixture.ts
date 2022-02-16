@@ -1,21 +1,31 @@
 import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
 import { AppModule } from '../src/AppModule';
 import { DatabaseProxy } from '../tools/database/DatabaseProxy';
 
-function initE2eFixture() {
+type E2eFixtureOptions = Readonly<{
+  debug?: boolean;
+  override?: (builder: TestingModuleBuilder) => TestingModuleBuilder;
+}>;
+
+function initE2eFixture(options: E2eFixtureOptions = {}) {
   let app: INestApplication;
   const db = new DatabaseProxy();
 
-  beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+  const debug = options.debug ?? false;
+  const override = options.override ?? ((b) => b);
 
-    mongoose.set('debug', true);
+  beforeAll(async () => {
+    mongoose.set('debug', debug);
+    const moduleFixture: TestingModule = await override(
+      Test.createTestingModule({
+        imports: [AppModule],
+      }),
+    ).compile();
+
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
     await app.init();

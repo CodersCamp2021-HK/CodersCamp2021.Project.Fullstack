@@ -4,5 +4,8 @@ index.ts
 models/ArticleDto.ts
 models/ArticleListDto.ts
 models/CreateArticleDto.ts
+models/DefaultResponseDto.ts
+models/ErrorDetailsDto.ts
+models/ValidationErrorDto.ts
 models/index.ts
 runtime.ts

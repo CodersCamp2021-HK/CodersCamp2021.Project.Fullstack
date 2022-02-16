@@ -17,7 +17,7 @@ const App = () => {
   const [data, setData] = useState<ArticleDto[]>([]);
 
   useEffect(() => {
-    api.getAll().then((x) => {
+    api.list().then((x) => {
       setData(x.data);
     });
   }, []);

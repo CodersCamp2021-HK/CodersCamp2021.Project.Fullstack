@@ -1,3 +1,5 @@
 export * from './CreateArticleHandler';
+export * from './DeleteArticleHandler';
 export * from './GetArticleHandler';
-export * from './GetArticlesHandler';
+export * from './ListArticlesHandler';
+export * from './UpdateArticleHandler';

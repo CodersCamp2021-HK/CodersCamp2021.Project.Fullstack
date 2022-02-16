@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
 
 import { ArticlesModule } from './articles';
-import { MongoModule, ServeClientModule } from './config';
-import { OpenApiValidationModule } from './config/OpenApiValidationModule';
+import {
+  ExceptionFiltersModule,
+  MongoModule,
+  OpenApiValidationModule,
+  ResponseInterceptorModule,
+  ServeClientModule,
+} from './config';
 
+const featureModules = [ArticlesModule];
+const configModules = [
+  ExceptionFiltersModule,
+  OpenApiValidationModule,
+  MongoModule,
+  ResponseInterceptorModule,
+  ServeClientModule,
+];
 @Module({
-  imports: [MongoModule, ServeClientModule, ArticlesModule, OpenApiValidationModule],
+  imports: [...featureModules, ...configModules],
 })
 export class AppModule {}

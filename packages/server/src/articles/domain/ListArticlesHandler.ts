@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { IHandler } from '../../shared';
 import { Article, ArticleDocument } from '../database';
 
-class GetArticlesHandler implements IHandler<void, Article[]> {
+class ListArticlesHandler implements IHandler<void, Article[]> {
   constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
   async exec(): Promise<Article[]> {
@@ -14,4 +14,4 @@ class GetArticlesHandler implements IHandler<void, Article[]> {
   }
 }
 
-export { GetArticlesHandler };
+export { ListArticlesHandler };

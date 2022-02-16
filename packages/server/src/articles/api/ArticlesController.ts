@@ -1,47 +1,63 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
-import { CreateArticleHandler, GetArticleHandler, GetArticlesHandler } from '../domain';
-import { ArticleDto, CreateArticleDto } from './ArticleDto';
+import { ApiController, ApiCreate, ApiDelete, ApiGet, ApiList, ApiObjectIdParam, ApiUpdate, Url } from '../../shared';
+import {
+  CreateArticleHandler,
+  DeleteArticleHandler,
+  GetArticleHandler,
+  ListArticlesHandler,
+  UpdateArticleHandler,
+} from '../domain';
+import { ArticleDto, CreateArticleDto, UpdateArticleDto } from './ArticleDto';
 import { ArticleListDto } from './ArticleListDto';
 
-@ApiTags('articles')
-@Controller('articles')
+@ApiController({ path: 'articles', name: 'Articles', description: 'Operations about articles' })
 class ArticlesController {
   constructor(
-    private readonly createArticleHandler: CreateArticleHandler,
+    private readonly listArticlesHandler: ListArticlesHandler,
     private readonly getArticleHandler: GetArticleHandler,
-    private readonly getArticlesHandler: GetArticlesHandler,
+    private readonly createArticleHandler: CreateArticleHandler,
+    private readonly updateArticleHandler: UpdateArticleHandler,
+    private readonly deleteArticleHandler: DeleteArticleHandler,
   ) {}
 
-  @Get()
-  @ApiOkResponse({ type: ArticleListDto })
-  async getAll() {
-    const articles = await this.getArticlesHandler.exec();
-    return plainToInstance(ArticleListDto, { data: plainToInstance(ArticleDto, articles) });
-  }
-
-  @Get(':id')
-  @ApiOkResponse({ type: ArticleDto })
-  async findOne(@Param('id') id: string) {
+  @ApiObjectIdParam()
+  @ApiGet({ name: 'article', response: ArticleDto })
+  async findById(@Param('id') id: string) {
     const article = await this.getArticleHandler.exec({ id });
     if (!article) return null;
     return plainToInstance(ArticleDto, article);
   }
 
-  @Post()
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: ArticleDto,
-    headers: { Location: { schema: { type: 'string' } } },
-  })
-  @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createArticleDto: CreateArticleDto, @Res({ passthrough: true }) resp: Response) {
+  @ApiList({ name: 'articles', response: ArticleListDto })
+  async list() {
+    const articles = await this.listArticlesHandler.exec();
+    return plainToInstance(ArticleListDto, { data: articles });
+  }
+
+  @ApiCreate({ name: 'article', response: ArticleDto })
+  async create(
+    @Body() createArticleDto: CreateArticleDto,
+    @Res({ passthrough: true }) resp: Response,
+    @Url() url: URL,
+  ) {
     const article = await this.createArticleHandler.exec(createArticleDto);
-    resp.setHeader('Location', `/${article.id}`);
+    resp.setHeader('Location', `${url.href}/${article.id}`);
     return plainToInstance(ArticleDto, article);
+  }
+
+  @ApiObjectIdParam()
+  @ApiUpdate({ name: 'article' })
+  async update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+    return this.updateArticleHandler.exec({ id, ...updateArticleDto });
+  }
+
+  @ApiObjectIdParam()
+  @ApiDelete({ name: 'article' })
+  async delete(@Param('id') id: string) {
+    return this.deleteArticleHandler.exec({ id });
   }
 }
 

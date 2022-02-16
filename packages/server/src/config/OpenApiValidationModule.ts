@@ -1,10 +1,12 @@
-import { ArgumentsHost, Catch, ExceptionFilter, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
+import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { error } from 'express-openapi-validator';
 import { join } from 'path';
 
+import { ValidationErrorDto } from '../shared';
 import { env } from './Env';
 
 interface ValidationError {
@@ -13,7 +15,7 @@ interface ValidationError {
   errors: Array<{
     path: string;
     message: string;
-    error_code?: string;
+    errorCode?: string;
   }>;
   path?: string;
   name: string;
@@ -23,12 +25,14 @@ interface ValidationError {
 }
 
 @Catch(...Object.values(error))
-export class OpenApiExceptionFilter implements ExceptionFilter {
+class OpenApiExceptionFilter implements ExceptionFilter {
   catch(error: ValidationError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    const body = { ...error };
+    Logger.debug({ ...error, path: response.req.originalUrl }, OpenApiExceptionFilter.name);
+
+    const body = plainToInstance(ValidationErrorDto, { ...error, path: response.req.originalUrl });
 
     response.status(error.status).header(error.headers).json(body);
   }

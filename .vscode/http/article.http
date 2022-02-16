@@ -1,10 +1,12 @@
 
+@articlesUrl = {{baseUrl}}/articles
+
 ### get all articles
-GET {{baseUrl}}/
+GET {{articlesUrl}}
 
 ### create article
 # @name create_article
-POST {{baseUrl}}/
+POST {{articlesUrl}}/
 
 {
   "title": "Article title",
@@ -15,4 +17,16 @@ POST {{baseUrl}}/
 @article_id = {{create_article.response.body.id}}
 
 ### get article by id
-GET {{baseUrl}}/{{article_id}}
+GET {{articlesUrl}}/{{article_id}}
+
+
+### update article
+PUT {{articlesUrl}}/{{article_id}}
+
+{
+  "title":"addsd",
+  "content": "Article content"
+}
+
+### delete article
+DELETE {{articlesUrl}}/{{article_id}}

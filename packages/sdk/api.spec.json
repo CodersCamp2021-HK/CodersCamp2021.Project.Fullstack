@@ -1,20 +1,114 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/api/articles/{id}": {
+      "get": {
+        "operationId": "ArticlesController_findById",
+        "summary": "Retrive a article by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned article.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      },
+      "put": {
+        "operationId": "ArticlesController_update",
+        "summary": "Update an existing article.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateArticleDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The article has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      },
+      "delete": {
+        "operationId": "ArticlesController_delete",
+        "summary": "Delete a article.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "The article has been successfully deleted." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      }
+    },
     "/api/articles": {
       "get": {
-        "operationId": "ArticlesController_getAll",
+        "operationId": "ArticlesController_list",
+        "summary": "Retrive a list of articles.",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Successfully returned list of articles.",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["articles"]
+        "tags": ["Articles"]
       },
       "post": {
         "operationId": "ArticlesController_create",
+        "summary": "Create a new article.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -22,38 +116,67 @@
         },
         "responses": {
           "201": {
-            "description": "The record has been successfully created.",
+            "description": "The article has been successfully created.",
             "headers": { "Location": { "schema": { "type": "string" } } },
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
-          }
-        },
-        "tags": ["articles"]
-      }
-    },
-    "/api/articles/{id}": {
-      "get": {
-        "operationId": "ArticlesController_findOne",
-        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
-        "responses": {
-          "200": {
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
             "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["articles"]
+        "tags": ["Articles"]
       }
     }
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
-  "tags": [],
+  "tags": [{ "name": "Articles", "description": "Operations about articles" }],
   "servers": [],
   "components": {
     "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
     "schemas": {
+      "DefaultResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string" },
+          "path": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "required": ["name", "status", "path"]
+      },
       "ArticleDto": {
         "type": "object",
-        "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "content": { "type": "string" } },
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
         "required": ["id", "title", "content"]
+      },
+      "ErrorDetailsDto": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "message": { "type": "string" },
+          "errorCode": { "type": "string" }
+        },
+        "required": ["path", "message", "errorCode"]
+      },
+      "ValidationErrorDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string" },
+          "path": { "type": "string" },
+          "message": { "type": "string" },
+          "errors": { "type": "array", "items": { "$ref": "#/components/schemas/ErrorDetailsDto" } }
+        },
+        "required": ["name", "status", "path"]
       },
       "ArticleListDto": {
         "type": "object",
@@ -62,7 +185,18 @@
       },
       "CreateArticleDto": {
         "type": "object",
-        "properties": { "title": { "type": "string" }, "content": { "type": "string" } },
+        "properties": {
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
+        "required": ["title", "content"]
+      },
+      "UpdateArticleDto": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
         "required": ["title", "content"]
       }
     }

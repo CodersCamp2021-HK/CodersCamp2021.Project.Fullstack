@@ -23,13 +23,19 @@ import {
   CreateArticleDto,
   CreateArticleDtoFromJSON,
   CreateArticleDtoToJSON,
+  DefaultResponseDto,
+  DefaultResponseDtoFromJSON,
+  DefaultResponseDtoToJSON,
+  ValidationErrorDto,
+  ValidationErrorDtoFromJSON,
+  ValidationErrorDtoToJSON,
 } from '../models';
 
 export interface CreateRequest {
   createArticleDto: CreateArticleDto;
 }
 
-export interface FindOneRequest {
+export interface FindByIdRequest {
   id: string;
 }
 
@@ -38,6 +44,7 @@ export interface FindOneRequest {
  */
 export class ArticlesApi extends runtime.BaseAPI {
   /**
+   * Create article.
    */
   async createRaw(
     requestParameters: CreateRequest,
@@ -71,6 +78,7 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
+   * Create article.
    */
   async create(requestParameters: CreateRequest, initOverrides?: RequestInit): Promise<ArticleDto> {
     const response = await this.createRaw(requestParameters, initOverrides);
@@ -78,15 +86,16 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
+   * Read article by id.
    */
-  async findOneRaw(
-    requestParameters: FindOneRequest,
+  async findByIdRaw(
+    requestParameters: FindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<ArticleDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling findOne.',
+        'Required parameter requestParameters.id was null or undefined when calling findById.',
       );
     }
 
@@ -108,15 +117,17 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
+   * Read article by id.
    */
-  async findOne(requestParameters: FindOneRequest, initOverrides?: RequestInit): Promise<ArticleDto> {
-    const response = await this.findOneRaw(requestParameters, initOverrides);
+  async findById(requestParameters: FindByIdRequest, initOverrides?: RequestInit): Promise<ArticleDto> {
+    const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
+   * List articles.
    */
-  async getAllRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<ArticleListDto>> {
+  async listRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<ArticleListDto>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -135,9 +146,10 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
+   * List articles.
    */
-  async getAll(initOverrides?: RequestInit): Promise<ArticleListDto> {
-    const response = await this.getAllRaw(initOverrides);
+  async list(initOverrides?: RequestInit): Promise<ArticleListDto> {
+    const response = await this.listRaw(initOverrides);
     return await response.value();
   }
 }

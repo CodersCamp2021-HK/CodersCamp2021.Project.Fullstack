@@ -28,7 +28,6 @@
     "test": "yarn workspaces foreach -tpi run test",
     "lint": "yarn workspaces foreach -tpi run lint",
     "format": "yarn workspaces foreach -tpi run format",
-    "dev:server": "yarn workspace @fullstack/server run dev",
     "gen:sdk": "yarn workspace @fullstack/server tools:gen && yarn workspace @fullstack/sdk gen"
   },
   "devDependencies": {
