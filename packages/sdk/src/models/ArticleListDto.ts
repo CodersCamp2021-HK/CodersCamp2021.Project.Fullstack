@@ -27,6 +27,12 @@ export interface ArticleListDto {
    * @memberof ArticleListDto
    */
   data: Array<ArticleDto>;
+  /**
+   *
+   * @type {number}
+   * @memberof ArticleListDto
+   */
+  pages: number;
 }
 
 export function ArticleListDtoFromJSON(json: any): ArticleListDto {
@@ -39,6 +45,7 @@ export function ArticleListDtoFromJSONTyped(json: any, ignoreDiscriminator: bool
   }
   return {
     data: (json['data'] as Array<any>).map(ArticleDtoFromJSON),
+    pages: json['pages'],
   };
 }
 
@@ -51,5 +58,6 @@ export function ArticleListDtoToJSON(value?: ArticleListDto | null): any {
   }
   return {
     data: (value.data as Array<any>).map(ArticleDtoToJSON),
+    pages: value.pages,
   };
 }

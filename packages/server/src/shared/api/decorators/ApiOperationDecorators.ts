@@ -59,7 +59,7 @@ type ApiDeleteOptions = Readonly<
     }>
 >;
 
-type ApiListOptions = Omit<ApiGetOptions, 'notFound'>;
+type ApiListOptions = Readonly<Omit<ApiGetOptions, 'notFound'> & { link?: true }>;
 
 type ApiCreateOptions = Readonly<
   Partial<
@@ -219,6 +219,7 @@ function ApiList(options: ApiListOptions): MethodDecorator {
       description: `Successfully returned list of ${rname}.`,
       ...options.ok,
       type: options.response,
+      headers: options.link ? { link: { schema: { type: 'string' } } } : undefined,
     }),
     ApiBadRequestResponse({
       description: `Parameters are not valid or they are missing.`,

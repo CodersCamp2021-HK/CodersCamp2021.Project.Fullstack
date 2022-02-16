@@ -7,6 +7,9 @@ class ArticleListDto {
   @Type(() => ArticleDto)
   @ApiProperty({ type: [ArticleDto] })
   data: ArticleDto[];
+
+  @ApiProperty()
+  pages: number;
 }
 
 export { ArticleListDto };

@@ -89,10 +89,24 @@
       "get": {
         "operationId": "ArticlesController_list",
         "summary": "Retrive a list of articles.",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully returned list of articles.",
+            "headers": { "link": { "schema": { "type": "string" } } },
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleListDto" } } }
           },
           "400": {
@@ -180,8 +194,11 @@
       },
       "ArticleListDto": {
         "type": "object",
-        "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/ArticleDto" } } },
-        "required": ["data"]
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/ArticleDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
       },
       "CreateArticleDto": {
         "type": "object",

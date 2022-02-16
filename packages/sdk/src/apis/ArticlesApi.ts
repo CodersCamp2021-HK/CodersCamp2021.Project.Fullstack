@@ -26,10 +26,17 @@ import {
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
+  UpdateArticleDto,
+  UpdateArticleDtoFromJSON,
+  UpdateArticleDtoToJSON,
   ValidationErrorDto,
   ValidationErrorDtoFromJSON,
   ValidationErrorDtoToJSON,
 } from '../models';
+
+export interface DeleteRequest {
+  id: string;
+}
 
 export interface CreateRequest {
   createArticleDto: CreateArticleDto;
@@ -39,12 +46,57 @@ export interface FindByIdRequest {
   id: string;
 }
 
+export interface ListRequest {
+  page?: number;
+  limit?: number;
+}
+
+export interface UpdateRequest {
+  id: string;
+  updateArticleDto: UpdateArticleDto;
+}
+
 /**
  *
  */
 export class ArticlesApi extends runtime.BaseAPI {
   /**
-   * Create article.
+   * Delete a article.
+   */
+  async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter requestParameters.id was null or undefined when calling _delete.',
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request(
+      {
+        path: `/api/articles/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(requestParameters.id))),
+        method: 'DELETE',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides,
+    );
+
+    return new runtime.VoidApiResponse(response);
+  }
+
+  /**
+   * Delete a article.
+   */
+  async _delete(requestParameters: DeleteRequest, initOverrides?: RequestInit): Promise<void> {
+    await this._deleteRaw(requestParameters, initOverrides);
+  }
+
+  /**
+   * Create a new article.
    */
   async createRaw(
     requestParameters: CreateRequest,
@@ -78,7 +130,7 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Create article.
+   * Create a new article.
    */
   async create(requestParameters: CreateRequest, initOverrides?: RequestInit): Promise<ArticleDto> {
     const response = await this.createRaw(requestParameters, initOverrides);
@@ -86,7 +138,7 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Read article by id.
+   * Retrive a article by id.
    */
   async findByIdRaw(
     requestParameters: FindByIdRequest,
@@ -117,7 +169,7 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Read article by id.
+   * Retrive a article by id.
    */
   async findById(requestParameters: FindByIdRequest, initOverrides?: RequestInit): Promise<ArticleDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);
@@ -125,10 +177,21 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
-   * List articles.
+   * Retrive a list of articles.
    */
-  async listRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<ArticleListDto>> {
+  async listRaw(
+    requestParameters: ListRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<ArticleListDto>> {
     const queryParameters: any = {};
+
+    if (requestParameters.page !== undefined) {
+      queryParameters['page'] = requestParameters.page;
+    }
+
+    if (requestParameters.limit !== undefined) {
+      queryParameters['limit'] = requestParameters.limit;
+    }
 
     const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,10 +209,55 @@ export class ArticlesApi extends runtime.BaseAPI {
   }
 
   /**
-   * List articles.
+   * Retrive a list of articles.
    */
-  async list(initOverrides?: RequestInit): Promise<ArticleListDto> {
-    const response = await this.listRaw(initOverrides);
+  async list(requestParameters: ListRequest = {}, initOverrides?: RequestInit): Promise<ArticleListDto> {
+    const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
+  }
+
+  /**
+   * Update an existing article.
+   */
+  async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter requestParameters.id was null or undefined when calling update.',
+      );
+    }
+
+    if (requestParameters.updateArticleDto === null || requestParameters.updateArticleDto === undefined) {
+      throw new runtime.RequiredError(
+        'updateArticleDto',
+        'Required parameter requestParameters.updateArticleDto was null or undefined when calling update.',
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters['Content-Type'] = 'application/json';
+
+    const response = await this.request(
+      {
+        path: `/api/articles/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(requestParameters.id))),
+        method: 'PUT',
+        headers: headerParameters,
+        query: queryParameters,
+        body: UpdateArticleDtoToJSON(requestParameters.updateArticleDto),
+      },
+      initOverrides,
+    );
+
+    return new runtime.VoidApiResponse(response);
+  }
+
+  /**
+   * Update an existing article.
+   */
+  async update(requestParameters: UpdateRequest, initOverrides?: RequestInit): Promise<void> {
+    await this.updateRaw(requestParameters, initOverrides);
   }
 }

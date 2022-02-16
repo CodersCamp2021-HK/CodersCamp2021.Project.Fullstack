@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
 
-import { IHandler } from '../../shared';
+import { Handler } from '../../shared';
 import { Article, ArticleDocument } from '../database';
 
 interface CreateArticleRequest {
@@ -12,7 +12,7 @@ interface CreateArticleRequest {
 }
 
 @Injectable()
-class CreateArticleHandler implements IHandler<CreateArticleRequest, Article> {
+class CreateArticleHandler implements Handler<CreateArticleRequest, Article> {
   constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
   async exec(req: CreateArticleRequest): Promise<Article> {

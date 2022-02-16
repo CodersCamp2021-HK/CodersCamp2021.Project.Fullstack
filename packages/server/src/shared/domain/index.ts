@@ -1,1 +1,2 @@
-export * from './IHandler';
+export * from './Handler';
+export * from './Paginated';

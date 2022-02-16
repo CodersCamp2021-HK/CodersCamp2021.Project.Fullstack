@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { IHandler } from '../../shared';
+import { Handler } from '../../shared';
 import { Article, ArticleDocument } from '../database';
 
 interface DeleteArticleRequest {
@@ -10,7 +10,7 @@ interface DeleteArticleRequest {
 }
 
 @Injectable()
-class DeleteArticleHandler implements IHandler<DeleteArticleRequest, null | undefined> {
+class DeleteArticleHandler implements Handler<DeleteArticleRequest, null | undefined> {
   constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
   async exec(req: DeleteArticleRequest): Promise<null | undefined> {

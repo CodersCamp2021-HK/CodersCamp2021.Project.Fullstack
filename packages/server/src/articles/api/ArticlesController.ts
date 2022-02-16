@@ -2,7 +2,19 @@ import { Body, Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
-import { ApiController, ApiCreate, ApiDelete, ApiGet, ApiList, ApiObjectIdParam, ApiUpdate, Url } from '../../shared';
+import {
+  ApiController,
+  ApiCreate,
+  ApiDelete,
+  ApiGet,
+  ApiList,
+  ApiObjectIdParam,
+  ApiUpdate,
+  createPaginationLink,
+  Pagination,
+  PaginationQuery,
+  Url,
+} from '../../shared';
 import {
   CreateArticleHandler,
   DeleteArticleHandler,
@@ -31,10 +43,11 @@ class ArticlesController {
     return plainToInstance(ArticleDto, article);
   }
 
-  @ApiList({ name: 'articles', response: ArticleListDto })
-  async list() {
-    const articles = await this.listArticlesHandler.exec();
-    return plainToInstance(ArticleListDto, { data: articles });
+  @ApiList({ name: 'articles', response: ArticleListDto, link: true })
+  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) resp: Response, @Url() url: URL) {
+    const paginatedArticles = await this.listArticlesHandler.exec(pagination);
+    resp.setHeader('Link', createPaginationLink(url, paginatedArticles.pages));
+    return plainToInstance(ArticleListDto, paginatedArticles);
   }
 
   @ApiCreate({ name: 'article', response: ArticleDto })

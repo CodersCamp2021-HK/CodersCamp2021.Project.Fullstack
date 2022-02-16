@@ -5,4 +5,5 @@ export * from './ArticleListDto';
 export * from './CreateArticleDto';
 export * from './DefaultResponseDto';
 export * from './ErrorDetailsDto';
+export * from './UpdateArticleDto';
 export * from './ValidationErrorDto';

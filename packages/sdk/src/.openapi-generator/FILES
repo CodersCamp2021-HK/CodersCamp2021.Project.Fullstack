@@ -6,6 +6,7 @@ models/ArticleListDto.ts
 models/CreateArticleDto.ts
 models/DefaultResponseDto.ts
 models/ErrorDetailsDto.ts
+models/UpdateArticleDto.ts
 models/ValidationErrorDto.ts
 models/index.ts
 runtime.ts
