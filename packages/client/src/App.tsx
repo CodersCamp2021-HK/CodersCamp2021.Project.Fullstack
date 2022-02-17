@@ -1,6 +1,7 @@
 import './App.css';
 
 import { ArticleDto, ArticlesApi, Configuration } from '@fullstack/sdk';
+import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import logo from './logo.svg';
@@ -33,9 +34,9 @@ const App = () => {
         </ul>
         <p>Hello Vite + React!</p>
         <p>
-          <button type='button' onClick={() => setCount((x) => x + 1)}>
+          <Button variant='contained' onClick={() => setCount((x) => x + 1)}>
             count is: {count}
-          </button>
+          </Button>
         </p>
         <p>
           Edit <code>App.tsx</code> and save to test HMR updates.
