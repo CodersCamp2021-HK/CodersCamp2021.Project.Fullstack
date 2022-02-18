@@ -40,5 +40,18 @@ module.exports = {
       files: ['*.config.[jt]s', '*.stories.[jt]sx'],
       rules: { 'import/no-default-export': 0, 'import/no-extraneous-dependencies': 0 },
     },
+    {
+      files: ['**/?(*.)+(spec|test).[jt]s?(x)'],
+      env: {
+        jest: true,
+      },
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest/style',
+        'plugin:jest-formatting/recommended',
+        'plugin:testing-library/react',
+      ],
+      rules: { 'import/no-extraneous-dependencies': 0, 'jest/expect-expect': [2, { assertFunctionNames: ['expect'] }] },
+    },
   ],
 };

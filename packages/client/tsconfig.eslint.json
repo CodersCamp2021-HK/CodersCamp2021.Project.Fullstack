@@ -3,5 +3,5 @@
   "compilerOptions": {
     "allowJs": true
   },
-  "include": ["./src", ".eslintrc.js", "vite.config.ts"]
+  "include": ["./src", ".eslintrc.js", "vite.config.ts", "jest.setup.ts", "jest.config.ts"]
 }
