@@ -22,23 +22,38 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
+    'plugin:storybook/recommended',
   ],
   rules: {
     'no-plusplus': 0,
-    'no-param-reassign': [2, { props: true, ignorePropertyModificationsFor: ['ref'] }],
+    'no-param-reassign': [
+      2,
+      {
+        props: true,
+        ignorePropertyModificationsFor: ['ref'],
+      },
+    ],
     'no-restricted-syntax': 0,
     'import/prefer-default-export': 0,
     'import/no-default-export': 2,
     'react/jsx-props-no-spreading': 0,
     'react/prop-types': 0,
-    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+      },
+    ],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
   },
   overrides: [
     {
       files: ['*.config.[jt]s', '*.stories.[jt]sx'],
-      rules: { 'import/no-default-export': 0, 'import/no-extraneous-dependencies': 0 },
+      rules: {
+        'import/no-default-export': 0,
+        'import/no-extraneous-dependencies': 0,
+      },
     },
     {
       files: ['**/?(*.)+(spec|test).[jt]s?(x)'],
@@ -51,7 +66,15 @@ module.exports = {
         'plugin:jest-formatting/recommended',
         'plugin:testing-library/react',
       ],
-      rules: { 'import/no-extraneous-dependencies': 0, 'jest/expect-expect': [2, { assertFunctionNames: ['expect'] }] },
+      rules: {
+        'import/no-extraneous-dependencies': 0,
+        'jest/expect-expect': [
+          2,
+          {
+            assertFunctionNames: ['expect'],
+          },
+        ],
+      },
     },
   ],
 };

@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['./src/**/{!(*.stories|index),}.ts?(x)'],
+  collectCoverageFrom: ['./src/**/{!(*.stories|index|main|*.d),}.ts?(x)'],
   resetMocks: true,
   passWithNoTests: true,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],

@@ -5,6 +5,7 @@ const configBase: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   coverageDirectory: 'coverage',
+  collectCoverageFrom: ['./**/{!(index),}.ts?(x)'],
   resetMocks: true,
   passWithNoTests: true,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
