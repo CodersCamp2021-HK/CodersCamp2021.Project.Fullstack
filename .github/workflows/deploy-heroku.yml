@@ -7,8 +7,6 @@ on:
       - "**/*.md"
       - ".vscode/**"
       - ".gitignore"
-  pull_request:
-    branches: [main]
 
 jobs:
   deploy:
