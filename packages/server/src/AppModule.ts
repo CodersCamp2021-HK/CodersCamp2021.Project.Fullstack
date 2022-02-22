@@ -8,8 +8,9 @@ import {
   ResponseInterceptorModule,
   ServeClientModule,
 } from './config';
+import { UsersModule } from './users';
 
-const featureModules = [ArticlesModule];
+const featureModules = [ArticlesModule, UsersModule];
 const configModules = [
   ExceptionFiltersModule,
   OpenApiValidationModule,
