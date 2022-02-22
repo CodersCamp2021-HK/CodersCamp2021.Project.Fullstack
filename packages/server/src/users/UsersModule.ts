@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { UserFavouriteRestaurantsController } from './favourites/api';
+import { FavouriteDishListController, FavouriteRestaurantListController } from './favourites/api';
 
 @Module({
-  controllers: [UserFavouriteRestaurantsController],
+  controllers: [FavouriteRestaurantListController, FavouriteDishListController],
 })
 class UsersModule {}
 
