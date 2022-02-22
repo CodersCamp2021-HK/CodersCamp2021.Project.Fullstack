@@ -1,0 +1,21 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - ".vscode/**"
+      - ".gitignore"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # https://github.com/marketplace/actions/deploy-to-heroku
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "coderscamp2021-hk-fullstack"
+          heroku_email: "tomasz.chojnacki@coderscrew.pl"
