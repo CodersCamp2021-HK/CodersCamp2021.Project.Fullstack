@@ -148,7 +148,7 @@
     },
     "/api/users/favourite/restaurants": {
       "get": {
-        "operationId": "UserFavouriteRestaurantsController_list",
+        "operationId": "FavouriteRestaurantListController_list",
         "summary": "Retrive a list of restaurants.",
         "parameters": [
           {
@@ -169,7 +169,7 @@
             "description": "Successfully returned list of restaurants.",
             "headers": { "link": { "schema": { "type": "string" } } },
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/UserFavouriteRestaurantsDto" } }
+              "application/json": { "schema": { "$ref": "#/components/schemas/FavouriteRestaurantListDto" } }
             }
           },
           "400": {
@@ -183,11 +183,48 @@
         },
         "tags": ["User's favourite restaurants"]
       }
+    },
+    "/api/users/favourite/dishes": {
+      "get": {
+        "operationId": "FavouriteDishListController_list",
+        "summary": "Retrive a list of dishes.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FavouriteDishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["User's favourite dishes"]
+      }
     }
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
   "tags": [
     { "name": "Articles", "description": "Operations about articles" },
+    { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" }
   ],
   "servers": [],
@@ -257,10 +294,37 @@
         },
         "required": ["title", "content"]
       },
-      "UserFavouriteRestaurantsDto": {
+      "FavouriteRestaurantDto": {
         "type": "object",
-        "properties": { "pages": { "type": "number" } },
-        "required": ["pages"]
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "FavouriteRestaurantListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "FavouriteDishDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "FavouriteDishListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
       }
     }
   }
