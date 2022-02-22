@@ -1,0 +1,1 @@
+export { UserFavouriteRestaurantsController } from './UserFavouriteRestaurantsController';
