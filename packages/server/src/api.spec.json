@@ -146,7 +146,7 @@
         "tags": ["Articles"]
       }
     },
-    "/api/users": {
+    "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "UserFavouriteRestaurantsController_list",
         "summary": "Retrive a list of restaurants.",
@@ -181,14 +181,14 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Favourite restaurants"]
+        "tags": ["User's favourite restaurants"]
       }
     }
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
   "tags": [
     { "name": "Articles", "description": "Operations about articles" },
-    { "name": "Favourite restaurants", "description": "Operations on favourite restaurants" }
+    { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" }
   ],
   "servers": [],
   "components": {

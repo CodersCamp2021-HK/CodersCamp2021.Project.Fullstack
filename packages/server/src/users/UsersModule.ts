@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { UserFavouriteRestaurantsController } from './api';
+import { UserFavouriteRestaurantsController } from './favourites/api';
 
 @Module({
   controllers: [UserFavouriteRestaurantsController],
