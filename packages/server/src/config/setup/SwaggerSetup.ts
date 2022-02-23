@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
-import { TagMap } from '../shared';
+import { TagMap } from '../../shared';
 
 type SwaggerDocumentConfig = Readonly<{
   title: string;
@@ -63,7 +63,6 @@ function createSwaggerDocument(app: INestApplication, config: SwaggerDocumentCon
 }
 
 function setupSwagger(app: INestApplication, config: SwaggerConfig = defaultSwaggerConfig) {
-  app.setGlobalPrefix(config.document.path);
   const document = createSwaggerDocument(app, config.document);
   SwaggerModule.setup(config.document.path, app, document, config.ui);
   return app;
