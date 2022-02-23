@@ -44,20 +44,16 @@ class ArticlesController {
   }
 
   @ApiList({ name: 'articles', response: ArticleListDto, link: true })
-  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) resp: Response, @Url() url: URL) {
+  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
     const paginatedArticles = await this.listArticlesHandler.exec(pagination);
-    resp.setHeader('Link', createPaginationLink(url, paginatedArticles.pages));
+    res.setHeader('Link', createPaginationLink(url, paginatedArticles.pages));
     return plainToInstance(ArticleListDto, paginatedArticles);
   }
 
   @ApiCreate({ name: 'article', response: ArticleDto })
-  async create(
-    @Body() createArticleDto: CreateArticleDto,
-    @Res({ passthrough: true }) resp: Response,
-    @Url() url: URL,
-  ) {
+  async create(@Body() createArticleDto: CreateArticleDto, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
     const article = await this.createArticleHandler.exec(createArticleDto);
-    resp.setHeader('Location', `${url.href}/${article.id}`);
+    res.setHeader('Location', `${url.href}/${article.id}`);
     return plainToInstance(ArticleDto, article);
   }
 
@@ -69,7 +65,7 @@ class ArticlesController {
 
   @ApiObjectIdParam()
   @ApiDelete({ name: 'article' })
-  async delete(@Param('id') id: string) {
+  async deleteOne(@Param('id') id: string) {
     return this.deleteArticleHandler.exec({ id });
   }
 }

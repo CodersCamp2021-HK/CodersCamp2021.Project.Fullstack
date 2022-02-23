@@ -41,7 +41,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       _.defaults(
         {
           name: getReasonPhrase(status),
-          status: status,
+          status: status.toString(),
           path: request.originalUrl,
         },
         _.isString(exceptionBody)

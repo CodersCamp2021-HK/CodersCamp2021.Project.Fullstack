@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { ArticlesModule } from './articles';
+import { AuthModule } from './auth';
 import {
   ExceptionFiltersModule,
   MongoModule,
@@ -8,8 +9,10 @@ import {
   ResponseInterceptorModule,
   ServeClientModule,
 } from './config';
+import { RestaurantsModule } from './restaurants';
+import { UsersModule } from './users';
 
-const featureModules = [ArticlesModule];
+const featureModules = [ArticlesModule, AuthModule, RestaurantsModule, UsersModule];
 const configModules = [
   ExceptionFiltersModule,
   OpenApiValidationModule,

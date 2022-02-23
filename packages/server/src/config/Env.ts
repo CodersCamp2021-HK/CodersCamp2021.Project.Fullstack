@@ -25,6 +25,21 @@ class EnvVariables {
   @IsString()
   @IsNotEmpty()
   readonly SERVER_URL: string;
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  readonly JWT_SECRET: string;
+
+  @Expose()
+  @IsInt()
+  @IsNotEmpty()
+  readonly ACCESS_TOKEN_EXPIRATION_TIME: number;
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  readonly ACCESS_TOKEN_NAME: string;
 }
 
 const env = plainToInstance(EnvVariables, process.env, {
