@@ -1,16 +1,18 @@
 import { NestApplicationOptions } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import _ from 'lodash';
 
 import { AppModule } from './AppModule';
-import { env, setupSwagger } from './config';
+import { env, setupSecurity, setupSwagger } from './config';
 
 async function appFactory(options: NestApplicationOptions = {}) {
   const app = await NestFactory.create(AppModule, {
-    cors: env.NODE_ENV !== 'production',
     logger: env.NODE_ENV !== 'production' ? ['verbose', 'debug', 'log', 'warn', 'error'] : ['log', 'warn', 'error'],
     ...options,
   });
-  return setupSwagger(app);
+  app.setGlobalPrefix('api');
+  const setup = _.flow(setupSecurity, setupSwagger);
+  return setup(app);
 }
 
 export { appFactory };
