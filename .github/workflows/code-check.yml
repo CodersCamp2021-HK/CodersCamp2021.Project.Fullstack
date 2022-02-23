@@ -1,0 +1,72 @@
+name: Code Check
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - ".vscode/**"
+      - ".gitignore"
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - ".vscode/**"
+      - ".gitignore"
+
+jobs:
+  build-and-test:
+    name: "Build and test application"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: root
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Cache & restore dependencies
+        uses: c-hive/gha-yarn-cache@v2
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Build storybook
+        working-directory: ./packages/client
+        run: yarn build-storybook --quiet
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Run tests with coverage
+        run: yarn test --coverage --colors
+
+      - name: Upload server coverage
+        uses: codecov/codecov-action@v2
+        with:
+          flags: server
+          directory: ./packages/server/coverage
+          verbose: true
+
+      - name: Upload client coverage
+        uses: codecov/codecov-action@v2
+        with:
+          flags: client
+          directory: ./packages/client/coverage
+          verbose: true
