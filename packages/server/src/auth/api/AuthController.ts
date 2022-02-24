@@ -18,19 +18,17 @@ class AuthController {
   ) {}
 
   @ApiCreate({ path: 'register/partner', name: 'partner' })
-  async registerAsPartner(
-    @Body() dto: RegisterAsPartnerDto,
-    @Res({ passthrough: true }) res: Response,
-    @Url() url: URL,
-  ) {
+  async registerAsPartner(@Body() dto: RegisterAsPartnerDto, @Res() res: Response, @Url() url: URL) {
     await this.registerAsPartnerHandler.exec(dto);
     res.setHeader('Location', `${url.origin}/api/partners/profile`);
+    res.status(HttpStatus.CREATED).send();
   }
 
   @ApiCreate({ path: 'register/user', name: 'user' })
-  async registerAsUser(@Body() dto: RegisterAsUserDto, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
+  async registerAsUser(@Body() dto: RegisterAsUserDto, @Res() res: Response, @Url() url: URL) {
     await this.registerAsUserHandler.exec(dto);
     res.setHeader('Location', `${url.origin}/api/users/profile`);
+    res.status(HttpStatus.CREATED).send();
   }
 
   @ApiOperation({ summary: 'Store auth token in cookies.' })

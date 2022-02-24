@@ -1,5 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Type } from '@nestjs/common';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
@@ -9,6 +10,7 @@ import { DatabaseProxy } from '../tools/database/DatabaseProxy';
 type E2eFixtureOptions = Readonly<{
   debug?: boolean;
   override?: (builder: TestingModuleBuilder) => TestingModuleBuilder;
+  testControllers?: Type[];
 }>;
 
 function initE2eFixture(options: E2eFixtureOptions = {}) {
@@ -23,11 +25,13 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
     const moduleFixture: TestingModule = await override(
       Test.createTestingModule({
         imports: [AppModule],
+        controllers: options.testControllers,
       }),
     ).compile();
 
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
+    app.use(cookieParser());
     await app.init();
     await db.init();
     if (db.connection.db.databaseName !== 'test') {
@@ -41,7 +45,7 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
     await db.close();
   });
 
-  return {
+  return Object.freeze({
     get app(): Omit<INestApplication, 'init' | 'close'> {
       return app;
     },
@@ -51,7 +55,10 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
     get req() {
       return request(app.getHttpServer());
     },
-  };
+    agent: () => {
+      return request.agent(app.getHttpServer());
+    },
+  });
 }
 
 export { initE2eFixture };
