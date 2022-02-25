@@ -2184,7 +2184,6 @@ __metadata:
     "@typescript-eslint/parser": ^5.12.0
     "@vitejs/plugin-react": ^1.2.0
     babel-loader: ^8.2.3
-    babel-plugin-search-and-replace: ^1.1.0
     eslint: ^8.9.0
     eslint-config-airbnb: ^19.0.4
     eslint-config-airbnb-typescript: ^16.1.0
@@ -6673,13 +6672,6 @@ __metadata:
     lodash: ^4.17.15
     react-docgen: ^5.0.0
   checksum: 6126d358ac2cb27a9a7f145ab586b7a28cb19ef09ca37c4f08a853246a101328ffe6c87813e95b1b4ba05beb627285199f7d0ba16abfb61b35cc4febb6d5eabd
-  languageName: node
-  linkType: hard
-
-"babel-plugin-search-and-replace@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "babel-plugin-search-and-replace@npm:1.1.0"
-  checksum: 489784ff4a117b50eb3ce36f700366a44b1bc52499c25bd64975f1a0798618ba9b3a4bd85a6392c52785168cadee93b6b49cbe5499ebd3d63f6e1077c2aa98ba
   languageName: node
   linkType: hard
 
