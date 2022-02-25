@@ -5,16 +5,16 @@ import { ApiEmailProperty, ApiPasswordProperty } from './decorators';
 
 class LoginDto {
   @ApiEmailProperty()
-  email: string;
+  readonly email: string;
 
   @ApiProperty({ enum: Role, enumName: 'Role' })
-  role: Role;
+  readonly role: Role;
 
   @ApiPasswordProperty()
-  password: string;
+  readonly password: string;
 
   @ApiProperty()
-  rememberMe: boolean;
+  readonly rememberMe: boolean;
 }
 
 export { LoginDto };

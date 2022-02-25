@@ -4,16 +4,16 @@ import { ApiPhoneNumberProperty } from './decorators/ApiPhoneNumberProperty';
 
 class RegisterAsPartnerDto {
   @ApiEmailProperty()
-  email: string;
+  readonly email: string;
 
   @ApiPasswordProperty()
-  password: string;
+  readonly password: string;
 
   @ApiPhoneNumberProperty()
-  phoneNumber: string;
+  readonly phoneNumber: string;
 
   @ApiNipProperty()
-  nip: string;
+  readonly nip: string;
 }
 
 export { RegisterAsPartnerDto };

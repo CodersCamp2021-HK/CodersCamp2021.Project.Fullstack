@@ -2,7 +2,8 @@ import { Get, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ObjectId } from 'mongodb';
 
-import { ApiAuthentication, ApiAuthorization, ApiController, PartnerId, Role } from '../src/shared';
+import { ApiAuthentication, ApiAuthorization, ApiController, PartnerId, Role, UserId } from '../src/shared';
+import { loginDto, registerPartnerDto, registerUserDto } from './ApiDtoUtils';
 import { initE2eFixture } from './E2eFixture';
 
 const PATH = '/api/auth';
@@ -35,7 +36,7 @@ class GuardedTestController {
   }
   @Get('guarded/user')
   @ApiAuthorization(Role.User)
-  guardedUser(@PartnerId() id: string) {
+  guardedUser(@UserId() id: string) {
     return id;
   }
 }
@@ -43,23 +44,10 @@ class GuardedTestController {
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture({ testControllers: [GuardedTestController] });
 
-  async function cleanup() {
-    await Promise.all([
-      fixture.db.authModel.deleteMany(),
-      fixture.db.userModel.deleteMany(),
-      fixture.db.restaurantModel.deleteMany(),
-    ]);
-  }
-
   describe(`POST ${REGISTER_AS_PARTNER_REL_PATH}`, () => {
-    const validRequest = {
-      email: 'partner@email.com',
-      password: 'Password1',
-      phoneNumber: '800500300',
-      nip: '1234563218',
-    };
-
     describe(`should return 400`, () => {
+      const validRequest = registerPartnerDto({ email: 'partner.invalid@email.com' });
+
       it.each([
         { key: 'email', val: 'email.com' },
         { key: 'password', val: 'Passw12' },
@@ -74,48 +62,34 @@ describe(`${PATH}`, () => {
 
         // Then
         expect(res.statusCode).toBe(HttpStatus.BAD_REQUEST);
-        expect(await fixture.db.authModel.countDocuments()).toBe(0);
-        expect(await fixture.db.restaurantModel.countDocuments()).toBe(0);
+        expect(await fixture.db.authModel.find({ email: val })).toHaveLength(0);
       });
     });
 
-    describe('group', () => {
-      afterAll(async () => {
-        await cleanup();
-      });
+    it('should return 201 with location url when request succeeded and should return 409 when partner with requested email already exists', async () => {
+      // Given
+      const validRequest = registerPartnerDto({ email: 'partner.valid@email.com' });
+      // When
+      const res0 = await fixture.req.post(REGISTER_AS_PARTNER_PATH).send(validRequest);
 
-      it('should return 201 with location url when request succeeded', async () => {
-        // When
-        const res = await fixture.req.post(REGISTER_AS_PARTNER_PATH).send(validRequest);
+      // Then
+      expect(res0.statusCode).toBe(HttpStatus.CREATED);
+      expect(res0.headers['location']).toMatch(/:\d+\/api\/partners\/profile$/);
+      expect(await fixture.db.authModel.find({ email: validRequest.email })).toHaveLength(1);
 
-        // Then
-        expect(res.statusCode).toBe(HttpStatus.CREATED);
-        expect(res.headers['location']).toMatch(/:\d+\/api\/partners\/profile$/);
-        expect(await fixture.db.authModel.countDocuments()).toBe(1);
-        expect(await fixture.db.restaurantModel.countDocuments()).toBe(1);
-      });
+      // When
+      const res1 = await fixture.req.post(REGISTER_AS_PARTNER_PATH).send(validRequest);
 
-      describe('and', () => {
-        it('should return 409 when partner with requested email already exists', async () => {
-          // When
-          const res = await fixture.req.post(REGISTER_AS_PARTNER_PATH).send(validRequest);
-
-          // Then
-          expect(res.statusCode).toBe(HttpStatus.CONFLICT);
-          expect(await fixture.db.authModel.countDocuments()).toBe(1);
-          expect(await fixture.db.restaurantModel.countDocuments()).toBe(1);
-        });
-      });
+      // Then
+      expect(res1.statusCode).toBe(HttpStatus.CONFLICT);
+      expect(await fixture.db.authModel.find({ email: validRequest.email })).toHaveLength(1);
     });
   });
 
   describe(`POST ${REGISTER_AS_USER_REL_PATH}`, () => {
-    const validRequest = {
-      email: 'partner@email.com',
-      password: 'Password1',
-    };
-
     describe(`should return 400`, () => {
+      const validRequest = registerUserDto({ email: 'user.invalid@email.com' });
+
       it.each([
         { key: 'email', val: 'email.com' },
         { key: 'password', val: 'Passw12' },
@@ -128,54 +102,35 @@ describe(`${PATH}`, () => {
 
         // Then
         expect(res.statusCode).toBe(HttpStatus.BAD_REQUEST);
-        expect(await fixture.db.authModel.countDocuments()).toBe(0);
-        expect(await fixture.db.userModel.countDocuments()).toBe(0);
+        expect(await fixture.db.authModel.find({ email: val })).toHaveLength(0);
       });
     });
 
-    describe('group', () => {
-      afterAll(async () => {
-        await cleanup();
-      });
+    it('should return 201 with location url when request succeeded and should return 409 when user with requested email already exists', async () => {
+      // Given
+      const validRequest = registerUserDto({ email: 'user.valid@email.com' });
 
-      it('should return 201 with location url when request succeeded', async () => {
-        // When
-        const res = await fixture.req.post(REGISTER_AS_USER_PATH).send(validRequest);
+      // When
+      const res0 = await fixture.req.post(REGISTER_AS_USER_PATH).send(validRequest);
 
-        // Then
-        expect(res.statusCode).toBe(HttpStatus.CREATED);
-        expect(res.headers['location']).toMatch(/:\d+\/api\/users\/profile$/);
-        expect(await fixture.db.authModel.countDocuments()).toBe(1);
-        expect(await fixture.db.userModel.countDocuments()).toBe(1);
-      });
+      // Then
+      expect(res0.statusCode).toBe(HttpStatus.CREATED);
+      expect(res0.headers['location']).toMatch(/:\d+\/api\/users\/profile$/);
+      expect(await fixture.db.authModel.find({ email: validRequest.email })).toHaveLength(1);
 
-      describe('and', () => {
-        it('should return 409 when user with requested email already exists', async () => {
-          // When
-          const res = await fixture.req.post(REGISTER_AS_USER_PATH).send(validRequest);
+      // When
+      const res1 = await fixture.req.post(REGISTER_AS_USER_PATH).send(validRequest);
 
-          // Then
-          expect(res.statusCode).toBe(HttpStatus.CONFLICT);
-          expect(await fixture.db.authModel.countDocuments()).toBe(1);
-          expect(await fixture.db.userModel.countDocuments()).toBe(1);
-        });
-      });
+      // Then
+      expect(res1.statusCode).toBe(HttpStatus.CONFLICT);
+      expect(await fixture.db.authModel.find({ email: validRequest.email })).toHaveLength(1);
     });
   });
 
   describe(`POST ${LOGIN_REL_PATH}`, () => {
-    const validRequest = {
-      email: 'user@email.com',
-      password: 'Password1',
-      role: 'User',
-      rememberMe: false,
-    };
-
-    afterAll(async () => {
-      await cleanup();
-    });
-
     describe(`should return 400`, () => {
+      const validRequest = loginDto({ email: 'user.login.invalid@email.com' });
+
       it.each([
         { key: 'email', val: 'email.com' },
         { key: 'password', val: 'Passw12' },
@@ -192,9 +147,11 @@ describe(`${PATH}`, () => {
     });
 
     describe('Given registered user', () => {
+      const validRequest = loginDto({ email: 'user.login.valid@email.com' });
+
       beforeAll(async () => {
         await fixture.db.authModel.create({
-          email: 'user@email.com',
+          email: validRequest.email,
           password:
             '050d685f8b21323e9bcb4907cd7609e4a92275dfbd41fa8eafe7c531d46523094ee5292b70f17ef1276fb4cd116e3c333fc5ac2a63f556faaf35f261c2e4a8ab4b81ad822ae9d005fc599366e193635f',
           role: Role.User,
@@ -263,21 +220,10 @@ describe(`${PATH}`, () => {
   });
 
   describe('Features', () => {
-    afterEach(async () => {
-      await cleanup();
-    });
-
     it('User should register, login and logout with specific privileges', async () => {
       // Given
-      const registerBody = {
-        email: 'user@email.com',
-        password: 'Password1',
-      };
-      const loginReq = {
-        ...registerBody,
-        role: Role.User,
-        rememberMe: false,
-      };
+      const registerBody = registerUserDto({ email: 'user.feat@email.com' });
+      const loginReq = loginDto({ ...registerBody });
       const agent = fixture.agent();
 
       // When
@@ -308,7 +254,7 @@ describe(`${PATH}`, () => {
       const res4 = await agent.get(GUARDED_TEST_PARTNER_PATH);
 
       // Then
-      expect(res4.statusCode).toBe(HttpStatus.UNAUTHORIZED);
+      expect(res4.statusCode).toBe(HttpStatus.FORBIDDEN);
 
       // When
       const res5 = await agent.post(LOGOUT_PATH);
@@ -325,18 +271,12 @@ describe(`${PATH}`, () => {
 
     it('Partner should register, login and logout with specific privileges', async () => {
       // Given
-      const registerBody = {
-        email: 'partner@email.com',
-        password: 'Password1',
-        phoneNumber: '800500300',
-        nip: '1234563218',
-      };
-      const loginBody = {
+      const registerBody = registerPartnerDto({ email: 'partner.feat@email.com' });
+      const loginBody = loginDto({
         email: registerBody.email,
         password: registerBody.password,
         role: Role.Partner,
-        rememberMe: false,
-      };
+      });
       const agent = fixture.agent();
 
       // When
@@ -361,7 +301,7 @@ describe(`${PATH}`, () => {
       const res3 = await agent.get(GUARDED_TEST_USER_PATH);
 
       // Then
-      expect(res3.statusCode).toBe(HttpStatus.UNAUTHORIZED);
+      expect(res3.statusCode).toBe(HttpStatus.FORBIDDEN);
 
       // When
       const res4 = await agent.get(GUARDED_TEST_PARTNER_PATH);

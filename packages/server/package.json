@@ -14,7 +14,7 @@
     "build": "nest build",
     "start": "cross-env NODE_ENV=production node dist/src/main",
     "dev": "nest start --watch",
-    "test": "jest",
+    "test": "jest --runInBand",
     "lint": "eslint \"{src,apps,libs,test,tools}/**/*.ts\"",
     "format": "prettier --write \"{src,apps,libs,test,tools}/**/*.ts\"",
     "test:unit": "jest --selectProjects unit",

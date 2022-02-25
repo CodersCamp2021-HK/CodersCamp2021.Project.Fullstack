@@ -2,10 +2,10 @@ import { ApiEmailProperty, ApiPasswordProperty } from './decorators';
 
 class RegisterAsUserDto {
   @ApiEmailProperty()
-  email: string;
+  readonly email: string;
 
   @ApiPasswordProperty()
-  password: string;
+  readonly password: string;
 }
 
 export { RegisterAsUserDto };
