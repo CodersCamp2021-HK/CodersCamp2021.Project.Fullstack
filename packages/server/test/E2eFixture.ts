@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 
 import { AppModule } from '../src/AppModule';
+import { createSwaggerDocument, setupOpenApiValidator } from '../src/config';
 import { DatabaseProxy } from '../tools/database/DatabaseProxy';
 
 type E2eFixtureOptions = Readonly<{
@@ -28,6 +29,8 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
 
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
+    const apiSpec = createSwaggerDocument(app);
+    app = setupOpenApiValidator(app, apiSpec);
     await app.init();
     await db.init();
     if (db.connection.db.databaseName !== 'test') {
