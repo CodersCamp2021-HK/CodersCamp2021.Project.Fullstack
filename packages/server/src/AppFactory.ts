@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import _ from 'lodash';
 
 import { AppModule } from './AppModule';
-import { env, setupSecurity, setupSwagger } from './config';
+import { createSwaggerDocument, env, setupOpenApiValidator, setupSecurity, setupSwagger } from './config';
 
 async function appFactory(options: NestApplicationOptions = {}) {
   const app = await NestFactory.create(AppModule, {
@@ -11,7 +11,12 @@ async function appFactory(options: NestApplicationOptions = {}) {
     ...options,
   });
   app.setGlobalPrefix('api');
-  const setup = _.flow(setupSecurity, setupSwagger);
+  const apiSpec = createSwaggerDocument(app);
+  const setup = _.flow(
+    setupSecurity,
+    _.curryRight(setupSwagger)(apiSpec),
+    _.curryRight(setupOpenApiValidator)(apiSpec),
+  );
   return setup(app);
 }
 

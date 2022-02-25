@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, OpenAPIObject, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 import { TagMap } from '../../shared';
 import { env } from '../Env';
@@ -63,8 +63,7 @@ function createSwaggerDocument(app: INestApplication, config: SwaggerDocumentCon
   return document;
 }
 
-function setupSwagger(app: INestApplication, config: SwaggerConfig = defaultSwaggerConfig) {
-  const document = createSwaggerDocument(app, config.document);
+function setupSwagger(app: INestApplication, document: OpenAPIObject, config: SwaggerConfig = defaultSwaggerConfig) {
   SwaggerModule.setup(config.document.path, app, document, config.ui);
   return app;
 }
