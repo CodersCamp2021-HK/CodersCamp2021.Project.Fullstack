@@ -13,7 +13,7 @@ function setupOpenApiValidator(app: INestApplication, apiSpec: OpenAPIObject) {
     '/api',
     bodyParser.json(),
     ...OpenApiValidator.middleware({
-      apiSpec: apiSpec as unknown as OpenAPIV3.Document,
+      apiSpec: apiSpec as OpenAPIV3.Document,
       validateRequests: {
         allowUnknownQueryParameters: true,
         coerceTypes: false,
