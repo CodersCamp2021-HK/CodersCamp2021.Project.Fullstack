@@ -1,11 +1,14 @@
-import { Expose, plainToInstance } from 'class-transformer';
+import { Exclude, Expose, plainToInstance } from 'class-transformer';
 import { IsIn, IsInt, IsNotEmpty, IsPositive, IsString, validateSync } from 'class-validator';
 import dotenv from 'dotenv';
 
-dotenv.config();
+const isProduction = process.env['NODE_ENV'] === 'production';
+
+dotenv.config({ path: isProduction ? undefined : '.env.dev' });
 
 const NODE_ENV_VALUES = ['development', 'test', 'production'] as const;
 
+@Exclude()
 class EnvVariables {
   @Expose()
   @IsIn(NODE_ENV_VALUES)

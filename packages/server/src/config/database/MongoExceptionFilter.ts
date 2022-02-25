@@ -1,13 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger, Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 import { MongoError } from 'mongodb';
 import { Error as MongooseError } from 'mongoose';
 
-import { DefaultResponseDto } from '../shared';
-import { env } from './Env';
+import { DefaultResponseDto } from '../../shared';
 
 @Catch(MongoError, MongooseError)
 class MongoExceptionFilter implements ExceptionFilter {
@@ -27,19 +24,4 @@ class MongoExceptionFilter implements ExceptionFilter {
   }
 }
 
-@Module({
-  imports: [
-    MongooseModule.forRoot(env.MONGO_URL, {
-      authSource: 'admin',
-    }),
-  ],
-  providers: [
-    {
-      provide: APP_FILTER,
-      useClass: MongoExceptionFilter,
-    },
-  ],
-})
-class MongoModule {}
-
-export { MongoModule };
+export { MongoExceptionFilter };
