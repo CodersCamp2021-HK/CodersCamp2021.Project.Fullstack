@@ -7,11 +7,20 @@ function ApiEmailProperty(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
-      pattern: EMAIL.REGEX.source,
+      format: EMIAL_FORMAT_KEY,
       maxLength: EMAIL.MAX_LEN,
       example: 'user@email.com',
+      description: 'RFC 5322 standard email format',
     }),
   );
 }
 
-export { ApiEmailProperty };
+const EMIAL_FORMAT_KEY = 'email';
+
+const ApiEmailFormat = Object.freeze({
+  name: EMIAL_FORMAT_KEY,
+  type: 'string' as const,
+  validate: (v: string) => EMAIL.REGEX.test(v),
+});
+
+export { ApiEmailFormat, ApiEmailProperty };

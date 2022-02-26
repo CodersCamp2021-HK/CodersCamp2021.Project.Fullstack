@@ -7,11 +7,20 @@ function ApiPhoneNumberProperty(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
-      pattern: PHONE_NUMBER.REGEX.source,
+      format: PHONE_NUMBER_FORMAT_KEY,
       maxLength: PHONE_NUMBER.MAX_LEN,
       example: '800500300',
+      description: '',
     }),
   );
 }
 
-export { ApiPhoneNumberProperty };
+const PHONE_NUMBER_FORMAT_KEY = 'phoneNumber';
+
+const ApiPhoneNumberFormat = Object.freeze({
+  name: PHONE_NUMBER_FORMAT_KEY,
+  type: 'string' as const,
+  validate: (v: string) => PHONE_NUMBER.REGEX.test(v),
+});
+
+export { ApiPhoneNumberFormat, ApiPhoneNumberProperty };

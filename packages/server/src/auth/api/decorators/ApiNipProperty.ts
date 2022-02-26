@@ -7,11 +7,20 @@ function ApiNipProperty(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
-      pattern: NIP.REGEX.source,
+      format: NIP_FORMAT_KEY,
       maxLength: NIP.MAX_LEN,
       example: '1234563218',
+      description: 'Polish NIP number',
     }),
   );
 }
 
-export { ApiNipProperty };
+const NIP_FORMAT_KEY = 'nip';
+
+const ApiNipFormat = Object.freeze({
+  name: NIP_FORMAT_KEY,
+  type: 'string' as const,
+  validate: (v: string) => NIP.REGEX.test(v),
+});
+
+export { ApiNipFormat, ApiNipProperty };
