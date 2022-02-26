@@ -7,7 +7,7 @@ function ApiEmailProperty(): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
-      format: EMIAL_FORMAT_KEY,
+      format: EMAIL_FORMAT_KEY,
       maxLength: EMAIL.MAX_LEN,
       example: 'user@email.com',
       description: 'RFC 5322 standard email format',
@@ -15,10 +15,10 @@ function ApiEmailProperty(): PropertyDecorator {
   );
 }
 
-const EMIAL_FORMAT_KEY = 'email';
+const EMAIL_FORMAT_KEY = 'email';
 
 const ApiEmailFormat = Object.freeze({
-  name: EMIAL_FORMAT_KEY,
+  name: EMAIL_FORMAT_KEY,
   type: 'string' as const,
   validate: (v: string) => EMAIL.REGEX.test(v),
 });
