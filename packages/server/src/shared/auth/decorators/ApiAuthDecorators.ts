@@ -1,7 +1,6 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { ApiCookieAuth } from '@nestjs/swagger';
 
-import { env } from '../../../config';
 import { JwtAuthGuard } from '../JwtAuthGuard';
 import { Role } from '../Role';
 import { REFLECTOR_ROLES_KEY, RolesAuthGuard } from '../RolesAuthGuard';
