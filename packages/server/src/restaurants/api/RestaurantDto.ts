@@ -4,17 +4,18 @@ import { Type } from 'class-transformer';
 import { ApiObjectIdProperty } from '../../shared';
 import { ShortenedDishDto } from '../dishes/api/DishDto';
 
+// TODO: add min and max length restrictions once work on RestaurantSchema gets finished
 class RestaurantDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Resto bar' })
   readonly name: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'włoskie' })
   readonly type: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: ['tradycyjna', 'oryginalne składniki'] })
   readonly tags: string[];
 
   @ApiProperty()
