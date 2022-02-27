@@ -14,6 +14,7 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  PartnerId,
   Role,
   Url,
 } from '../../../shared';
@@ -26,7 +27,7 @@ class PartnerDishController {
   @ApiGet({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async findById(@Param('id') id: string) {
+  async findById(@PartnerId() partnerId: string, @Param('id') dishId: string) {
     const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
     if (!dish) return null;
     return plainToInstance(DishDto, dish);
@@ -34,7 +35,12 @@ class PartnerDishController {
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   @ApiAuthorization(Role.Partner)
-  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
+  async list(
+    @PartnerId() partnerId: string,
+    @Pagination() pagination: PaginationQuery,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+  ) {
     const paginatedDishes = { data: [], pages: 1 }; // TODO: Hook up ListDishesHandler
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
@@ -42,7 +48,12 @@ class PartnerDishController {
 
   @ApiCreate({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
-  async create(@Body() createDishDto: CreateDishDto, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
+  async create(
+    @PartnerId() partnerId: string,
+    @Body() createDishDto: CreateDishDto,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+  ) {
     const dish = { ...createDishDto, id: '6200218668fc82e7bdf15088' }; // TODO: Hook up CreateDishHandler
     res.setHeader('Location', `${url.href}/${dish.id}`);
     return plainToInstance(DishDto, dish);
@@ -52,7 +63,7 @@ class PartnerDishController {
   @ApiUpdate({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async update(@Param('id') id: string, @Body() updateDishDto: UpdateDishDto) {
+  async update(@PartnerId() partnerId: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
     return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above
   }
 
@@ -60,7 +71,7 @@ class PartnerDishController {
   @ApiDelete({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async deleteOne(@Param('id') id: string) {
+  async deleteOne(@PartnerId() partnerId: string, @Param('id') dishId: string) {
     return null; // TODO: Hook up DeleteDishHandler, remove eslint-disable comment above
   }
 }
