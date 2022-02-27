@@ -1,4 +1,5 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 import { ApiObjectIdProperty } from '../../../shared';
 
@@ -8,9 +9,12 @@ interface NutritionalValue {
   carbohydrates: number;
 }
 
-interface Ingredient {
-  name: string;
-  canBeExcluded: boolean;
+class IngredientDto {
+  @ApiProperty({ example: 'bazylia' })
+  readonly name: string;
+
+  @ApiProperty()
+  readonly canBeExcluded: boolean;
 }
 
 // TODO: Add min and max length constrains when DishSchema gets finished, possibly move example to consts
@@ -36,8 +40,9 @@ class DishDto {
   @ApiProperty({ example: { fats: 20, proteins: 16, carbohydrates: 35 } })
   readonly nutritionalValue: NutritionalValue;
 
-  @ApiProperty({ example: [{ name: 'bazylia', canBeExcluded: true }] })
-  readonly ingredients: Ingredient[];
+  @Type(() => IngredientDto)
+  @ApiProperty({ type: IngredientDto })
+  readonly ingredients: IngredientDto[];
 }
 
 class CreateDishDto extends OmitType(DishDto, ['id'] as const) {}
