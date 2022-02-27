@@ -1,0 +1,35 @@
+
+@authUrl = {{baseUrl}}/auth
+
+
+### register as user
+POST {{authUrl}}/register/user
+
+{
+  "email": "user@email.com",
+  "password": "Password1"
+}
+
+### register as partner
+POST {{authUrl}}/register/partner
+
+{
+  "email": "partner@email.com",
+  "password": "Password1",
+  "phoneNumber": "800500300",
+  "nip": "1234563218"
+}
+
+### login
+POST {{authUrl}}/login
+
+{
+  "email": "user@email.com",
+  "role": "User",
+  "password": "Password1",
+  "rememberMe": false
+}
+
+
+### logout
+POST {{authUrl}}/logout

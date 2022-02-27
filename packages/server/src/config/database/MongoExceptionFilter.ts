@@ -8,19 +8,42 @@ import { DefaultResponseDto } from '../../shared';
 
 @Catch(MongoError, MongooseError)
 class MongoExceptionFilter implements ExceptionFilter {
+  handleUniqueKeyException(exception: MongoError, res: Response) {
+    let message: string | undefined = undefined;
+    if ('keyPattern' in exception) {
+      const keys = Object.keys(exception['keyPattern']).join(',');
+      message = `Unique key constraint violated for (${keys}) keys`;
+    }
+
+    const body = plainToInstance(DefaultResponseDto, {
+      name: 'Unique key conflict',
+      status: HttpStatus.CONFLICT.toString(),
+      path: res.req.originalUrl,
+      message: message,
+    });
+    res.status(HttpStatus.CONFLICT).json(body);
+  }
+
   catch(exception: MongoError | MongooseError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const res = ctx.getResponse<Response>();
 
-    Logger.error(exception.message, exception.stack, MongoExceptionFilter.name);
+    Logger.warn(exception.message, exception.stack, MongoExceptionFilter.name);
+
+    if (exception instanceof MongoError) {
+      if (exception.code === 11000) {
+        this.handleUniqueKeyException(exception, res);
+        return;
+      }
+    }
 
     const body = plainToInstance(DefaultResponseDto, {
       name: 'Internal Server Error',
-      status: HttpStatus.INTERNAL_SERVER_ERROR,
-      path: response.req.originalUrl,
+      status: HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+      path: res.req.originalUrl,
     });
 
-    response.status(HttpStatus.INTERNAL_SERVER_ERROR).json(body);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(body);
   }
 }
 
