@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 
 import { ApiObjectIdProperty } from '../../../shared';
 
@@ -41,4 +41,6 @@ class DishDto {
 
 class FavouriteDishDto extends PickType(DishDto, ['id', 'name'] as const) {}
 
-export { DishDto, FavouriteDishDto };
+class ShortenedDishDto extends OmitType(DishDto, ['allergens', 'nutritionalValue', 'ingredients'] as const) {}
+
+export { DishDto, FavouriteDishDto, ShortenedDishDto };
