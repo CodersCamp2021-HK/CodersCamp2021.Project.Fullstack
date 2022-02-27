@@ -24,12 +24,12 @@ class RolesAuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    const paylaod: JwtPayload | undefined = request.user;
-    if (!paylaod) {
+    const payload: JwtPayload | undefined = request.user;
+    if (!payload) {
       return false;
     }
 
-    return requiredRoles.includes(paylaod.role);
+    return requiredRoles.includes(payload.role);
   }
 }
 

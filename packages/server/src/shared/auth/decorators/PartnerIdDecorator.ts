@@ -6,16 +6,16 @@ import { JwtPayload } from '../RolesAuthGuard';
 const PartnerId = createParamDecorator((_: unknown, context: ExecutionContext) => {
   const request = context.switchToHttp().getRequest();
 
-  const paylaod: JwtPayload | undefined = request.user;
-  if (!paylaod) {
+  const payload: JwtPayload | undefined = request.user;
+  if (!payload) {
     throw new UnauthorizedException();
   }
 
-  if (paylaod.role !== Role.Partner) {
+  if (payload.role !== Role.Partner) {
     throw new ForbiddenException();
   }
 
-  return paylaod.sub;
+  return payload.sub;
 });
 
 export { PartnerId };
