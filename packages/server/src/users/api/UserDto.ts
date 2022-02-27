@@ -5,9 +5,9 @@ import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
 import { ApiObjectIdProperty } from '../../shared';
 
 interface Card {
-  number: number;
+  number: string;
   expirationDate: Date;
-  securityCode: number;
+  securityCode: string;
 }
 
 class UserDto {
@@ -50,4 +50,6 @@ class UserDto {
   readonly profileCompleted: boolean;
 }
 
-export { UserDto };
+class NoPasswordUserDto extends OmitType(UserDto, ['password'] as const) {}
+
+export { NoPasswordUserDto, UserDto };
