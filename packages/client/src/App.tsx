@@ -6,9 +6,15 @@ import { useEffect, useState } from 'react';
 
 import logo from './logo.svg';
 
+const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
+const DEV_API_BASE_PATH = 'http://localhost:4000';
+
+const mode = `import.meta.env.MODE` as string;
+const isProduction = mode === `"production"`;
+
 const api = new ArticlesApi(
   new Configuration({
-    basePath: 'http://localhost:4000',
+    basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
   }),
 );
 
