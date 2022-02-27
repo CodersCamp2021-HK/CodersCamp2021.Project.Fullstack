@@ -31,12 +31,6 @@ class AddressDto {
     example: '00-000',
   })
   readonly postcode: string;
-
-  @ApiProperty()
-  readonly longitude: number;
-
-  @ApiProperty()
-  readonly latitude: number;
 }
 
 class CreateAddressDto extends OmitType(AddressDto, ['id'] as const) {}

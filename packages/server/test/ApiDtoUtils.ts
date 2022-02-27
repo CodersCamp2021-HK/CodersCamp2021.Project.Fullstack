@@ -38,8 +38,6 @@ function addressDto() {
     floor: 1,
     city: 'Default City',
     postcode: '00-000',
-    longitude: 11.11,
-    latitude: 11.11,
   };
 }
 

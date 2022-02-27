@@ -51,8 +51,6 @@ describe(`${PATH}`, () => {
       floor: 2,
       city: 'Another City',
       postcode: '01-000',
-      longitude: 12.11,
-      latitude: 12.11,
     };
 
     // When

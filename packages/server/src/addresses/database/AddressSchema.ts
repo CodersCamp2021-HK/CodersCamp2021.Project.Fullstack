@@ -49,14 +49,6 @@ class Address {
   postcode: string;
 
   @Expose()
-  @Prop({ required: true })
-  longitude: number;
-
-  @Expose()
-  @Prop({ required: true })
-  latitude: number;
-
-  @Expose()
   readonly id: string;
 }
 

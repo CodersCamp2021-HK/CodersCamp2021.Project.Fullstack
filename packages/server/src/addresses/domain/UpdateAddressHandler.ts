@@ -13,8 +13,6 @@ interface UpdateAddressRequest {
   readonly floor: number;
   readonly city: string;
   readonly postcode: string;
-  readonly longitude: number;
-  readonly latitude: number;
 }
 
 @Injectable()
