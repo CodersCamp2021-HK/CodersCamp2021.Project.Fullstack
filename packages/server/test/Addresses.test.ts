@@ -1,5 +1,4 @@
 import { HttpStatus } from '@nestjs/common';
-import { add } from 'lodash';
 
 import { CreateAddressDto } from '../src/addresses/api/AddressDto';
 import { addressDto } from './ApiDtoUtils';
