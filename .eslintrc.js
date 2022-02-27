@@ -9,4 +9,15 @@ module.exports = {
     node: true,
     jest: true,
   },
+  rules: {
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        extendDefaults: true,
+        types: {
+          '{}': false,
+        },
+      },
+    ],
+  },
 };
