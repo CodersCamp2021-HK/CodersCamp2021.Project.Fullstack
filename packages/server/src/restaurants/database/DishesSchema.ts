@@ -20,11 +20,6 @@ enum MealType {
   Supper = 'kolacja',
 }
 
-enum Ingredients {
-  Onion = 'cebula',
-  tomato = 'pomidor',
-}
-
 enum Allergens {
   Gluten = 'gluten',
   ShellFish = 'skorupiaki',
@@ -75,7 +70,7 @@ class Dish {
   @Expose()
   @Prop(
     raw({
-      name: { type: [{ enum: Ingredients }] },
+      name: { type: String },
       canBeExcluded: { type: Boolean, default: false },
     }),
   )
