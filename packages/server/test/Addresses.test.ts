@@ -1,6 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
+import { add } from 'lodash';
 
 import { CreateAddressDto } from '../src/addresses/api/AddressDto';
+import { addressDto } from './ApiDtoUtils';
 import { initE2eFixture } from './E2eFixture';
 
 const PATH = '/api/addresses';
@@ -14,16 +16,7 @@ describe(`${PATH}`, () => {
 
   it('GET /:id', async () => {
     // Given
-    const address = {
-      street: 'Street',
-      streetNumber: '15A',
-      apartmentNumber: 1,
-      floor: 1,
-      city: 'Default City',
-      postcode: '00-000',
-      longitude: 11.11,
-      latitude: 11.11,
-    };
+    const address = addressDto();
     const created = await fixture.db.addressModel.create(address);
     const id = created._id?.toString();
 
@@ -37,16 +30,7 @@ describe(`${PATH}`, () => {
 
   it('POST /', async () => {
     // Given
-    const reqBody: CreateAddressDto = {
-      street: 'Street',
-      streetNumber: '15A',
-      apartmentNumber: 1,
-      floor: 1,
-      city: 'Default City',
-      postcode: '00-000',
-      longitude: 11.11,
-      latitude: 11.11,
-    };
+    const reqBody: CreateAddressDto = addressDto();
 
     // When
     const res = await fixture.req.post(PATH).send(reqBody);
@@ -58,16 +42,7 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const address = {
-      street: 'Street',
-      streetNumber: '15A',
-      apartmentNumber: 1,
-      floor: 1,
-      city: 'Default City',
-      postcode: '00-000',
-      longitude: 11.11,
-      latitude: 11.11,
-    };
+    const address = addressDto();
     const created = await fixture.db.addressModel.create(address);
     const id = created._id?.toString();
     const reqBody: CreateAddressDto = {
@@ -90,16 +65,7 @@ describe(`${PATH}`, () => {
 
   it('DELETE /:id', async () => {
     // Given
-    const address = {
-      street: 'Street',
-      streetNumber: '15A',
-      apartmentNumber: 1,
-      floor: 1,
-      city: 'Default City',
-      postcode: '00-000',
-      longitude: 11.11,
-      latitude: 11.11,
-    };
+    const address = addressDto();
     const created = await fixture.db.addressModel.create(address);
     const id = created._id?.toString();
 
