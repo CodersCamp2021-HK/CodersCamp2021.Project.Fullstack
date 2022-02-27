@@ -3,6 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
 import {
+  ApiAuthorization,
   ApiController,
   ApiCreate,
   ApiDelete,
@@ -13,6 +14,7 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  Role,
   Url,
 } from '../../../shared';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
@@ -22,6 +24,7 @@ import { DishListDto } from './DishListDto';
 class PartnerDishController {
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
+  @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(@Param('id') id: string) {
     const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
@@ -30,6 +33,7 @@ class PartnerDishController {
   }
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
+  @ApiAuthorization(Role.Partner)
   async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
     const paginatedDishes = { data: [], pages: 1 }; // TODO: Hook up ListDishesHandler
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
@@ -37,6 +41,7 @@ class PartnerDishController {
   }
 
   @ApiCreate({ name: 'dish', response: DishDto })
+  @ApiAuthorization(Role.Partner)
   async create(@Body() createDishDto: CreateDishDto, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
     const dish = { ...createDishDto, id: '6200218668fc82e7bdf15088' }; // TODO: Hook up CreateDishHandler
     res.setHeader('Location', `${url.href}/${dish.id}`);
@@ -45,6 +50,7 @@ class PartnerDishController {
 
   @ApiObjectIdParam()
   @ApiUpdate({ name: 'dish' })
+  @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@Param('id') id: string, @Body() updateDishDto: UpdateDishDto) {
     return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above
@@ -52,6 +58,7 @@ class PartnerDishController {
 
   @ApiObjectIdParam()
   @ApiDelete({ name: 'dish' })
+  @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async deleteOne(@Param('id') id: string) {
     return null; // TODO: Hook up DeleteDishHandler, remove eslint-disable comment above
