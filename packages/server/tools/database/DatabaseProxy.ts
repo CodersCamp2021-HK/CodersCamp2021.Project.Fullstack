@@ -6,7 +6,12 @@ import { Connection, Model } from 'mongoose';
 
 import { AppModule } from '../../src/AppModule';
 import { Article, ArticleDocument } from '../../src/articles/database';
+
 import { Dish, DishDocument } from '../../src/restaurants/database';
+import { Auth, AuthDocument } from '../../src/auth/database';
+import { Restaurant, RestaurantDocument } from '../../src/restaurants/database';
+import { User, UserDocument } from '../../src/users/database';
+
 
 class DatabaseProxy {
   private app: INestApplicationContext;
@@ -26,8 +31,21 @@ class DatabaseProxy {
     return this.app.get<Model<ArticleDocument>>(getModelToken(Article.name));
   }
 
+
   get dishModel() {
     return this.app.get<Model<DishDocument>>(getModelToken(Dish.name));
+
+  get authModel() {
+    return this.app.get<Model<AuthDocument>>(getModelToken(Auth.name));
+  }
+
+  get userModel() {
+    return this.app.get<Model<UserDocument>>(getModelToken(User.name));
+  }
+
+  get restaurantModel() {
+    return this.app.get<Model<RestaurantDocument>>(getModelToken(Restaurant.name));
+
   }
 
   get connection() {

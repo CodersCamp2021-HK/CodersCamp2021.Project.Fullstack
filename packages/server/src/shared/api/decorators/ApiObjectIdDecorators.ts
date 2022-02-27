@@ -3,7 +3,7 @@ import { ApiParam, ApiParamOptions, ApiProperty, ApiPropertyOptions } from '@nes
 
 const OBJECT_ID_SCHEMA = Object.freeze({
   type: 'string',
-  pattern: '^[0-9a-fA-F]{24}$',
+  pattern: /^[0-9a-fA-F]{24}$/.source,
   example: '6200218668fc82e7bdf15088',
 });
 

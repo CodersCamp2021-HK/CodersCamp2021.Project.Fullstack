@@ -60,7 +60,7 @@
         "tags": ["Articles"]
       },
       "delete": {
-        "operationId": "ArticlesController_delete",
+        "operationId": "ArticlesController_deleteOne",
         "summary": "Delete a article.",
         "parameters": [
           {
@@ -146,6 +146,101 @@
         "tags": ["Articles"]
       }
     },
+    "/api/auth/register/partner": {
+      "post": {
+        "operationId": "AuthController_registerAsPartner",
+        "summary": "Create a new partner.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RegisterAsPartnerDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The partner has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/register/user": {
+      "post": {
+        "operationId": "AuthController_registerAsUser",
+        "summary": "Create a new user.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RegisterAsUserDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The user has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Store auth token in cookies.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginDto" } } }
+        },
+        "responses": {
+          "204": { "description": "Auth token successfully received as cookie." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "summary": "Remove auth token from cookies.",
+        "parameters": [],
+        "responses": {
+          "204": { "description": "Auth token successfully removed from cookies." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Auth"],
+        "security": [{ "cookie": [] }]
+      }
+    },
     "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "FavouriteRestaurantListController_list",
@@ -225,11 +320,12 @@
   "tags": [
     { "name": "Articles", "description": "Operations about articles" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
-    { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" }
+    { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
+    { "name": "Auth", "description": "Operations about authentication and registration" }
   ],
   "servers": [],
   "components": {
-    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "securitySchemes": { "cookie": { "type": "apiKey", "in": "cookie", "name": "access_token" } },
     "schemas": {
       "DefaultResponseDto": {
         "type": "object",
@@ -293,6 +389,65 @@
           "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
         },
         "required": ["title", "content"]
+      },
+      "RegisterAsPartnerDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
+            "maxLength": 64,
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$",
+            "maxLength": 64,
+            "example": "Password1"
+          },
+          "phoneNumber": { "type": "string", "pattern": "^\\+?\\d{6,14}$", "maxLength": 14, "example": "800500300" },
+          "nip": { "type": "string", "pattern": "^\\d{10}$", "maxLength": 10, "example": "1234563218" }
+        },
+        "required": ["email", "password", "phoneNumber", "nip"]
+      },
+      "RegisterAsUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
+            "maxLength": 64,
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$",
+            "maxLength": 64,
+            "example": "Password1"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "Role": { "type": "string", "enum": ["Partner", "User"] },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
+            "maxLength": 64,
+            "example": "user@email.com"
+          },
+          "role": { "$ref": "#/components/schemas/Role" },
+          "password": {
+            "type": "string",
+            "pattern": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$",
+            "maxLength": 64,
+            "example": "Password1"
+          },
+          "rememberMe": { "type": "boolean" }
+        },
+        "required": ["email", "role", "password", "rememberMe"]
       },
       "FavouriteRestaurantDto": {
         "type": "object",
