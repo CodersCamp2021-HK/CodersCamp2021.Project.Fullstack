@@ -7,10 +7,14 @@ class AddressDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Street' })
   readonly street: string;
 
-  @ApiProperty({ pattern: ADDRESS_CONSTANTS.STREET_NUMBER.REGEX.toString().slice(1, -1) })
+  @ApiProperty({
+    pattern: ADDRESS_CONSTANTS.STREET_NUMBER.REGEX.source,
+    maxLength: ADDRESS_CONSTANTS.STREET_NUMBER.MAX_LENGTH,
+    example: '1A',
+  })
   readonly streetNumber: string;
 
   @ApiProperty({ required: false })
@@ -19,10 +23,13 @@ class AddressDto {
   @ApiProperty({ required: false })
   readonly floor: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'City' })
   readonly city: string;
 
-  @ApiProperty({ pattern: ADDRESS_CONSTANTS.POSTCODE.REGEX.toString().slice(1, -1) })
+  @ApiProperty({
+    pattern: ADDRESS_CONSTANTS.POSTCODE.REGEX.source,
+    example: '00-000',
+  })
   readonly postcode: string;
 
   @ApiProperty()

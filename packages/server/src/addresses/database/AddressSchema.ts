@@ -6,8 +6,11 @@ import { Document } from 'mongoose';
 type AddressDocument = Address & Document<ObjectId>;
 
 const ADDRESS_CONSTANTS = Object.freeze({
-  STREET_NUMBER: Object.freeze({ REGEX: /^([0-9]{1,})([A-Za-z]{0,1}$)/ }),
-  POSTCODE: Object.freeze({ REGEX: /^([0-9]{2})-([0-9]{3})$/ }),
+  STREET_NUMBER: Object.freeze({
+    REGEX: /^\d+[A-Za-z]?$/,
+    MAX_LENGTH: 4,
+  }),
+  POSTCODE: Object.freeze({ REGEX: /^\d{2}-\d{3}$/ }),
 });
 @Exclude()
 @Schema({
@@ -22,6 +25,7 @@ class Address {
   @Prop({
     required: true,
     match: ADDRESS_CONSTANTS.STREET_NUMBER.REGEX,
+    maxlength: ADDRESS_CONSTANTS.STREET_NUMBER.MAX_LENGTH,
   })
   streetNumber: string;
 

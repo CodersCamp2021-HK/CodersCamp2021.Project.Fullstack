@@ -22,19 +22,7 @@ class UpdateAddressHandler implements Handler<UpdateAddressRequest, null | undef
   constructor(@InjectModel(Address.name) private addressModel: Model<AddressDocument>) {}
 
   async exec(req: UpdateAddressRequest): Promise<null | undefined> {
-    const result = await this.addressModel.findOneAndUpdate(
-      { _id: req.id },
-      {
-        street: req.street,
-        streetNumber: req.streetNumber,
-        apartmentNumber: req.apartmentNumber,
-        floor: req.floor,
-        city: req.city,
-        postcode: req.postcode,
-        longitude: req.longitude,
-        latitude: req.latitude,
-      },
-    );
+    const result = await this.addressModel.findOneAndUpdate({ _id: req.id }, { ...req, id: undefined });
     if (result === null) return null;
     return undefined;
   }
