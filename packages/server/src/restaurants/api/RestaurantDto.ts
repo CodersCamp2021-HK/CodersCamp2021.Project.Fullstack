@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 import { ApiObjectIdProperty } from '../../shared';
 import { ShortenedDishDto } from '../dishes/api/DishDto';
 
-// TODO: add min and max length restrictions once work on RestaurantSchema gets finished
+// TODO: add min and max length restrictions once work on RestaurantSchema gets finished, possibly move examples to consts
 class RestaurantDto {
   @ApiObjectIdProperty()
   readonly id: string;
