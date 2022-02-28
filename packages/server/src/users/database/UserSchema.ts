@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
 type UserDocument = User & Document<ObjectId>;
 
@@ -42,7 +42,7 @@ class User {
 
   @Expose()
   @Prop({ ref: 'Address' })
-  addressId: mongoose.Schema.Types.ObjectId;
+  addressId: ObjectId;
 
   @Expose()
   @Prop(
@@ -61,15 +61,15 @@ class User {
 
   @Expose()
   @Prop({ ref: 'Restaurant' })
-  favouriteRestaurants: mongoose.Schema.Types.ObjectId;
+  favouriteRestaurants: ObjectId;
 
   @Expose()
   @Prop({ ref: 'Dish' })
-  favouriteDishes: mongoose.Schema.Types.ObjectId;
+  favouriteDishes: ObjectId;
 
   @Expose()
   @Prop({ ref: 'Order' })
-  orders: mongoose.Schema.Types.ObjectId;
+  orders: ObjectId;
 
   @Expose()
   @Prop({ default: false })
