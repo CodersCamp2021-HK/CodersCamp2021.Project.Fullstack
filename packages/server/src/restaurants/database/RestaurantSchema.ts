@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
+import { PHONE_NUMBER } from '../../auth/shared';
 
 type RestaurantDocument = Restaurant & Document<ObjectId>;
 
@@ -53,9 +54,6 @@ const RESTAURANT_CONSTANTS = Object.freeze({
   BANK_ACCOUNT_NUMBER: Object.freeze({
     REGEX: /\W*\d{8,19}\b/,
   }),
-  PHONE_NUMBER: Object.freeze({
-    REGEX: /(?<!\w)(\(?(\+|00)?48\)?)?[ -]?\d{3}[ -]?\d{3}[ -]?\d{3}(?!\w)/,
-  }),
   DESCRIPTION: Object.freeze({
     MAX_LENGTH: 500,
   }),
@@ -77,7 +75,10 @@ class Restaurant {
   bankAccountNumber: string;
 
   @Expose()
-  @Prop({ match: RESTAURANT_CONSTANTS.PHONE_NUMBER.REGEX })
+  @Prop({
+    match: PHONE_NUMBER.REGEX,
+    maxlength: PHONE_NUMBER.MAX_LEN,
+  })
   phoneNumber: string;
 
   @Expose()
