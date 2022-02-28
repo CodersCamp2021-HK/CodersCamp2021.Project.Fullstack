@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 
+import { Address, AddressDocument } from '../../src/addresses/database';
 import { AppModule } from '../../src/AppModule';
 import { Article, ArticleDocument } from '../../src/articles/database';
 import { Auth, AuthDocument } from '../../src/auth/database';
@@ -26,6 +27,10 @@ class DatabaseProxy {
 
   get articleModel() {
     return this.app.get<Model<ArticleDocument>>(getModelToken(Article.name));
+  }
+
+  get addressModel() {
+    return this.app.get<Model<AddressDocument>>(getModelToken(Address.name));
   }
 
   get authModel() {
