@@ -29,60 +29,6 @@
           }
         },
         "tags": ["Addresses"]
-      },
-      "put": {
-        "operationId": "AddressesController_update",
-        "summary": "Update an existing address.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateAddressDto" } } }
-        },
-        "responses": {
-          "204": { "description": "The address has been successfully updated." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Address does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Addresses"]
-      },
-      "delete": {
-        "operationId": "AddressesController_delete",
-        "summary": "Delete a address.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "204": { "description": "The address has been successfully deleted." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Address does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Addresses"]
       }
     },
     "/api/addresses": {
@@ -483,18 +429,6 @@
         "required": ["name", "status", "path"]
       },
       "CreateAddressDto": {
-        "type": "object",
-        "properties": {
-          "street": { "type": "string", "example": "Street" },
-          "streetNumber": { "type": "string", "pattern": "^\\d+[A-Za-z]?$", "maxLength": 4, "example": "1A" },
-          "apartmentNumber": { "type": "number" },
-          "floor": { "type": "number" },
-          "city": { "type": "string", "example": "City" },
-          "postcode": { "type": "string", "pattern": "^\\d{2}-\\d{3}$", "example": "00-000" }
-        },
-        "required": ["street", "streetNumber", "city", "postcode"]
-      },
-      "UpdateAddressDto": {
         "type": "object",
         "properties": {
           "street": { "type": "string", "example": "Street" },

@@ -38,44 +38,4 @@ describe(`${PATH}`, () => {
     expect(res.status).toBe(HttpStatus.CREATED);
     expect(res.body).toEqual(expect.objectContaining(reqBody));
   });
-
-  it('PUT /:id', async () => {
-    // Given
-    const address = addressDto();
-    const created = await fixture.db.addressModel.create(address);
-    const id = created._id?.toString();
-    const reqBody: CreateAddressDto = {
-      street: 'Another Street',
-      streetNumber: '15',
-      apartmentNumber: 2,
-      floor: 2,
-      city: 'Another City',
-      postcode: '01-000',
-    };
-
-    // When
-    const res = await fixture.req.put(`${PATH}/${id}`).send(reqBody);
-
-    // Then
-    expect(res.status).toBe(HttpStatus.NO_CONTENT);
-  });
-
-  it('DELETE /:id', async () => {
-    // Given
-    const address = addressDto();
-    const created = await fixture.db.addressModel.create(address);
-    const id = created._id?.toString();
-
-    // When
-    const res0 = await fixture.req.delete(`${PATH}/${id}`);
-
-    // Then
-    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
-
-    // When
-    const res1 = await fixture.req.delete(`${PATH}/${id}`);
-
-    // Then
-    expect(res1.status).toBe(HttpStatus.NOT_FOUND);
-  });
 });
