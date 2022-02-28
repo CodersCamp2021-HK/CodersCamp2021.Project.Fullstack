@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose } from 'class-transformer';
-import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 type ArticleDocument = Article & Document<ObjectId>;
 
