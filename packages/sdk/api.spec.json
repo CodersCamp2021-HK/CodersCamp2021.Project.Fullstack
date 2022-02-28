@@ -298,6 +298,156 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/partner/dishes/{id}": {
+      "get": {
+        "operationId": "PartnerDishController_findById",
+        "summary": "Retrive a dish by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned dish.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      },
+      "put": {
+        "operationId": "PartnerDishController_update",
+        "summary": "Update an existing dish.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateDishDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The dish has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      },
+      "delete": {
+        "operationId": "PartnerDishController_deleteOne",
+        "summary": "Delete a dish.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "The dish has been successfully deleted." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      }
+    },
+    "/api/partner/dishes": {
+      "get": {
+        "operationId": "PartnerDishController_list",
+        "summary": "Retrive a list of dishes.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      },
+      "post": {
+        "operationId": "PartnerDishController_create",
+        "summary": "Create a new dish.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateDishDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The dish has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      }
+    },
     "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "FavouriteRestaurantListController_list",
@@ -377,6 +527,7 @@
   "tags": [
     { "name": "Addresses", "description": "Operations about addresses" },
     { "name": "Articles", "description": "Operations about articles" },
+    { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
     { "name": "Auth", "description": "Operations about authentication and registration" }
@@ -550,6 +701,75 @@
         },
         "required": ["email", "role", "password", "rememberMe"]
       },
+      "DishDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string", "example": "Chilli con carne" },
+          "photo": { "type": "string" },
+          "description": {
+            "type": "string",
+            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          },
+          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
+          "callories": { "type": "number" },
+          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
+          "ingredients": {
+            "example": [{ "name": "bazylia", "canBeExcluded": true }],
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["id", "name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+      },
+      "DishListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/DishDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "CreateDishDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Chilli con carne" },
+          "photo": { "type": "string" },
+          "description": {
+            "type": "string",
+            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          },
+          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
+          "callories": { "type": "number" },
+          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
+          "ingredients": {
+            "example": [{ "name": "bazylia", "canBeExcluded": true }],
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+      },
+      "UpdateDishDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Chilli con carne" },
+          "photo": { "type": "string" },
+          "description": {
+            "type": "string",
+            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          },
+          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
+          "callories": { "type": "number" },
+          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
+          "ingredients": {
+            "example": [{ "name": "bazylia", "canBeExcluded": true }],
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+      },
       "FavouriteRestaurantDto": {
         "type": "object",
         "properties": {
@@ -570,7 +790,7 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string" }
+          "name": { "type": "string", "example": "Chilli con carne" }
         },
         "required": ["id", "name"]
       },
