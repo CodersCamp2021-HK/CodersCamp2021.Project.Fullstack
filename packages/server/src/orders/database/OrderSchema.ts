@@ -13,6 +13,9 @@ const ORDER_CONSTANTS = Object.freeze({
   PRICE: Object.freeze({
     MIN: 0,
   }),
+  COUNT: Object.freeze({
+    MIN: 1,
+  }),
 });
 
 class SubOrder {
@@ -54,7 +57,7 @@ class Order {
         required: true,
       },
       price: { type: Number, min: ORDER_CONSTANTS.PRICE.MIN },
-      count: { type: Number },
+      count: { type: Number, default: ORDER_CONSTANTS.PRICE.MIN, min: ORDER_CONSTANTS.PRICE.MIN },
       excludedIngredients: { type: [String] },
     }),
   )
