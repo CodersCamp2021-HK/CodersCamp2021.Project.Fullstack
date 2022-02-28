@@ -52,8 +52,8 @@ class User {
       securityCode: {
         type: Number,
         required: true,
-        min: USER_CONSTANTS.CARD.CVV.MIN_LENGTH,
-        max: USER_CONSTANTS.CARD.CVV.MAX_LENGTH,
+        min: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
+        max: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
       },
     }),
   )
