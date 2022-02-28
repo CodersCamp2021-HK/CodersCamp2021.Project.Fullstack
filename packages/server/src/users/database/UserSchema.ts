@@ -5,6 +5,15 @@ import mongoose, { Document } from 'mongoose';
 
 type UserDocument = User & Document<ObjectId>;
 
+const USER_CONSTANTS = Object.freeze({
+  CARD: Object.freeze({
+    NUMBER: {
+      REGEX: /^5[1-5][0-9]{14}$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}$/,
+    },
+    CVV: { MIN_LENGTH: 3, MAX_LENGTH: 3 },
+  }),
+});
+
 @Exclude()
 @Schema({
   collection: 'users',
@@ -31,21 +40,26 @@ class User {
   phoneNumber: string;
 
   @Expose()
-  @Prop({ ref: 'Ad' })
+  @Prop({ ref: 'Address' })
   addressId: mongoose.Schema.Types.ObjectId;
 
   @Expose()
   @Prop(
     raw({
-      number: { type: Number, required: true },
+      number: { type: Number, required: true, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
       expirationDate: { type: Date, required: true },
-      securityCode: { type: Number, required: true },
+      securityCode: {
+        type: Number,
+        required: true,
+        min: USER_CONSTANTS.CARD.CVV.MIN_LENGTH,
+        max: USER_CONSTANTS.CARD.CVV.MAX_LENGTH,
+      },
     }),
   )
   card: object[];
 
   @Expose()
-  @Prop({ ref: 'Rest' })
+  @Prop({ ref: 'Restaurant' })
   favouriteRestaurants: mongoose.Schema.Types.ObjectId;
 
   @Expose()
