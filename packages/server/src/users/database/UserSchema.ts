@@ -3,6 +3,8 @@ import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
+import { Address } from '../../addresses/database/AddressSchema';
+import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 type UserDocument = User & Document<ObjectId>;
 
 const USER_CONSTANTS = Object.freeze({
@@ -41,8 +43,8 @@ class User {
   phoneNumber: string;
 
   @Expose()
-  @Prop({ ref: 'Address' })
-  addressId: ObjectId;
+  @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
+  addressId: Address[];
 
   @Expose()
   @Prop(
@@ -60,16 +62,16 @@ class User {
   card: object[];
 
   @Expose()
-  @Prop({ ref: 'Restaurant' })
-  favouriteRestaurants: ObjectId;
+  @Prop({ type: [{ type: ObjectId, ref: 'Restaurant' }] })
+  favouriteRestaurants: Restaurant[];
 
   @Expose()
-  @Prop({ ref: 'Dish' })
-  favouriteDishes: ObjectId;
+  @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
+  favouriteDishes: ObjectId[];
 
   @Expose()
-  @Prop({ ref: 'Order' })
-  orders: ObjectId;
+  @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
+  orders: ObjectId[];
 
   @Expose()
   @Prop({ default: false })
