@@ -95,12 +95,12 @@ class Restaurant {
   description: string;
 
   @Expose()
-  @Prop({ type: [{ enum: CuisineTypes }] })
-  cuisineType: string[];
+  @Prop()
+  cuisineType: CuisineTypes[];
 
   @Expose()
-  @Prop({ type: [{ enum: RestaurantTags }] })
-  tags: string[];
+  @Prop()
+  tags: RestaurantTags[];
 
   @Expose()
   @Prop({ default: false })
