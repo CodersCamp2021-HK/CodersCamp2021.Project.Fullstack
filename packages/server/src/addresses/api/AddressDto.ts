@@ -17,11 +17,19 @@ class AddressDto {
   })
   readonly streetNumber: string;
 
-  @ApiProperty({ required: false })
-  readonly apartmentNumber: number;
+  @ApiProperty({
+    pattern: ADDRESS_CONSTANTS.APARTMENT_NUMBER.REGEX.source,
+    required: false,
+    example: '1',
+  })
+  readonly apartmentNumber: string;
 
-  @ApiProperty({ required: false })
-  readonly floor: number;
+  @ApiProperty({
+    pattern: ADDRESS_CONSTANTS.FLOOR.REGEX.source,
+    required: false,
+    example: '1',
+  })
+  readonly floor: string;
 
   @ApiProperty({ example: 'City' })
   readonly city: string;

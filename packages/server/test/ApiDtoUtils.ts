@@ -34,8 +34,8 @@ function addressDto() {
   return {
     street: 'Street',
     streetNumber: '15A',
-    apartmentNumber: 1,
-    floor: 1,
+    apartmentNumber: '1',
+    floor: '1',
     city: 'Default City',
     postcode: '00-000',
   };

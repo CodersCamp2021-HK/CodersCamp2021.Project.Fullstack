@@ -9,8 +9,8 @@ import { Address, AddressDocument } from '../database';
 interface CreateAddressRequest {
   readonly street: string;
   readonly streetNumber: string;
-  readonly apartmentNumber: number;
-  readonly floor: number;
+  readonly apartmentNumber: string;
+  readonly floor: string;
   readonly city: string;
   readonly postcode: string;
 }

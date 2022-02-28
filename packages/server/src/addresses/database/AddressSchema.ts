@@ -11,6 +11,8 @@ const ADDRESS_CONSTANTS = Object.freeze({
     MAX_LENGTH: 4,
   }),
   POSTCODE: Object.freeze({ REGEX: /^\d{2}-\d{3}$/ }),
+  APARTMENT_NUMBER: Object.freeze({ REGEX: /^\d{1,3}$/ }),
+  FLOOR: Object.freeze({ REGEX: /^\d{0,2}$/ }),
 });
 @Exclude()
 @Schema({
@@ -30,12 +32,12 @@ class Address {
   streetNumber: string;
 
   @Expose()
-  @Prop()
-  apartmentNumber: number;
+  @Prop({ match: ADDRESS_CONSTANTS.APARTMENT_NUMBER.REGEX })
+  apartmentNumber: string;
 
   @Expose()
-  @Prop()
-  floor: number;
+  @Prop({ match: ADDRESS_CONSTANTS.FLOOR.REGEX })
+  floor: string;
 
   @Expose()
   @Prop({ required: true })
