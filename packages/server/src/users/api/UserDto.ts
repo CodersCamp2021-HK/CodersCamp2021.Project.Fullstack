@@ -23,9 +23,6 @@ class UserDto {
   @ApiProperty()
   readonly email: string;
 
-  @ApiProperty()
-  readonly password: string;
-
   @ApiPropertyOptional()
   readonly phoneNumber: string;
 
@@ -50,6 +47,4 @@ class UserDto {
   readonly profileCompleted: boolean;
 }
 
-class NoPasswordUserDto extends OmitType(UserDto, ['password'] as const) {}
-
-export { NoPasswordUserDto, UserDto };
+export { UserDto };
