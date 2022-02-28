@@ -30,4 +30,15 @@ function loginDto(overrides: Partial<LoginDto>) {
   };
 }
 
-export { loginDto, registerPartnerDto, registerUserDto };
+function addressDto() {
+  return {
+    street: 'Street',
+    streetNumber: '15A',
+    apartmentNumber: '1',
+    floor: '1',
+    city: 'Default City',
+    postcode: '00-000',
+  };
+}
+
+export { addressDto, loginDto, registerPartnerDto, registerUserDto };
