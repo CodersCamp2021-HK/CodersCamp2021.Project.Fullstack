@@ -86,7 +86,7 @@ class Restaurant {
 
   @Expose()
   @Prop()
-  logo: string;
+  logo: Buffer;
 
   @Expose()
   @Prop({
