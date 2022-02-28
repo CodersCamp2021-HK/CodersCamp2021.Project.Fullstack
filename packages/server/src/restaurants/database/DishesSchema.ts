@@ -114,16 +114,16 @@ class Dish {
 
   @Expose()
   @Prop({
-    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   portionWeight: number;
 
   @Expose()
   @Prop({
     required: true,
-    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   calories: number;
 
@@ -133,12 +133,12 @@ class Dish {
       per100g: {
         type: Number,
         required: true,
-        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
       },
       perPortion: Number,
-      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   fats: {};
@@ -149,12 +149,12 @@ class Dish {
       per100g: {
         type: Number,
         required: true,
-        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
       },
       perPortion: Number,
-      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   proteins: {};
@@ -165,12 +165,12 @@ class Dish {
       per100g: {
         type: Number,
         required: true,
-        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
       },
       perPortion: Number,
-      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   carbohydrates: {};
