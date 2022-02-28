@@ -3,6 +3,8 @@ import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
+import { Address } from '../../addresses/database/AddressSchema';
+
 type RestaurantDocument = Restaurant & Document<ObjectId>;
 
 enum CuisineTypes {
@@ -79,8 +81,8 @@ class Restaurant {
   phoneNumber: string;
 
   @Expose()
-  @Prop()
-  address: string[];
+  @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
+  addressId: Address[];
 
   @Expose()
   @Prop()
