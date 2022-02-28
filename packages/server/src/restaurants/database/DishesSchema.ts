@@ -5,6 +5,17 @@ import mongoose, { Document } from 'mongoose';
 
 type DishDocument = Dish & Document<ObjectId>;
 
+const DISH_CONSTANTS = Object.freeze({
+  DISH_LEN_STR: Object.freeze({
+    MIN_LENGTH: 1,
+    MAX_LENGTH: 500,
+  }),
+  DISH_LEN_NUMBER: Object.freeze({
+    MIN_LENGTH: 1,
+    MAX_LENGTH: 3000,
+  }),
+});
+
 enum DishTags {
   Vegan = 'wegańska',
   Vegetarian = 'wegetariańska',
@@ -35,18 +46,6 @@ enum Allergens {
   Lupine = 'łubin',
   Molluscs = 'mięczaki',
 }
-
-const DISH_CONSTANTS = Object.freeze({
-  DISH_LEN_STR: Object.freeze({
-    MIN_LENGTH: 1,
-    MAX_LENGTH: 500,
-  }),
-  DISH_LEN_NUMBER: Object.freeze({
-    MIN_LENGTH: 1,
-    MAX_LENGTH: 5,
-  }),
-});
-
 @Exclude()
 @Schema({
   collection: 'dishes',
@@ -63,8 +62,6 @@ class Dish {
   @Expose()
   @Prop({
     type: [{ enum: MealType }],
-    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
-    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
   })
   mealType: string[];
 
@@ -78,10 +75,10 @@ class Dish {
   @Expose()
   @Prop({
     required: true,
-    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
-  price: mongoose.Decimal128;
+  price: number;
 
   @Expose()
   @Prop()
@@ -90,8 +87,6 @@ class Dish {
   @Expose()
   @Prop({
     type: [{ enum: DishTags }],
-    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
-    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
   })
   tags: string[];
 
