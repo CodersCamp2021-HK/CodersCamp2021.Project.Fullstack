@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 
-// import { Address } from '../addresses/database/AddressSchema';
+import { Address } from '../../addresses/database/AddressSchema';
 import { User } from '../../users/database/UserSchema';
 
 export type OrderDocument = Order & Document;
@@ -35,8 +35,8 @@ class SubOrder {
 class Order {
   readonly id: string;
 
-  //   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }], required: true })
-  //   addressId: Address[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }], required: true })
+  addressId: Address[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   userId: User;
