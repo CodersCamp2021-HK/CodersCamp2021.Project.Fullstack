@@ -36,26 +36,50 @@ enum Allergens {
   Molluscs = 'mięczaki',
 }
 
+const DISH_CONSTANTS = Object.freeze({
+  DISH_LEN_STR: Object.freeze({
+    MIN_LENGTH: 1,
+    MAX_LENGTH: 500,
+  }),
+  DISH_LEN_NUMBER: Object.freeze({
+    MIN_LENGTH: 1,
+    MAX_LENGTH: 5,
+  }),
+});
+
 @Exclude()
 @Schema({
   collection: 'dishes',
 })
 class Dish {
   @Expose()
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+  })
   name: string;
 
   @Expose()
-  @Prop({ type: [{ enum: MealType }] })
+  @Prop({
+    type: [{ enum: MealType }],
+    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+  })
   mealType: string[];
 
   @Expose()
-  @Prop()
+  @Prop({
+    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+  })
   description: string;
 
   @Expose()
   @Prop({
     required: true,
+    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   price: mongoose.Decimal128;
 
@@ -64,13 +88,21 @@ class Dish {
   photo: Buffer;
 
   @Expose()
-  @Prop({ type: [{ enum: DishTags }] })
+  @Prop({
+    type: [{ enum: DishTags }],
+    minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+  })
   tags: string[];
 
   @Expose()
   @Prop(
     raw({
-      name: { type: String },
+      name: {
+        type: String,
+        minlength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+        maxlength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+      },
       canBeExcluded: { type: Boolean, default: false },
     }),
   )
@@ -81,18 +113,32 @@ class Dish {
   allergens: string[];
 
   @Expose()
-  @Prop()
+  @Prop({
+    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+  })
   portionWeight: number;
 
   @Expose()
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+  })
   calories: number;
 
   @Expose()
   @Prop(
     raw({
-      per100g: { type: Number, required: true },
+      per100g: {
+        type: Number,
+        required: true,
+        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      },
       perPortion: Number,
+      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   fats: {};
@@ -100,8 +146,15 @@ class Dish {
   @Expose()
   @Prop(
     raw({
-      per100g: { type: Number, required: true },
+      per100g: {
+        type: Number,
+        required: true,
+        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      },
       perPortion: Number,
+      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   proteins: {};
@@ -109,8 +162,15 @@ class Dish {
   @Expose()
   @Prop(
     raw({
-      per100g: { type: Number, required: true },
+      per100g: {
+        type: Number,
+        required: true,
+        minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+        maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
+      },
       perPortion: Number,
+      minlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+      maxlength: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
     }),
   )
   carbohydrates: {};
@@ -121,5 +181,5 @@ class Dish {
 
 const DishSchema = SchemaFactory.createForClass(Dish);
 
-export { Dish, DishSchema };
+export { Dish, DISH_CONSTANTS, DishSchema };
 export type { DishDocument };
