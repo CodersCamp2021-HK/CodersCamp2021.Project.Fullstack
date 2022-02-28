@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
-import { NullInterceptor, OpenApiExceptionFilter, OpenApiValidationModule, UndefinedInterceptor } from './api';
+import { NullInterceptor, UndefinedInterceptor } from './api';
 import { MongoExceptionFilter, MongoModule } from './database';
 import { env } from './Env';
-import { HttpExceptionFilter, UnhandledExceptionFilter } from './exceptions';
+import { HttpExceptionFilter, OpenApiExceptionFilter, UnhandledExceptionFilter } from './exceptions';
 import { SecurityModule } from './SecurityModule';
 import { ServeClientModule } from './ServeClientModule';
 
-const devConfigModules = [OpenApiValidationModule, MongoModule];
+const devConfigModules = [MongoModule];
 const prodConfigModules = [ServeClientModule, SecurityModule];
 const configModules = [...devConfigModules, ...(env.NODE_ENV === 'production' ? prodConfigModules : [])];
 const expectionFilters = [

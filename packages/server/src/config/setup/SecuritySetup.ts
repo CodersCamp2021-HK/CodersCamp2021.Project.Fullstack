@@ -7,7 +7,7 @@ import { env } from '../Env';
 function setupSecurity(app: INestApplication) {
   app.use(cookieParser());
 
-  if (env.NODE_ENV !== 'development') {
+  if (env.NODE_ENV === 'development') {
     app.enableCors({ origin: 'http://localhost:3000' });
   }
 
