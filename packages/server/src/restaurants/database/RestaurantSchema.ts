@@ -64,6 +64,7 @@ const RESTAURANT_CONSTANTS = Object.freeze({
   collection: 'restaurants',
 })
 class Restaurant {
+  @Expose()
   @Prop({
     minlength: RESTAURANT_CONSTANTS.NAME.MIN_LENGTH,
     maxlength: RESTAURANT_CONSTANTS.NAME.MAX_LENGTH,
@@ -113,5 +114,5 @@ class Restaurant {
 
 const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
 
-export { Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema };
+export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
 export type { RestaurantDocument };

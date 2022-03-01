@@ -945,23 +945,23 @@
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
-          "photo": { "type": "string" },
+          "description": { "type": "string" },
+          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
+          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } },
           "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
         },
-        "required": ["id", "name", "type", "tags", "photo", "dishes"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "dishes"]
       },
       "RestaurantWithoutDishesDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
-          "photo": { "type": "string" }
+          "description": { "type": "string" },
+          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
+          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } }
         },
-        "required": ["id", "name", "type", "tags", "photo"]
+        "required": ["id", "name", "description", "cuisineType", "tags"]
       },
       "RestaurantListDto": {
         "type": "object",
