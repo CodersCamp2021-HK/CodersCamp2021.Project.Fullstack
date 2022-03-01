@@ -1,0 +1,392 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/articles/{id}": {
+      "get": {
+        "operationId": "ArticlesController_findById",
+        "summary": "Retrive a article by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned article.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      },
+      "put": {
+        "operationId": "ArticlesController_update",
+        "summary": "Update an existing article.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateArticleDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The article has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      },
+      "delete": {
+        "operationId": "ArticlesController_delete",
+        "summary": "Delete a article.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "The article has been successfully deleted." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Article does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      }
+    },
+    "/api/articles": {
+      "get": {
+        "operationId": "ArticlesController_list",
+        "summary": "Retrive a list of articles.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of articles.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      },
+      "post": {
+        "operationId": "ArticlesController_create",
+        "summary": "Create a new article.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateArticleDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The article has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ArticleDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Articles"]
+      }
+    },
+    "/api/users/favourite/restaurants": {
+      "get": {
+        "operationId": "FavouriteRestaurantListController_list",
+        "summary": "Retrive a list of restaurants.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of restaurants.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/FavouriteRestaurantListDto" } }
+            }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["User's favourite restaurants"]
+      }
+    },
+    "/api/users/favourite/dishes": {
+      "get": {
+        "operationId": "FavouriteDishListController_list",
+        "summary": "Retrive a list of dishes.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FavouriteDishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["User's favourite dishes"]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findById",
+        "summary": "Retrive a user by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned user.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "User does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Users"]
+      }
+    }
+  },
+  "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
+  "tags": [
+    { "name": "Articles", "description": "Operations about articles" },
+    { "name": "Users", "description": "Operations about users" },
+    { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
+    { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "DefaultResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string" },
+          "path": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "required": ["name", "status", "path"]
+      },
+      "ArticleDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
+        "required": ["id", "title", "content"]
+      },
+      "ErrorDetailsDto": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "message": { "type": "string" },
+          "errorCode": { "type": "string" }
+        },
+        "required": ["path", "message", "errorCode"]
+      },
+      "ValidationErrorDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string" },
+          "path": { "type": "string" },
+          "message": { "type": "string" },
+          "errors": { "type": "array", "items": { "$ref": "#/components/schemas/ErrorDetailsDto" } }
+        },
+        "required": ["name", "status", "path"]
+      },
+      "ArticleListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/ArticleDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "CreateArticleDto": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
+        "required": ["title", "content"]
+      },
+      "UpdateArticleDto": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "minLength": 4, "maxLength": 256 },
+          "content": { "type": "string", "minLength": 4, "maxLength": 32768 }
+        },
+        "required": ["title", "content"]
+      },
+      "FavouriteRestaurantDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "FavouriteRestaurantListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "FavouriteDishDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "FavouriteDishListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" },
+          "surname": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "addressId": { "type": "array", "items": { "type": "string" } },
+          "card": { "type": "object" },
+          "favouriteRestaurants": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
+          },
+          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "orders": { "type": "array", "items": { "type": "string" } },
+          "profileCompleted": { "type": "boolean", "default": false }
+        },
+        "required": [
+          "id",
+          "email",
+          "password",
+          "card",
+          "favouriteRestaurants",
+          "favouriteDishes",
+          "orders",
+          "profileCompleted"
+        ]
+      }
+    }
+  }
+}
