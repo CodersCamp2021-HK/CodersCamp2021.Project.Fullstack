@@ -141,5 +141,5 @@ class Dish {
 
 const DishSchema = SchemaFactory.createForClass(Dish);
 
-export { Dish, DISH_CONSTANTS, DishSchema };
+export { Allergens, Dish, DISH_CONSTANTS, DishSchema, DishTags, MealType };
 export type { DishDocument };
