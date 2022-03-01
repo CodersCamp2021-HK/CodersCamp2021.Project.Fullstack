@@ -29,7 +29,6 @@ class DatabaseProxy {
     return this.app.get<Model<ArticleDocument>>(getModelToken(Article.name));
   }
 
-
   get dishModel() {
     return this.app.get<Model<DishDocument>>(getModelToken(Dish.name));
   }

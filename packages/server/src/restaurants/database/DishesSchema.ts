@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
 type DishDocument = Dish & Document<ObjectId>;
 
