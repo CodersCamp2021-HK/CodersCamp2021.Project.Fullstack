@@ -298,6 +298,150 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/restaurants/{id}": {
+      "get": {
+        "operationId": "RestaurantController_findById",
+        "summary": "Retrive a restaurant by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned restaurant.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RestaurantDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Restaurant does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Restaurants"]
+      }
+    },
+    "/api/restaurants": {
+      "get": {
+        "operationId": "RestaurantController_list",
+        "summary": "Retrive a list of restaurants.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of restaurants.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RestaurantListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Restaurants"]
+      }
+    },
+    "/api/restaurants/{restaurantId}/dishes/{id}": {
+      "get": {
+        "operationId": "RestaurantDishController_findById",
+        "summary": "Retrive a dish by id.",
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned dish.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Restaurant's dishes"]
+      }
+    },
+    "/api/restaurants/{restaurantId}/dishes": {
+      "get": {
+        "operationId": "RestaurantDishController_list",
+        "summary": "Retrive a list of dishes.",
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Restaurant's dishes"]
+      }
+    },
     "/api/partner/dishes/{id}": {
       "get": {
         "operationId": "PartnerDishController_findById",
@@ -527,7 +671,9 @@
   "tags": [
     { "name": "Addresses", "description": "Operations about addresses" },
     { "name": "Articles", "description": "Operations about articles" },
+    { "name": "Restaurants", "description": "Operations on restaurants" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
+    { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
     { "name": "Auth", "description": "Operations about authentication and registration" }
@@ -701,6 +847,56 @@
         },
         "required": ["email", "role", "password", "rememberMe"]
       },
+      "ShortenedDishDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string", "example": "Chilli con carne" },
+          "photo": { "type": "string" },
+          "description": {
+            "type": "string",
+            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          },
+          "callories": { "type": "number" }
+        },
+        "required": ["id", "name", "photo", "description", "callories"]
+      },
+      "RestaurantDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string", "example": "Resto bar" },
+          "type": { "type": "string", "example": "włoskie" },
+          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "photo": { "type": "string" },
+          "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
+        },
+        "required": ["id", "name", "type", "tags", "photo", "dishes"]
+      },
+      "RestaurantWithoutDishesDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string", "example": "Resto bar" },
+          "type": { "type": "string", "example": "włoskie" },
+          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "photo": { "type": "string" }
+        },
+        "required": ["id", "name", "type", "tags", "photo"]
+      },
+      "RestaurantListDto": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantWithoutDishesDto" } },
+          "pages": { "type": "number" }
+        },
+        "required": ["data", "pages"]
+      },
+      "IngredientDto": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "example": "bazylia" }, "canBeExcluded": { "type": "boolean" } },
+        "required": ["name", "canBeExcluded"]
+      },
       "DishDto": {
         "type": "object",
         "properties": {
@@ -714,11 +910,7 @@
           "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
           "callories": { "type": "number" },
           "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": {
-            "example": [{ "name": "bazylia", "canBeExcluded": true }],
-            "type": "array",
-            "items": { "type": "string" }
-          }
+          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
         },
         "required": ["id", "name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
       },
@@ -742,11 +934,7 @@
           "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
           "callories": { "type": "number" },
           "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": {
-            "example": [{ "name": "bazylia", "canBeExcluded": true }],
-            "type": "array",
-            "items": { "type": "string" }
-          }
+          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
         },
         "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
       },
@@ -762,11 +950,7 @@
           "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
           "callories": { "type": "number" },
           "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": {
-            "example": [{ "name": "bazylia", "canBeExcluded": true }],
-            "type": "array",
-            "items": { "type": "string" }
-          }
+          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
         },
         "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
       },
@@ -774,7 +958,7 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string" }
+          "name": { "type": "string", "example": "Resto bar" }
         },
         "required": ["id", "name"]
       },
