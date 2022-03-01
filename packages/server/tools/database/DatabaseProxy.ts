@@ -8,7 +8,7 @@ import { Address, AddressDocument } from '../../src/addresses/database';
 import { AppModule } from '../../src/AppModule';
 import { Article, ArticleDocument } from '../../src/articles/database';
 import { Auth, AuthDocument } from '../../src/auth/database';
-import { Restaurant, RestaurantDocument } from '../../src/restaurants/database';
+import { Dish, DishDocument, Restaurant, RestaurantDocument } from '../../src/restaurants/database';
 import { User, UserDocument } from '../../src/users/database';
 
 class DatabaseProxy {
@@ -27,6 +27,10 @@ class DatabaseProxy {
 
   get articleModel() {
     return this.app.get<Model<ArticleDocument>>(getModelToken(Article.name));
+  }
+
+  get dishModel() {
+    return this.app.get<Model<DishDocument>>(getModelToken(Dish.name));
   }
 
   get addressModel() {
