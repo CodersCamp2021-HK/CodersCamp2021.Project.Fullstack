@@ -10,19 +10,20 @@ const DISH_CONSTANTS = Object.freeze({
     MIN_LENGTH: 1,
     MAX_LENGTH: 500,
   }),
-  DISH_LEN_NUMBER: Object.freeze({
-    MIN_LENGTH: 0,
+  DISH_NUMBER: Object.freeze({
+    MIN: 0,
   }),
 });
 
 const MacroSchema = raw({
   per100g: {
     type: Number,
-    required: true,
-    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
   },
-  perPortion: Number,
-  min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+  perPortion: {
+    type: Number,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
+  },
 });
 
 enum DishTags {
@@ -82,7 +83,7 @@ class Dish {
   @Expose()
   @Prop({
     required: true,
-    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
   })
   price: number;
 
@@ -113,26 +114,37 @@ class Dish {
 
   @Expose()
   @Prop({
-    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+    required: true,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
   })
   portionWeight: number;
 
   @Expose()
   @Prop({
+    type: MacroSchema,
     required: true,
   })
-  calories: number;
+  calories: object;
 
   @Expose()
-  @Prop(MacroSchema)
+  @Prop({
+    type: MacroSchema,
+    required: true,
+  })
   fats: object;
 
   @Expose()
-  @Prop(MacroSchema)
+  @Prop({
+    type: MacroSchema,
+    required: true,
+  })
   proteins: object;
 
   @Expose()
-  @Prop(MacroSchema)
+  @Prop({
+    type: MacroSchema,
+    required: true,
+  })
   carbohydrates: object;
 
   @Expose()
