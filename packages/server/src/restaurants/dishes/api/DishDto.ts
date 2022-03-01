@@ -2,47 +2,110 @@ import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { ApiObjectIdProperty } from '../../../shared';
-
-interface NutritionalValue {
-  fats: number;
-  proteins: number;
-  carbohydrates: number;
-}
+import { Allergens, DISH_CONSTANTS, DishTags, MealType } from '../database';
 
 class IngredientDto {
-  @ApiProperty({ example: 'bazylia' })
+  @ApiProperty({
+    minLength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxLength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+    example: 'bazylia',
+  })
   readonly name: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: false })
   readonly canBeExcluded: boolean;
 }
 
-// TODO: Add min and max length constrains when DishSchema gets finished, possibly move example to consts
+class MacroDto {
+  @ApiProperty({
+    minimum: DISH_CONSTANTS.DISH_NUMBER.MIN,
+    example: 30,
+  })
+  readonly per100g: number;
+
+  @ApiProperty({
+    minimum: DISH_CONSTANTS.DISH_NUMBER.MIN,
+    example: 45,
+  })
+  readonly perPortion: number;
+}
+
+// TODO: Add photo property
 class DishDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiProperty({ example: 'Chilli con carne' })
+  @ApiProperty({
+    minLength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
+    maxLength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
+    example: 'Danie 1',
+  })
   readonly name: string;
 
-  @ApiProperty()
-  readonly photo: string;
+  @ApiProperty({
+    required: false,
+    enum: MealType,
+    enumName: 'MealTypeEnum',
+    isArray: true,
+    example: ['lunch', 'obiad'],
+  })
+  readonly mealType: MealType[];
 
-  @ApiProperty({ example: 'Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu' })
+  @ApiProperty({
+    required: false,
+    example: 'Opis dania',
+  })
   readonly description: string;
 
-  @ApiProperty({ example: ['milk', 'eggs', 'wheat'] })
-  readonly allergens: string[];
+  @ApiProperty({ example: 2350 })
+  readonly price: number;
 
-  @ApiProperty()
-  readonly callories: number;
-
-  @ApiProperty({ example: { fats: 20, proteins: 16, carbohydrates: 35 } })
-  readonly nutritionalValue: NutritionalValue;
+  @ApiProperty({
+    required: false,
+    enum: DishTags,
+    enumName: 'DishTagsEnum',
+    isArray: true,
+    example: ['ostre', 'gluten free'],
+  })
+  readonly tags: DishTags[];
 
   @Type(() => IngredientDto)
-  @ApiProperty({ type: IngredientDto })
+  @ApiProperty({
+    required: false,
+    type: IngredientDto,
+  })
   readonly ingredients: IngredientDto[];
+
+  @ApiProperty({
+    required: false,
+    enum: Allergens,
+    enumName: 'AllergensEnum',
+    isArray: true,
+    example: ['orzechy'],
+  })
+  readonly allergens: Allergens[];
+
+  @ApiProperty({ minimum: DISH_CONSTANTS.DISH_NUMBER.MIN })
+  readonly portionWeight: number;
+
+  @Type(() => MacroDto)
+  @ApiProperty({
+    type: MacroDto,
+    example: { per100g: 100, perPortion: 300 },
+  })
+  readonly calories: MacroDto;
+
+  @Type(() => MacroDto)
+  @ApiProperty({ type: MacroDto })
+  readonly fats: MacroDto;
+
+  @Type(() => MacroDto)
+  @ApiProperty({ type: MacroDto })
+  readonly proteins: MacroDto;
+
+  @Type(() => MacroDto)
+  @ApiProperty({ type: MacroDto })
+  readonly carbohydrates: MacroDto;
 }
 
 class CreateDishDto extends OmitType(DishDto, ['id'] as const) {}
@@ -51,6 +114,12 @@ class UpdateDishDto extends CreateDishDto {}
 
 class FavouriteDishDto extends PickType(DishDto, ['id', 'name'] as const) {}
 
-class ShortenedDishDto extends OmitType(DishDto, ['allergens', 'nutritionalValue', 'ingredients'] as const) {}
+class ShortenedDishDto extends OmitType(DishDto, [
+  'allergens',
+  'fats',
+  'proteins',
+  'carbohydrates',
+  'ingredients',
+] as const) {}
 
 export { CreateDishDto, DishDto, FavouriteDishDto, ShortenedDishDto, UpdateDishDto };
