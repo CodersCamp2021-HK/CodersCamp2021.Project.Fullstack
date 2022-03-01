@@ -14,8 +14,19 @@ describe(`${PATH}`, () => {
   it('GET /', async () => {
     // Given
     const restaurants = [
-      { name: 'Restaurant 1', type: 'Italian', tags: [], photo: '', profileCompleted: true },
+      {
+        name: 'Restaurant 1',
+        description: 'Test!',
+        cuisineType: ['italian'],
+        tags: ['pizza'],
+        profileCompleted: true,
+      },
       { name: 'Restaurant 2', profileCompleted: false },
+      {
+        name: 'Restaurant 3',
+        description: 'Test!',
+        profileCompleted: true,
+      },
     ];
     await fixture.db.restaurantModel.create(restaurants);
 
@@ -23,8 +34,7 @@ describe(`${PATH}`, () => {
     const resp = await fixture.req.get(PATH);
 
     // Then
-    console.log(resp.body);
     expect(resp.status).toBe(HttpStatus.OK);
-    expect(resp.body.data).toHaveLength(restaurants.filter((rest) => rest.profileCompleted).length);
+    expect(resp.body.data).toHaveLength(restaurants.filter((rest) => rest?.profileCompleted).length);
   });
 });

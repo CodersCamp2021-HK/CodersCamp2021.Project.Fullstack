@@ -12,14 +12,14 @@ class RestaurantDto {
   @ApiProperty({ example: 'Resto bar' })
   readonly name: string;
 
-  @ApiProperty({ example: 'włoskie' })
-  readonly type: string;
-
-  @ApiProperty({ example: ['tradycyjna', 'oryginalne składniki'] })
-  readonly tags: string[];
-
   @ApiProperty()
-  readonly photo: string;
+  readonly description: string;
+
+  @ApiProperty({ example: ['włoska'] })
+  readonly cuisineType: string[];
+
+  @ApiProperty({ example: ['pizza', 'zdrowa'] })
+  readonly tags: string[];
 
   @Type(() => ShortenedDishDto)
   @ApiProperty({ type: [ShortenedDishDto] })
