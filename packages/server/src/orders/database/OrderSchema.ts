@@ -1,5 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { ObjectId } from 'mongodb';
+import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { User } from '../../users/database/UserSchema';
@@ -23,10 +24,23 @@ class SubOrder {
   deliveryDate: Date;
 
   @Prop({ required: true })
-  hourStart: Date;
+  hourStart: number;
 
   @Prop({ required: true })
-  hourEnd: Date;
+  hourEnd: number;
+
+  @Prop(
+    raw({
+      dishId: {
+        type: [{ type: ObjectId, ref: 'Dish' }],
+        required: true,
+      },
+      price: { type: Number, min: ORDER_CONSTANTS.PRICE.MIN },
+      count: { type: Number, default: ORDER_CONSTANTS.PRICE.MIN, min: ORDER_CONSTANTS.PRICE.MIN },
+      excludedIngredients: { type: [String] },
+    }),
+  )
+  dishes: object[];
 
   @Prop({ default: false })
   delivered: boolean;
@@ -38,10 +52,10 @@ class SubOrder {
 class Order {
   readonly id: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }], required: true })
-  addressId: Address[];
+  @Prop({ type: ObjectId, ref: 'Address', required: true })
+  addressId: Address;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: ObjectId, ref: 'User', required: true })
   userId: User;
 
   @Prop({ required: true })
@@ -49,19 +63,6 @@ class Order {
 
   @Prop()
   subOrders: SubOrder[];
-
-  @Prop(
-    raw({
-      dishId: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dish' }],
-        required: true,
-      },
-      price: { type: Number, min: ORDER_CONSTANTS.PRICE.MIN },
-      count: { type: Number, default: ORDER_CONSTANTS.PRICE.MIN, min: ORDER_CONSTANTS.PRICE.MIN },
-      excludedIngredients: { type: [String] },
-    }),
-  )
-  dishes: object[];
 
   @Prop({
     maxlength: ORDER_CONSTANTS.COMMENT.MAX_LENGTH,
@@ -71,4 +72,4 @@ class Order {
 
 const OrderSchema = SchemaFactory.createForClass(Order);
 
-export { OrderSchema };
+export { ORDER_CONSTANTS, OrderSchema };
