@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
+import { Dish } from '../../restaurants/database/DishesSchema';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 type UserDocument = User & Document<ObjectId>;
 
@@ -56,10 +57,10 @@ class User {
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Restaurant' }] })
   favouriteRestaurants: Restaurant[];
-  // TODO: import Dish schema and change dish type
+
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
-  favouriteDishes: ObjectId[];
+  favouriteDishes: Dish[];
 
   // TODO: import Order schema and change orders type
   @Expose()
