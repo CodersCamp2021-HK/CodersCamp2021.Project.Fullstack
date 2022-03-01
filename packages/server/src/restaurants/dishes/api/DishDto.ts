@@ -72,7 +72,7 @@ class DishDto {
   @Type(() => IngredientDto)
   @ApiProperty({
     required: false,
-    type: IngredientDto,
+    type: [IngredientDto],
   })
   readonly ingredients: IngredientDto[];
 

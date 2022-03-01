@@ -1048,7 +1048,7 @@
             "example": ["ostre", "gluten free"],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],
@@ -1089,7 +1089,7 @@
             "example": ["ostre", "gluten free"],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],
@@ -1122,7 +1122,7 @@
             "example": ["ostre", "gluten free"],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],

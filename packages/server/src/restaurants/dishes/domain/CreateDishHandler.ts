@@ -16,8 +16,8 @@ interface CreateDishRequest {
   readonly ingredients: object[];
   readonly allergens: Allergens[];
   readonly portionWeight: number;
-  readonly calories: number;
-  readonly fats: object[];
+  readonly calories: object;
+  readonly fats: object;
   readonly proteins: object;
   readonly carbohydrates: object;
 }
