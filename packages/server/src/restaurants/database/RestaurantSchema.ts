@@ -114,5 +114,5 @@ class Restaurant {
 
 const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
 
-export { Restaurant, RestaurantSchema };
+export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
 export type { RestaurantDocument };

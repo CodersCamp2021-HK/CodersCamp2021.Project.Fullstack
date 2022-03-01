@@ -17,7 +17,7 @@ describe(`${PATH}`, () => {
       {
         name: 'Restaurant 1',
         description: 'Test!',
-        cuisineType: ['italian'],
+        cuisineType: ['włoska'],
         tags: ['pizza'],
         profileCompleted: true,
       },
