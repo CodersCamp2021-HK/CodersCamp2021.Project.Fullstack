@@ -11,9 +11,18 @@ const DISH_CONSTANTS = Object.freeze({
     MAX_LENGTH: 500,
   }),
   DISH_LEN_NUMBER: Object.freeze({
-    MIN_LENGTH: 1,
-    MAX_LENGTH: 3000,
+    MIN_LENGTH: 0,
   }),
+});
+
+const MacroSchema = raw({
+  per100g: {
+    type: Number,
+    required: true,
+    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
+  },
+  perPortion: Number,
+  min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
 });
 
 enum DishTags {
@@ -76,7 +85,6 @@ class Dish {
   @Prop({
     required: true,
     min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   price: number;
 
@@ -110,65 +118,26 @@ class Dish {
   @Expose()
   @Prop({
     min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   portionWeight: number;
 
   @Expose()
   @Prop({
     required: true,
-    min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-    max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
   })
   calories: number;
 
   @Expose()
-  @Prop(
-    raw({
-      per100g: {
-        type: Number,
-        required: true,
-        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-      },
-      perPortion: Number,
-      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-    }),
-  )
-  fats: {};
+  @Prop(MacroSchema)
+  fats: object;
 
   @Expose()
-  @Prop(
-    raw({
-      per100g: {
-        type: Number,
-        required: true,
-        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-      },
-      perPortion: Number,
-      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-    }),
-  )
-  proteins: {};
+  @Prop(MacroSchema)
+  proteins: object;
 
   @Expose()
-  @Prop(
-    raw({
-      per100g: {
-        type: Number,
-        required: true,
-        min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-        max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-      },
-      perPortion: Number,
-      min: DISH_CONSTANTS.DISH_LEN_NUMBER.MIN_LENGTH,
-      max: DISH_CONSTANTS.DISH_LEN_NUMBER.MAX_LENGTH,
-    }),
-  )
-  carbohydrates: {};
+  @Prop(MacroSchema)
+  carbohydrates: object;
 
   @Expose()
   readonly id: string;
