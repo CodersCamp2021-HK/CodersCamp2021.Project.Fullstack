@@ -37,4 +37,25 @@ describe(`${PATH}`, () => {
     expect(resp.status).toBe(HttpStatus.OK);
     expect(resp.body.data).toHaveLength(restaurants.filter((rest) => rest?.profileCompleted).length);
   });
+
+  it('GET /:id', async () => {
+    // Given
+    const restaurant = {
+      name: 'Restaurant',
+      description: 'Test!',
+      cuisineType: ['włoska'],
+      tags: ['pizza'],
+      dishes: [],
+      profileCompleted: true,
+    };
+    const created = await fixture.db.restaurantModel.create(restaurant);
+    const id = created._id?.toString();
+
+    // When
+    const resp = await fixture.req.get(`${PATH}/${id}`);
+
+    // Then
+    expect(resp.status).toBe(HttpStatus.OK);
+    expect(created).toEqual(expect.objectContaining(resp.body));
+  });
 });
