@@ -32,14 +32,6 @@ class User {
 
   @Expose()
   @Prop({ required: true })
-  email: string;
-
-  @Expose()
-  @Prop({ required: true })
-  password: string;
-
-  @Expose()
-  @Prop({ required: true })
   phoneNumber: string;
 
   @Expose()
@@ -64,11 +56,12 @@ class User {
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Restaurant' }] })
   favouriteRestaurants: Restaurant[];
-
+  // TODO: import Dish schema and change dish type
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
   favouriteDishes: ObjectId[];
 
+  // TODO: import Order schema and change orders type
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
   orders: ObjectId[];
