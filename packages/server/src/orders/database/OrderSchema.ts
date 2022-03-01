@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
-import { Dish } from '../../restaurants/database/DishesSchema';
+import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { User } from '../../users/database/UserSchema';
 
 export type OrderDocument = Order & Document;
