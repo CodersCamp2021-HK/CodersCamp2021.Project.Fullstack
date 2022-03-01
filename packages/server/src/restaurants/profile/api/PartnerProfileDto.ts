@@ -1,7 +1,5 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 
-import { AddressDto } from '../../../addresses/api/AddressDto';
 import { ApiPhoneNumberProperty } from '../../../auth/api/decorators';
 import { RestaurantDto } from '../../api/RestaurantDto';
 import { RESTAURANT_CONSTANTS } from '../../database';
@@ -15,13 +13,6 @@ class PartnerProfileDto extends PickType(RestaurantDto, ['id', 'name', 'descript
 
   @ApiPhoneNumberProperty()
   readonly phoneNumber: string;
-
-  // NOTE: possibly move this to RestaurantDto and pick? (user searching for a restaurant should see its address)
-  @Type(() => AddressDto)
-  @ApiProperty({
-    type: [AddressDto],
-  })
-  readonly addressId: AddressDto[];
 }
 
 class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}
