@@ -1,4 +1,4 @@
-import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
@@ -10,6 +10,10 @@ type RestaurantDocument = Restaurant & Document<ObjectId>;
   collection: 'restaurants',
 })
 class Restaurant {
+  @Expose()
+  @Prop({ default: false })
+  profileCompleted: boolean;
+
   @Expose()
   readonly id: string;
 }
