@@ -364,6 +364,53 @@
         "tags": ["Restaurants"]
       }
     },
+    "/api/partner/profile": {
+      "get": {
+        "operationId": "PartnerProfileController_findById",
+        "summary": "Retrive a profile by id.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully returned profile.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PartnerProfileDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Profile does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's profile"],
+        "security": [{ "cookie": [] }]
+      },
+      "put": {
+        "operationId": "PartnerProfileController_update",
+        "summary": "Update an existing profile.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdatePartnerProfileDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The profile has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Profile does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's profile"],
+        "security": [{ "cookie": [] }]
+      }
+    },
     "/api/restaurants/{restaurantId}/dishes/{id}": {
       "get": {
         "operationId": "RestaurantDishController_findById",
@@ -704,6 +751,7 @@
     { "name": "Restaurants", "description": "Operations on restaurants" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
+    { "name": "Partner's profile", "description": "Operations on partner's profile" },
     { "name": "Users", "description": "Operations about users" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
@@ -922,6 +970,45 @@
           "pages": { "type": "number" }
         },
         "required": ["data", "pages"]
+      },
+      "PartnerProfileDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string", "example": "Resto bar" },
+          "type": { "type": "string", "example": "włoskie" },
+          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
+          "phoneNumber": {
+            "type": "string",
+            "format": "phoneNumber",
+            "maxLength": 14,
+            "example": "800500300",
+            "description": ""
+          },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+        },
+        "required": ["id", "name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
+      },
+      "UpdatePartnerProfileDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Resto bar" },
+          "type": { "type": "string", "example": "włoskie" },
+          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
+          "phoneNumber": {
+            "type": "string",
+            "format": "phoneNumber",
+            "maxLength": 14,
+            "example": "800500300",
+            "description": ""
+          },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+        },
+        "required": ["name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
       },
       "IngredientDto": {
         "type": "object",

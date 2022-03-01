@@ -6,10 +6,11 @@ import { Restaurant, RestaurantSchema } from './database';
 import { PartnerDishController } from './dishes/api/PartnerDishController';
 import { RestaurantDishController } from './dishes/api/RestaurantDishController';
 import { RestaurantsFacade } from './infra';
+import { PartnerProfileController } from './profile/api/PartnerProfileController';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Restaurant.name, schema: RestaurantSchema }])],
-  controllers: [RestaurantController, RestaurantDishController, PartnerDishController],
+  controllers: [RestaurantController, PartnerProfileController, RestaurantDishController, PartnerDishController],
   providers: [RestaurantsFacade],
   exports: [RestaurantsFacade],
 })
