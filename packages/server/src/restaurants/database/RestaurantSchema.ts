@@ -52,7 +52,7 @@ const RESTAURANT_CONSTANTS = Object.freeze({
     MAX_LENGTH: 50,
   }),
   BANK_ACCOUNT_NUMBER: Object.freeze({
-    REGEX: /\W*\d{8,19}\b/,
+    REGEX: /^\d{26}$/,
   }),
   DESCRIPTION: Object.freeze({
     MAX_LENGTH: 500,
