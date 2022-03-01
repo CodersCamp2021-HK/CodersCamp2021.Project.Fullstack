@@ -69,10 +69,8 @@ class Dish {
   name: string;
 
   @Expose()
-  @Prop({
-    type: [{ enum: MealType }],
-  })
-  mealType: string[];
+  @Prop()
+  mealType: MealType[];
 
   @Expose()
   @Prop({
@@ -93,10 +91,8 @@ class Dish {
   photo: Buffer;
 
   @Expose()
-  @Prop({
-    type: [{ enum: DishTags }],
-  })
-  tags: string[];
+  @Prop()
+  tags: DishTags[];
 
   @Expose()
   @Prop(
@@ -112,8 +108,8 @@ class Dish {
   ingredients: object[];
 
   @Expose()
-  @Prop({ type: [{ enum: Allergens }] })
-  allergens: string[];
+  @Prop()
+  allergens: Allergens[];
 
   @Expose()
   @Prop({
