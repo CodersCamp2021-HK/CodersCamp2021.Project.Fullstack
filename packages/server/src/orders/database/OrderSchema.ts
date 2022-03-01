@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
+import { Dish } from '../../restaurants/database/DishSchema';
 import { User } from '../../users/database/UserSchema';
 
 export type OrderDocument = Order & Document;
@@ -40,7 +41,7 @@ class SubOrder {
       excludedIngredients: { type: [String] },
     }),
   )
-  dishes: object[];
+  dishes: Dishes[];
 
   @Prop({ default: false })
   delivered: boolean;
