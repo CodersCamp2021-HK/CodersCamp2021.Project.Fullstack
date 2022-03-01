@@ -45,7 +45,6 @@ describe(`${PATH}`, () => {
       description: 'Test!',
       cuisineType: ['włoska'],
       tags: ['pizza'],
-      dishes: [],
       profileCompleted: true,
     };
     const created = await fixture.db.restaurantModel.create(restaurant);

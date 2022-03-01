@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
-import { RestaurantWithoutDishesDto } from './RestaurantDto';
+import { RestaurantDto } from './RestaurantDto';
 
 class RestaurantListDto {
-  @Type(() => RestaurantWithoutDishesDto)
-  @ApiProperty({ type: [RestaurantWithoutDishesDto] })
-  data: RestaurantWithoutDishesDto[];
+  @Type(() => RestaurantDto)
+  @ApiProperty({ type: [RestaurantDto] })
+  data: RestaurantDto[];
 
   @ApiProperty()
   pages: number;
