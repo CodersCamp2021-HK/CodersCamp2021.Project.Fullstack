@@ -4,8 +4,10 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
+import { Order } from '../../orders/database/OrderSchema';
 import { Dish } from '../../restaurants/database/DishesSchema';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
+
 type UserDocument = User & Document<ObjectId>;
 
 const USER_CONSTANTS = Object.freeze({
@@ -60,10 +62,9 @@ class User {
   @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
   favouriteDishes: Dish[];
 
-  // TODO: import Order schema and change orders type
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
-  orders: ObjectId[];
+  orders: Order[];
 
   @Expose()
   @Prop({ default: false })
