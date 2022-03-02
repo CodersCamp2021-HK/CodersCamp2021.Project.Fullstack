@@ -51,6 +51,4 @@ class UpdateDishDto extends CreateDishDto {}
 
 class FavouriteDishDto extends PickType(DishDto, ['id', 'name'] as const) {}
 
-class ShortenedDishDto extends OmitType(DishDto, ['allergens', 'nutritionalValue', 'ingredients'] as const) {}
-
-export { CreateDishDto, DishDto, FavouriteDishDto, ShortenedDishDto, UpdateDishDto };
+export { CreateDishDto, DishDto, FavouriteDishDto, UpdateDishDto };

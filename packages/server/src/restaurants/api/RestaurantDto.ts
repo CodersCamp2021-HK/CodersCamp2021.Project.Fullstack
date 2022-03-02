@@ -1,33 +1,41 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
+import { AddressDto } from '../../addresses/api/AddressDto';
 import { ApiObjectIdProperty } from '../../shared';
-import { ShortenedDishDto } from '../dishes/api/DishDto';
+import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
-// TODO: add min and max length restrictions once work on RestaurantSchema gets finished, possibly move examples to consts
+// TODO: Add logo
 class RestaurantDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiProperty({ example: 'Resto bar' })
+  @ApiProperty({
+    minLength: RESTAURANT_CONSTANTS.NAME.MIN_LENGTH,
+    maxLength: RESTAURANT_CONSTANTS.NAME.MAX_LENGTH,
+    example: 'Resto bar',
+  })
   readonly name: string;
 
-  @ApiProperty({ example: 'włoskie' })
-  readonly type: string;
+  @ApiProperty({
+    maxLength: RESTAURANT_CONSTANTS.DESCRIPTION.MAX_LENGTH,
+    example: 'Opis restauracji.',
+  })
+  readonly description: string;
 
-  @ApiProperty({ example: ['tradycyjna', 'oryginalne składniki'] })
-  readonly tags: string[];
+  @ApiProperty({ enum: CuisineTypes, enumName: 'CuisineTypeEnum', isArray: true, example: ['włoska'] })
+  readonly cuisineType: CuisineTypes[];
 
-  @ApiProperty()
-  readonly photo: string;
+  @ApiProperty({ enum: RestaurantTags, enumName: 'RestaurantTagEnum', isArray: true, example: ['pizza', 'zdrowa'] })
+  readonly tags: RestaurantTags[];
 
-  @Type(() => ShortenedDishDto)
-  @ApiProperty({ type: [ShortenedDishDto] })
-  readonly dishes: ShortenedDishDto[];
+  @Type(() => AddressDto)
+  @ApiProperty({
+    type: [AddressDto],
+  })
+  readonly addressId: AddressDto[];
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
 
-class RestaurantWithoutDishesDto extends OmitType(RestaurantDto, ['dishes'] as const) {}
-
-export { FavouriteRestaurantDto, RestaurantDto, RestaurantWithoutDishesDto };
+export { FavouriteRestaurantDto, RestaurantDto };
