@@ -1,6 +1,7 @@
 import { LoginDto } from '../src/auth/api/LoginDto';
 import { RegisterAsPartnerDto } from '../src/auth/api/RegisterAsPartnerDto';
 import { RegisterAsUserDto } from '../src/auth/api/RegisterAsUserDto';
+import { Allergens, DishTags, MealType } from '../src/restaurants/dishes/database';
 
 function registerPartnerDto(overrides: Partial<RegisterAsPartnerDto>) {
   return {
@@ -41,4 +42,24 @@ function addressDto() {
   };
 }
 
-export { addressDto, loginDto, registerPartnerDto, registerUserDto };
+function dishDto() {
+  return {
+    name: 'Danie 1',
+    mealType: [MealType.Lunch, MealType.Dinner],
+    description: 'Opis dania',
+    price: 2350,
+    tags: [DishTags.Spicy],
+    ingredients: [
+      { name: 'składnik 1', canBeExcluded: true },
+      { name: 'składnik 2', canBeExcluded: false },
+    ],
+    allergens: [Allergens.Eggs],
+    portionWeight: 300,
+    calories: { per100g: 100, perPortion: 300 },
+    fats: { per100g: 20, perPortion: 60 },
+    proteins: { per100g: 20, perPortion: 60 },
+    carbohydrates: { per100g: 20, perPortion: 60 },
+  };
+}
+
+export { addressDto, dishDto, loginDto, registerPartnerDto, registerUserDto };

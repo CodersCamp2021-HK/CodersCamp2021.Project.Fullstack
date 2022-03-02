@@ -954,47 +954,72 @@
         },
         "required": ["email", "role", "password", "rememberMe"]
       },
-      "ShortenedDishDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Chilli con carne" },
-          "photo": { "type": "string" },
-          "description": {
-            "type": "string",
-            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
-          },
-          "callories": { "type": "number" }
-        },
-        "required": ["id", "name", "photo", "description", "callories"]
+      "CuisineTypeEnum": {
+        "type": "string",
+        "enum": [
+          "amerykańska",
+          "azjatycka",
+          "europejska",
+          "arabska",
+          "chińska",
+          "francuska",
+          "gruzińska",
+          "grecka",
+          "indyjska",
+          "włoska",
+          "japońska",
+          "żydowska",
+          "koreańska",
+          "libańska",
+          "śródziemnomorska",
+          "meksykanśka",
+          "polska",
+          "tajska",
+          "turecka",
+          "wietnamska"
+        ]
+      },
+      "RestaurantTagEnum": {
+        "type": "string",
+        "enum": [
+          "fast food",
+          "wegańska",
+          "wegetariańska",
+          "kawiarnia",
+          "zdrowa",
+          "street food",
+          "desery",
+          "pizza",
+          "burgery",
+          "sushi",
+          "kebab",
+          "gluten free"
+        ]
       },
       "RestaurantDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Resto bar" },
-          "description": { "type": "string" },
-          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
-          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } },
-          "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
+          "cuisineType": {
+            "type": "array",
+            "example": ["włoska"],
+            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
+          },
+          "tags": {
+            "type": "array",
+            "example": ["pizza", "zdrowa"],
+            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
+          },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } }
         },
-        "required": ["id", "name", "description", "cuisineType", "tags", "dishes"]
-      },
-      "RestaurantWithoutDishesDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Resto bar" },
-          "description": { "type": "string" },
-          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
-          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } }
-        },
-        "required": ["id", "name", "description", "cuisineType", "tags"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "addressId"]
       },
       "RestaurantListDto": {
         "type": "object",
         "properties": {
-          "data": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantWithoutDishesDto" } },
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantDto" } },
           "pages": { "type": "number" }
         },
         "required": ["data", "pages"]
@@ -1003,9 +1028,18 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
+          "cuisineType": {
+            "type": "array",
+            "example": ["włoska"],
+            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
+          },
+          "tags": {
+            "type": "array",
+            "example": ["pizza", "zdrowa"],
+            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1013,18 +1047,25 @@
             "maxLength": 14,
             "example": "800500300",
             "description": ""
-          },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+          }
         },
-        "required": ["id", "name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
       },
       "UpdatePartnerProfileDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
+          "cuisineType": {
+            "type": "array",
+            "example": ["włoska"],
+            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
+          },
+          "tags": {
+            "type": "array",
+            "example": ["pizza", "zdrowa"],
+            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1032,33 +1073,79 @@
             "maxLength": 14,
             "example": "800500300",
             "description": ""
-          },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+          }
         },
-        "required": ["name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
+        "required": ["name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
+      },
+      "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
+      "DishTagsEnum": {
+        "type": "string",
+        "enum": ["wegańska", "wegetariańska", "gluten free", "ostre", "bardzo ostre"]
       },
       "IngredientDto": {
         "type": "object",
-        "properties": { "name": { "type": "string", "example": "bazylia" }, "canBeExcluded": { "type": "boolean" } },
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "bazylia" },
+          "canBeExcluded": { "type": "boolean", "default": false }
+        },
         "required": ["name", "canBeExcluded"]
+      },
+      "AllergensEnum": {
+        "type": "string",
+        "enum": [
+          "gluten",
+          "skorupiaki",
+          "jaja",
+          "ryby",
+          "orzechy",
+          "soja",
+          "mleko",
+          "seler",
+          "gorczyca",
+          "nasiona sezamu",
+          "dwutlenek siarki",
+          "łubin",
+          "mięczaki"
+        ]
+      },
+      "NutritionalValueDto": {
+        "type": "object",
+        "properties": {
+          "per100g": { "type": "number", "minimum": 0 },
+          "perPortion": { "type": "number", "minimum": 0 }
+        },
+        "required": ["per100g", "perPortion"]
       },
       "DishDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Chilli con carne" },
-          "photo": { "type": "string" },
-          "description": {
-            "type": "string",
-            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "mealType": {
+            "type": "array",
+            "example": ["lunch", "obiad"],
+            "items": { "$ref": "#/components/schemas/MealTypeEnum" }
           },
-          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
-          "callories": { "type": "number" },
-          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
+          "description": { "type": "string", "example": "Opis dania" },
+          "price": { "type": "number", "example": 2350 },
+          "tags": {
+            "type": "array",
+            "example": ["ostre", "gluten free"],
+            "items": { "$ref": "#/components/schemas/DishTagsEnum" }
+          },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "allergens": {
+            "type": "array",
+            "example": ["orzechy"],
+            "items": { "$ref": "#/components/schemas/AllergensEnum" }
+          },
+          "portionWeight": { "type": "number", "minimum": 0 },
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
-        "required": ["id", "name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+        "required": ["id", "name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
       "DishListDto": {
         "type": "object",
@@ -1071,40 +1158,68 @@
       "CreateDishDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string", "example": "Chilli con carne" },
-          "photo": { "type": "string" },
-          "description": {
-            "type": "string",
-            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "mealType": {
+            "type": "array",
+            "example": ["lunch", "obiad"],
+            "items": { "$ref": "#/components/schemas/MealTypeEnum" }
           },
-          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
-          "callories": { "type": "number" },
-          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
+          "description": { "type": "string", "example": "Opis dania" },
+          "price": { "type": "number", "example": 2350 },
+          "tags": {
+            "type": "array",
+            "example": ["ostre", "gluten free"],
+            "items": { "$ref": "#/components/schemas/DishTagsEnum" }
+          },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "allergens": {
+            "type": "array",
+            "example": ["orzechy"],
+            "items": { "$ref": "#/components/schemas/AllergensEnum" }
+          },
+          "portionWeight": { "type": "number", "minimum": 0 },
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
-        "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
       "UpdateDishDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string", "example": "Chilli con carne" },
-          "photo": { "type": "string" },
-          "description": {
-            "type": "string",
-            "example": "Składa się z soczewicy, świeżych pomidorów  i bazylii oraz kuminu"
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "mealType": {
+            "type": "array",
+            "example": ["lunch", "obiad"],
+            "items": { "$ref": "#/components/schemas/MealTypeEnum" }
           },
-          "allergens": { "example": ["milk", "eggs", "wheat"], "type": "array", "items": { "type": "string" } },
-          "callories": { "type": "number" },
-          "nutritionalValue": { "type": "object", "example": { "fats": 20, "proteins": 16, "carbohydrates": 35 } },
-          "ingredients": { "$ref": "#/components/schemas/IngredientDto" }
+          "description": { "type": "string", "example": "Opis dania" },
+          "price": { "type": "number", "example": 2350 },
+          "tags": {
+            "type": "array",
+            "example": ["ostre", "gluten free"],
+            "items": { "$ref": "#/components/schemas/DishTagsEnum" }
+          },
+          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "allergens": {
+            "type": "array",
+            "example": ["orzechy"],
+            "items": { "$ref": "#/components/schemas/AllergensEnum" }
+          },
+          "portionWeight": { "type": "number", "minimum": 0 },
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
-        "required": ["name", "photo", "description", "allergens", "callories", "nutritionalValue", "ingredients"]
+        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
       "FavouriteRestaurantDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Resto bar" }
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" }
         },
         "required": ["id", "name"]
       },
@@ -1120,7 +1235,7 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Chilli con carne" }
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" }
         },
         "required": ["id", "name"]
       },
