@@ -15,17 +15,6 @@ const DISH_CONSTANTS = Object.freeze({
   }),
 });
 
-const MacroSchema = raw({
-  per100g: {
-    type: Number,
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-  },
-  perPortion: {
-    type: Number,
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-  },
-});
-
 enum DishTags {
   Vegan = 'wegańska',
   Vegetarian = 'wegetariańska',
@@ -96,7 +85,7 @@ class Dish {
   tags: DishTags[];
 
   @Expose()
-  @Prop(
+  @Prop([
     raw({
       name: {
         type: String,
@@ -105,7 +94,7 @@ class Dish {
       },
       canBeExcluded: { type: Boolean, default: false },
     }),
-  )
+  ])
   ingredients: object[];
 
   @Expose()
@@ -121,31 +110,31 @@ class Dish {
 
   @Expose()
   @Prop({
-    type: MacroSchema,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
     required: true,
   })
-  calories: object;
+  calories: number;
 
   @Expose()
   @Prop({
-    type: MacroSchema,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
     required: true,
   })
-  fats: object;
+  fats: number;
 
   @Expose()
   @Prop({
-    type: MacroSchema,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
     required: true,
   })
-  proteins: object;
+  proteins: number;
 
   @Expose()
   @Prop({
-    type: MacroSchema,
+    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
     required: true,
   })
-  carbohydrates: object;
+  carbohydrates: number;
 
   @Expose()
   readonly id: string;
