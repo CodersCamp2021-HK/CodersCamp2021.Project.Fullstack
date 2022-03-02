@@ -1,7 +1,9 @@
-import { Param } from '@nestjs/common';
+import { Body } from '@nestjs/common';
+import { OmitType } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
-import { ApiController, ApiGet, ApiObjectIdParam } from '../../shared';
+import { ApiController, ApiGet, ApiObjectIdParam, ApiUpdate } from '../../shared';
+import { ApiAuthorization, Role, UserId } from '../../shared/auth';
 import { UserDto } from './UserDto';
 
 @ApiController({ path: 'users', name: 'Users', description: 'Operations about users' })
@@ -36,6 +38,16 @@ class UsersController {
     if (!user) return null;
     return plainToInstance(UserDto, user);
   }
+  @ApiObjectIdParam()
+  @ApiUpdate({ name: 'user' })
+  @ApiAuthorization(Role.User)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async update(@UserId() partnerId: string, @Body() updateUserDto: UpdateUserDto) {
+    return null;
+  }
 }
 
+class CreteUserDto extends OmitType(UserDto, ['id'] as const) {}
+
+class UpdateUserDto extends CreteUserDto {}
 export { UsersController };
