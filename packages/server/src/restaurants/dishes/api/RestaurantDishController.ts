@@ -12,9 +12,9 @@ import {
   PaginationQuery,
   Url,
 } from '../../../shared';
+import { ListDishesHandler } from '../domain';
 import { DishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
-import { ListDishesHandler } from './domain';
 
 @ApiController({
   path: 'restaurants/:restaurantId/dishes',
@@ -22,6 +22,7 @@ import { ListDishesHandler } from './domain';
   description: "Operations on restaurant's dishes",
 })
 class RestaurantDishController {
+  constructor(private readonly listDishesHandler: ListDishesHandler) {}
   @ApiObjectIdParam({ name: 'restaurantId' })
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })

@@ -3,7 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
 
 import { Handler, Paginated, PaginationQuery } from '../../../shared';
-import { Dish, DishDocument } from '../database';
+import { Dish, DishDocument } from '../../database';
 
 class ListDishesHandler implements Handler<PaginationQuery, Paginated<Dish>> {
   constructor(@InjectModel(Dish.name) private dishModel: Model<DishDocument>) {}

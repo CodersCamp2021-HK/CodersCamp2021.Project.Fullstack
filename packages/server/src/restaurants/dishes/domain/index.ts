@@ -1,1 +1,1 @@
-export * from './ListDishesHanlder';
+export * from './ListDishesHandler';
