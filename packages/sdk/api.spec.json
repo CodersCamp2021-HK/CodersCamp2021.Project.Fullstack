@@ -665,6 +665,36 @@
         },
         "tags": ["User's favourite dishes"]
       }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findById",
+        "summary": "Retrive a user by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned user.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "User does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Users"]
+      }
     }
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
@@ -674,6 +704,7 @@
     { "name": "Restaurants", "description": "Operations on restaurants" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
+    { "name": "Users", "description": "Operations about users" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
     { "name": "Auth", "description": "Operations about authentication and registration" }
@@ -866,23 +897,23 @@
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
-          "photo": { "type": "string" },
+          "description": { "type": "string" },
+          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
+          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } },
           "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
         },
-        "required": ["id", "name", "type", "tags", "photo", "dishes"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "dishes"]
       },
       "RestaurantWithoutDishesDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
-          "photo": { "type": "string" }
+          "description": { "type": "string" },
+          "cuisineType": { "example": ["włoska"], "type": "array", "items": { "type": "string" } },
+          "tags": { "example": ["pizza", "zdrowa"], "type": "array", "items": { "type": "string" } }
         },
-        "required": ["id", "name", "type", "tags", "photo"]
+        "required": ["id", "name", "description", "cuisineType", "tags"]
       },
       "RestaurantListDto": {
         "type": "object",
@@ -985,6 +1016,26 @@
           "pages": { "type": "number" }
         },
         "required": ["data", "pages"]
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "name": { "type": "string" },
+          "surname": { "type": "string" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "addressId": { "type": "array", "items": { "type": "string" } },
+          "card": { "type": "object" },
+          "favouriteRestaurants": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
+          },
+          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "orders": { "type": "array", "items": { "type": "string" } },
+          "profileCompleted": { "type": "boolean", "default": false }
+        },
+        "required": ["id", "email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       }
     }
   }
