@@ -1019,9 +1019,10 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
           "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
         },
-        "required": ["id", "name", "description", "cuisineType", "tags", "dishes"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "addressId", "dishes"]
       },
       "RestaurantWithoutDishesDto": {
         "type": "object",
@@ -1038,9 +1039,10 @@
             "type": "array",
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
-          }
+          },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } }
         },
-        "required": ["id", "name", "description", "cuisineType", "tags"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "addressId"]
       },
       "RestaurantListDto": {
         "type": "object",
@@ -1054,9 +1056,18 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
+          "cuisineType": {
+            "type": "array",
+            "example": ["włoska"],
+            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
+          },
+          "tags": {
+            "type": "array",
+            "example": ["pizza", "zdrowa"],
+            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1064,18 +1075,25 @@
             "maxLength": 14,
             "example": "800500300",
             "description": ""
-          },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+          }
         },
-        "required": ["id", "name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
+        "required": ["id", "name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
       },
       "UpdatePartnerProfileDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string", "example": "Resto bar" },
-          "type": { "type": "string", "example": "włoskie" },
-          "tags": { "example": ["tradycyjna", "oryginalne składniki"], "type": "array", "items": { "type": "string" } },
+          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
+          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
+          "cuisineType": {
+            "type": "array",
+            "example": ["włoska"],
+            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
+          },
+          "tags": {
+            "type": "array",
+            "example": ["pizza", "zdrowa"],
+            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1083,11 +1101,9 @@
             "maxLength": 14,
             "example": "800500300",
             "description": ""
-          },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." }
+          }
         },
-        "required": ["name", "type", "tags", "bankAccountNumber", "phoneNumber", "addressId", "description"]
+        "required": ["name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
       },
       "IngredientDto": {
         "type": "object",
