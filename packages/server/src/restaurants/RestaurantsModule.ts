@@ -9,13 +9,14 @@ import { Dish, DishSchema } from './dishes/database';
 import { CreateDishHandler } from './dishes/domain';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
+import { PartnerProfileController } from './profile/api/PartnerProfileController';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Restaurant.name, schema: RestaurantSchema }]),
     MongooseModule.forFeature([{ name: Dish.name, schema: DishSchema }]),
   ],
-  controllers: [RestaurantController, RestaurantDishController, PartnerDishController],
+  controllers: [RestaurantController, PartnerProfileController, RestaurantDishController, PartnerDishController],
   providers: [RestaurantsFacade, ListRestaurantsHandler, CreateDishHandler],
   exports: [RestaurantsFacade],
 })
