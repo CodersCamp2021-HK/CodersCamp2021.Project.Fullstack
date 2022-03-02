@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { ApiAuthentication, ApiAuthorization, ApiController, PartnerId, Role, UserId } from '../src/shared';
 import { loginDto, registerPartnerDto, registerUserDto } from './ApiDtoUtils';
 import { initE2eFixture } from './E2eFixture';
+import { accessTokenAsCookie } from './shared';
 
 const PATH = '/api/auth';
 const REGISTER_AS_PARTNER_REL_PATH = '/register/partner';
@@ -18,8 +19,6 @@ const LOGOUT_PATH = `${PATH}${LOGOUT_REL_PATH}`;
 const GUARDED_TEST_PATH = '/api/test/guarded';
 const GUARDED_TEST_PARTNER_PATH = `${GUARDED_TEST_PATH}/partner`;
 const GUARDED_TEST_USER_PATH = `${GUARDED_TEST_PATH}/user`;
-
-const accessTokenAsCookie = (token: string) => `access_token=${token}; Path=/; HttpOnly; SameSite=Strict`;
 
 @ApiController({ path: 'test', name: 'Tests' })
 class GuardedTestController {

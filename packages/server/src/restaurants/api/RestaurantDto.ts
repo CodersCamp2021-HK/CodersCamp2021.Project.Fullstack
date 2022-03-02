@@ -1,5 +1,5 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
 import { ApiObjectIdProperty } from '../../shared';
@@ -34,6 +34,9 @@ class RestaurantDto {
     type: [AddressDto],
   })
   readonly addressId: AddressDto[];
+
+  @Exclude()
+  declare readonly profileCompleted: boolean;
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}

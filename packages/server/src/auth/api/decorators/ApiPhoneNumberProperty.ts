@@ -1,9 +1,9 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
 import { PHONE_NUMBER } from '../../shared';
 
-function ApiPhoneNumberProperty(): PropertyDecorator {
+function ApiPhoneNumberProperty(rest?: ApiPropertyOptions): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
@@ -11,6 +11,7 @@ function ApiPhoneNumberProperty(): PropertyDecorator {
       maxLength: PHONE_NUMBER.MAX_LEN,
       example: '800500300',
       description: '',
+      ...rest,
     }),
   );
 }
