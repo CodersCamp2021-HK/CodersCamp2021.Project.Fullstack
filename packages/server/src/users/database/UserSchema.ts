@@ -5,8 +5,8 @@ import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { Order } from '../../orders/database/OrderSchema';
-import { Dish } from '../../restaurants/database/DishesSchema';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
+import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 
 type UserDocument = User & Document<ObjectId>;
 
