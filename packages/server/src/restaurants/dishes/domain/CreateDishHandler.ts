@@ -4,7 +4,7 @@ import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
-import { Allergens, Dish, DishDocument, DishTags, MealType } from '../database';
+import { Allergens, Dish, DishDocument, DishTags, Ingredient, MealType, NutritionalValue } from '../database';
 
 interface CreateDishRequest {
   readonly name: string;
@@ -12,13 +12,13 @@ interface CreateDishRequest {
   readonly description: string;
   readonly price: number;
   readonly tags: DishTags[];
-  readonly ingredients: object[];
+  readonly ingredients: Ingredient[];
   readonly allergens: Allergens[];
   readonly portionWeight: number;
-  readonly calories: number;
-  readonly fats: number;
-  readonly proteins: number;
-  readonly carbohydrates: number;
+  readonly calories: NutritionalValue;
+  readonly fats: NutritionalValue;
+  readonly proteins: NutritionalValue;
+  readonly carbohydrates: NutritionalValue;
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ class CreateDishHandler implements Handler<CreateDishRequest, Dish> {
 
   async exec(req: CreateDishRequest): Promise<Dish> {
     const created = await this.dishModel.create({ ...req });
-    return plainToInstance(Dish, created.toObject({ virtuals: true }));
+    return plainToInstance(Dish, created);
   }
 }
 

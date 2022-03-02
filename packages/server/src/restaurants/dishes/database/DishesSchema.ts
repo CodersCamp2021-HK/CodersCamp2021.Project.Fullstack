@@ -1,5 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
@@ -45,6 +45,23 @@ enum Allergens {
   Lupine = 'łubin',
   Molluscs = 'mięczaki',
 }
+
+@Exclude()
+class Ingredient {
+  @Expose()
+  readonly name: string;
+
+  @Expose()
+  readonly canBeExcluded: boolean;
+}
+@Exclude()
+class NutritionalValue {
+  @Expose()
+  readonly per100g: number;
+
+  @Expose()
+  readonly perPortion: number;
+}
 @Exclude()
 @Schema({
   collection: 'dishes',
@@ -85,6 +102,7 @@ class Dish {
   tags: DishTags[];
 
   @Expose()
+  @Type(() => Ingredient)
   @Prop([
     raw({
       name: {
@@ -95,7 +113,7 @@ class Dish {
       canBeExcluded: { type: Boolean, default: false },
     }),
   ])
-  ingredients: object[];
+  ingredients: Ingredient[];
 
   @Expose()
   @Prop()
@@ -109,32 +127,68 @@ class Dish {
   portionWeight: number;
 
   @Expose()
-  @Prop({
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-    required: true,
-  })
-  calories: number;
+  @Type(() => NutritionalValue)
+  @Prop(
+    raw({
+      per100g: {
+        type: Number,
+        min: 0,
+      },
+      perPortion: {
+        type: Number,
+        min: 0,
+      },
+    }),
+  )
+  calories: NutritionalValue;
 
   @Expose()
-  @Prop({
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-    required: true,
-  })
-  fats: number;
+  @Type(() => NutritionalValue)
+  @Prop(
+    raw({
+      per100g: {
+        type: Number,
+        min: 0,
+      },
+      perPortion: {
+        type: Number,
+        min: 0,
+      },
+    }),
+  )
+  fats: NutritionalValue;
 
   @Expose()
-  @Prop({
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-    required: true,
-  })
-  proteins: number;
+  @Type(() => NutritionalValue)
+  @Prop(
+    raw({
+      per100g: {
+        type: Number,
+        min: 0,
+      },
+      perPortion: {
+        type: Number,
+        min: 0,
+      },
+    }),
+  )
+  proteins: NutritionalValue;
 
   @Expose()
-  @Prop({
-    min: DISH_CONSTANTS.DISH_NUMBER.MIN,
-    required: true,
-  })
-  carbohydrates: number;
+  @Type(() => NutritionalValue)
+  @Prop(
+    raw({
+      per100g: {
+        type: Number,
+        min: 0,
+      },
+      perPortion: {
+        type: Number,
+        min: 0,
+      },
+    }),
+  )
+  carbohydrates: NutritionalValue;
 
   @Expose()
   readonly id: string;
@@ -142,5 +196,5 @@ class Dish {
 
 const DishSchema = SchemaFactory.createForClass(Dish);
 
-export { Allergens, Dish, DISH_CONSTANTS, DishSchema, DishTags, MealType };
+export { Allergens, Dish, DISH_CONSTANTS, DishSchema, DishTags, Ingredient, MealType, NutritionalValue };
 export type { DishDocument };

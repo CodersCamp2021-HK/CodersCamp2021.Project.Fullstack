@@ -55,10 +55,10 @@ function dishDto() {
     ],
     allergens: [Allergens.Eggs],
     portionWeight: 300,
-    calories: 100,
-    fats: 20,
-    proteins: 20,
-    carbohydrates: 20,
+    calories: { per100g: 100, perPortion: 300 },
+    fats: { per100g: 20, perPortion: 60 },
+    proteins: { per100g: 20, perPortion: 60 },
+    carbohydrates: { per100g: 20, perPortion: 60 },
   };
 }
 

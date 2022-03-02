@@ -925,6 +925,14 @@
         "type": "string",
         "enum": ["wegańska", "wegetariańska", "gluten free", "ostre", "bardzo ostre"]
       },
+      "NutritionalValueDto": {
+        "type": "object",
+        "properties": {
+          "per100g": { "type": "number", "minimum": 0 },
+          "perPortion": { "type": "number", "minimum": 0 }
+        },
+        "required": ["per100g", "perPortion"]
+      },
       "ShortenedDishDto": {
         "type": "object",
         "properties": {
@@ -943,7 +951,7 @@
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
-          "calories": { "type": "number", "minimum": 0 }
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
         "required": ["id", "name", "price", "portionWeight", "calories"]
       },
@@ -1044,10 +1052,10 @@
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
-          "calories": { "type": "number", "minimum": 0 },
-          "fats": { "type": "number", "minimum": 0 },
-          "proteins": { "type": "number", "minimum": 0 },
-          "carbohydrates": { "type": "number", "minimum": 0 }
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
         "required": ["id", "name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
@@ -1082,10 +1090,10 @@
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
-          "calories": { "type": "number", "minimum": 0 },
-          "fats": { "type": "number", "minimum": 0 },
-          "proteins": { "type": "number", "minimum": 0 },
-          "carbohydrates": { "type": "number", "minimum": 0 }
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
         "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
@@ -1112,10 +1120,10 @@
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
-          "calories": { "type": "number", "minimum": 0 },
-          "fats": { "type": "number", "minimum": 0 },
-          "proteins": { "type": "number", "minimum": 0 },
-          "carbohydrates": { "type": "number", "minimum": 0 }
+          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
         "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },

@@ -16,6 +16,14 @@ class IngredientDto {
   readonly canBeExcluded: boolean;
 }
 
+class NutritionalValueDto {
+  @ApiProperty({ minimum: 0 })
+  readonly per100g: number;
+
+  @ApiProperty({ minimum: 0 })
+  readonly perPortion: number;
+}
+
 // TODO: Add photo property
 class DishDto {
   @ApiObjectIdProperty()
@@ -74,29 +82,29 @@ class DishDto {
   @ApiProperty({ minimum: DISH_CONSTANTS.DISH_NUMBER.MIN })
   readonly portionWeight: number;
 
+  @Type(() => NutritionalValueDto)
   @ApiProperty({
-    minimum: 0,
-    example: 100,
+    type: NutritionalValueDto,
   })
-  readonly calories: number;
+  readonly calories: NutritionalValueDto;
 
+  @Type(() => NutritionalValueDto)
   @ApiProperty({
-    minimum: 0,
-    example: 20,
+    type: NutritionalValueDto,
   })
-  readonly fats: number;
+  readonly fats: NutritionalValueDto;
 
+  @Type(() => NutritionalValueDto)
   @ApiProperty({
-    minimum: 0,
-    example: 20,
+    type: NutritionalValueDto,
   })
-  readonly proteins: number;
+  readonly proteins: NutritionalValueDto;
 
+  @Type(() => NutritionalValueDto)
   @ApiProperty({
-    minimum: 0,
-    example: 20,
+    type: NutritionalValueDto,
   })
-  readonly carbohydrates: number;
+  readonly carbohydrates: NutritionalValueDto;
 }
 
 class CreateDishDto extends OmitType(DishDto, ['id'] as const) {}
