@@ -39,7 +39,6 @@ class User {
   @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
-  @Expose()
   @Prop(
     raw({
       number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
