@@ -32,7 +32,7 @@ class User {
   surname: string;
 
   @Expose()
-  @Prop({ required: true })
+  @Prop()
   phoneNumber: string;
 
   @Expose()
@@ -42,11 +42,10 @@ class User {
   @Expose()
   @Prop(
     raw({
-      number: { type: String, required: true, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
-      expirationDate: { type: Date, required: true },
+      number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
+      expirationDate: { type: Date },
       securityCode: {
         type: String,
-        required: true,
         min: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
         max: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
       },
