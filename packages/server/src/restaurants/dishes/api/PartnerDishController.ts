@@ -18,11 +18,14 @@ import {
   Role,
   Url,
 } from '../../../shared';
+import { CreateDishHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
 @ApiController({ path: 'partner/dishes', name: "Partner's dishes", description: "Operations on partner's dishes" })
 class PartnerDishController {
+  constructor(private readonly createDishHandler: CreateDishHandler) {}
+
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
@@ -54,7 +57,7 @@ class PartnerDishController {
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const dish = { ...createDishDto, id: '6200218668fc82e7bdf15088' }; // TODO: Hook up CreateDishHandler
+    const dish = await this.createDishHandler.exec(createDishDto);
     res.setHeader('Location', `${url.href}/${dish.id}`);
     return plainToInstance(DishDto, dish);
   }

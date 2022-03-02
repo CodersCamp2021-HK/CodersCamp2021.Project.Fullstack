@@ -8,7 +8,8 @@ import { Address, AddressDocument } from '../../src/addresses/database';
 import { AppModule } from '../../src/AppModule';
 import { Article, ArticleDocument } from '../../src/articles/database';
 import { Auth, AuthDocument } from '../../src/auth/database';
-import { Dish, DishDocument, Restaurant, RestaurantDocument } from '../../src/restaurants/database';
+import { Restaurant, RestaurantDocument } from '../../src/restaurants/database';
+import { Dish, DishDocument } from '../../src/restaurants/dishes/database';
 import { User, UserDocument } from '../../src/users/database';
 
 class DatabaseProxy {
