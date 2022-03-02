@@ -11,7 +11,6 @@ interface CreateDishRequest {
   readonly mealType: MealType[];
   readonly description: string;
   readonly price: number;
-  readonly photo: Buffer;
   readonly tags: DishTags[];
   readonly ingredients: object[];
   readonly allergens: Allergens[];
