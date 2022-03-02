@@ -220,18 +220,11 @@
         "tags": ["User's favourite dishes"]
       }
     },
-    "/api/users/profile/{id}": {
+    "/api/users/profile": {
       "get": {
         "operationId": "UsersController_findById",
         "summary": "Retrive a user by id.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successfully returned user.",
@@ -247,35 +240,30 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Users"]
+        "tags": ["User's profile"],
+        "security": [{ "cookie": [] }]
       },
       "put": {
         "operationId": "UsersController_update",
-        "summary": "Update user profile.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
+        "summary": "Update existing user profile.",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully returned user.",
+            "description": "The user profile has been successfully updated..",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserDto" } } }
           },
           "400": {
             "description": "Parameters are not valid or they are missing.",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
           },
-          "404": { "description": "User does not exist." },
+          "404": { "description": "User profile does not exist." },
           "default": {
             "description": "",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Users"]
+        "tags": ["User's profile"],
+        "security": [{ "cookie": [] }]
       }
     }
   },
