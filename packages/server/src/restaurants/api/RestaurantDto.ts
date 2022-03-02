@@ -1,5 +1,7 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
+import { AddressDto } from '../../addresses/api/AddressDto';
 import { ApiObjectIdProperty } from '../../shared';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
@@ -26,6 +28,12 @@ class RestaurantDto {
 
   @ApiProperty({ enum: RestaurantTags, enumName: 'RestaurantTagEnum', isArray: true, example: ['pizza', 'zdrowa'] })
   readonly tags: RestaurantTags[];
+
+  @Type(() => AddressDto)
+  @ApiProperty({
+    type: [AddressDto],
+  })
+  readonly addressId: AddressDto[];
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
