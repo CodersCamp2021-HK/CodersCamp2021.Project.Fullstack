@@ -968,63 +968,7 @@
           "gluten free"
         ]
       },
-      "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
-      "DishTagsEnum": {
-        "type": "string",
-        "enum": ["wegańska", "wegetariańska", "gluten free", "ostre", "bardzo ostre"]
-      },
-      "NutritionalValueDto": {
-        "type": "object",
-        "properties": {
-          "per100g": { "type": "number", "minimum": 0 },
-          "perPortion": { "type": "number", "minimum": 0 }
-        },
-        "required": ["per100g", "perPortion"]
-      },
-      "ShortenedDishDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
-          "mealType": {
-            "type": "array",
-            "example": ["lunch", "obiad"],
-            "items": { "$ref": "#/components/schemas/MealTypeEnum" }
-          },
-          "description": { "type": "string", "example": "Opis dania" },
-          "price": { "type": "number", "example": 2350 },
-          "tags": {
-            "type": "array",
-            "example": ["ostre", "gluten free"],
-            "items": { "$ref": "#/components/schemas/DishTagsEnum" }
-          },
-          "portionWeight": { "type": "number", "minimum": 0 },
-          "calories": { "$ref": "#/components/schemas/NutritionalValueDto" }
-        },
-        "required": ["id", "name", "price", "portionWeight", "calories"]
-      },
       "RestaurantDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "minLength": 1, "maxLength": 50, "example": "Resto bar" },
-          "description": { "type": "string", "maxLength": 500, "example": "Opis restauracji." },
-          "cuisineType": {
-            "type": "array",
-            "example": ["włoska"],
-            "items": { "$ref": "#/components/schemas/CuisineTypeEnum" }
-          },
-          "tags": {
-            "type": "array",
-            "example": ["pizza", "zdrowa"],
-            "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
-          },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/ShortenedDishDto" } }
-        },
-        "required": ["id", "name", "description", "cuisineType", "tags", "addressId", "dishes"]
-      },
-      "RestaurantWithoutDishesDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
@@ -1047,7 +991,7 @@
       "RestaurantListDto": {
         "type": "object",
         "properties": {
-          "data": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantWithoutDishesDto" } },
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantDto" } },
           "pages": { "type": "number" }
         },
         "required": ["data", "pages"]
@@ -1105,6 +1049,11 @@
         },
         "required": ["name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
       },
+      "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
+      "DishTagsEnum": {
+        "type": "string",
+        "enum": ["wegańska", "wegetariańska", "gluten free", "ostre", "bardzo ostre"]
+      },
       "IngredientDto": {
         "type": "object",
         "properties": {
@@ -1130,6 +1079,14 @@
           "łubin",
           "mięczaki"
         ]
+      },
+      "NutritionalValueDto": {
+        "type": "object",
+        "properties": {
+          "per100g": { "type": "number", "minimum": 0 },
+          "perPortion": { "type": "number", "minimum": 0 }
+        },
+        "required": ["per100g", "perPortion"]
       },
       "DishDto": {
         "type": "object",

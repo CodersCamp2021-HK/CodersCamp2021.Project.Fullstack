@@ -7,6 +7,7 @@ import { PartnerDishController } from './dishes/api/PartnerDishController';
 import { RestaurantDishController } from './dishes/api/RestaurantDishController';
 import { Dish, DishSchema } from './dishes/database';
 import { CreateDishHandler } from './dishes/domain';
+import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
 import { PartnerProfileController } from './profile/api/PartnerProfileController';
@@ -17,7 +18,7 @@ import { PartnerProfileController } from './profile/api/PartnerProfileController
     MongooseModule.forFeature([{ name: Dish.name, schema: DishSchema }]),
   ],
   controllers: [RestaurantController, PartnerProfileController, RestaurantDishController, PartnerDishController],
-  providers: [RestaurantsFacade, ListRestaurantsHandler, CreateDishHandler],
+  providers: [RestaurantsFacade, ListRestaurantsHandler, GetRestaurantHandler, CreateDishHandler],
   exports: [RestaurantsFacade],
 })
 class RestaurantsModule {}

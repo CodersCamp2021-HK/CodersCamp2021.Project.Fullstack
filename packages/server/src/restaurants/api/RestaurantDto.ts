@@ -1,11 +1,11 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
 import { ApiObjectIdProperty } from '../../shared';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
-import { ShortenedDishDto } from '../dishes/api/DishDto';
 
+// TODO: Add logo
 class RestaurantDto {
   @ApiObjectIdProperty()
   readonly id: string;
@@ -34,14 +34,8 @@ class RestaurantDto {
     type: [AddressDto],
   })
   readonly addressId: AddressDto[];
-
-  @Type(() => ShortenedDishDto)
-  @ApiProperty({ type: [ShortenedDishDto] })
-  readonly dishes: ShortenedDishDto[];
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
 
-class RestaurantWithoutDishesDto extends OmitType(RestaurantDto, ['dishes'] as const) {}
-
-export { FavouriteRestaurantDto, RestaurantDto, RestaurantWithoutDishesDto };
+export { FavouriteRestaurantDto, RestaurantDto };
