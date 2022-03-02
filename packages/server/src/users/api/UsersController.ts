@@ -4,7 +4,7 @@ import { plainToInstance } from 'class-transformer';
 
 import { ApiController, ApiGet, ApiObjectIdParam, ApiUpdate } from '../../shared';
 import { ApiAuthorization, Role, UserId } from '../../shared/auth';
-import { UserDto } from './UserDto';
+import { UpdateUserDto, UserDto } from './UserDto';
 
 @ApiController({ path: 'users', name: 'Users', description: 'Operations about users' })
 class UsersController {
@@ -47,7 +47,4 @@ class UsersController {
   }
 }
 
-class CreteUserDto extends OmitType(UserDto, ['id'] as const) {}
-
-class UpdateUserDto extends CreteUserDto {}
 export { UsersController };
