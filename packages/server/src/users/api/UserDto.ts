@@ -47,4 +47,7 @@ class UserDto {
   readonly profileCompleted: boolean;
 }
 
-export { UserDto };
+class CreateUserDto extends OmitType(UserDto, ['id'] as const) {}
+
+class UpdateUserDto extends CreateUserDto {}
+export { CreateUserDto, UpdateUserDto, UserDto };
