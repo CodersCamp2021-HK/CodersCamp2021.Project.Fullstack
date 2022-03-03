@@ -6,14 +6,14 @@ import { Handler } from '../../shared';
 import { User, UserDocument } from '../database';
 
 interface GetUserRequest {
-  readonly userId: string;
+  readonly id: string;
 }
 
 class GetUserHandler implements Handler<GetUserRequest, User | null> {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async exec(req: GetUserRequest): Promise<User | null> {
-    const user = await this.userModel.findById(req.userId);
+    const user = await this.userModel.findById(req.id);
     console.log(req);
     if (!user) return null;
     return plainToInstance(User, user);

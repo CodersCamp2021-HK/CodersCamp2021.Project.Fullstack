@@ -12,7 +12,7 @@ class UsersController {
   @ApiGet({ path: '', name: 'user', response: UserDto })
   @ApiAuthorization(Role.User)
   async findById(@UserId() userId: string) {
-    const user = await this.getUserHandler.exec({ userId });
+    const user = await this.getUserHandler.exec({ id: userId });
     if (!user) return null;
     return plainToInstance(UserDto, user);
   }

@@ -21,16 +21,10 @@ class UserDto {
   readonly surname: string;
 
   @ApiPropertyOptional()
-  readonly email: string;
-
-  @ApiPropertyOptional()
   readonly phoneNumber: string;
 
   @ApiPropertyOptional()
   readonly addressId: string[];
-
-  @ApiPropertyOptional()
-  readonly card: Card;
 
   @ApiProperty({ type: [FavouriteRestaurantDto] })
   readonly favouriteRestaurants: FavouriteRestaurantDto[];
