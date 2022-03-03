@@ -20,7 +20,7 @@ class UserDto {
   @ApiPropertyOptional()
   readonly surname: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   readonly email: string;
 
   @ApiPropertyOptional()
@@ -29,7 +29,7 @@ class UserDto {
   @ApiPropertyOptional()
   readonly addressId: string[];
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   readonly card: Card;
 
   @ApiProperty({ type: [FavouriteRestaurantDto] })

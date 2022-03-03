@@ -11,7 +11,6 @@ class UsersController {
   constructor(private readonly getUserHandler: GetUserHandler) {}
   @ApiGet({ path: '', name: 'user', response: UserDto })
   @ApiAuthorization(Role.User)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(@UserId() userId: string) {
     const user = await this.getUserHandler.exec({ userId });
     if (!user) return null;
