@@ -4,7 +4,7 @@ import { FavouriteRestaurantDto } from '../../restaurants/api/RestaurantDto';
 import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
 import { ApiObjectIdProperty } from '../../shared';
 
-interface Card {
+export interface Card {
   number: string;
   expirationDate: Date;
   securityCode: string;
