@@ -742,6 +742,64 @@
         },
         "tags": ["Users"]
       }
+    },
+    "/api/img/{type}/{id}": {
+      "get": {
+        "operationId": "ImageController_getImg",
+        "summary": "Retrive a file by id.",
+        "parameters": [
+          {
+            "name": "type",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "enum": ["restaurant", "dish"] }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned file.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StreamableFile" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "File does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Images"]
+      }
+    },
+    "/api/img/file": {
+      "post": {
+        "operationId": "ImageController_uploadFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "" },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Images"]
+      }
     }
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
@@ -755,7 +813,8 @@
     { "name": "Users", "description": "Operations about users" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
-    { "name": "Auth", "description": "Operations about authentication and registration" }
+    { "name": "Auth", "description": "Operations about authentication and registration" },
+    { "name": "Images", "description": "Operations on images" }
   ],
   "servers": [],
   "components": {
@@ -984,7 +1043,12 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
-          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } }
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "logo": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+          }
         },
         "required": ["id", "name", "description", "cuisineType", "tags", "addressId"]
       },
@@ -1012,6 +1076,12 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "logo": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1021,7 +1091,7 @@
             "description": ""
           }
         },
-        "required": ["id", "name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
+        "required": ["id", "cuisineType", "tags", "addressId"]
       },
       "UpdatePartnerProfileDto": {
         "type": "object",
@@ -1038,6 +1108,12 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "logo": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1047,7 +1123,7 @@
             "description": ""
           }
         },
-        "required": ["name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
+        "required": ["cuisineType", "tags", "addressId"]
       },
       "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
       "DishTagsEnum": {
@@ -1093,6 +1169,11 @@
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "photo": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+          },
           "mealType": {
             "type": "array",
             "example": ["lunch", "obiad"],
@@ -1238,7 +1319,8 @@
           "profileCompleted": { "type": "boolean", "default": false }
         },
         "required": ["id", "email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
-      }
+      },
+      "StreamableFile": { "type": "object", "properties": {} }
     }
   }
 }
