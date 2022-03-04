@@ -26,7 +26,6 @@ describe(`${PATH}`, () => {
     const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
 
     // Then
-    console.log([resp.status, HttpStatus.OK]);
     expect(resp.status).toBe(HttpStatus.OK);
     expect(created).toEqual(expect.objectContaining(resp.body));
   });
