@@ -14,7 +14,6 @@ class GetUserHandler implements Handler<GetUserRequest, User | null> {
 
   async exec(req: GetUserRequest): Promise<User | null> {
     const user = await this.userModel.findById(req.id);
-    console.log(req);
     if (!user) return null;
     return plainToInstance(User, user);
   }
