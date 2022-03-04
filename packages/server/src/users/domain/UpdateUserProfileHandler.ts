@@ -2,8 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { Address } from '../../addresses/database/AddressSchema';
+import { Order } from '../../orders/database/OrderSchema';
 import { FavouriteRestaurantDto } from '../../restaurants/api/RestaurantDto';
+import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
+import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { Handler } from '../../shared';
 import { Card } from '../api/UserDto';
 import { User, UserDocument } from '../database';
@@ -13,11 +17,11 @@ interface UpdateUserProfileRequest {
   readonly surname: string;
   readonly email: string;
   readonly phoneNumber: string;
-  readonly addressId: string[];
-  readonly card: Card;
-  readonly favouriteRestaurants: FavouriteRestaurantDto[];
-  readonly favouriteDishes: FavouriteDishDto[];
-  readonly orders: string[];
+  readonly addressId: Address[];
+  // readonly card: object[];
+  readonly favouriteRestaurants: Restaurant[];
+  readonly favouriteDishes: Dish[];
+  readonly orders: Order[];
   readonly profileCompleted: boolean;
 }
 
@@ -32,7 +36,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
       email: req.email,
       phoneNumber: req.phoneNumber,
       // addressId: req.addressId,
-      card: req.card,
+      // card: req.card,
       // favouriteRestaurants: req.favouriteRestaurants,
       // favouriteDishes: req.favouriteDishes,
       // orders: req.orders,

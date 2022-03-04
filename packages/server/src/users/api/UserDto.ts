@@ -1,9 +1,12 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 
+import { Address } from '../../addresses/database/AddressSchema';
+import { Order } from '../../orders/database/OrderSchema';
 import { FavouriteRestaurantDto } from '../../restaurants/api/RestaurantDto';
+import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
+import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { ApiObjectIdProperty } from '../../shared';
-
 export interface Card {
   number: string;
   expirationDate: Date;
@@ -27,19 +30,19 @@ class UserDto {
   readonly phoneNumber: string;
 
   @ApiPropertyOptional()
-  readonly addressId: string[];
+  readonly addressId: Address[];
 
   @ApiProperty()
   readonly card: Card;
 
   @ApiProperty({ type: [FavouriteRestaurantDto] })
-  readonly favouriteRestaurants: FavouriteRestaurantDto[];
+  readonly favouriteRestaurants: Restaurant[];
 
   @ApiProperty({ type: [FavouriteDishDto] })
-  readonly favouriteDishes: FavouriteDishDto[];
+  readonly favouriteDishes: Dish[];
 
   @ApiProperty()
-  readonly orders: string[];
+  readonly orders: Order[];
 
   @ApiProperty({
     default: false,

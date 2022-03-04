@@ -41,7 +41,7 @@ class User {
   @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
-  @Prop(
+  @Prop([
     raw({
       number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
       expirationDate: { type: Date },
@@ -51,7 +51,7 @@ class User {
         max: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
       },
     }),
-  )
+  ])
   card: object[];
 
   @Expose()
@@ -76,5 +76,5 @@ class User {
 
 const UserSchema = SchemaFactory.createForClass(User);
 
-export { User, UserSchema };
+export { User, USER_CONSTANTS, UserSchema };
 export type { UserDocument };
