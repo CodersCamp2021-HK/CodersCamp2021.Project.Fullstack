@@ -4,7 +4,7 @@
     "/api/addresses/{id}": {
       "get": {
         "operationId": "AddressesController_findById",
-        "summary": "Retrive a address by id.",
+        "summary": "Retrieve a address by id.",
         "parameters": [
           {
             "name": "id",
@@ -61,7 +61,7 @@
     "/api/articles/{id}": {
       "get": {
         "operationId": "ArticlesController_findById",
-        "summary": "Retrive a article by id.",
+        "summary": "Retrieve a article by id.",
         "parameters": [
           {
             "name": "id",
@@ -145,7 +145,7 @@
     "/api/articles": {
       "get": {
         "operationId": "ArticlesController_list",
-        "summary": "Retrive a list of articles.",
+        "summary": "Retrieve a list of articles.",
         "parameters": [
           {
             "name": "page",
@@ -301,7 +301,7 @@
     "/api/restaurants/{id}": {
       "get": {
         "operationId": "RestaurantController_findById",
-        "summary": "Retrive a restaurant by id.",
+        "summary": "Retrieve a restaurant by id.",
         "parameters": [
           {
             "name": "id",
@@ -331,7 +331,7 @@
     "/api/restaurants": {
       "get": {
         "operationId": "RestaurantController_list",
-        "summary": "Retrive a list of restaurants.",
+        "summary": "Retrieve a list of restaurants.",
         "parameters": [
           {
             "name": "page",
@@ -367,7 +367,7 @@
     "/api/partner/profile": {
       "get": {
         "operationId": "PartnerProfileController_findById",
-        "summary": "Retrive a profile by id.",
+        "summary": "Retrieve a profile by id.",
         "parameters": [],
         "responses": {
           "200": {
@@ -414,7 +414,7 @@
     "/api/restaurants/{restaurantId}/dishes/{id}": {
       "get": {
         "operationId": "RestaurantDishController_findById",
-        "summary": "Retrive a dish by id.",
+        "summary": "Retrieve a dish by id.",
         "parameters": [
           {
             "name": "restaurantId",
@@ -450,7 +450,7 @@
     "/api/restaurants/{restaurantId}/dishes": {
       "get": {
         "operationId": "RestaurantDishController_list",
-        "summary": "Retrive a list of dishes.",
+        "summary": "Retrieve a list of dishes.",
         "parameters": [
           {
             "name": "restaurantId",
@@ -492,7 +492,7 @@
     "/api/partner/dishes/{id}": {
       "get": {
         "operationId": "PartnerDishController_findById",
-        "summary": "Retrive a dish by id.",
+        "summary": "Retrieve a dish by id.",
         "parameters": [
           {
             "name": "id",
@@ -579,7 +579,7 @@
     "/api/partner/dishes": {
       "get": {
         "operationId": "PartnerDishController_list",
-        "summary": "Retrive a list of dishes.",
+        "summary": "Retrieve a list of dishes.",
         "parameters": [
           {
             "name": "page",
@@ -642,7 +642,7 @@
     "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "FavouriteRestaurantListController_list",
-        "summary": "Retrive a list of restaurants.",
+        "summary": "Retrieve a list of restaurants.",
         "parameters": [
           {
             "name": "page",
@@ -680,7 +680,7 @@
     "/api/users/favourite/dishes": {
       "get": {
         "operationId": "FavouriteDishListController_list",
-        "summary": "Retrive a list of dishes.",
+        "summary": "Retrieve a list of dishes.",
         "parameters": [
           {
             "name": "page",
@@ -716,7 +716,7 @@
     "/api/users/profile": {
       "get": {
         "operationId": "UsersController_findById",
-        "summary": "Retrive a user by id.",
+        "summary": "Retrieve a user by id.",
         "parameters": [],
         "responses": {
           "200": {
@@ -763,7 +763,7 @@
     "/api/img/{type}/{id}": {
       "get": {
         "operationId": "ImageController_getImg",
-        "summary": "Retrive a file by id.",
+        "summary": "Retrieve a image by id.",
         "parameters": [
           {
             "name": "type",
@@ -780,14 +780,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully returned file.",
+            "description": "Successfully returned image.",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StreamableFile" } } }
           },
           "400": {
             "description": "Parameters are not valid or they are missing.",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
           },
-          "404": { "description": "File does not exist." },
+          "404": { "description": "Image does not exist." },
           "default": {
             "description": "",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
@@ -796,9 +796,10 @@
         "tags": ["Images"]
       }
     },
-    "/api/img/file": {
-      "post": {
-        "operationId": "ImageController_uploadFile",
+    "/api/img/upload-restaurant": {
+      "put": {
+        "operationId": "ImageController_uploadLogo",
+        "summary": "Update an existing logo.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -809,13 +810,61 @@
           }
         },
         "responses": {
-          "201": { "description": "" },
+          "200": {
+            "description": "The logo has been successfully updated.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UploadedImageDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Logo does not exist." },
           "default": {
             "description": "",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Images"]
+        "tags": ["Images"],
+        "security": [{ "cookie": [] }]
+      }
+    },
+    "/api/img/upload-dish/{dishId}": {
+      "put": {
+        "operationId": "ImageController_uploadPhoto",
+        "summary": "Update an existing photo.",
+        "parameters": [
+          {
+            "name": "dishId",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The photo has been successfully updated.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UploadedImageDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Photo does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Images"],
+        "security": [{ "cookie": [] }]
       }
     }
   },
@@ -1064,7 +1113,7 @@
           "logo": {
             "type": "string",
             "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
-            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
           }
         },
         "required": ["id", "name", "description", "cuisineType", "tags", "addressId"]
@@ -1097,7 +1146,7 @@
           "logo": {
             "type": "string",
             "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
-            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
           },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
@@ -1129,7 +1178,7 @@
           "logo": {
             "type": "string",
             "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
-            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
           },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
@@ -1189,7 +1238,7 @@
           "photo": {
             "type": "string",
             "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
-            "example": "/api/img/restaurant/6200218668fc82e7bdf15088"
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
           },
           "mealType": {
             "type": "array",
@@ -1368,7 +1417,18 @@
         },
         "required": ["email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
-      "StreamableFile": { "type": "object", "properties": {} }
+      "StreamableFile": { "type": "object", "properties": {} },
+      "UploadedImageDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
+          }
+        },
+        "required": ["url"]
+      }
     }
   }
 }

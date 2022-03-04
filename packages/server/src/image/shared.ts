@@ -5,7 +5,7 @@ enum ImageType {
   DishPhoto = 'dish',
 }
 
-enum ContentType {
+enum AllowedContentType {
   JPEG = 'image/jpeg',
   PNG = 'image/png',
   WEBP = 'image/webp',
@@ -13,7 +13,7 @@ enum ContentType {
 
 class DBImage {
   readonly data: Binary;
-  readonly contentType: ContentType;
+  readonly contentType: AllowedContentType;
 }
 
-export { ContentType, DBImage, ImageType };
+export { AllowedContentType, DBImage, ImageType };

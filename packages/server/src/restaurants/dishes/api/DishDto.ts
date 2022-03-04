@@ -25,7 +25,6 @@ class NutritionalValueDto {
   readonly perPortion: number;
 }
 
-// TODO: Add photo property
 class DishDto {
   @ApiObjectIdProperty()
   readonly id: string;

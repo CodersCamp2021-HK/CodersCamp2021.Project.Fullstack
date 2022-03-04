@@ -4,10 +4,10 @@ import { Transform } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
 
-export const IMAGE_URL_SCHEMA = Object.freeze({
+const IMAGE_URL_SCHEMA = Object.freeze({
   type: 'string',
   pattern: /\/api\/img\/(restaurant|dish)\/[0-9a-fA-F]{24}$/.source,
-  example: '/api/img/restaurant/6200218668fc82e7bdf15088',
+  example: `https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088`,
 });
 
 function ApiImageProperty(type: ImageType): PropertyDecorator {
@@ -17,4 +17,4 @@ function ApiImageProperty(type: ImageType): PropertyDecorator {
   );
 }
 
-export { ApiImageProperty };
+export { ApiImageProperty, IMAGE_URL_SCHEMA };

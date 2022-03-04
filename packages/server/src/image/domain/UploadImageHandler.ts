@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import { Restaurant, RestaurantDocument } from '../../restaurants/database';
 import { Dish, DishDocument } from '../../restaurants/dishes/database';
 import { Handler } from '../../shared';
-import { ContentType, DBImage, ImageType } from '../shared';
+import { AllowedContentType, DBImage, ImageType } from '../shared';
 
 interface UploadImageRequest {
   readonly partnerId: string;
@@ -59,7 +59,7 @@ class UploadImageHandler implements Handler<UploadImageRequest, UploadImageRespo
   async exec(req: UploadImageRequest): Promise<UploadImageResponse> {
     if (!req.file) return UploadImageResponse.NoFileGiven;
 
-    const allowedContentType = Object.values(ContentType).includes(req.file.mimetype as ContentType);
+    const allowedContentType = Object.values(AllowedContentType).includes(req.file.mimetype as AllowedContentType);
     if (!allowedContentType) return UploadImageResponse.FileHasUnknownExtension;
 
     const targetOwnerId = await this.getTargetOwnerId(req);
