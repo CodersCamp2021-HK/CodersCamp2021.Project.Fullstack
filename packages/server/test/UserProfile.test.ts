@@ -16,13 +16,7 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const user = {
-      addressId: [],
-      favouriteRestaurants: [],
-      favouriteDishes: [],
-      orders: [],
-      profileCompleted: false,
-    };
+    const user = {};
 
     const created = await fixture.db.userModel.create(user);
     const id = created._id?.toString();
