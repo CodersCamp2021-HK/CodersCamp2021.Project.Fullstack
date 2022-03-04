@@ -5,6 +5,7 @@ import { Restaurant, RestaurantSchema } from '../restaurants/database';
 import { Dish, DishSchema } from '../restaurants/dishes/database';
 import { ImageController } from './api';
 import { GetImageHandler } from './domain/GetImageHandler';
+import { UploadImageHandler } from './domain/UploadImageHandler';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { GetImageHandler } from './domain/GetImageHandler';
     MongooseModule.forFeature([{ name: Dish.name, schema: DishSchema }]),
   ],
   controllers: [ImageController],
-  providers: [GetImageHandler],
+  providers: [GetImageHandler, UploadImageHandler],
 })
 class ImageModule {}
 

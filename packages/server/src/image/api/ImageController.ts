@@ -1,14 +1,29 @@
 import { Param, Res, StreamableFile, UploadedFile } from '@nestjs/common';
 import { ApiParam } from '@nestjs/swagger';
+import { plainToInstance } from 'class-transformer';
 import { Express, Response } from 'express';
 
-import { ApiController, ApiCreate, ApiFileUpload, ApiGet, ApiObjectIdParam } from '../../shared';
+import {
+  ApiAuthorization,
+  ApiController,
+  ApiFileUpload,
+  ApiGet,
+  ApiObjectIdParam,
+  ApiUpdate,
+  PartnerId,
+  Role,
+} from '../../shared';
 import { GetImageHandler } from '../domain/GetImageHandler';
+import { UploadImageHandler } from '../domain/UploadImageHandler';
 import { ImageType } from '../shared';
+import { UploadedImageDto } from './UploadedImageDto';
 
 @ApiController({ path: 'img', name: 'Images', description: 'Operations on images' })
 class ImageController {
-  constructor(private readonly getImageHandler: GetImageHandler) {}
+  constructor(
+    private readonly getImageHandler: GetImageHandler,
+    private readonly uploadImageHandler: UploadImageHandler,
+  ) {}
 
   @ApiGet({ path: ':type/:id', name: 'image', response: StreamableFile })
   @ApiParam({ name: 'type', enum: ImageType })
@@ -18,13 +33,38 @@ class ImageController {
     if (!fileData) return null;
 
     res.set({ 'Content-Type': fileData.contentType, 'Content-Disposition': 'inline' });
-    return new StreamableFile(fileData.buffer);
+    return new StreamableFile(fileData.data.buffer);
   }
 
-  @ApiCreate({ name: 'image' })
+  @ApiUpdate({ path: 'upload-restaurant', name: 'logo', response: UploadedImageDto })
+  @ApiAuthorization(Role.Partner)
   @ApiFileUpload()
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  async uploadLogo(@PartnerId() partnerId: string, @UploadedFile() file?: Express.Multer.File) {
+    const uploaded = await this.uploadImageHandler.exec({
+      partnerId,
+      file,
+      targetId: partnerId,
+      type: ImageType.RestaurantLogo,
+    });
+    return uploaded ? plainToInstance(UploadedImageDto, {}) : null;
+  }
+
+  @ApiUpdate({ path: 'upload-dish/:dishId', name: 'photo', response: UploadedImageDto })
+  @ApiAuthorization(Role.Partner)
+  @ApiFileUpload()
+  @ApiObjectIdParam({ name: 'dishId' })
+  async uploadPhoto(
+    @PartnerId() partnerId: string,
+    @Param('dishId') dishId: string,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    const uploaded = await this.uploadImageHandler.exec({
+      partnerId,
+      file,
+      targetId: dishId,
+      type: ImageType.DishPhoto,
+    });
+    return uploaded ? plainToInstance(UploadedImageDto, {}) : null;
   }
 }
 

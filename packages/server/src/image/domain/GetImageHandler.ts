@@ -21,7 +21,6 @@ class GetImageHandler implements Handler<GetImageRequest, DBImage | null> {
   private async getRestaurantLogo(id: string): Promise<DBImage | null> {
     const restaurant = await this.restaurantModel.findById(id);
     if (!restaurant?.logo) return null;
-    console.log(restaurant.logo);
     return plainToInstance(DBImage, restaurant.logo);
   }
 

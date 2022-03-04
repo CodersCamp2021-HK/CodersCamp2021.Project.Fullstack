@@ -1,3 +1,5 @@
+import { Binary } from 'mongodb';
+
 enum ImageType {
   RestaurantLogo = 'restaurant',
   DishPhoto = 'dish',
@@ -10,8 +12,8 @@ enum ContentType {
 }
 
 class DBImage {
-  readonly buffer: Buffer;
+  readonly data: Binary;
   readonly contentType: ContentType;
 }
 
-export { DBImage, ImageType };
+export { ContentType, DBImage, ImageType };

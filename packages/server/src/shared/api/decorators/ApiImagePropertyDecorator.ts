@@ -4,7 +4,7 @@ import { Transform } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
 
-const IMAGE_URL_SCHEMA = Object.freeze({
+export const IMAGE_URL_SCHEMA = Object.freeze({
   type: 'string',
   pattern: /\/api\/img\/(restaurant|dish)\/[0-9a-fA-F]{24}$/.source,
   example: '/api/img/restaurant/6200218668fc82e7bdf15088',
@@ -13,7 +13,7 @@ const IMAGE_URL_SCHEMA = Object.freeze({
 function ApiImageProperty(type: ImageType): PropertyDecorator {
   return applyDecorators(
     ApiProperty({ required: false, ...IMAGE_URL_SCHEMA }),
-    Transform(({ obj, value }) => (value ? `/api/img/${type}/${obj.id}` : undefined)),
+    Transform(({ obj, value }) => (value ? `${process.env.SERVER_URL}/api/img/${type}/${obj.id}` : undefined)),
   );
 }
 
