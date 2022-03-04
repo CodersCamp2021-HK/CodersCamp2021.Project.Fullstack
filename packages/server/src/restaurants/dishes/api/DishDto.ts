@@ -105,12 +105,16 @@ class DishDto {
     type: NutritionalValueDto,
   })
   readonly carbohydrates: NutritionalValueDto;
+
+  @Type(() => String)
+  @ApiObjectIdProperty()
+  readonly restaurant: string;
 }
 
-class CreateDishDto extends OmitType(DishDto, ['id'] as const) {}
+class CreateDishDto extends OmitType(DishDto, ['id', 'restaurant'] as const) {}
 
 class UpdateDishDto extends CreateDishDto {}
 
-class FavouriteDishDto extends PickType(DishDto, ['id', 'name'] as const) {}
+class FavouriteDishDto extends PickType(DishDto, ['id', 'name', 'restaurant'] as const) {}
 
 export { CreateDishDto, DishDto, FavouriteDishDto, UpdateDishDto };
