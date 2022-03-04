@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { PHONE_NUMBER } from '../../auth/shared';
+import { DBImage } from '../../image/shared';
 
 type RestaurantDocument = Restaurant & Document<ObjectId>;
 
@@ -87,8 +88,9 @@ class Restaurant {
   addressId: Address[];
 
   @Expose()
+  @Type(() => DBImage)
   @Prop()
-  logo: Buffer;
+  logo: DBImage;
 
   @Expose()
   @Prop({

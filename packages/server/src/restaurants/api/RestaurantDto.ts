@@ -2,10 +2,11 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Exclude, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
+import { ImageType } from '../../image/shared';
 import { ApiObjectIdProperty } from '../../shared';
+import { ApiImage } from '../../shared/api/decorators/ApiImageDecorator';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
-// TODO: Add logo
 class RestaurantDto {
   @ApiObjectIdProperty()
   readonly id: string;
@@ -34,6 +35,9 @@ class RestaurantDto {
     type: [AddressDto],
   })
   readonly addressId: AddressDto[];
+
+  @ApiImage(ImageType.RestaurantLogo)
+  readonly logo: string;
 
   @Exclude()
   declare readonly profileCompleted: boolean;

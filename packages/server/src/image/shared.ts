@@ -3,11 +3,15 @@ enum ImageType {
   DishPhoto = 'dish',
 }
 
-enum ImageExtension {
-  PNG = 'png',
-  JPG = 'jpg',
-  JPEG = 'jpeg',
-  WEBP = 'webp',
+enum ContentType {
+  JPEG = 'image/jpeg',
+  PNG = 'image/png',
+  WEBP = 'image/webp',
 }
 
-export { ImageExtension, ImageType };
+class DBImage {
+  readonly buffer: Buffer;
+  readonly contentType: ContentType;
+}
+
+export { DBImage, ImageType };

@@ -11,6 +11,7 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'cuisineType',
   'tags',
   'addressId',
+  'logo',
   'profileCompleted',
 ] as const) {
   @ApiProperty({ required: false })

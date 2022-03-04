@@ -1,7 +1,9 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
+import { ImageType } from '../../../image/shared';
 import { ApiObjectIdProperty } from '../../../shared';
+import { ApiImage } from '../../../shared/api/decorators/ApiImageDecorator';
 import { Allergens, DISH_CONSTANTS, DishTags, MealType } from '../database';
 
 class IngredientDto {
@@ -35,6 +37,9 @@ class DishDto {
     example: 'Danie 1',
   })
   readonly name: string;
+
+  @ApiImage(ImageType.DishPhoto)
+  readonly photo: string;
 
   @ApiProperty({
     required: false,
@@ -107,7 +112,7 @@ class DishDto {
   readonly carbohydrates: NutritionalValueDto;
 }
 
-class CreateDishDto extends OmitType(DishDto, ['id'] as const) {}
+class CreateDishDto extends OmitType(DishDto, ['id', 'photo'] as const) {}
 
 class UpdateDishDto extends CreateDishDto {}
 
