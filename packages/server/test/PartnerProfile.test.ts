@@ -15,21 +15,34 @@ describe(`${PATH}`, () => {
   });
 
   it('GET /', async () => {
-    // Given
-    const restaurant = {
-      name: 'Restaurant',
-      phoneNumber: '123456789',
-      profileCompleted: false,
-    };
-    const created = await fixture.db.restaurantModel.create(restaurant);
-    const id = created._id?.toString();
-    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
+    const restaurants = [
+      {
+        name: 'Incomplete restaurant',
+        phoneNumber: '123456789',
+        profileCompleted: false,
+      },
+      {
+        name: 'Completed restaurant',
+        description: 'A description.',
+        cuisineType: ['włoska'],
+        tags: ['zdrowa', 'pizza'],
+        bankAccountNumber: '72920080748556126838146923',
+        phoneNumber: '123456789',
+      },
+    ];
 
-    // When
-    const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
+    for (const restaurant of restaurants) {
+      // Given
+      const created = await fixture.db.restaurantModel.create(restaurant);
+      const id = created._id?.toString();
+      const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
 
-    // Then
-    expect(resp.status).toBe(HttpStatus.OK);
-    expect(created).toEqual(expect.objectContaining(resp.body));
+      // When
+      const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
+
+      // Then
+      expect(resp.status).toBe(HttpStatus.OK);
+      expect(created).toEqual(expect.objectContaining(resp.body));
+    }
   });
 });
