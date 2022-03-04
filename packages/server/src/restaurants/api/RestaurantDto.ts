@@ -3,8 +3,7 @@ import { Exclude, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
 import { ImageType } from '../../image/shared';
-import { ApiObjectIdProperty } from '../../shared';
-import { ApiImage } from '../../shared/api/decorators/ApiImageDecorator';
+import { ApiImage, ApiObjectIdProperty } from '../../shared';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
 class RestaurantDto {

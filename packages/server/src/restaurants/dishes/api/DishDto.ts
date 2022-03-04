@@ -2,8 +2,7 @@ import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
-import { ApiObjectIdProperty } from '../../../shared';
-import { ApiImage } from '../../../shared/api/decorators/ApiImageDecorator';
+import { ApiImage, ApiObjectIdProperty } from '../../../shared';
 import { Allergens, DISH_CONSTANTS, DishTags, MealType } from '../database';
 
 class IngredientDto {
