@@ -1,4 +1,13 @@
-import { Param, Res, StreamableFile, UploadedFile } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  NotFoundException,
+  Param,
+  Res,
+  StreamableFile,
+  UnauthorizedException,
+  UploadedFile,
+} from '@nestjs/common';
 import { ApiParam } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { Express, Response } from 'express';
@@ -14,7 +23,7 @@ import {
   Role,
 } from '../../shared';
 import { GetImageHandler } from '../domain/GetImageHandler';
-import { UploadImageHandler } from '../domain/UploadImageHandler';
+import { UploadImageHandler, UploadImageRequest, UploadImageResponse } from '../domain/UploadImageHandler';
 import { ImageType } from '../shared';
 import { UploadedImageDto } from './UploadedImageDto';
 
@@ -40,13 +49,12 @@ class ImageController {
   @ApiAuthorization(Role.Partner)
   @ApiFileUpload()
   async uploadLogo(@PartnerId() partnerId: string, @UploadedFile() file?: Express.Multer.File) {
-    const uploaded = await this.uploadImageHandler.exec({
+    return this.handleUpload({
       partnerId,
       file,
       targetId: partnerId,
       type: ImageType.RestaurantLogo,
     });
-    return uploaded ? plainToInstance(UploadedImageDto, {}) : null;
   }
 
   @ApiUpdate({ path: 'upload-dish/:dishId', name: 'photo', response: UploadedImageDto })
@@ -58,13 +66,32 @@ class ImageController {
     @Param('dishId') dishId: string,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    const uploaded = await this.uploadImageHandler.exec({
+    return this.handleUpload({
       partnerId,
       file,
       targetId: dishId,
       type: ImageType.DishPhoto,
     });
-    return uploaded ? plainToInstance(UploadedImageDto, {}) : null;
+  }
+
+  private async handleUpload(uploadRequest: UploadImageRequest) {
+    const uploadResult = await this.uploadImageHandler.exec(uploadRequest);
+
+    switch (uploadResult) {
+      case UploadImageResponse.Success:
+        return plainToInstance(UploadedImageDto, {
+          url: `${process.env.SERVER_URL}/api/img/${uploadRequest.type}/${uploadRequest.targetId}`,
+        });
+      case UploadImageResponse.NoFileGiven:
+      case UploadImageResponse.FileHasUnknownExtension:
+        throw new BadRequestException();
+      case UploadImageResponse.RequesterIsNotOwner:
+        throw new UnauthorizedException();
+      case UploadImageResponse.ResourceNotFound:
+        throw new NotFoundException();
+      default:
+        throw new InternalServerErrorException();
+    }
   }
 }
 

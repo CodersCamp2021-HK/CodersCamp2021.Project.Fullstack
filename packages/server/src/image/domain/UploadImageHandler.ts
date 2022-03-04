@@ -15,7 +15,15 @@ interface UploadImageRequest {
   readonly file?: Express.Multer.File;
 }
 
-class UploadImageHandler implements Handler<UploadImageRequest, boolean> {
+enum UploadImageResponse {
+  Success,
+  NoFileGiven,
+  FileHasUnknownExtension,
+  RequesterIsNotOwner,
+  ResourceNotFound,
+}
+
+class UploadImageHandler implements Handler<UploadImageRequest, UploadImageResponse> {
   constructor(
     @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
     @InjectModel(Dish.name) private dishModel: Model<DishDocument>,
@@ -48,13 +56,21 @@ class UploadImageHandler implements Handler<UploadImageRequest, boolean> {
     }
   }
 
-  async exec(req: UploadImageRequest): Promise<boolean> {
-    const contentTypeIsAllowed = Object.values(ContentType).includes(req.file?.mimetype as ContentType);
-    const targetOwner = await this.getTargetOwnerId(req);
-    if (!req.file || !contentTypeIsAllowed || req.partnerId !== targetOwner) return false;
+  async exec(req: UploadImageRequest): Promise<UploadImageResponse> {
+    if (!req.file) return UploadImageResponse.NoFileGiven;
+
+    const allowedContentType = Object.values(ContentType).includes(req.file.mimetype as ContentType);
+    if (!allowedContentType) return UploadImageResponse.FileHasUnknownExtension;
+
+    const targetOwnerId = await this.getTargetOwnerId(req);
+    if (req.partnerId !== targetOwnerId) return UploadImageResponse.RequesterIsNotOwner;
+
     const updatedModel = await this.addToModel(req);
-    return updatedModel !== null;
+    if (!updatedModel) return UploadImageResponse.ResourceNotFound;
+
+    return UploadImageResponse.Success;
   }
 }
 
-export { UploadImageHandler };
+export { UploadImageHandler, UploadImageResponse };
+export type { UploadImageRequest };
