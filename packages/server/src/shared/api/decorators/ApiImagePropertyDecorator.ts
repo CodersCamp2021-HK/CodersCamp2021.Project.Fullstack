@@ -10,11 +10,11 @@ const IMAGE_URL_SCHEMA = Object.freeze({
   example: '/api/img/restaurant/6200218668fc82e7bdf15088',
 });
 
-function ApiImage(type: ImageType): PropertyDecorator {
+function ApiImageProperty(type: ImageType): PropertyDecorator {
   return applyDecorators(
     ApiProperty({ required: false, ...IMAGE_URL_SCHEMA }),
     Transform(({ obj, value }) => (value ? `/api/img/${type}/${obj.id}` : undefined)),
   );
 }
 
-export { ApiImage };
+export { ApiImageProperty };

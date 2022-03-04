@@ -3,7 +3,7 @@ import { Exclude, Expose, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
 import { ImageType } from '../../image/shared';
-import { ApiImage, ApiObjectIdProperty } from '../../shared';
+import { ApiImageProperty, ApiObjectIdProperty } from '../../shared';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
 @Exclude()
@@ -43,7 +43,7 @@ class RestaurantDto {
   readonly addressId: AddressDto[];
 
   @Expose()
-  @ApiImage(ImageType.RestaurantLogo)
+  @ApiImageProperty(ImageType.RestaurantLogo)
   readonly logo: string;
 }
 

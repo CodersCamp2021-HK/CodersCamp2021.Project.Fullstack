@@ -1,9 +1,8 @@
-import { Param, Post, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiParam } from '@nestjs/swagger';
+import { Param, Res, StreamableFile, UploadedFile } from '@nestjs/common';
+import { ApiParam } from '@nestjs/swagger';
 import { Express, Response } from 'express';
 
-import { ApiController, ApiGet, ApiObjectIdParam } from '../../shared';
+import { ApiController, ApiCreate, ApiFileUpload, ApiGet, ApiObjectIdParam } from '../../shared';
 import { GetImageHandler } from '../domain/GetImageHandler';
 import { ImageType } from '../shared';
 
@@ -11,7 +10,7 @@ import { ImageType } from '../shared';
 class ImageController {
   constructor(private readonly getImageHandler: GetImageHandler) {}
 
-  @ApiGet({ path: ':type/:id', name: 'file', response: StreamableFile })
+  @ApiGet({ path: ':type/:id', name: 'image', response: StreamableFile })
   @ApiParam({ name: 'type', enum: ImageType })
   @ApiObjectIdParam()
   async getImg(@Param('type') type: ImageType, @Param('id') id: string, @Res({ passthrough: true }) res: Response) {
@@ -22,20 +21,8 @@ class ImageController {
     return new StreamableFile(fileData.buffer);
   }
 
-  @UseInterceptors(FileInterceptor('file'))
-  @Post('file')
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
+  @ApiCreate({ name: 'image' })
+  @ApiFileUpload()
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
   }
