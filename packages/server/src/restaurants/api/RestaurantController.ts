@@ -12,15 +12,15 @@ import {
   PaginationQuery,
   Url,
 } from '../../shared';
-import { GetRestaurantHandler } from '../domain/GetRestaurantHandler';
-import { ListRestaurantsHandler } from '../domain/ListRestaurantsHandler';
-import { RestaurantDto } from './RestaurantDto';
+import { GetRestaurantHandler, ListRestaurantsHandler, UpdateRestaurantHandler } from '../domain/';
+import { RestaurantDto, UpdateRestaurantDto } from './RestaurantDto';
 import { RestaurantListDto } from './RestaurantListDto';
 
 @ApiController({ path: 'restaurants', name: 'Restaurants', description: 'Operations on restaurants' })
 class RestaurantController {
   constructor(
     private readonly getRestaurantHandler: GetRestaurantHandler,
+    private readonly updateRestaurantHandler: UpdateRestaurantHandler,
     private readonly listRestaurantsHandler: ListRestaurantsHandler,
   ) {}
 
@@ -37,6 +37,12 @@ class RestaurantController {
     const paginatedRestaurants = await this.listRestaurantsHandler.exec(pagination);
     res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
     return plainToInstance(RestaurantListDto, paginatedRestaurants);
+  }
+
+  @ApiObjectIdParam()
+  @ApiUpdate({ name: 'restaurant' })
+  async update(@Param('id') id: string, @Body() updateRestaurantDto: UpdateRestaurantDto) {
+    return this.updateRestaurantHandler.exec({ id, ...updateRestaurantDto });
   }
 }
 
