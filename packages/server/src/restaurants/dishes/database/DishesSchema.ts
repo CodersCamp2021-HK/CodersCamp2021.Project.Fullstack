@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { DBImage } from '../../../image/shared';
+import { Restaurant } from '../../database';
 
 type DishDocument = Dish & Document<ObjectId>;
 
@@ -56,6 +57,7 @@ class Ingredient {
   @Expose()
   readonly canBeExcluded: boolean;
 }
+
 @Exclude()
 class NutritionalValue {
   @Expose()
@@ -64,6 +66,7 @@ class NutritionalValue {
   @Expose()
   readonly perPortion: number;
 }
+
 @Exclude()
 @Schema({
   collection: 'dishes',
@@ -192,6 +195,10 @@ class Dish {
     }),
   )
   carbohydrates: NutritionalValue;
+
+  @Expose()
+  @Prop({ type: ObjectId, ref: 'Restaurant', required: true })
+  restaurant: Restaurant;
 
   @Expose()
   readonly id: string;

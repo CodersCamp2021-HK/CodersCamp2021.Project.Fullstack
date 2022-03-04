@@ -6,6 +6,7 @@ import { Document } from 'mongoose';
 import { Address } from '../../addresses/database/AddressSchema';
 import { PHONE_NUMBER } from '../../auth/shared';
 import { DBImage } from '../../image/shared';
+import { Dish } from '../dishes/database';
 
 type RestaurantDocument = Restaurant & Document<ObjectId>;
 
@@ -109,6 +110,10 @@ class Restaurant {
   @Expose()
   @Prop({ default: false })
   profileCompleted: boolean;
+
+  @Expose()
+  @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
+  dishes: Dish[];
 
   @Expose()
   readonly id: string;
