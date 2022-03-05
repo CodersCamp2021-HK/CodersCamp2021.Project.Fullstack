@@ -5,6 +5,7 @@ import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
 import { dishDto } from './ApiDtoUtils';
 import { initE2eFixture } from './E2eFixture';
+import { accessTokenAsCookie } from './shared';
 
 const PATH = '/api/partner/dishes';
 
@@ -13,9 +14,7 @@ describe(`${PATH}`, () => {
 
   it('POST /', async () => {
     // Given
-    const accessToken = `access_token=${fixture.app
-      .get(JwtService)
-      .sign({ role: Role.Partner })}; Path=/; HttpOnly; SameSite=Strict`;
+    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner }));
     const reqBody: CreateDishDto = dishDto();
 
     // When

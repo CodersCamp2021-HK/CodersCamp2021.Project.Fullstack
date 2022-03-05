@@ -713,18 +713,11 @@
         "tags": ["User's favourite dishes"]
       }
     },
-    "/api/users/{id}": {
+    "/api/users/profile": {
       "get": {
         "operationId": "UsersController_findById",
         "summary": "Retrive a user by id.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successfully returned user.",
@@ -740,7 +733,31 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Users"]
+        "tags": ["Users's profile"],
+        "security": [{ "cookie": [] }]
+      },
+      "put": {
+        "operationId": "UsersController_update",
+        "summary": "Update an existing user.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The user has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "User does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Users's profile"],
+        "security": [{ "cookie": [] }]
       }
     }
   },
@@ -752,7 +769,7 @@
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
     { "name": "Partner's profile", "description": "Operations on partner's profile" },
-    { "name": "Users", "description": "Operations about users" },
+    { "name": "Users's profile", "description": "Operations on user's profile" },
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
     { "name": "Auth", "description": "Operations about authentication and registration" }
@@ -1012,6 +1029,7 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1021,7 +1039,7 @@
             "description": ""
           }
         },
-        "required": ["id", "name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
+        "required": ["id", "cuisineType", "tags", "addressId"]
       },
       "UpdatePartnerProfileDto": {
         "type": "object",
@@ -1038,6 +1056,7 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1047,7 +1066,7 @@
             "description": ""
           }
         },
-        "required": ["name", "description", "cuisineType", "tags", "bankAccountNumber", "phoneNumber"]
+        "required": ["cuisineType", "tags", "addressId"]
       },
       "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
       "DishTagsEnum": {
@@ -1115,9 +1134,20 @@
           "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
-          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "restaurant": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
         },
-        "required": ["id", "name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
+        "required": [
+          "id",
+          "name",
+          "price",
+          "portionWeight",
+          "calories",
+          "fats",
+          "proteins",
+          "carbohydrates",
+          "restaurant"
+        ]
       },
       "DishListDto": {
         "type": "object",
@@ -1207,9 +1237,10 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" }
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "restaurant": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
         },
-        "required": ["id", "name"]
+        "required": ["id", "name", "restaurant"]
       },
       "FavouriteDishListDto": {
         "type": "object",
@@ -1238,6 +1269,25 @@
           "profileCompleted": { "type": "boolean", "default": false }
         },
         "required": ["id", "email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "surname": { "type": "string" },
+          "email": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "addressId": { "type": "array", "items": { "type": "string" } },
+          "card": { "type": "object" },
+          "favouriteRestaurants": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
+          },
+          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "orders": { "type": "array", "items": { "type": "string" } },
+          "profileCompleted": { "type": "boolean", "default": false }
+        },
+        "required": ["email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       }
     }
   }

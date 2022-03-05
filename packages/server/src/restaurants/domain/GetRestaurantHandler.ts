@@ -7,14 +7,15 @@ import { Restaurant, RestaurantDocument } from '../database';
 
 interface GetRestaurantRequest {
   readonly id: string;
+  readonly profileMustBeCompleted?: boolean;
 }
 
 class GetRestaurantHandler implements Handler<GetRestaurantRequest, Restaurant | null> {
   constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
-  async exec(req: GetRestaurantRequest): Promise<Restaurant | null> {
-    const restaurant = await this.restaurantModel.findById(req.id);
-    if (!restaurant || !restaurant?.profileCompleted) return null;
+  async exec({ id, profileMustBeCompleted = true }: GetRestaurantRequest): Promise<Restaurant | null> {
+    const restaurant = await this.restaurantModel.findById(id);
+    if (!restaurant || (profileMustBeCompleted && !restaurant?.profileCompleted)) return null;
     return plainToInstance(Restaurant, restaurant);
   }
 }

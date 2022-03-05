@@ -20,17 +20,11 @@ class UserDto {
   @ApiPropertyOptional()
   readonly surname: string;
 
-  @ApiProperty()
-  readonly email: string;
-
   @ApiPropertyOptional()
   readonly phoneNumber: string;
 
   @ApiPropertyOptional()
   readonly addressId: string[];
-
-  @ApiProperty()
-  readonly card: Card;
 
   @ApiProperty({ type: [FavouriteRestaurantDto] })
   readonly favouriteRestaurants: FavouriteRestaurantDto[];
@@ -47,4 +41,7 @@ class UserDto {
   readonly profileCompleted: boolean;
 }
 
-export { UserDto };
+class CreateUserDto extends OmitType(UserDto, ['id'] as const) {}
+
+class UpdateUserDto extends CreateUserDto {}
+export { CreateUserDto, UpdateUserDto, UserDto };
