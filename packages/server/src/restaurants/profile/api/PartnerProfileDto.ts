@@ -1,9 +1,11 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
 
 import { ApiPhoneNumberProperty } from '../../../auth/api/decorators';
 import { RestaurantDto } from '../../api/RestaurantDto';
 import { RESTAURANT_CONSTANTS } from '../../database';
 
+@Exclude()
 class PartnerProfileDto extends PickType(RestaurantDto, [
   'id',
   'name',
@@ -11,7 +13,6 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'cuisineType',
   'tags',
   'addressId',
-  'profileCompleted',
 ] as const) {
   @ApiProperty({ required: false })
   declare readonly name: string;
@@ -19,6 +20,7 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   @ApiProperty({ required: false })
   declare readonly description: string;
 
+  @Expose()
   @ApiProperty({
     pattern: RESTAURANT_CONSTANTS.BANK_ACCOUNT_NUMBER.REGEX.source,
     example: '72920080748556126838146923',
@@ -26,6 +28,7 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   })
   readonly bankAccountNumber: string;
 
+  @Expose()
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
 }
