@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   InternalServerErrorException,
-  NotFoundException,
   Param,
   Res,
   StreamableFile,
@@ -82,13 +81,10 @@ class ImageController {
         return plainToInstance(UploadedImageDto, {
           url: `${process.env.SERVER_URL}/api/img/${uploadRequest.type}/${uploadRequest.targetId}`,
         });
-      case UploadImageResponse.NoFileGiven:
-      case UploadImageResponse.FileHasUnknownExtension:
+      case UploadImageResponse.InvalidFileGiven:
         throw new BadRequestException();
-      case UploadImageResponse.RequesterIsNotOwner:
+      case UploadImageResponse.RequesterUnauthorized:
         throw new UnauthorizedException();
-      case UploadImageResponse.ResourceNotFound:
-        throw new NotFoundException();
       default:
         throw new InternalServerErrorException();
     }

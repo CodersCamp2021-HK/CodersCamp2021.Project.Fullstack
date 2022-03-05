@@ -17,10 +17,9 @@ interface UploadImageRequest {
 
 enum UploadImageResponse {
   Success,
-  NoFileGiven,
-  FileHasUnknownExtension,
-  RequesterIsNotOwner,
-  ResourceNotFound,
+  InvalidFileGiven,
+  RequesterUnauthorized,
+  OtherError,
 }
 
 class UploadImageHandler implements Handler<UploadImageRequest, UploadImageResponse> {
@@ -57,16 +56,16 @@ class UploadImageHandler implements Handler<UploadImageRequest, UploadImageRespo
   }
 
   async exec(req: UploadImageRequest): Promise<UploadImageResponse> {
-    if (!req.file) return UploadImageResponse.NoFileGiven;
+    if (!req.file) return UploadImageResponse.InvalidFileGiven;
 
     const allowedContentType = Object.values(AllowedContentType).includes(req.file.mimetype as AllowedContentType);
-    if (!allowedContentType) return UploadImageResponse.FileHasUnknownExtension;
+    if (!allowedContentType) return UploadImageResponse.InvalidFileGiven;
 
     const targetOwnerId = await this.getTargetOwnerId(req);
-    if (req.partnerId !== targetOwnerId) return UploadImageResponse.RequesterIsNotOwner;
+    if (req.partnerId !== targetOwnerId) return UploadImageResponse.RequesterUnauthorized;
 
     const updatedModel = await this.addToModel(req);
-    if (!updatedModel) return UploadImageResponse.ResourceNotFound;
+    if (!updatedModel) return UploadImageResponse.OtherError;
 
     return UploadImageResponse.Success;
   }

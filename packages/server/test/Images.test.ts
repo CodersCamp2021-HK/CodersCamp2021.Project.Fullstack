@@ -29,7 +29,7 @@ describe(`${PATH}`, () => {
     await fixture.db.dishModel.deleteMany();
   });
 
-  it('PUT /upload-restaurant', async () => {
+  test('PUT /upload-restaurant', async () => {
     // Given
     const { sub, accessToken, filePath, fileBuffer } = await prepareRestaurantAndFile(fixture);
 
@@ -48,7 +48,7 @@ describe(`${PATH}`, () => {
     expect(downloadResp.body).toEqual(fileBuffer);
   });
 
-  it('PUT /upload-dish/:id', async () => {
+  test('PUT /upload-dish/:id', async () => {
     // Given
     const { sub, accessToken, filePath, fileBuffer } = await prepareRestaurantAndFile(fixture);
 
@@ -68,5 +68,19 @@ describe(`${PATH}`, () => {
 
     expect(downloadResp.status).toBe(HttpStatus.OK);
     expect(downloadResp.body).toEqual(fileBuffer);
+  });
+
+  test('Image upload errors', async () => {
+    // Given
+    const { accessToken } = await prepareRestaurantAndFile(fixture);
+    const request = () => fixture.req.put(`${PATH}/upload-restaurant`);
+
+    // Requester is not authenticated
+    const resp1 = await request();
+    expect(resp1.status).toEqual(HttpStatus.UNAUTHORIZED);
+
+    // File with illegal content type attached
+    const resp2 = await request().set('Cookie', [accessToken]).attach('file', path.join(__dirname, '../package.json'));
+    expect(resp2.status).toEqual(HttpStatus.BAD_REQUEST);
   });
 });
