@@ -12,37 +12,25 @@ import {
   PaginationQuery,
   Url,
 } from '../../shared';
-import { GetRestaurantHandler, ListRestaurantsHandler, UpdateRestaurantHandler } from '../domain/';
-import { RestaurantDto, UpdateRestaurantDto } from './RestaurantDto';
+import { RestaurantDto } from './RestaurantDto';
 import { RestaurantListDto } from './RestaurantListDto';
 
 @ApiController({ path: 'restaurants', name: 'Restaurants', description: 'Operations on restaurants' })
 class RestaurantController {
-  constructor(
-    private readonly getRestaurantHandler: GetRestaurantHandler,
-    private readonly updateRestaurantHandler: UpdateRestaurantHandler,
-    private readonly listRestaurantsHandler: ListRestaurantsHandler,
-  ) {}
-
   @ApiObjectIdParam()
   @ApiGet({ name: 'restaurant', response: RestaurantDto })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(@Param('id') id: string) {
-    const restaurant = await this.getRestaurantHandler.exec({ id });
+    const restaurant = null; // TODO: Hook up GetRestaurantHandler, remove eslint-disable comment above
     if (!restaurant) return null;
     return plainToInstance(RestaurantDto, restaurant);
   }
 
   @ApiList({ name: 'restaurants', response: RestaurantListDto, link: true })
   async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
-    const paginatedRestaurants = await this.listRestaurantsHandler.exec(pagination);
+    const paginatedRestaurants = { data: [], pages: 1 }; // TODO: Hook up ListRestaurantsHandler
     res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
     return plainToInstance(RestaurantListDto, paginatedRestaurants);
-  }
-
-  @ApiObjectIdParam()
-  @ApiUpdate({ name: 'restaurant' })
-  async update(@Param('id') id: string, @Body() updateRestaurantDto: UpdateRestaurantDto) {
-    return this.updateRestaurantHandler.exec({ id, ...updateRestaurantDto });
   }
 }
 

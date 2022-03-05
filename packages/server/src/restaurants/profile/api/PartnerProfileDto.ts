@@ -30,6 +30,8 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   readonly phoneNumber: string;
 }
 
-class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}
+// TODO: remove addresId from OmitType after address case is resolved
+
+class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id', 'addressId'] as const) {}
 
 export { PartnerProfileDto, UpdatePartnerProfileDto };
