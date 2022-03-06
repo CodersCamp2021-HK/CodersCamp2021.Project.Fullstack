@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
-import { CreateAddressHandler } from '../../addresses/domain/CreateAddressHandler';
 import { Order } from '../../orders/database/OrderSchema';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 import { Dish } from '../../restaurants/dishes/database/DishesSchema';
@@ -23,7 +22,9 @@ interface UpdateUserProfileRequest {
   readonly orders: Order[];
   readonly profileCompleted: boolean;
 }
-
+function isEmptyObject(obj) {
+  return !Object.keys(obj).length;
+}
 @Injectable()
 class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null | undefined> {
   constructor(@InjectModel(User.name) private userModule: Model<UserDocument>) {}
@@ -36,7 +37,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         surname: req.surname,
         email: req.email,
         phoneNumber: req.phoneNumber,
-        addressId: req.addressId,
+        // addressId: req.addressId,
         card: req.card,
         // favouriteRestaurants: req.favouriteRestaurants,
         // favouriteDishes: req.favouriteDishes,
@@ -45,7 +46,6 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
       },
     );
 
-    CreateAddressHandler;
     if (result === null) return null;
     return undefined;
   }
