@@ -15,6 +15,10 @@ const ORDER_CONSTANTS = Object.freeze({
   PRICE: Object.freeze({
     MIN: 0,
   }),
+  HOUR: Object.freeze({
+    MIN: 0,
+    MAX: 23,
+  }),
   COUNT: Object.freeze({
     MIN: 1,
   }),
@@ -24,12 +28,18 @@ class SubOrder {
   @Prop({ required: true })
   deliveryDate: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
   hourStart: number;
 
-  @Prop({ required: true })
+  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
   hourEnd: number;
 
+  /*
+  TODO: When creating a handler this part might need to be refactored.
+  Also, remove price from this object when refactoring, as of now price is supplied
+  by user, so there is nothing stopping the user from just entering 0 for every item
+  in his order and receiving the food for free.
+  */
   @Prop(
     raw({
       dishId: {
