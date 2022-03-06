@@ -23,7 +23,7 @@ class UserDto {
   @ApiPropertyOptional()
   readonly surname: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   readonly email: string;
 
   @ApiPropertyOptional()
@@ -32,19 +32,19 @@ class UserDto {
   @ApiPropertyOptional()
   readonly addressId: Address[];
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   readonly card: Card;
 
-  @ApiProperty({ type: [FavouriteRestaurantDto] })
+  @ApiPropertyOptional({ type: [FavouriteRestaurantDto] })
   readonly favouriteRestaurants: Restaurant[];
 
-  @ApiProperty({ type: [FavouriteDishDto] })
+  @ApiPropertyOptional({ type: [FavouriteDishDto] })
   readonly favouriteDishes: Dish[];
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   readonly orders: Order[];
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     default: false,
   })
   readonly profileCompleted: boolean;

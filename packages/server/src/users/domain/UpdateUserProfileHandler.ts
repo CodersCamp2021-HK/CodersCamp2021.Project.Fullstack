@@ -4,13 +4,10 @@ import { Model } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { Order } from '../../orders/database/OrderSchema';
-import { FavouriteRestaurantDto } from '../../restaurants/api/RestaurantDto';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
-import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
 import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { Handler } from '../../shared';
-import { Card } from '../api/UserDto';
-import { User, UserDocument } from '../database';
+import { Card, User, UserDocument } from '../database';
 
 interface UpdateUserProfileRequest {
   readonly name: string;
@@ -18,7 +15,7 @@ interface UpdateUserProfileRequest {
   readonly email: string;
   readonly phoneNumber: string;
   readonly addressId: Address[];
-  // readonly card: object[];
+  readonly card: Card;
   readonly favouriteRestaurants: Restaurant[];
   readonly favouriteDishes: Dish[];
   readonly orders: Order[];
@@ -35,12 +32,12 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
       surname: req.surname,
       email: req.email,
       phoneNumber: req.phoneNumber,
-      // addressId: req.addressId,
-      // card: req.card,
+      addressId: req.addressId,
+      card: req.card,
       // favouriteRestaurants: req.favouriteRestaurants,
       // favouriteDishes: req.favouriteDishes,
       // orders: req.orders,
-      profileCompleted: req.profileCompleted,
+      // profileCompleted: req.profileCompleted,
     });
     if (result === null) return null;
     return undefined;

@@ -1,5 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
@@ -19,6 +19,18 @@ const USER_CONSTANTS = Object.freeze({
     CVC: { MIN_LENGTH: 3, MAX_LENGTH: 4 },
   }),
 });
+
+@Exclude()
+class Card {
+  @Expose()
+  number: string;
+
+  @Expose()
+  expirationDate: Date;
+
+  @Expose()
+  securityCode: string;
+}
 
 @Exclude()
 @Schema({
@@ -41,7 +53,9 @@ class User {
   @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
-  @Prop([
+  @Expose()
+  @Type(() => Card)
+  @Prop(
     raw({
       number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
       expirationDate: { type: Date },
@@ -51,8 +65,8 @@ class User {
         max: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
       },
     }),
-  ])
-  card: object[];
+  )
+  card: Card;
 
   @Expose()
   @Prop({ type: [{ type: ObjectId, ref: 'Restaurant' }] })
@@ -76,5 +90,5 @@ class User {
 
 const UserSchema = SchemaFactory.createForClass(User);
 
-export { User, USER_CONSTANTS, UserSchema };
+export { Card, User, USER_CONSTANTS, UserSchema };
 export type { UserDocument };
