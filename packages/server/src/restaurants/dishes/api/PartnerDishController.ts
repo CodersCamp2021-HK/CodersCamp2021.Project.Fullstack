@@ -18,20 +18,23 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler } from '../domain';
+import { CreateDishHandler, GetDishHandler, ListDishesHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
 @ApiController({ path: 'partner/dishes', name: "Partner's dishes", description: "Operations on partner's dishes" })
 class PartnerDishController {
-  constructor(private readonly createDishHandler: CreateDishHandler) {}
+  constructor(
+    private readonly createDishHandler: CreateDishHandler,
+    private readonly getDishHandler: GetDishHandler,
+    private readonly listDishesHandler: ListDishesHandler,
+  ) {}
 
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(@PartnerId() partnerId: string, @Param('id') dishId: string) {
-    const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
+    const dish = await this.getDishHandler.exec({ dishId, partnerId });
     if (!dish) return null;
     return plainToInstance(DishDto, dish);
   }
@@ -40,11 +43,11 @@ class PartnerDishController {
   @ApiAuthorization(Role.Partner)
   async list(
     @PartnerId() partnerId: string,
-    @Pagination() pagination: PaginationQuery,
+    @Pagination() { page, limit }: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const paginatedDishes = { data: [], pages: 1 }; // TODO: Hook up ListDishesHandler
+    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, partnerId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }
