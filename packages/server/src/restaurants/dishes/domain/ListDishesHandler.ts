@@ -1,5 +1,6 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Handler, Paginated, PaginationQuery } from '../../../shared';
@@ -13,7 +14,7 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
 
   async exec(req: ListDishesRequest) {
     const offset = (req.page - 1) * req.limit;
-    const queryFilter = { restaurant: req.partnerId };
+    const queryFilter = { restaurant: new ObjectId(req.partnerId) };
     const dishDocsQuery = this.dishModel.find(queryFilter).skip(offset).limit(req.limit);
     const countQuery = this.dishModel.countDocuments();
     const [dishDocs, count] = await Promise.all([dishDocsQuery.exec(), countQuery.exec()]);

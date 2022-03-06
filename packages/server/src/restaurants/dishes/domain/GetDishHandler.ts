@@ -15,7 +15,7 @@ class GetDishHandler implements Handler<GetDishRequest, Dish | null> {
 
   async exec(req: GetDishRequest): Promise<Dish | null> {
     const dish = await this.dishModel.findById(req.dishId);
-    if (!dish || dish.restaurant.id !== req.partnerId) return null;
+    if (!dish || dish?.restaurant.toString() !== req.partnerId) return null;
     return plainToInstance(Dish, dish);
   }
 }

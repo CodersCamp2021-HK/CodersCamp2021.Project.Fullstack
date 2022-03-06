@@ -3,6 +3,7 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
+import { ExposeId } from '../../../shared/api/decorators';
 import { Restaurant } from '../../database';
 
 type DishDocument = Dish & Document<ObjectId>;
@@ -195,6 +196,7 @@ class Dish {
   carbohydrates: NutritionalValue;
 
   @Expose()
+  @ExposeId()
   @Prop({ type: ObjectId, ref: 'Restaurant', required: true })
   restaurant: Restaurant;
 
