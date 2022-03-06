@@ -22,9 +22,7 @@ interface UpdateUserProfileRequest {
   readonly orders: Order[];
   readonly profileCompleted: boolean;
 }
-function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
-}
+
 @Injectable()
 class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null | undefined> {
   constructor(@InjectModel(User.name) private userModule: Model<UserDocument>) {}
