@@ -1,6 +1,7 @@
 import { LoginDto } from '../src/auth/api/LoginDto';
 import { RegisterAsPartnerDto } from '../src/auth/api/RegisterAsPartnerDto';
 import { RegisterAsUserDto } from '../src/auth/api/RegisterAsUserDto';
+import { DishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Allergens, DishTags, MealType } from '../src/restaurants/dishes/database';
 
 function registerPartnerDto(overrides: Partial<RegisterAsPartnerDto>) {
@@ -42,7 +43,7 @@ function addressDto() {
   };
 }
 
-function dishDto() {
+function dishDto(overrides: Partial<DishDto>) {
   return {
     name: 'Danie 1',
     mealType: [MealType.Lunch, MealType.Dinner],
@@ -59,6 +60,7 @@ function dishDto() {
     fats: { per100g: 20, perPortion: 60 },
     proteins: { per100g: 20, perPortion: 60 },
     carbohydrates: { per100g: 20, perPortion: 60 },
+    ...overrides,
   };
 }
 
