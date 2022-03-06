@@ -8,17 +8,57 @@ import { initE2eFixture } from './E2eFixture';
 import { accessTokenAsCookie } from './shared';
 
 const PATH = '/api/partner/dishes';
+const RESTAURANT_ID = '6200218668fc82e7bdf15088';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
+  it('GET /', async () => {
+    // Given
+    const accessToken = `access_token=${fixture.app
+      .get(JwtService)
+      .sign({ role: Role.Partner })}; Path=/; HttpOnly; SameSite=Strict`;
+    const dishes = [
+      dishDto({ restaurant: RESTAURANT_ID }),
+      dishDto({ restaurant: RESTAURANT_ID }),
+      dishDto({ restaurant: RESTAURANT_ID }),
+    ];
+    await fixture.db.dishModel.create(dishes);
+
+    // When
+    const res = await fixture.req.get(PATH).set('Cookie', [accessToken]);
+    console.log(res.body);
+
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+  });
+
+  it('GET /:id', async () => {
+    // Given
+    const accessToken = `access_token=${fixture.app
+      .get(JwtService)
+      .sign({ role: Role.Partner })}; Path=/; HttpOnly; SameSite=Strict`;
+    const dish = dishDto({ restaurant: RESTAURANT_ID });
+    const created = await fixture.db.dishModel.create(dish);
+    const id = created._id?.toString();
+
+    // When
+    const res = await fixture.req.get(`${PATH}/${id}`).set('Cookie', [accessToken]);
+    console.log(res.body);
+
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(created).toEqual(expect.objectContaining(res.body));
+  });
+
   it('POST /', async () => {
     // Given
     const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner }));
-    const reqBody: CreateDishDto = dishDto();
+    const reqBody: CreateDishDto = dishDto({});
 
     // When
     const res = await fixture.agent().post(PATH).set('Cookie', [accessToken]).send(reqBody);
+    console.log(res.body);
 
     // Then
     expect(res.status).toBe(HttpStatus.CREATED);
