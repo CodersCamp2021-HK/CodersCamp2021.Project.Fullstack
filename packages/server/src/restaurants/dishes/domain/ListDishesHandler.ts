@@ -9,6 +9,8 @@ class ListDishesHandler implements Handler<PaginationQuery, Paginated<Dish>> {
   constructor(@InjectModel(Dish.name) private dishModel: Model<DishDocument>) {}
   async exec(req: PaginationQuery): Promise<Paginated<Dish>> {
     const offset = (req.page - 1) * req.limit;
+    const queryFilter = { restaurant: true };
+
     const dishesDocsQuery = this.dishModel.find().skip(offset).limit(req.limit);
     const countQuery = this.dishModel.countDocuments();
     const [dishesDocs, count] = await Promise.all([dishesDocsQuery.exec(), countQuery.exec()]);
