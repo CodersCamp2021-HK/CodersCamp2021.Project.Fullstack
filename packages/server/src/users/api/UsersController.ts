@@ -44,7 +44,7 @@ class UsersController {
   @ApiAuthorization(Role.User)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@UserId() userId: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.updateUserProfileHandler.exec({ ...updateUserDto }); // TODO: Hook up UpdateUserProfileHandler (issue #44), remove eslint-disable comment above
+    return this.updateUserProfileHandler.exec({ id: userId, ...updateUserDto }); // TODO: Hook up UpdateUserProfileHandler (issue #44), remove eslint-disable comment above
   }
 }
 

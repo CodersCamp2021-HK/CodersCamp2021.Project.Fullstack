@@ -17,22 +17,22 @@ class UserDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Jan' })
   readonly name: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Kowalski' })
   readonly surname: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'jan@kowalski.pl' })
   readonly email: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: '123456789' })
   readonly phoneNumber: string;
 
   @ApiPropertyOptional()
   readonly addressId: Address[];
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: { number: '4562574783836030', expirationDate: '2022-10-12', securityCode: '722' } })
   readonly card: Card;
 
   @ApiPropertyOptional({ type: [FavouriteRestaurantDto] })
