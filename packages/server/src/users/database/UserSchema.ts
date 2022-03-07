@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
-import { Order } from '../../orders/database/OrderSchema';
 import { Restaurant } from '../../restaurants/database/RestaurantSchema';
 import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 
@@ -62,9 +61,9 @@ class User {
   @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
   favouriteDishes: Dish[];
 
-  @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
-  orders: Order[];
+  // @Expose()
+  // @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
+  // orders: Order[];
 
   @Expose()
   @Prop({ default: false })
