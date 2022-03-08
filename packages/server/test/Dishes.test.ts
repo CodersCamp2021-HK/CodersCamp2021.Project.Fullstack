@@ -33,7 +33,7 @@ describe(`${PATH}`, () => {
   it('POST /', async () => {
     // Given
     const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner }));
-    const reqBody: CreateDishDto = dishDto({});
+    const reqBody: CreateDishDto = dishDto();
 
     // When
     const res = await fixture.agent().post(PATH).set('Cookie', [accessToken]).send(reqBody);

@@ -43,7 +43,7 @@ function addressDto() {
   };
 }
 
-function dishDto(overrides: Partial<DishDto>) {
+function dishDto(overrides: Partial<DishDto> = {}) {
   return {
     name: 'Danie 1',
     mealType: [MealType.Lunch, MealType.Dinner],
