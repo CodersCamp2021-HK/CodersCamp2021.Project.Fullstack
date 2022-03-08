@@ -5,10 +5,19 @@ import { ArticlesModule } from './articles';
 import { AuthModule } from './auth';
 import { AppConfigModule } from './config';
 import { ImageModule } from './image';
+import { OrderModule } from './orders';
 import { RestaurantsModule } from './restaurants';
 import { UsersModule } from './users';
 
-const featureModules = [AddressesModule, ArticlesModule, AuthModule, RestaurantsModule, UsersModule, ImageModule];
+const featureModules = [
+  AddressesModule,
+  ArticlesModule,
+  AuthModule,
+  RestaurantsModule,
+  UsersModule,
+  OrderModule,
+  ImageModule,
+];
 
 @Module({
   imports: [AppConfigModule, ...featureModules],
