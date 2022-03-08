@@ -1256,10 +1256,8 @@
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "addressId": { "type": "array", "items": { "type": "string" } },
-          "card": { "type": "object" },
           "favouriteRestaurants": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
@@ -1268,17 +1266,15 @@
           "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["id", "email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+        "required": ["id", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
       "UpdateUserDto": {
         "type": "object",
         "properties": {
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "addressId": { "type": "array", "items": { "type": "string" } },
-          "card": { "type": "object" },
           "favouriteRestaurants": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
@@ -1287,7 +1283,7 @@
           "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+        "required": ["favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       }
     }
   }
