@@ -26,14 +26,18 @@ class RestaurantController {
 
   @ApiObjectIdParam()
   @ApiGet({ name: 'restaurant', response: RestaurantDto })
-  async findById(@Param('id') id: string) {
+  async findRestaurantById(@Param('id') id: string) {
     const restaurant = await this.getRestaurantHandler.exec({ id });
     if (!restaurant) return null;
     return plainToInstance(RestaurantDto, restaurant);
   }
 
   @ApiList({ name: 'restaurants', response: RestaurantListDto, link: true })
-  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
+  async listRestaurants(
+    @Pagination() pagination: PaginationQuery,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+  ) {
     const paginatedRestaurants = await this.listRestaurantsHandler.exec(pagination);
     res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
     return plainToInstance(RestaurantListDto, paginatedRestaurants);

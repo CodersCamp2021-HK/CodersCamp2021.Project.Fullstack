@@ -9,7 +9,7 @@ import { CreateOrderDto, OrderDto } from './OrderDto';
 class OrderController {
   @ApiCreate({ name: 'order', response: OrderDto })
   @ApiAuthorization(Role.User)
-  async create(
+  async createOrder(
     @UserId() userId: string,
     @Body() createOrderDto: CreateOrderDto,
     @Res({ passthrough: true }) res: Response,

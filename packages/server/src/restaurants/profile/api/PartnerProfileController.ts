@@ -11,7 +11,7 @@ class PartnerProfileController {
 
   @ApiGet({ path: '', name: 'profile', response: PartnerProfileDto })
   @ApiAuthorization(Role.Partner)
-  async findById(@PartnerId() partnerId: string) {
+  async findPartnerById(@PartnerId() partnerId: string) {
     const partner = await this.getRestaurantHandler.exec({ id: partnerId, profileMustBeCompleted: false });
     if (!partner) return null;
     return plainToInstance(PartnerProfileDto, partner);
@@ -20,7 +20,7 @@ class PartnerProfileController {
   @ApiUpdate({ path: '', name: 'profile' })
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async update(@PartnerId() partnerId: string, @Body() updatePartnerProfileDto: UpdatePartnerProfileDto) {
+  async updatePartner(@PartnerId() partnerId: string, @Body() updatePartnerProfileDto: UpdatePartnerProfileDto) {
     return null; // TODO: Hook up UpdatePartnerProfileHandler (issue #22), remove eslint-disable comment above
   }
 }
