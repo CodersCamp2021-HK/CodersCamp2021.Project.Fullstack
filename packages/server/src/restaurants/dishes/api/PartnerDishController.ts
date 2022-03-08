@@ -18,7 +18,7 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, GetDishHandler, ListDishesHandler } from '../domain';
+import { CreateDishHandler, ListDishesHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -26,15 +26,15 @@ import { DishListDto } from './DishListDto';
 class PartnerDishController {
   constructor(
     private readonly createDishHandler: CreateDishHandler,
-    private readonly getDishHandler: GetDishHandler,
     private readonly listDishesHandler: ListDishesHandler,
   ) {}
 
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(@PartnerId() partnerId: string, @Param('id') dishId: string) {
-    const dish = await this.getDishHandler.exec({ dishId, partnerId });
+    const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
     if (!dish) return null;
     return plainToInstance(DishDto, dish);
   }

@@ -27,28 +27,9 @@ describe(`${PATH}`, () => {
 
     // When
     const res = await fixture.req.get(PATH).set('Cookie', [accessToken]);
-    console.log(res.body);
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
-  });
-
-  it('GET /:id', async () => {
-    // Given
-    const accessToken = `access_token=${fixture.app
-      .get(JwtService)
-      .sign({ role: Role.Partner })}; Path=/; HttpOnly; SameSite=Strict`;
-    const dish = dishDto({ restaurant: RESTAURANT_ID });
-    const created = await fixture.db.dishModel.create(dish);
-    const id = created._id?.toString();
-
-    // When
-    const res = await fixture.req.get(`${PATH}/${id}`).set('Cookie', [accessToken]);
-    console.log(res.body);
-
-    // Then
-    expect(res.status).toBe(HttpStatus.OK);
-    expect(created).toEqual(expect.objectContaining(res.body));
   });
 
   it('POST /', async () => {
@@ -58,7 +39,6 @@ describe(`${PATH}`, () => {
 
     // When
     const res = await fixture.agent().post(PATH).set('Cookie', [accessToken]).send(reqBody);
-    console.log(res.body);
 
     // Then
     expect(res.status).toBe(HttpStatus.CREATED);
