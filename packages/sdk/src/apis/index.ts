@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './AddressesApi';
+export * from './AllDishesApi';
 export * from './AuthApi';
 export * from './OrdersApi';
 export * from './PartnersDishesApi';

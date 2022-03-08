@@ -1,4 +1,5 @@
 apis/AddressesApi.ts
+apis/AllDishesApi.ts
 apis/AuthApi.ts
 apis/OrdersApi.ts
 apis/PartnersDishesApi.ts

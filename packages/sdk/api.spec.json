@@ -494,6 +494,42 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/dishes": {
+      "get": {
+        "operationId": "DishController_list",
+        "summary": "Retrive a list of dishes.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["All dishes"]
+      }
+    },
     "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "FavouriteRestaurantListController_listFavouriteRestaurants",
@@ -648,6 +684,7 @@
   "tags": [
     { "name": "Addresses", "description": "Operations about addresses" },
     { "name": "Restaurants", "description": "Operations on restaurants" },
+    { "name": "All dishes", "description": "Operations on all dishes" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
     { "name": "Partner's profile", "description": "Operations on partner's profile" },
