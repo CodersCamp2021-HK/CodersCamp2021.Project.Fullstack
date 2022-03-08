@@ -9,7 +9,7 @@ import { Dish, DishDocument } from '../database';
 interface ListDishesRequest extends PaginationQuery {
   readonly partnerId: string;
 }
-class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | Dish | null> {
+class ListPartnerDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | Dish | null> {
   constructor(@InjectModel(Dish.name) private dishModel: Model<DishDocument>) {}
 
   async exec(req: ListDishesRequest) {
@@ -22,4 +22,4 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
   }
 }
 
-export { ListDishesHandler };
+export { ListPartnerDishesHandler };

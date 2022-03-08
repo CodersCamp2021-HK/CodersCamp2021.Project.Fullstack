@@ -1,2 +1,2 @@
 export * from './CreateDishHandler';
-export * from './ListDishesHandler';
+export * from './ListPartnerDishesHandler';

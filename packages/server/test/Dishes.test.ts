@@ -30,6 +30,7 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
+    expect(res.body.data).toHaveLength(dishes.length);
   });
 
   it('POST /', async () => {

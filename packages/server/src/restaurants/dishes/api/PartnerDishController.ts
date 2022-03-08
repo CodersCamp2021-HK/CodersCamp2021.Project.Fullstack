@@ -18,7 +18,7 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, ListDishesHandler } from '../domain';
+import { CreateDishHandler, ListPartnerDishesHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -26,7 +26,7 @@ import { DishListDto } from './DishListDto';
 class PartnerDishController {
   constructor(
     private readonly createDishHandler: CreateDishHandler,
-    private readonly listDishesHandler: ListDishesHandler,
+    private readonly listPartnerDishesHandler: ListPartnerDishesHandler,
   ) {}
 
   @ApiObjectIdParam()
@@ -47,7 +47,7 @@ class PartnerDishController {
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, partnerId });
+    const paginatedDishes = await this.listPartnerDishesHandler.exec({ page, limit, partnerId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }
