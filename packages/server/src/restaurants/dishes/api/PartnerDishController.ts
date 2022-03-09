@@ -67,7 +67,7 @@ class PartnerDishController {
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@PartnerId() restaurant: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
-    return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above and below
+    return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above
   }
 
   @ApiObjectIdParam()
