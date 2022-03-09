@@ -42,7 +42,7 @@ export interface RestaurantsApiListRequest {
  */
 export class RestaurantsApi extends runtime.BaseAPI {
   /**
-   * Retrive a restaurant by id.
+   * Retrieve a restaurant by id.
    */
   async findByIdRaw(
     requestParameters: RestaurantsApiFindByIdRequest,
@@ -73,7 +73,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a restaurant by id.
+   * Retrieve a restaurant by id.
    */
   async findById(
     requestParameters: RestaurantsApiFindByIdRequest,
@@ -84,7 +84,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of restaurants.
+   * Retrieve a list of restaurants.
    */
   async listRaw(
     requestParameters: RestaurantsApiListRequest,
@@ -116,7 +116,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of restaurants.
+   * Retrieve a list of restaurants.
    */
   async list(
     requestParameters: RestaurantsApiListRequest = {},

@@ -69,6 +69,12 @@ export interface RestaurantDto {
    * @memberof RestaurantDto
    */
   addressId: Array<AddressDto>;
+  /**
+   *
+   * @type {string}
+   * @memberof RestaurantDto
+   */
+  logo?: string;
 }
 
 export function RestaurantDtoFromJSON(json: any): RestaurantDto {
@@ -86,6 +92,7 @@ export function RestaurantDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
     cuisineType: (json['cuisineType'] as Array<any>).map(CuisineTypeEnumFromJSON),
     tags: (json['tags'] as Array<any>).map(RestaurantTagEnumFromJSON),
     addressId: (json['addressId'] as Array<any>).map(AddressDtoFromJSON),
+    logo: !exists(json, 'logo') ? undefined : json['logo'],
   };
 }
 
@@ -103,5 +110,6 @@ export function RestaurantDtoToJSON(value?: RestaurantDto | null): any {
     cuisineType: (value.cuisineType as Array<any>).map(CuisineTypeEnumToJSON),
     tags: (value.tags as Array<any>).map(RestaurantTagEnumToJSON),
     addressId: (value.addressId as Array<any>).map(AddressDtoToJSON),
+    logo: value.logo,
   };
 }

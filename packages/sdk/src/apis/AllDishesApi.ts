@@ -35,7 +35,7 @@ export interface AllDishesApiListRequest {
  */
 export class AllDishesApi extends runtime.BaseAPI {
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async listRaw(
     requestParameters: AllDishesApiListRequest,
@@ -67,7 +67,7 @@ export class AllDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async list(requestParameters: AllDishesApiListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);

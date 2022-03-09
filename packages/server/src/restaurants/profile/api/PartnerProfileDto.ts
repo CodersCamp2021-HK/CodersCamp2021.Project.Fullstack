@@ -13,6 +13,7 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'cuisineType',
   'tags',
   'addressId',
+  'logo',
 ] as const) {
   @ApiProperty({ required: false })
   declare readonly name: string;

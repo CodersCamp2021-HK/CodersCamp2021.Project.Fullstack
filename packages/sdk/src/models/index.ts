@@ -32,5 +32,6 @@ export * from './SubOrderDto';
 export * from './UpdateDishDto';
 export * from './UpdatePartnerProfileDto';
 export * from './UpdateUserDto';
+export * from './UploadedImageDto';
 export * from './UserDto';
 export * from './ValidationErrorDto';

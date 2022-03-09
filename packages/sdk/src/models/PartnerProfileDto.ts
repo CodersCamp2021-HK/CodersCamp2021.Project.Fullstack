@@ -74,6 +74,12 @@ export interface PartnerProfileDto {
    * @type {string}
    * @memberof PartnerProfileDto
    */
+  logo?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PartnerProfileDto
+   */
   bankAccountNumber?: string;
   /**
    *
@@ -98,6 +104,7 @@ export function PartnerProfileDtoFromJSONTyped(json: any, ignoreDiscriminator: b
     cuisineType: (json['cuisineType'] as Array<any>).map(CuisineTypeEnumFromJSON),
     tags: (json['tags'] as Array<any>).map(RestaurantTagEnumFromJSON),
     addressId: (json['addressId'] as Array<any>).map(AddressDtoFromJSON),
+    logo: !exists(json, 'logo') ? undefined : json['logo'],
     bankAccountNumber: !exists(json, 'bankAccountNumber') ? undefined : json['bankAccountNumber'],
     phoneNumber: !exists(json, 'phoneNumber') ? undefined : json['phoneNumber'],
   };
@@ -117,6 +124,7 @@ export function PartnerProfileDtoToJSON(value?: PartnerProfileDto | null): any {
     cuisineType: (value.cuisineType as Array<any>).map(CuisineTypeEnumToJSON),
     tags: (value.tags as Array<any>).map(RestaurantTagEnumToJSON),
     addressId: (value.addressId as Array<any>).map(AddressDtoToJSON),
+    logo: value.logo,
     bankAccountNumber: value.bankAccountNumber,
     phoneNumber: value.phoneNumber,
   };

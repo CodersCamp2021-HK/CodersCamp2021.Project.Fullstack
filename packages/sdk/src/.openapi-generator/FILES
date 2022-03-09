@@ -1,6 +1,7 @@
 apis/AddressesApi.ts
 apis/AllDishesApi.ts
 apis/AuthApi.ts
+apis/ImagesApi.ts
 apis/OrdersApi.ts
 apis/PartnersDishesApi.ts
 apis/PartnersProfileApi.ts
@@ -43,6 +44,7 @@ models/SubOrderDto.ts
 models/UpdateDishDto.ts
 models/UpdatePartnerProfileDto.ts
 models/UpdateUserDto.ts
+models/UploadedImageDto.ts
 models/UserDto.ts
 models/ValidationErrorDto.ts
 models/index.ts

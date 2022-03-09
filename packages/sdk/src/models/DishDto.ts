@@ -44,6 +44,12 @@ export interface DishDto {
   name: string;
   /**
    *
+   * @type {string}
+   * @memberof DishDto
+   */
+  photo?: string;
+  /**
+   *
    * @type {Array<MealTypeEnum>}
    * @memberof DishDto
    */
@@ -127,6 +133,7 @@ export function DishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
   return {
     id: json['id'],
     name: json['name'],
+    photo: !exists(json, 'photo') ? undefined : json['photo'],
     mealType: !exists(json, 'mealType') ? undefined : (json['mealType'] as Array<any>).map(MealTypeEnumFromJSON),
     description: !exists(json, 'description') ? undefined : json['description'],
     price: json['price'],
@@ -154,6 +161,7 @@ export function DishDtoToJSON(value?: DishDto | null): any {
   return {
     id: value.id,
     name: value.name,
+    photo: value.photo,
     mealType: value.mealType === undefined ? undefined : (value.mealType as Array<any>).map(MealTypeEnumToJSON),
     description: value.description,
     price: value.price,

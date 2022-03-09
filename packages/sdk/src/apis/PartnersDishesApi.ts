@@ -141,7 +141,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a dish by id.
+   * Retrieve a dish by id.
    */
   async findByIdRaw(
     requestParameters: PartnersDishesApiFindByIdRequest,
@@ -172,7 +172,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a dish by id.
+   * Retrieve a dish by id.
    */
   async findById(requestParameters: PartnersDishesApiFindByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);
@@ -180,7 +180,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async listRaw(
     requestParameters: PartnersDishesApiListRequest,
@@ -212,7 +212,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async list(requestParameters: PartnersDishesApiListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);

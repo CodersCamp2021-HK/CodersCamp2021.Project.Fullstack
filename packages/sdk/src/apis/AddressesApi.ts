@@ -83,7 +83,7 @@ export class AddressesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a address by id.
+   * Retrieve a address by id.
    */
   async findByIdRaw(
     requestParameters: AddressesApiFindByIdRequest,
@@ -114,7 +114,7 @@ export class AddressesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a address by id.
+   * Retrieve a address by id.
    */
   async findById(requestParameters: AddressesApiFindByIdRequest, initOverrides?: RequestInit): Promise<AddressDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);

@@ -44,7 +44,7 @@ export interface RestaurantsDishesApiListRequest {
  */
 export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
-   * Retrive a dish by id.
+   * Retrieve a dish by id.
    */
   async findByIdRaw(
     requestParameters: RestaurantsDishesApiFindByIdRequest,
@@ -84,7 +84,7 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a dish by id.
+   * Retrieve a dish by id.
    */
   async findById(
     requestParameters: RestaurantsDishesApiFindByIdRequest,
@@ -95,7 +95,7 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async listRaw(
     requestParameters: RestaurantsDishesApiListRequest,
@@ -137,7 +137,7 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async list(requestParameters: RestaurantsDishesApiListRequest, initOverrides?: RequestInit): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);

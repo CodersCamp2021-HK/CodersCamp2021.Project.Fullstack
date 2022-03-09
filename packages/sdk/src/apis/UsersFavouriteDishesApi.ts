@@ -35,7 +35,7 @@ export interface UsersFavouriteDishesApiListRequest {
  */
 export class UsersFavouriteDishesApi extends runtime.BaseAPI {
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async listRaw(
     requestParameters: UsersFavouriteDishesApiListRequest,
@@ -67,7 +67,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a list of dishes.
+   * Retrieve a list of dishes.
    */
   async list(
     requestParameters: UsersFavouriteDishesApiListRequest = {},

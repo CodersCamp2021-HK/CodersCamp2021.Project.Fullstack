@@ -37,7 +37,7 @@ export interface PartnersProfileApiUpdateRequest {
  */
 export class PartnersProfileApi extends runtime.BaseAPI {
   /**
-   * Retrive a profile by id.
+   * Retrieve a profile by id.
    */
   async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<PartnerProfileDto>> {
     const queryParameters: any = {};
@@ -58,7 +58,7 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a profile by id.
+   * Retrieve a profile by id.
    */
   async findById(initOverrides?: RequestInit): Promise<PartnerProfileDto> {
     const response = await this.findByIdRaw(initOverrides);

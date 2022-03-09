@@ -3,6 +3,7 @@
 export * from './AddressesApi';
 export * from './AllDishesApi';
 export * from './AuthApi';
+export * from './ImagesApi';
 export * from './OrdersApi';
 export * from './PartnersDishesApi';
 export * from './PartnersProfileApi';

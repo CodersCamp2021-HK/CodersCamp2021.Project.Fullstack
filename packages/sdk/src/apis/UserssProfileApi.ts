@@ -37,7 +37,7 @@ export interface UserssProfileApiUpdateRequest {
  */
 export class UserssProfileApi extends runtime.BaseAPI {
   /**
-   * Retrive a user by id.
+   * Retrieve a user by id.
    */
   async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<UserDto>> {
     const queryParameters: any = {};
@@ -58,7 +58,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrive a user by id.
+   * Retrieve a user by id.
    */
   async findById(initOverrides?: RequestInit): Promise<UserDto> {
     const response = await this.findByIdRaw(initOverrides);
