@@ -7,7 +7,6 @@ import {
   ApiController,
   ApiCreate,
   ApiDelete,
-  ApiGet,
   ApiList,
   ApiObjectIdParam,
   ApiUpdate,
@@ -25,16 +24,6 @@ import { DishListDto } from './DishListDto';
 @ApiController({ path: 'partner/dishes', name: "Partner's dishes", description: "Operations on partner's dishes" })
 class PartnerDishController {
   constructor(private readonly createDishHandler: CreateDishHandler) {}
-
-  @ApiObjectIdParam()
-  @ApiGet({ name: 'dish', response: DishDto })
-  @ApiAuthorization(Role.Partner)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async findById(@PartnerId() partnerId: string, @Param('id') dishId: string) {
-    const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
-    if (!dish) return null;
-    return plainToInstance(DishDto, dish);
-  }
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   @ApiAuthorization(Role.Partner)

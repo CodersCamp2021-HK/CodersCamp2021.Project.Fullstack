@@ -1,18 +1,39 @@
-import { Res } from '@nestjs/common';
+import { Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
-import { ApiController, ApiList, createPaginationLink, Pagination, PaginationQuery, Url } from '../../../shared';
-import { ListAllDishesHandler } from '../domain/ListAllDishesHandler';
+import {
+  ApiController,
+  ApiGet,
+  ApiList,
+  ApiObjectIdParam,
+  createPaginationLink,
+  Pagination,
+  PaginationQuery,
+  Url,
+} from '../../../shared';
+import { GetDishHandler, ListAllDishesHandler } from '../domain';
+import { DishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
 @ApiController({
   path: 'dishes',
-  name: 'All dishes',
-  description: 'Operations on all dishes',
+  name: 'Dishes',
+  description: 'Operations on dishes',
 })
 class DishController {
-  constructor(private readonly listAllDishesHandler: ListAllDishesHandler) {}
+  constructor(
+    private readonly listAllDishesHandler: ListAllDishesHandler,
+    private readonly getDishHandler: GetDishHandler,
+  ) {}
+
+  @ApiObjectIdParam()
+  @ApiGet({ name: 'dish', response: DishDto })
+  async findById(@Param('id') dishId: string) {
+    const dish = await this.getDishHandler.exec({ dishId });
+    if (!dish) return null;
+    return plainToInstance(DishDto, dish);
+  }
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
