@@ -2,10 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Address } from '../../addresses/database/AddressSchema';
-import { Order } from '../../orders/database/OrderSchema';
-import { Restaurant } from '../../restaurants/database/RestaurantSchema';
-import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { Handler } from '../../shared';
 import { Card, User, UserDocument } from '../database';
 
@@ -15,7 +11,6 @@ interface UpdateUserProfileRequest {
   readonly surname: string;
   readonly email: string;
   readonly phoneNumber: string;
-  readonly addressId: Address[];
   readonly card: Card;
   readonly profileCompleted: boolean;
 }
@@ -32,7 +27,6 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         surname: req.surname,
         email: req.email,
         phoneNumber: req.phoneNumber,
-        addressId: req.addressId[0].id,
         card: req.card,
         profileCompleted: req.profileCompleted,
       },
