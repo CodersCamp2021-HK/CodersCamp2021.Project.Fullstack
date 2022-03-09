@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ObjectId } from 'mongodb';
+import { Binary, ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Address, AddressDocument } from '../../../addresses/database';
@@ -16,6 +16,8 @@ interface UpdatePartnerProfileRequest {
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
   readonly addressId: Address[];
+  //   readonly password: string;
+  //   readonly logo: Buffer;
 }
 
 @Injectable()
@@ -26,19 +28,21 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   ) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
-    const created = await this.restaurantModel.create({ ...req, addressId: new ObjectId(req.addressId[0].id) });
+    // const created = await this.restaurantModel.create({ ...req, addressId: new ObjectId(req.addressId[0].id) });
+    req.addressId.map((address) => console.log(address.id));
 
-    console.log(created);
     const result = await this.restaurantModel.findOneAndUpdate(
       { _id: req.id },
       {
         name: req.name,
         description: req.description,
-        tags: req.tags,
+        // password: req.password,
+        // logo: new Binary('test'),
         cuisineType: req.cuisineType,
+        tags: req.tags,
+        addressId: req.addressId[0].id,
         bankAccountNumber: req.bankAccountNumber,
         phoneNumber: req.phoneNumber,
-        addressId: req.addressId[0].id,
       },
     );
 
