@@ -15,13 +15,14 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const accessToken = `access_token=${fixture.app
-      .get(JwtService)
-      .sign({ role: Role.Partner })}; Path=/; HttpOnly; SameSite=Strict`;
+    const accessToken = accessTokenAsCookie(
+      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
+    );
     const dishes = [
       dishDto({ restaurant: RESTAURANT_ID }),
       dishDto({ restaurant: RESTAURANT_ID }),
       dishDto({ restaurant: RESTAURANT_ID }),
+      dishDto({ restaurant: '6200218668fc82e7bdf15089' }),
     ];
     await fixture.db.dishModel.create(dishes);
 
@@ -30,11 +31,14 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
+    expect(res.body.data).toHaveLength(3);
   });
 
   it('POST /', async () => {
     // Given
-    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner }));
+    const accessToken = accessTokenAsCookie(
+      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
+    );
     const reqBody: CreateDishDto = dishDto();
 
     // When
