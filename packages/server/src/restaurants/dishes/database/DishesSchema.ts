@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 import { ExposeId } from '../../../shared/api/decorators';
 import { Restaurant } from '../../database';
@@ -197,7 +197,7 @@ class Dish {
 
   @Expose()
   @ExposeId()
-  @Prop({ type: ObjectId, ref: 'Restaurant', required: true })
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Restaurant', required: true })
   restaurant: Restaurant;
 
   @Expose()
