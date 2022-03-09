@@ -1,9 +1,21 @@
-import { ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
-import { Card } from '../database';
 
+class CardDto {
+  @ApiProperty({
+    example: '4562574783836030',
+  })
+  readonly number: string;
+
+  @ApiProperty({ pattern: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})', example: '2022-10-12' })
+  readonly expirationDate: string;
+
+  @ApiProperty({ example: '722' })
+  readonly securityCode: string;
+}
 class UserDto {
   @ApiObjectIdProperty()
   readonly id: string;
@@ -20,8 +32,12 @@ class UserDto {
   @ApiPhoneNumberProperty()
   readonly phoneNumber: string;
 
-  @ApiPropertyOptional({ example: { number: '4562574783836030', expirationDate: '2022-10-12', securityCode: '722' } })
-  readonly card: Card;
+  @Type(() => CardDto)
+  @ApiProperty({
+    required: false,
+    type: CardDto,
+  })
+  readonly card: CardDto;
 
   @ApiPropertyOptional({
     default: false,

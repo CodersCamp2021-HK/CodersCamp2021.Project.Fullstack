@@ -26,7 +26,7 @@ class Card {
   number: string;
 
   @Expose()
-  expirationDate: Date;
+  expirationDate: string;
 
   @Expose()
   securityCode: string;
@@ -58,7 +58,7 @@ class User {
   @Prop(
     raw({
       number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
-      expirationDate: { type: Date },
+      expirationDate: { type: String },
       securityCode: {
         type: String,
         min: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
