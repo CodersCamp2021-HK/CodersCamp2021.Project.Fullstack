@@ -14,7 +14,6 @@ describe(`${PATH}`, () => {
     await fixture.db.userModel.deleteMany();
   });
 
-  
   it('GET /', async () => {
     // Given
     const user = {};
@@ -30,7 +29,7 @@ describe(`${PATH}`, () => {
     expect(resp.status).toBe(HttpStatus.OK);
     expect(created).toEqual(expect.objectContaining(resp.body));
   });
-  
+
   it('PUT /', async () => {
     // Given
     const user = {
@@ -47,4 +46,5 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(resp.status).toBe(HttpStatus.NO_CONTENT);
+  });
 });
