@@ -47,19 +47,32 @@ describe(`${PATH}`, () => {
   });
 
   it('PUT /', async () => {
-    
     const restaurant = {};
 
-      // Given
-      const created = await fixture.db.restaurantModel.create(restaurant);
-      const id = created._id?.toString();
-      const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
-      const reqBody = { cuisineType: ['włoska'], tags: ['wegetariańska'], addressId: [{id: "6200218668fc82e7bdf15088", street: "Street", streetNumber: "1A", apartmentNumber: "1", floor: "1", city: "City", postcode: "00-000"}] };
+    // Given
+    const created = await fixture.db.restaurantModel.create(restaurant);
+    const id = created._id?.toString();
+    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
+    const reqBody = {
+      cuisineType: ['włoska'],
+      tags: ['wegetariańska'],
+      addressId: [
+        {
+          id: '6200218668fc82e7bdf15088',
+          street: 'Street',
+          streetNumber: '1A',
+          apartmentNumber: '1',
+          floor: '1',
+          city: 'City',
+          postcode: '00-000',
+        },
+      ],
+    };
 
-      // When
-      const resp = await fixture.agent().put(PATH).set('Cookie', [accessToken]).send(reqBody);
+    // When
+    const resp = await fixture.agent().put(PATH).set('Cookie', [accessToken]).send(reqBody);
 
-      // Then
-      expect(resp.status).toBe(HttpStatus.NO_CONTENT);
+    // Then
+    expect(resp.status).toBe(HttpStatus.NO_CONTENT);
   });
 });
