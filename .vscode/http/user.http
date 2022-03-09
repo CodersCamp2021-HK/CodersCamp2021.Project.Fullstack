@@ -1,10 +1,10 @@
 
 @userUrl = {{baseUrl}}/users/profile
-
-### get all articles
+### first you need login
+### get user profile
 GET {{userUrl}}
 
-### update article
+### update user profile
 PUT {{userUrl}}
 
 {
