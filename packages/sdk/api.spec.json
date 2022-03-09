@@ -639,6 +639,42 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/dishes": {
+      "get": {
+        "operationId": "DishController_list",
+        "summary": "Retrieve a list of dishes.",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 1, "type": "number", "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned list of dishes.",
+            "headers": { "link": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishListDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["All dishes"]
+      }
+    },
     "/api/users/favourite/restaurants": {
       "get": {
         "operationId": "FavouriteRestaurantListController_list",
@@ -760,6 +796,34 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/orders": {
+      "post": {
+        "operationId": "OrderController_create",
+        "summary": "Create a new order.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateOrderDto" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "The order has been successfully created.",
+            "headers": { "Location": { "schema": { "type": "string" } } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Orders"],
+        "security": [{ "cookie": [] }]
+      }
+    },
     "/api/img/{type}/{id}": {
       "get": {
         "operationId": "ImageController_getImg",
@@ -873,6 +937,7 @@
     { "name": "Addresses", "description": "Operations about addresses" },
     { "name": "Articles", "description": "Operations about articles" },
     { "name": "Restaurants", "description": "Operations on restaurants" },
+    { "name": "All dishes", "description": "Operations on all dishes" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
     { "name": "Partner's profile", "description": "Operations on partner's profile" },
@@ -880,7 +945,8 @@
     { "name": "User's favourite dishes", "description": "Operations on user's favourite dishes" },
     { "name": "User's favourite restaurants", "description": "Operations on user's favourite restaurants" },
     { "name": "Auth", "description": "Operations about authentication and registration" },
-    { "name": "Images", "description": "Operations on images" }
+    { "name": "Images", "description": "Operations on images" },
+    { "name": "Orders", "description": "Submitting an order" }
   ],
   "servers": [],
   "components": {
@@ -1384,10 +1450,8 @@
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "addressId": { "type": "array", "items": { "type": "string" } },
-          "card": { "type": "object" },
           "favouriteRestaurants": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
@@ -1396,17 +1460,15 @@
           "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["id", "email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+        "required": ["id", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
       "UpdateUserDto": {
         "type": "object",
         "properties": {
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "addressId": { "type": "array", "items": { "type": "string" } },
-          "card": { "type": "object" },
           "favouriteRestaurants": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
@@ -1415,7 +1477,47 @@
           "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["email", "card", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+        "required": ["favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
+      },
+      "OrderDishDto": {
+        "type": "object",
+        "properties": {
+          "dishId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "count": { "type": "number", "minimum": 1 },
+          "excludedIngredients": { "example": [], "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["dishId", "count", "excludedIngredients"]
+      },
+      "SubOrderDto": {
+        "type": "object",
+        "properties": {
+          "deliveryDate": { "format": "date-time", "type": "string" },
+          "hourStart": { "type": "number", "example": 8, "minimum": 0, "maximum": 23 },
+          "hourEnd": { "type": "number", "example": 11, "minimum": 0, "maximum": 23 },
+          "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/OrderDishDto" } }
+        },
+        "required": ["deliveryDate", "hourStart", "hourEnd", "dishes"]
+      },
+      "CreateOrderDto": {
+        "type": "object",
+        "properties": {
+          "addressId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
+          "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
+        },
+        "required": ["addressId", "subOrders", "comment"]
+      },
+      "OrderDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "addressId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "userId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "date": { "format": "date-time", "type": "string" },
+          "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
+          "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
+        },
+        "required": ["id", "addressId", "userId", "date", "subOrders", "comment"]
       },
       "StreamableFile": { "type": "object", "properties": {} },
       "UploadedImageDto": {
