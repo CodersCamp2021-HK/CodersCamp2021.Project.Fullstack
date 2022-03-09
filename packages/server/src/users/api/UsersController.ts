@@ -11,7 +11,7 @@ class UsersController {
   constructor(private readonly getUserHandler: GetUserHandler) {}
   @ApiGet({ path: '', name: 'user', response: UserDto })
   @ApiAuthorization(Role.User)
-  async findUserById(@UserId() userId: string) {
+  async findById(@UserId() userId: string) {
     const user = await this.getUserHandler.exec({ id: userId });
     if (!user) return null;
     return plainToInstance(UserDto, user);
@@ -20,7 +20,7 @@ class UsersController {
   @ApiUpdate({ path: '', name: 'user' })
   @ApiAuthorization(Role.User)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async updateUser(@UserId() userId: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(@UserId() userId: string, @Body() updateUserDto: UpdateUserDto) {
     return null; // TODO: Hook up UpdateUserProfileHandler (issue #44), remove eslint-disable comment above
   }
 }

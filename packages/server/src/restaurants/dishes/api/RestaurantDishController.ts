@@ -25,7 +25,7 @@ class RestaurantDishController {
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async findRestaurantsDishById(@Param('restaurantId') restaurantId: string, @Param('id') dishId: string) {
+  async findById(@Param('restaurantId') restaurantId: string, @Param('id') dishId: string) {
     const dish = null; // TODO: Hook up GetDishHandler, remove eslint-disable comment above
     if (!dish) return null;
     return plainToInstance(DishDto, dish);
@@ -33,7 +33,7 @@ class RestaurantDishController {
 
   @ApiObjectIdParam({ name: 'restaurantId' })
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
-  async listRestaurantsDishes(
+  async list(
     @Param('restaurantId') restaurantId: string,
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,

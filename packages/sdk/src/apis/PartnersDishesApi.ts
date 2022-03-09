@@ -34,24 +34,24 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface CreatePartnersDishRequest {
+export interface PartnersDishesApiCreateRequest {
   createDishDto: CreateDishDto;
 }
 
-export interface DeleteOnePartnersDishRequest {
+export interface PartnersDishesApiDeleteOneRequest {
   id: string;
 }
 
-export interface FindByIdRequest {
+export interface PartnersDishesApiFindByIdRequest {
   id: string;
 }
 
-export interface ListPartnersDishesRequest {
+export interface PartnersDishesApiListRequest {
   page?: number;
   limit?: number;
 }
 
-export interface UpdatePartnersDishRequest {
+export interface PartnersDishesApiUpdateRequest {
   id: string;
   updateDishDto: UpdateDishDto;
 }
@@ -63,14 +63,14 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Create a new dish.
    */
-  async createPartnersDishRaw(
-    requestParameters: CreatePartnersDishRequest,
+  async createRaw(
+    requestParameters: PartnersDishesApiCreateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.createDishDto === null || requestParameters.createDishDto === undefined) {
       throw new runtime.RequiredError(
         'createDishDto',
-        'Required parameter requestParameters.createDishDto was null or undefined when calling createPartnersDish.',
+        'Required parameter requestParameters.createDishDto was null or undefined when calling create.',
       );
     }
 
@@ -97,25 +97,22 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Create a new dish.
    */
-  async createPartnersDish(
-    requestParameters: CreatePartnersDishRequest,
-    initOverrides?: RequestInit,
-  ): Promise<DishDto> {
-    const response = await this.createPartnersDishRaw(requestParameters, initOverrides);
+  async create(requestParameters: PartnersDishesApiCreateRequest, initOverrides?: RequestInit): Promise<DishDto> {
+    const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Delete a dish.
    */
-  async deleteOnePartnersDishRaw(
-    requestParameters: DeleteOnePartnersDishRequest,
+  async deleteOneRaw(
+    requestParameters: PartnersDishesApiDeleteOneRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling deleteOnePartnersDish.',
+        'Required parameter requestParameters.id was null or undefined when calling deleteOne.',
       );
     }
 
@@ -139,18 +136,15 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Delete a dish.
    */
-  async deleteOnePartnersDish(
-    requestParameters: DeleteOnePartnersDishRequest,
-    initOverrides?: RequestInit,
-  ): Promise<void> {
-    await this.deleteOnePartnersDishRaw(requestParameters, initOverrides);
+  async deleteOne(requestParameters: PartnersDishesApiDeleteOneRequest, initOverrides?: RequestInit): Promise<void> {
+    await this.deleteOneRaw(requestParameters, initOverrides);
   }
 
   /**
    * Retrive a dish by id.
    */
   async findByIdRaw(
-    requestParameters: FindByIdRequest,
+    requestParameters: PartnersDishesApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -180,7 +174,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a dish by id.
    */
-  async findById(requestParameters: FindByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
+  async findById(requestParameters: PartnersDishesApiFindByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -188,8 +182,8 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a list of dishes.
    */
-  async listPartnersDishesRaw(
-    requestParameters: ListPartnersDishesRequest,
+  async listRaw(
+    requestParameters: PartnersDishesApiListRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
@@ -220,32 +214,29 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a list of dishes.
    */
-  async listPartnersDishes(
-    requestParameters: ListPartnersDishesRequest = {},
-    initOverrides?: RequestInit,
-  ): Promise<DishListDto> {
-    const response = await this.listPartnersDishesRaw(requestParameters, initOverrides);
+  async list(requestParameters: PartnersDishesApiListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
+    const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Update an existing dish.
    */
-  async updatePartnersDishRaw(
-    requestParameters: UpdatePartnersDishRequest,
+  async updateRaw(
+    requestParameters: PartnersDishesApiUpdateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling updatePartnersDish.',
+        'Required parameter requestParameters.id was null or undefined when calling update.',
       );
     }
 
     if (requestParameters.updateDishDto === null || requestParameters.updateDishDto === undefined) {
       throw new runtime.RequiredError(
         'updateDishDto',
-        'Required parameter requestParameters.updateDishDto was null or undefined when calling updatePartnersDish.',
+        'Required parameter requestParameters.updateDishDto was null or undefined when calling update.',
       );
     }
 
@@ -272,7 +263,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Update an existing dish.
    */
-  async updatePartnersDish(requestParameters: UpdatePartnersDishRequest, initOverrides?: RequestInit): Promise<void> {
-    await this.updatePartnersDishRaw(requestParameters, initOverrides);
+  async update(requestParameters: PartnersDishesApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
+    await this.updateRaw(requestParameters, initOverrides);
   }
 }

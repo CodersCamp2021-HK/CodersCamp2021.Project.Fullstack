@@ -28,11 +28,11 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface FindRestaurantByIdRequest {
+export interface RestaurantsApiFindByIdRequest {
   id: string;
 }
 
-export interface ListRestaurantsRequest {
+export interface RestaurantsApiListRequest {
   page?: number;
   limit?: number;
 }
@@ -44,14 +44,14 @@ export class RestaurantsApi extends runtime.BaseAPI {
   /**
    * Retrive a restaurant by id.
    */
-  async findRestaurantByIdRaw(
-    requestParameters: FindRestaurantByIdRequest,
+  async findByIdRaw(
+    requestParameters: RestaurantsApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<RestaurantDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling findRestaurantById.',
+        'Required parameter requestParameters.id was null or undefined when calling findById.',
       );
     }
 
@@ -75,19 +75,19 @@ export class RestaurantsApi extends runtime.BaseAPI {
   /**
    * Retrive a restaurant by id.
    */
-  async findRestaurantById(
-    requestParameters: FindRestaurantByIdRequest,
+  async findById(
+    requestParameters: RestaurantsApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<RestaurantDto> {
-    const response = await this.findRestaurantByIdRaw(requestParameters, initOverrides);
+    const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Retrive a list of restaurants.
    */
-  async listRestaurantsRaw(
-    requestParameters: ListRestaurantsRequest,
+  async listRaw(
+    requestParameters: RestaurantsApiListRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<RestaurantListDto>> {
     const queryParameters: any = {};
@@ -118,11 +118,11 @@ export class RestaurantsApi extends runtime.BaseAPI {
   /**
    * Retrive a list of restaurants.
    */
-  async listRestaurants(
-    requestParameters: ListRestaurantsRequest = {},
+  async list(
+    requestParameters: RestaurantsApiListRequest = {},
     initOverrides?: RequestInit,
   ): Promise<RestaurantListDto> {
-    const response = await this.listRestaurantsRaw(requestParameters, initOverrides);
+    const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }

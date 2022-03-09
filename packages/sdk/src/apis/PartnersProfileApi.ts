@@ -28,7 +28,7 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface UpdatePartnerRequest {
+export interface PartnersProfileApiUpdateRequest {
   updatePartnerProfileDto: UpdatePartnerProfileDto;
 }
 
@@ -39,7 +39,7 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Retrive a profile by id.
    */
-  async findPartnerByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<PartnerProfileDto>> {
+  async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<PartnerProfileDto>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -60,22 +60,22 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Retrive a profile by id.
    */
-  async findPartnerById(initOverrides?: RequestInit): Promise<PartnerProfileDto> {
-    const response = await this.findPartnerByIdRaw(initOverrides);
+  async findById(initOverrides?: RequestInit): Promise<PartnerProfileDto> {
+    const response = await this.findByIdRaw(initOverrides);
     return await response.value();
   }
 
   /**
    * Update an existing profile.
    */
-  async updatePartnerRaw(
-    requestParameters: UpdatePartnerRequest,
+  async updateRaw(
+    requestParameters: PartnersProfileApiUpdateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.updatePartnerProfileDto === null || requestParameters.updatePartnerProfileDto === undefined) {
       throw new runtime.RequiredError(
         'updatePartnerProfileDto',
-        'Required parameter requestParameters.updatePartnerProfileDto was null or undefined when calling updatePartner.',
+        'Required parameter requestParameters.updatePartnerProfileDto was null or undefined when calling update.',
       );
     }
 
@@ -102,7 +102,7 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Update an existing profile.
    */
-  async updatePartner(requestParameters: UpdatePartnerRequest, initOverrides?: RequestInit): Promise<void> {
-    await this.updatePartnerRaw(requestParameters, initOverrides);
+  async update(requestParameters: PartnersProfileApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
+    await this.updateRaw(requestParameters, initOverrides);
   }
 }

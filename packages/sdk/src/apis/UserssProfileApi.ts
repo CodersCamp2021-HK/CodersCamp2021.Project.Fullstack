@@ -28,7 +28,7 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface UpdateUserRequest {
+export interface UserssProfileApiUpdateRequest {
   updateUserDto: UpdateUserDto;
 }
 
@@ -39,7 +39,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Retrive a user by id.
    */
-  async findUserByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<UserDto>> {
+  async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<UserDto>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -60,22 +60,22 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Retrive a user by id.
    */
-  async findUserById(initOverrides?: RequestInit): Promise<UserDto> {
-    const response = await this.findUserByIdRaw(initOverrides);
+  async findById(initOverrides?: RequestInit): Promise<UserDto> {
+    const response = await this.findByIdRaw(initOverrides);
     return await response.value();
   }
 
   /**
    * Update an existing user.
    */
-  async updateUserRaw(
-    requestParameters: UpdateUserRequest,
+  async updateRaw(
+    requestParameters: UserssProfileApiUpdateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.updateUserDto === null || requestParameters.updateUserDto === undefined) {
       throw new runtime.RequiredError(
         'updateUserDto',
-        'Required parameter requestParameters.updateUserDto was null or undefined when calling updateUser.',
+        'Required parameter requestParameters.updateUserDto was null or undefined when calling update.',
       );
     }
 
@@ -102,7 +102,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Update an existing user.
    */
-  async updateUser(requestParameters: UpdateUserRequest, initOverrides?: RequestInit): Promise<void> {
-    await this.updateUserRaw(requestParameters, initOverrides);
+  async update(requestParameters: UserssProfileApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
+    await this.updateRaw(requestParameters, initOverrides);
   }
 }

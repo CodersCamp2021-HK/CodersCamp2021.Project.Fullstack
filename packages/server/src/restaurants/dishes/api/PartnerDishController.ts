@@ -38,7 +38,7 @@ class PartnerDishController {
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   @ApiAuthorization(Role.Partner)
-  async listPartnersDishes(
+  async list(
     @PartnerId() partnerId: string,
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
@@ -51,7 +51,7 @@ class PartnerDishController {
 
   @ApiCreate({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
-  async createPartnersDish(
+  async create(
     @PartnerId() restaurant: string,
     @Body() createDishDto: CreateDishDto,
     @Res({ passthrough: true }) res: Response,
@@ -65,21 +65,16 @@ class PartnerDishController {
   @ApiObjectIdParam()
   @ApiUpdate({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  async updatePartnersDish(
-    @PartnerId() restaurant: string,
-    @Param('id') dishId: string,
-    @Body() updateDishDto: UpdateDishDto,
-  ) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async update(@PartnerId() restaurant: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
     return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above and below
   }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   @ApiObjectIdParam()
   @ApiDelete({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async deleteOnePartnersDish(@PartnerId() restaurant: string, @Param('id') dishId: string) {
+  async deleteOne(@PartnerId() restaurant: string, @Param('id') dishId: string) {
     // TODO: Also remove dish from restaurant's dish array!!!
     return null; // TODO: Hook up DeleteDishHandler, remove eslint-disable comment above
   }

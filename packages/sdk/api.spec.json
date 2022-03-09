@@ -3,7 +3,7 @@
   "paths": {
     "/api/addresses/{id}": {
       "get": {
-        "operationId": "AddressesController_findAddressById",
+        "operationId": "AddressesController_findById",
         "summary": "Retrive a address by id.",
         "parameters": [
           {
@@ -33,7 +33,7 @@
     },
     "/api/addresses": {
       "post": {
-        "operationId": "AddressesController_createAddress",
+        "operationId": "AddressesController_create",
         "summary": "Create a new address.",
         "parameters": [],
         "requestBody": {
@@ -155,7 +155,7 @@
     },
     "/api/restaurants/{id}": {
       "get": {
-        "operationId": "RestaurantController_findRestaurantById",
+        "operationId": "RestaurantController_findById",
         "summary": "Retrive a restaurant by id.",
         "parameters": [
           {
@@ -185,7 +185,7 @@
     },
     "/api/restaurants": {
       "get": {
-        "operationId": "RestaurantController_listRestaurants",
+        "operationId": "RestaurantController_list",
         "summary": "Retrive a list of restaurants.",
         "parameters": [
           {
@@ -221,7 +221,7 @@
     },
     "/api/partner/profile": {
       "get": {
-        "operationId": "PartnerProfileController_findPartnerById",
+        "operationId": "PartnerProfileController_findById",
         "summary": "Retrive a profile by id.",
         "parameters": [],
         "responses": {
@@ -243,7 +243,7 @@
         "security": [{ "cookie": [] }]
       },
       "put": {
-        "operationId": "PartnerProfileController_updatePartner",
+        "operationId": "PartnerProfileController_update",
         "summary": "Update an existing profile.",
         "parameters": [],
         "requestBody": {
@@ -268,7 +268,7 @@
     },
     "/api/restaurants/{restaurantId}/dishes/{id}": {
       "get": {
-        "operationId": "RestaurantDishController_findRestaurantsDishById",
+        "operationId": "RestaurantDishController_findById",
         "summary": "Retrive a dish by id.",
         "parameters": [
           {
@@ -304,7 +304,7 @@
     },
     "/api/restaurants/{restaurantId}/dishes": {
       "get": {
-        "operationId": "RestaurantDishController_listRestaurantsDishes",
+        "operationId": "RestaurantDishController_list",
         "summary": "Retrive a list of dishes.",
         "parameters": [
           {
@@ -375,7 +375,7 @@
         "security": [{ "cookie": [] }]
       },
       "put": {
-        "operationId": "PartnerDishController_updatePartnersDish",
+        "operationId": "PartnerDishController_update",
         "summary": "Update an existing dish.",
         "parameters": [
           {
@@ -405,7 +405,7 @@
         "security": [{ "cookie": [] }]
       },
       "delete": {
-        "operationId": "PartnerDishController_deleteOnePartnersDish",
+        "operationId": "PartnerDishController_deleteOne",
         "summary": "Delete a dish.",
         "parameters": [
           {
@@ -433,7 +433,7 @@
     },
     "/api/partner/dishes": {
       "get": {
-        "operationId": "PartnerDishController_listPartnersDishes",
+        "operationId": "PartnerDishController_list",
         "summary": "Retrive a list of dishes.",
         "parameters": [
           {
@@ -468,7 +468,7 @@
         "security": [{ "cookie": [] }]
       },
       "post": {
-        "operationId": "PartnerDishController_createPartnersDish",
+        "operationId": "PartnerDishController_create",
         "summary": "Create a new dish.",
         "parameters": [],
         "requestBody": {
@@ -532,7 +532,7 @@
     },
     "/api/users/favourite/restaurants": {
       "get": {
-        "operationId": "FavouriteRestaurantListController_listFavouriteRestaurants",
+        "operationId": "FavouriteRestaurantListController_list",
         "summary": "Retrive a list of restaurants.",
         "parameters": [
           {
@@ -570,7 +570,7 @@
     },
     "/api/users/favourite/dishes": {
       "get": {
-        "operationId": "FavouriteDishListController_listFavouriteDishes",
+        "operationId": "FavouriteDishListController_list",
         "summary": "Retrive a list of dishes.",
         "parameters": [
           {
@@ -606,7 +606,7 @@
     },
     "/api/users/profile": {
       "get": {
-        "operationId": "UsersController_findUserById",
+        "operationId": "UsersController_findById",
         "summary": "Retrive a user by id.",
         "parameters": [],
         "responses": {
@@ -628,7 +628,7 @@
         "security": [{ "cookie": [] }]
       },
       "put": {
-        "operationId": "UsersController_updateUser",
+        "operationId": "UsersController_update",
         "summary": "Update an existing user.",
         "parameters": [],
         "requestBody": {
@@ -653,7 +653,7 @@
     },
     "/api/orders": {
       "post": {
-        "operationId": "OrderController_createOrder",
+        "operationId": "OrderController_create",
         "summary": "Create a new order.",
         "parameters": [],
         "requestBody": {

@@ -15,18 +15,14 @@ class AddressesController {
 
   @ApiObjectIdParam()
   @ApiGet({ name: 'address', response: AddressDto })
-  async findAddressById(@Param('id') id: string) {
+  async findById(@Param('id') id: string) {
     const address = await this.getAddressHandler.exec({ id });
     if (!address) return null;
     return plainToInstance(AddressDto, address);
   }
 
   @ApiCreate({ name: 'address', response: AddressDto })
-  async createAddress(
-    @Body() createAddressDto: CreateAddressDto,
-    @Res({ passthrough: true }) res: Response,
-    @Url() url: URL,
-  ) {
+  async create(@Body() createAddressDto: CreateAddressDto, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
     const address = await this.createAddressHandler.exec(createAddressDto);
     res.setHeader('Location', `${url.href}/${address.id}`);
     return plainToInstance(AddressDto, address);

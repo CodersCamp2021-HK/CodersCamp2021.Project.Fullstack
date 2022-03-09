@@ -17,7 +17,7 @@
     "test": "",
     "lint": "",
     "format": "prettier --write \"src/**/*.ts\"",
-    "gen": "docker run --rm -v \"$INIT_CWD:/local\" openapitools/openapi-generator-cli generate -i /local/api.spec.json -g typescript-fetch -o /local/src --ignore-file-override /local/src --additional-properties=typescriptThreePlus=true --remove-operation-id-prefix && yarn format"
+    "gen": "docker run --rm -v \"$INIT_CWD:/local\" openapitools/openapi-generator-cli generate -i /local/api.spec.json -g typescript-fetch -o /local/src --ignore-file-override /local/src --additional-properties=typescriptThreePlus=true,prefixParameterInterfaces=true --remove-operation-id-prefix && yarn format"
   },
   "devDependencies": {
     "prettier": "^2.5.1",

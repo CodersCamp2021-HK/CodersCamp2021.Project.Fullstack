@@ -28,11 +28,11 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface CreateAddressRequest {
+export interface AddressesApiCreateRequest {
   createAddressDto: CreateAddressDto;
 }
 
-export interface FindAddressByIdRequest {
+export interface AddressesApiFindByIdRequest {
   id: string;
 }
 
@@ -43,14 +43,14 @@ export class AddressesApi extends runtime.BaseAPI {
   /**
    * Create a new address.
    */
-  async createAddressRaw(
-    requestParameters: CreateAddressRequest,
+  async createRaw(
+    requestParameters: AddressesApiCreateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<AddressDto>> {
     if (requestParameters.createAddressDto === null || requestParameters.createAddressDto === undefined) {
       throw new runtime.RequiredError(
         'createAddressDto',
-        'Required parameter requestParameters.createAddressDto was null or undefined when calling createAddress.',
+        'Required parameter requestParameters.createAddressDto was null or undefined when calling create.',
       );
     }
 
@@ -77,22 +77,22 @@ export class AddressesApi extends runtime.BaseAPI {
   /**
    * Create a new address.
    */
-  async createAddress(requestParameters: CreateAddressRequest, initOverrides?: RequestInit): Promise<AddressDto> {
-    const response = await this.createAddressRaw(requestParameters, initOverrides);
+  async create(requestParameters: AddressesApiCreateRequest, initOverrides?: RequestInit): Promise<AddressDto> {
+    const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Retrive a address by id.
    */
-  async findAddressByIdRaw(
-    requestParameters: FindAddressByIdRequest,
+  async findByIdRaw(
+    requestParameters: AddressesApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<AddressDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling findAddressById.',
+        'Required parameter requestParameters.id was null or undefined when calling findById.',
       );
     }
 
@@ -116,8 +116,8 @@ export class AddressesApi extends runtime.BaseAPI {
   /**
    * Retrive a address by id.
    */
-  async findAddressById(requestParameters: FindAddressByIdRequest, initOverrides?: RequestInit): Promise<AddressDto> {
-    const response = await this.findAddressByIdRaw(requestParameters, initOverrides);
+  async findById(requestParameters: AddressesApiFindByIdRequest, initOverrides?: RequestInit): Promise<AddressDto> {
+    const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }

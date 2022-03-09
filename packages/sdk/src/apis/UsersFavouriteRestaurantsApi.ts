@@ -25,7 +25,7 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface ListFavouriteRestaurantsRequest {
+export interface UsersFavouriteRestaurantsApiListRequest {
   page?: number;
   limit?: number;
 }
@@ -37,8 +37,8 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
   /**
    * Retrive a list of restaurants.
    */
-  async listFavouriteRestaurantsRaw(
-    requestParameters: ListFavouriteRestaurantsRequest,
+  async listRaw(
+    requestParameters: UsersFavouriteRestaurantsApiListRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<FavouriteRestaurantListDto>> {
     const queryParameters: any = {};
@@ -69,11 +69,11 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
   /**
    * Retrive a list of restaurants.
    */
-  async listFavouriteRestaurants(
-    requestParameters: ListFavouriteRestaurantsRequest = {},
+  async list(
+    requestParameters: UsersFavouriteRestaurantsApiListRequest = {},
     initOverrides?: RequestInit,
   ): Promise<FavouriteRestaurantListDto> {
-    const response = await this.listFavouriteRestaurantsRaw(requestParameters, initOverrides);
+    const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }

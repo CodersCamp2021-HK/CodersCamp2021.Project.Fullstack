@@ -28,7 +28,7 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface CreateOrderRequest {
+export interface OrdersApiCreateRequest {
   createOrderDto: CreateOrderDto;
 }
 
@@ -39,14 +39,14 @@ export class OrdersApi extends runtime.BaseAPI {
   /**
    * Create a new order.
    */
-  async createOrderRaw(
-    requestParameters: CreateOrderRequest,
+  async createRaw(
+    requestParameters: OrdersApiCreateRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<OrderDto>> {
     if (requestParameters.createOrderDto === null || requestParameters.createOrderDto === undefined) {
       throw new runtime.RequiredError(
         'createOrderDto',
-        'Required parameter requestParameters.createOrderDto was null or undefined when calling createOrder.',
+        'Required parameter requestParameters.createOrderDto was null or undefined when calling create.',
       );
     }
 
@@ -73,8 +73,8 @@ export class OrdersApi extends runtime.BaseAPI {
   /**
    * Create a new order.
    */
-  async createOrder(requestParameters: CreateOrderRequest, initOverrides?: RequestInit): Promise<OrderDto> {
-    const response = await this.createOrderRaw(requestParameters, initOverrides);
+  async create(requestParameters: OrdersApiCreateRequest, initOverrides?: RequestInit): Promise<OrderDto> {
+    const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }

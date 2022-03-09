@@ -12,11 +12,7 @@ import { FavouriteDishListDto } from './FavouriteDishListDto';
 })
 class FavouriteDishListController {
   @ApiList({ name: 'dishes', response: FavouriteDishListDto, link: true })
-  async listFavouriteDishes(
-    @Pagination() pagination: PaginationQuery,
-    @Res({ passthrough: true }) resp: Response,
-    @Url() url: URL,
-  ) {
+  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) resp: Response, @Url() url: URL) {
     const paginatedDishes = { data: [], pages: 1 };
     resp.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(FavouriteDishListDto, paginatedDishes);

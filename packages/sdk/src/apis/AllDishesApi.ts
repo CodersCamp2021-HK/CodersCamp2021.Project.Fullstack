@@ -25,7 +25,7 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface ListRequest {
+export interface AllDishesApiListRequest {
   page?: number;
   limit?: number;
 }
@@ -38,7 +38,7 @@ export class AllDishesApi extends runtime.BaseAPI {
    * Retrive a list of dishes.
    */
   async listRaw(
-    requestParameters: ListRequest,
+    requestParameters: AllDishesApiListRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
@@ -69,7 +69,7 @@ export class AllDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a list of dishes.
    */
-  async list(requestParameters: ListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
+  async list(requestParameters: AllDishesApiListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }

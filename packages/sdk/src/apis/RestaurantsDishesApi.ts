@@ -28,12 +28,12 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface FindRestaurantsDishByIdRequest {
+export interface RestaurantsDishesApiFindByIdRequest {
   restaurantId: string;
   id: string;
 }
 
-export interface ListRestaurantsDishesRequest {
+export interface RestaurantsDishesApiListRequest {
   restaurantId: string;
   page?: number;
   limit?: number;
@@ -46,21 +46,21 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a dish by id.
    */
-  async findRestaurantsDishByIdRaw(
-    requestParameters: FindRestaurantsDishByIdRequest,
+  async findByIdRaw(
+    requestParameters: RestaurantsDishesApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.restaurantId === null || requestParameters.restaurantId === undefined) {
       throw new runtime.RequiredError(
         'restaurantId',
-        'Required parameter requestParameters.restaurantId was null or undefined when calling findRestaurantsDishById.',
+        'Required parameter requestParameters.restaurantId was null or undefined when calling findById.',
       );
     }
 
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter requestParameters.id was null or undefined when calling findRestaurantsDishById.',
+        'Required parameter requestParameters.id was null or undefined when calling findById.',
       );
     }
 
@@ -86,25 +86,25 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a dish by id.
    */
-  async findRestaurantsDishById(
-    requestParameters: FindRestaurantsDishByIdRequest,
+  async findById(
+    requestParameters: RestaurantsDishesApiFindByIdRequest,
     initOverrides?: RequestInit,
   ): Promise<DishDto> {
-    const response = await this.findRestaurantsDishByIdRaw(requestParameters, initOverrides);
+    const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
 
   /**
    * Retrive a list of dishes.
    */
-  async listRestaurantsDishesRaw(
-    requestParameters: ListRestaurantsDishesRequest,
+  async listRaw(
+    requestParameters: RestaurantsDishesApiListRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     if (requestParameters.restaurantId === null || requestParameters.restaurantId === undefined) {
       throw new runtime.RequiredError(
         'restaurantId',
-        'Required parameter requestParameters.restaurantId was null or undefined when calling listRestaurantsDishes.',
+        'Required parameter requestParameters.restaurantId was null or undefined when calling list.',
       );
     }
 
@@ -139,11 +139,8 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
    * Retrive a list of dishes.
    */
-  async listRestaurantsDishes(
-    requestParameters: ListRestaurantsDishesRequest,
-    initOverrides?: RequestInit,
-  ): Promise<DishListDto> {
-    const response = await this.listRestaurantsDishesRaw(requestParameters, initOverrides);
+  async list(requestParameters: RestaurantsDishesApiListRequest, initOverrides?: RequestInit): Promise<DishListDto> {
+    const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }
