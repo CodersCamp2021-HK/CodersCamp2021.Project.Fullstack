@@ -1,5 +1,6 @@
 import { ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 
+import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
 import { Card } from '../database';
 
@@ -13,10 +14,10 @@ class UserDto {
   @ApiPropertyOptional({ example: 'Kowalski' })
   readonly surname: string;
 
-  @ApiPropertyOptional({ example: 'jan@kowalski.pl' })
+  @ApiEmailProperty()
   readonly email: string;
 
-  @ApiPropertyOptional({ example: '123456789' })
+  @ApiPhoneNumberProperty()
   readonly phoneNumber: string;
 
   @ApiPropertyOptional({ example: { number: '4562574783836030', expirationDate: '2022-10-12', securityCode: '722' } })
