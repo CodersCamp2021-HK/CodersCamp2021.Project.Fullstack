@@ -1265,14 +1265,7 @@
           "surname": { "type": "string" },
           "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
-          "addressId": { "type": "array", "items": { "type": "string" } },
           "card": { "type": "object" },
-          "favouriteRestaurants": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
-          },
-          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
-          "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         }
       }

@@ -28,11 +28,27 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         email: req.email,
         phoneNumber: req.phoneNumber,
         card: req.card,
-        profileCompleted: req.profileCompleted,
       },
     );
 
+    //TODO update profileCompleted when all date are passed
+    // if (
+    //   req.name === undefined ||
+    //   req.surname === undefined ||
+    //   req.email === undefined ||
+    //   req.phoneNumber === undefined ||
+    //   req.card === undefined
+    // ) {
+    //   await this.userModule.findOneAndUpdate(
+    //     { _id: req.id },
+    //     {
+    //       profileCompleted: false,
+    //     },
+    //   );
+    // }
+
     if (result === null) return null;
+
     return undefined;
   }
 }
