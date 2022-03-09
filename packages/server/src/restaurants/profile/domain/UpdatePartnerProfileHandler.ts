@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-
 import { Model } from 'mongoose';
 
-import { Auth, AuthDocument } from '../../../auth/database';
-import { PasswordHasher } from '../../../auth/domain/PasswordHasher';
 import { Handler } from '../../../shared';
 import { CuisineTypes, Restaurant, RestaurantDocument, RestaurantTags } from '../../database';
 
@@ -16,28 +13,15 @@ interface UpdatePartnerProfileRequest {
   readonly cuisineType: CuisineTypes[];
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
-  readonly password: string;
   // readonly addressId: Address[];
   // readonly logo: Buffer;
 }
 
 @Injectable()
 class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest, null | undefined> {
-  constructor(
-    @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
-    @InjectModel(Auth.name) private authModel: Model<AuthDocument>,
-    // private readonly passwordHasher: PasswordHasher,
-  ) {}
+  constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
-    // TODO: add hashed password
-    // const hashPassword = await this.passwordHasher.hash(req.id);
-
-    const password = await this.authModel.findOneAndUpdate(
-      { entityId: req.id },
-      { password: req.password }
-    );
-
     const result = await this.restaurantModel.findOneAndUpdate(
       { _id: req.id },
       {

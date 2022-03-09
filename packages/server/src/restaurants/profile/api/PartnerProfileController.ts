@@ -1,6 +1,5 @@
-import { Body} from '@nestjs/common';
+import { Body } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-
 
 import { ApiAuthorization, ApiController, ApiGet, ApiUpdate, PartnerId, Role } from '../../../shared';
 import { GetRestaurantHandler } from '../../domain/GetRestaurantHandler';
@@ -21,7 +20,6 @@ class PartnerProfileController {
     if (!partner) return null;
     return plainToInstance(PartnerProfileDto, partner);
   }
-
 
   @ApiUpdate({ path: '', name: 'profile' })
   @ApiAuthorization(Role.Partner)
