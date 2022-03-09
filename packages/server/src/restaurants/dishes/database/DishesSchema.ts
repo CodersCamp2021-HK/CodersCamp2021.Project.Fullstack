@@ -3,6 +3,7 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
+import { DBImage } from '../../../image/shared';
 import { Restaurant } from '../../database';
 
 type DishDocument = Dish & Document<ObjectId>;
@@ -98,8 +99,9 @@ class Dish {
   price: number;
 
   @Expose()
+  @Type(() => DBImage)
   @Prop()
-  photo: Buffer;
+  photo: DBImage;
 
   @Expose()
   @Prop()
