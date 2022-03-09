@@ -1134,9 +1134,20 @@
           "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
-          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" },
+          "restaurant": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
         },
-        "required": ["id", "name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
+        "required": [
+          "id",
+          "name",
+          "price",
+          "portionWeight",
+          "calories",
+          "fats",
+          "proteins",
+          "carbohydrates",
+          "restaurant"
+        ]
       },
       "DishListDto": {
         "type": "object",
@@ -1226,9 +1237,10 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" }
+          "name": { "type": "string", "minLength": 1, "maxLength": 500, "example": "Danie 1" },
+          "restaurant": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
         },
-        "required": ["id", "name"]
+        "required": ["id", "name", "restaurant"]
       },
       "FavouriteDishListDto": {
         "type": "object",
@@ -1244,10 +1256,8 @@
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "addressId": { "type": "array", "items": { "type": "string" } },
-          "card": { "type": "object" },
           "favouriteRestaurants": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
@@ -1256,7 +1266,7 @@
           "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["id"]
+        "required": ["id", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
       "UpdateUserDto": {
         "type": "object",
@@ -1267,7 +1277,8 @@
           "phoneNumber": { "type": "string" },
           "card": { "type": "object" },
           "profileCompleted": { "type": "boolean", "default": false }
-        }
+        },
+        "required": ["favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       }
     }
   }

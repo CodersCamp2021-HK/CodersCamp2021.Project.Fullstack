@@ -14,6 +14,23 @@ describe(`${PATH}`, () => {
     await fixture.db.userModel.deleteMany();
   });
 
+  
+  it('GET /', async () => {
+    // Given
+    const user = {};
+
+    const created = await fixture.db.userModel.create(user);
+    const id = created._id?.toString();
+    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.User, sub: id }));
+
+    // When
+    const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
+
+    // Then
+    expect(resp.status).toBe(HttpStatus.OK);
+    expect(created).toEqual(expect.objectContaining(resp.body));
+  });
+  
   it('PUT /', async () => {
     // Given
     const user = {
@@ -30,5 +47,4 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(resp.status).toBe(HttpStatus.NO_CONTENT);
-  });
 });
