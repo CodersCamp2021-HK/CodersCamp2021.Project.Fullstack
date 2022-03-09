@@ -24,7 +24,7 @@ const App = () => {
   const [data, setData] = useState<RestaurantDto[]>([]);
 
   useEffect(() => {
-    api.listRestaurants().then((restaurants) => {
+    api.list().then((restaurants) => {
       setData(restaurants.data);
     });
   }, []);
