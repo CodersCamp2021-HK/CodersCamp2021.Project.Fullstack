@@ -35,7 +35,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         surname: req.surname,
         email: req.email,
         phoneNumber: req.phoneNumber,
-        // addressId: req.addressId,
+        addressId: req.addressId[0].id,
         card: req.card,
         // favouriteRestaurants: req.favouriteRestaurants,
         // favouriteDishes: req.favouriteDishes,
