@@ -1,6 +1,6 @@
 import './App.css';
 
-import { ArticleDto, ArticlesApi, Configuration } from '@fullstack/sdk';
+import { Configuration, RestaurantDto, RestaurantsApi } from '@fullstack/sdk';
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ const DEV_API_BASE_PATH = 'http://localhost:4000';
 const mode = `import.meta.env.MODE` as string;
 const isProduction = mode === `"production"`;
 
-const api = new ArticlesApi(
+const api = new RestaurantsApi(
   new Configuration({
     basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
   }),
@@ -21,11 +21,11 @@ const api = new ArticlesApi(
 const App = () => {
   const [count, setCount] = useState(0);
 
-  const [data, setData] = useState<ArticleDto[]>([]);
+  const [data, setData] = useState<RestaurantDto[]>([]);
 
   useEffect(() => {
-    api.list().then((x) => {
-      setData(x.data);
+    api.list().then((restaurants) => {
+      setData(restaurants.data);
     });
   }, []);
 
@@ -34,8 +34,8 @@ const App = () => {
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <ul>
-          {data.map((article) => (
-            <li key={article.id}>{JSON.stringify(article)}</li>
+          {data.map((restaurant) => (
+            <li key={restaurant.id}>{JSON.stringify(restaurant)}</li>
           ))}
         </ul>
         <p>Hello Vite + React!</p>

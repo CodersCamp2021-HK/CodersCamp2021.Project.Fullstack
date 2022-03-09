@@ -11,14 +11,20 @@ describe('<App/>', () => {
     fetchMock.mockResolvedValueOnce({
       status: 200,
       ok: true,
-      json: async () => ({ data: [{ id: '123' }, { id: '135' }], pages: 12 }),
+      json: async () => ({
+        data: [
+          { id: '123', cuisineType: [], tags: [], addressId: [] },
+          { id: '135', cuisineType: [], tags: [], addressId: [] },
+        ],
+        pages: 12,
+      }),
     });
 
     // Given
     render(<App />);
 
     // Then
-    expect(await screen.findByText('{"id":"123"}')).toBeInTheDocument();
+    expect(await screen.findByText(/"id":"123"/)).toBeInTheDocument();
 
     // When
     const btn = screen.getByRole(/button/i, { name: /count is: 0/i });
