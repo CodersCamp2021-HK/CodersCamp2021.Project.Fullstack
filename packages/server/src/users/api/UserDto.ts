@@ -5,15 +5,15 @@ import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorat
 import { ApiObjectIdProperty } from '../../shared';
 
 class CardDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '4562574783836030',
   })
   readonly number: string;
 
-  @ApiProperty({ pattern: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})', example: '2022-10-12' })
+  @ApiPropertyOptional({ pattern: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})', example: '2022-10-12' })
   readonly expirationDate: string;
 
-  @ApiProperty({ example: '722' })
+  @ApiPropertyOptional({ example: '722' })
   readonly securityCode: string;
 }
 class UserDto {
