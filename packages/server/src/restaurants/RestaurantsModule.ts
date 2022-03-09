@@ -5,10 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 // import { CreateAddressHandler } from '../addresses/domain';
 import { RestaurantController } from './api/RestaurantController';
 import { Restaurant, RestaurantSchema } from './database';
+import { DishController } from './dishes/api/DishController';
 import { PartnerDishController } from './dishes/api/PartnerDishController';
 import { RestaurantDishController } from './dishes/api/RestaurantDishController';
 import { Dish, DishSchema } from './dishes/database';
-import { CreateDishHandler } from './dishes/domain';
+import { CreateDishHandler, ListAllDishesHandler } from './dishes/domain';
 import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
@@ -23,15 +24,15 @@ import { Auth, AuthSchema } from '../auth/database';
     MongooseModule.forFeature([{ name: Auth.name, schema: AuthSchema }]),
     // MongooseModule.forFeature([{ name: Address.name, schema: AddressSchema }]),
   ],
-  controllers: [RestaurantController, PartnerProfileController, RestaurantDishController, PartnerDishController],
-  providers: [
-    RestaurantsFacade,
-    ListRestaurantsHandler,
-    GetRestaurantHandler,
-    CreateDishHandler,
-    UpdatePartnerProfileHandler,
-    // CreateAddressHandler,
+  controllers: [
+    RestaurantController,
+    PartnerProfileController,
+    RestaurantDishController,
+    PartnerDishController,
+    DishController,
+    PartnerProfileController,
   ],
+  providers: [RestaurantsFacade, ListRestaurantsHandler, GetRestaurantHandler, CreateDishHandler, ListAllDishesHandler, UpdatePartnerProfileHandler],
   exports: [RestaurantsFacade],
 })
 class RestaurantsModule {}
