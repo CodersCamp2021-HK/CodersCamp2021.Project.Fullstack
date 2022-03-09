@@ -36,6 +36,6 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
-    expect(created).toEqual(expect.objectContaining(res.body));
+    expect(res.body).toEqual(expect.objectContaining(dish));
   });
 });
