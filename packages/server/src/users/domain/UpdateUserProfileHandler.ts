@@ -17,9 +17,6 @@ interface UpdateUserProfileRequest {
   readonly phoneNumber: string;
   readonly addressId: Address[];
   readonly card: Card;
-  readonly favouriteRestaurants: Restaurant[];
-  readonly favouriteDishes: Dish[];
-  readonly orders: Order[];
   readonly profileCompleted: boolean;
 }
 
@@ -37,10 +34,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         phoneNumber: req.phoneNumber,
         addressId: req.addressId[0].id,
         card: req.card,
-        // favouriteRestaurants: req.favouriteRestaurants,
-        // favouriteDishes: req.favouriteDishes,
-        // orders: req.orders,
-        // profileCompleted: req.profileCompleted,
+        profileCompleted: req.profileCompleted,
       },
     );
 
