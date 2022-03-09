@@ -1,6 +1,6 @@
-import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude, Expose } from 'class-transformer';
+import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { Dish } from '../../restaurants/dishes/database/DishesSchema';
@@ -24,61 +24,79 @@ const ORDER_CONSTANTS = Object.freeze({
   }),
 });
 
+@Exclude()
+@Schema({ _id: false })
+class OrderDish {
+  @Expose()
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Dish', required: true })
+  readonly dishId: Dish;
+
+  @Expose()
+  @Prop({ default: ORDER_CONSTANTS.COUNT.MIN, min: ORDER_CONSTANTS.COUNT.MIN })
+  readonly count: number;
+
+  @Expose()
+  @Prop()
+  readonly excludedIngredients: string[];
+}
+
+const OrderDishSchema = SchemaFactory.createForClass(OrderDish);
+
+@Exclude()
+@Schema({ _id: false })
 class SubOrder {
+  @Expose()
   @Prop({ required: true })
-  deliveryDate: Date;
+  readonly deliveryDate: Date;
 
+  @Expose()
   @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
-  hourStart: number;
+  readonly hourStart: number;
 
+  @Expose()
   @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
-  hourEnd: number;
+  readonly hourEnd: number;
 
-  /*
-  TODO: When creating a handler this part might need to be refactored.
-  Also, remove price from this object when refactoring, as of now price is supplied
-  by user, so there is nothing stopping the user from just entering 0 for every item
-  in his order and receiving the food for free.
-  */
-  @Prop(
-    raw({
-      dishId: {
-        type: [{ type: ObjectId, ref: 'Dish' }],
-        required: true,
-      },
-      price: { type: Number, min: ORDER_CONSTANTS.PRICE.MIN },
-      count: { type: Number, default: ORDER_CONSTANTS.PRICE.MIN, min: ORDER_CONSTANTS.PRICE.MIN },
-      excludedIngredients: { type: [String] },
-    }),
-  )
-  dishes: Dish[];
+  @Expose()
+  @Prop({ type: [OrderDishSchema] })
+  readonly dishes: OrderDish[];
 
+  @Expose()
   @Prop({ default: false })
   delivered: boolean;
 }
 
+const SubOrderSchema = SchemaFactory.createForClass(SubOrder);
+
+@Exclude()
 @Schema({
   collection: 'order',
 })
 class Order {
+  @Expose()
   readonly id: string;
 
-  @Prop({ type: ObjectId, ref: 'Address', required: true })
-  addressId: Address;
+  @Expose()
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Address', required: true })
+  readonly addressId: Address;
 
-  @Prop({ type: ObjectId, ref: 'User', required: true })
-  userId: User;
+  @Expose()
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
+  readonly userId: User;
 
+  @Expose()
   @Prop({ required: true })
-  date: Date;
+  readonly date: Date;
 
-  @Prop()
-  subOrders: SubOrder[];
+  @Expose()
+  @Prop({ type: [SubOrderSchema] })
+  readonly subOrders: SubOrder[];
 
+  @Expose()
   @Prop({
     maxlength: ORDER_CONSTANTS.COMMENT.MAX_LENGTH,
   })
-  comment: string;
+  readonly comment: string;
 }
 
 const OrderSchema = SchemaFactory.createForClass(Order);
