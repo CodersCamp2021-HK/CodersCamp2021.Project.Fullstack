@@ -13,7 +13,6 @@ interface UpdatePartnerProfileRequest {
   readonly cuisineType: CuisineTypes[];
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
-  // readonly addressId: Address[];
   // readonly logo: Buffer;
 }
 
@@ -33,10 +32,6 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
 
         cuisineType: req.cuisineType,
         tags: req.tags,
-
-        // TODO: add address (?)
-        // addressId: req.addressId[0].id,
-
         bankAccountNumber: req.bankAccountNumber,
         phoneNumber: req.phoneNumber,
       },

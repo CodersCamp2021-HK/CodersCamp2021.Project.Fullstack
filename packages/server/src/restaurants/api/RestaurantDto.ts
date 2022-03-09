@@ -48,6 +48,6 @@ class RestaurantDto {
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
-class UpdateRestaurantDto extends PickType(RestaurantDto, ['cuisineType', 'tags', 'addressId'] as const) {}
+class UpdateRestaurantDto extends PickType(RestaurantDto, ['cuisineType', 'tags'] as const) {}
 
 export { FavouriteRestaurantDto, RestaurantDto, UpdateRestaurantDto };

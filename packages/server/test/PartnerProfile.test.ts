@@ -56,17 +56,6 @@ describe(`${PATH}`, () => {
     const reqBody = {
       cuisineType: ['włoska'],
       tags: ['wegetariańska'],
-      addressId: [
-        {
-          id: '6200218668fc82e7bdf15088',
-          street: 'Street',
-          streetNumber: '1A',
-          apartmentNumber: '1',
-          floor: '1',
-          city: 'City',
-          postcode: '00-000',
-        },
-      ],
     };
 
     // When

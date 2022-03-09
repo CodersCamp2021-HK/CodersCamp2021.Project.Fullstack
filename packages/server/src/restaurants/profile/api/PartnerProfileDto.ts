@@ -12,7 +12,6 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'description',
   'cuisineType',
   'tags',
-  'addressId',
   'logo',
 ] as const) {
   @ApiPropertyOptional()
