@@ -14,6 +14,7 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'tags',
   'addressId',
 ] as const) {
+  
   @ApiPropertyOptional()
   declare readonly name: string;
 
@@ -33,8 +34,14 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   readonly phoneNumber: string;
 
   @Expose()
-  @ApiPropertyOptional({ type: 'string', format: 'binary' })
-  readonly logo: Buffer;
+  @ApiPropertyOptional()
+  readonly password: string;
+
+  // TODO: add logo
+  
+  // @Expose()
+  // @ApiPropertyOptional()
+  // readonly logo: Buffer;
 }
 
 class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}

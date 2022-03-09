@@ -1,8 +1,6 @@
-import { Body, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { Body} from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { Express } from 'express';
+
 
 import { ApiAuthorization, ApiController, ApiGet, ApiUpdate, PartnerId, Role } from '../../../shared';
 import { GetRestaurantHandler } from '../../domain/GetRestaurantHandler';
@@ -10,7 +8,6 @@ import { UpdatePartnerProfileHandler } from '../domain/UpdatePartnerProfileHandl
 import { PartnerProfileDto, UpdatePartnerProfileDto } from './PartnerProfileDto';
 
 @ApiController({ path: 'partner/profile', name: "Partner's profile", description: "Operations on partner's profile" })
-@ApiTags('files')
 class PartnerProfileController {
   constructor(
     private readonly getRestaurantHandler: GetRestaurantHandler,
@@ -25,24 +22,6 @@ class PartnerProfileController {
     return plainToInstance(PartnerProfileDto, partner);
   }
 
-  // @ApiUpdate({ path: '', name: 'logo' })
-  // @ApiAuthorization(Role.Partner)
-  // @UseInterceptors(FileInterceptor('logo'))
-  // @ApiConsumes('multipart/form-data')
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       logo: {
-  //         type: 'string',
-  //         format: 'binary',
-  //       },
-  //     },
-  //   },
-  // })
-  // async uploadFile(@UploadedFile() file: Express.Multer.File) {
-  //   console.log(file);
-  // }
 
   @ApiUpdate({ path: '', name: 'profile' })
   @ApiAuthorization(Role.Partner)
