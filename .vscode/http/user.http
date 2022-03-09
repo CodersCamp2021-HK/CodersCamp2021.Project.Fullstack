@@ -1,0 +1,13 @@
+
+@userUrl = {{baseUrl}}/users/profile
+
+### get all articles
+GET {{userUrl}}
+
+### update article
+PUT {{userUrl}}
+
+{
+  "name":"John",
+  "surname": "Doe"
+}
