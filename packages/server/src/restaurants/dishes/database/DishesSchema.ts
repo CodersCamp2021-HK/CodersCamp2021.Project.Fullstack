@@ -3,6 +3,7 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document, SchemaTypes } from 'mongoose';
 
+import { DBImage } from '../../../image/shared';
 import { ExposeId } from '../../../shared/api/decorators';
 import { Restaurant } from '../../database';
 
@@ -99,8 +100,9 @@ class Dish {
   price: number;
 
   @Expose()
+  @Type(() => DBImage)
   @Prop()
-  photo: Buffer;
+  photo: DBImage;
 
   @Expose()
   @Prop()
