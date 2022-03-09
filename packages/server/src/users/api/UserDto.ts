@@ -26,10 +26,10 @@ class UserDto {
   @ApiPropertyOptional({ example: 'Kowalski' })
   readonly surname: string;
 
-  @ApiEmailProperty()
+  @ApiEmailProperty({ required: false })
   readonly email: string;
 
-  @ApiPhoneNumberProperty()
+  @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
 
   @Type(() => CardDto)
