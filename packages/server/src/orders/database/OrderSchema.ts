@@ -58,10 +58,6 @@ class SubOrder {
   @Type(() => OrderDish)
   @Prop({ type: [OrderDishSchema] })
   readonly dishes: OrderDish[];
-
-  @Expose()
-  @Prop({ default: false })
-  delivered: boolean;
 }
 
 const SubOrderSchema = SchemaFactory.createForClass(SubOrder);
