@@ -8,6 +8,7 @@ import { Order, OrderDocument } from '../database';
 
 interface CreateOrderRequest {
   addressId: string;
+  userId: string;
   subOrders: {
     deliveryDate: Date;
     hourStart: number;

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
@@ -11,9 +11,6 @@ export type OrderDocument = Order & Document;
 const ORDER_CONSTANTS = Object.freeze({
   COMMENT: Object.freeze({
     MAX_LENGTH: 300,
-  }),
-  PRICE: Object.freeze({
-    MIN: 0,
   }),
   HOUR: Object.freeze({
     MIN: 0,
@@ -58,6 +55,7 @@ class SubOrder {
   readonly hourEnd: number;
 
   @Expose()
+  @Type(() => OrderDish)
   @Prop({ type: [OrderDishSchema] })
   readonly dishes: OrderDish[];
 
@@ -89,6 +87,7 @@ class Order {
   readonly date: Date;
 
   @Expose()
+  @Type(() => SubOrder)
   @Prop({ type: [SubOrderSchema] })
   readonly subOrders: SubOrder[];
 

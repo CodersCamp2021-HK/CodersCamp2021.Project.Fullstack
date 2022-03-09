@@ -18,7 +18,7 @@ class OrderController {
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const order = await this.createOrderHandler.exec(createOrderDto);
+    const order = await this.createOrderHandler.exec({ ...createOrderDto, userId });
     res.setHeader('Location', `${url.href}/${order.id}`);
     return plainToInstance(OrderDto, order);
   }
