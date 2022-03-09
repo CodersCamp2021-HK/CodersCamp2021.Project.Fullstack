@@ -24,4 +24,18 @@ describe(`${PATH}`, () => {
     expect(res.status).toBe(HttpStatus.OK);
     expect(res.body.data).toHaveLength(dishes.length);
   });
+
+  it('GET /:id', async () => {
+    // Given
+    const dish = dishDto({ restaurant: '6200218668fc82e7bdf15090' });
+    const created = await fixture.db.dishModel.create(dish);
+    const id = created._id?.toString();
+
+    // When
+    const res = await fixture.req.get(`${PATH}/${id}`);
+
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(created).toEqual(expect.objectContaining(res.body));
+  });
 });
