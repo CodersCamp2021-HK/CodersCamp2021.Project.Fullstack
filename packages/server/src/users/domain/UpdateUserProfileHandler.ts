@@ -20,16 +20,13 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
   constructor(@InjectModel(User.name) private userModule: Model<UserDocument>) {}
 
   async exec(req: UpdateUserProfileRequest): Promise<null | undefined> {
-    const result = await this.userModule.findOneAndUpdate(
-      { _id: req.id },
-      {
-        name: req.name,
-        surname: req.surname,
-        email: req.email,
-        phoneNumber: req.phoneNumber,
-        card: req.card,
-      },
-    );
+    const result = await this.userModule.findByIdAndUpdate(req.id, {
+      name: req.name,
+      surname: req.surname,
+      email: req.email,
+      phoneNumber: req.phoneNumber,
+      card: req.card,
+    });
 
     //TODO update profileCompleted when all date are passed
     // if (
