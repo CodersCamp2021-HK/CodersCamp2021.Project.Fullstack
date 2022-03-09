@@ -29,14 +29,18 @@ class DishController {
 
   @ApiObjectIdParam()
   @ApiGet({ name: 'dish', response: DishDto })
-  async findById(@Param('id') dishId: string) {
+  async findDishById(@Param('id') dishId: string) {
     const dish = await this.getDishHandler.exec({ dishId });
     if (!dish) return null;
     return plainToInstance(DishDto, dish);
   }
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
-  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
+  async listAllDishes(
+    @Pagination() pagination: PaginationQuery,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+  ) {
     const paginatedDishes = await this.listAllDishesHandler.exec(pagination);
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
