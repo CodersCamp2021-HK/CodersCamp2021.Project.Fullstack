@@ -20,12 +20,23 @@ describe(`${PATH}`, () => {
     // Given
     const userId = new ObjectId().toString();
     const addressId = new ObjectId().toString();
+    const dishId = new ObjectId().toString();
     const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.User, sub: userId }));
 
     const reqBody: CreateOrderDto = {
       addressId,
-      subOrders: [],
-      comment: '',
+      subOrders: [
+        {
+          deliveryDate: new Date(),
+          hourStart: 9,
+          hourEnd: 12,
+          dishes: [
+            {
+              dishId,
+            },
+          ],
+        },
+      ],
     };
 
     // When
@@ -33,6 +44,7 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(resp.status).toBe(HttpStatus.CREATED);
-    expect(resp.body).toEqual(expect.objectContaining(reqBody));
+    expect(resp.body).toEqual(expect.objectContaining({ addressId, userId }));
+    expect(resp.body.subOrders[0].dishes).toEqual([{ dishId, count: 1, excludedIngredients: [] }]);
   });
 });

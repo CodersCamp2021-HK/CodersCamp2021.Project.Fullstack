@@ -15,11 +15,11 @@ interface CreateOrderRequest {
     hourEnd: number;
     dishes: {
       dishId: string;
-      count: number;
-      excludedIngredients: string[];
+      count?: number;
+      excludedIngredients?: string[];
     }[];
   }[];
-  comment: string;
+  comment?: string;
 }
 
 @Injectable()

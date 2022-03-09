@@ -10,10 +10,10 @@ class OrderDishDto {
   readonly dishId: string;
 
   @ApiPropertyOptional({ minimum: ORDER_CONSTANTS.COUNT.MIN })
-  readonly count: number;
+  readonly count?: number;
 
-  @ApiProperty({ example: [] })
-  readonly excludedIngredients: string[];
+  @ApiPropertyOptional({ example: [] })
+  readonly excludedIngredients?: string[];
 }
 
 class SubOrderDto {
@@ -54,7 +54,7 @@ class OrderDto {
     maxLength: ORDER_CONSTANTS.COMMENT.MAX_LENGTH,
     example: 'Additional requests for the restaurant.',
   })
-  readonly comment: string;
+  readonly comment?: string;
 }
 
 class CreateOrderDto extends OmitType(OrderDto, ['id', 'date', 'userId'] as const) {}

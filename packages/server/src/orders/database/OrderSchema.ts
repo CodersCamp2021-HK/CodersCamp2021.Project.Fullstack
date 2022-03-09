@@ -4,6 +4,7 @@ import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { Dish } from '../../restaurants/dishes/database/DishesSchema';
+import { ExposeId } from '../../shared';
 import { User } from '../../users/database/UserSchema';
 
 export type OrderDocument = Order & Document;
@@ -25,6 +26,7 @@ const ORDER_CONSTANTS = Object.freeze({
 @Schema({ _id: false })
 class OrderDish {
   @Expose()
+  @ExposeId()
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Dish', required: true })
   readonly dishId: Dish;
 
@@ -71,10 +73,12 @@ class Order {
   readonly id: string;
 
   @Expose()
+  @ExposeId()
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Address', required: true })
   readonly addressId: Address;
 
   @Expose()
+  @ExposeId()
   @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
   readonly userId: User;
 
