@@ -2,10 +2,10 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
-import { ApiObjectIdProperty } from '../../shared';
+import { ImageType } from '../../image/shared';
+import { ApiImageProperty, ApiObjectIdProperty } from '../../shared';
 import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
-// TODO: Add logo
 @Exclude()
 class RestaurantDto {
   @Expose()
@@ -41,6 +41,10 @@ class RestaurantDto {
     type: [AddressDto],
   })
   readonly addressId: AddressDto[];
+
+  @Expose()
+  @ApiImageProperty(ImageType.RestaurantLogo)
+  readonly logo: string;
 }
 
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
