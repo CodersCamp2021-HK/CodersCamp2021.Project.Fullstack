@@ -30,11 +30,12 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   ) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
+    // TODO: add hashed password
     // const hashPassword = await this.passwordHasher.hash(req.id);
 
     const password = await this.authModel.findOneAndUpdate(
       { entityId: req.id },
-      { password: 'test' }
+      { password: req.password }
     );
 
     const result = await this.restaurantModel.findOneAndUpdate(
@@ -42,9 +43,6 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
       {
         name: req.name,
         description: req.description,
-
-        // TODO: add password
-        // password: password,
 
         // TODO: add logo
         // logo: {},
