@@ -26,7 +26,7 @@ enum CuisineTypes {
   Korean = 'koreańska',
   Lebanese = 'libańska',
   Mediterranean = 'śródziemnomorska',
-  Mexican = 'meksykanśka',
+  Mexican = 'meksykańska',
   Polish = 'polska',
   Thai = 'tajska',
   Turkish = 'turecka',

@@ -4,12 +4,6 @@ import { FavouriteRestaurantDto } from '../../restaurants/api/RestaurantDto';
 import { FavouriteDishDto } from '../../restaurants/dishes/api/DishDto';
 import { ApiObjectIdProperty } from '../../shared';
 
-interface Card {
-  number: string;
-  expirationDate: Date;
-  securityCode: string;
-}
-
 class UserDto {
   @ApiObjectIdProperty()
   readonly id: string;

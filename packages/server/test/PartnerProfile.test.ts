@@ -45,4 +45,23 @@ describe(`${PATH}`, () => {
       expect(created).toEqual(expect.objectContaining(resp.body));
     }
   });
+
+  it('PUT /', async () => {
+    const restaurant = {};
+
+    // Given
+    const created = await fixture.db.restaurantModel.create(restaurant);
+    const id = created._id?.toString();
+    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
+    const reqBody = {
+      cuisineType: ['włoska'],
+      tags: ['wegetariańska'],
+    };
+
+    // When
+    const resp = await fixture.agent().put(PATH).set('Cookie', [accessToken]).send(reqBody);
+
+    // Then
+    expect(resp.status).toBe(HttpStatus.NO_CONTENT);
+  });
 });

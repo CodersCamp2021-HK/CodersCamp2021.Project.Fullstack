@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
-import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
