@@ -12,6 +12,7 @@ import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
 import { PartnerProfileController } from './profile/api/PartnerProfileController';
+import { UpdatePartnerProfileHandler } from './profile/domain';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PartnerProfileController } from './profile/api/PartnerProfileController
     RestaurantDishController,
     PartnerDishController,
     DishController,
+    PartnerProfileController,
   ],
   providers: [
     RestaurantsFacade,
@@ -33,6 +35,7 @@ import { PartnerProfileController } from './profile/api/PartnerProfileController
     CreateDishHandler,
     ListAllDishesHandler,
     ListPartnerDishesHandler,
+    UpdatePartnerProfileHandler,
   ],
   exports: [RestaurantsFacade],
 })

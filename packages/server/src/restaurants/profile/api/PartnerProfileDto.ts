@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType, PickType } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
 import { ApiPhoneNumberProperty } from '../../../auth/api/decorators';
@@ -12,13 +12,12 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   'description',
   'cuisineType',
   'tags',
-  'addressId',
   'logo',
 ] as const) {
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   declare readonly name: string;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   declare readonly description: string;
 
   @Expose()
@@ -32,6 +31,12 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   @Expose()
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
+
+  // TODO: add logo
+
+  // @Expose()
+  // @ApiPropertyOptional()
+  // readonly logo: Buffer;
 }
 
 class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}
