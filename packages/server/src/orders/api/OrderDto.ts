@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { ApiObjectIdProperty } from '../../shared';
@@ -9,21 +9,21 @@ class OrderDishDto {
   @ApiObjectIdProperty()
   readonly dishId: string;
 
-  @ApiProperty({ minimum: ORDER_CONSTANTS.COUNT.MIN })
-  readonly count: number;
+  @ApiPropertyOptional({ minimum: ORDER_CONSTANTS.COUNT.MIN })
+  readonly count?: number;
 
-  @ApiProperty({ example: [] })
-  readonly excludedIngredients: string[];
+  @ApiPropertyOptional({ example: [] })
+  readonly excludedIngredients?: string[];
 }
 
 class SubOrderDto {
-  @ApiProperty({ required: true })
+  @ApiProperty()
   readonly deliveryDate: Date;
 
-  @ApiProperty({ required: true, example: 8, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
+  @ApiProperty({ example: 8, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
   readonly hourStart: number;
 
-  @ApiProperty({ required: true, example: 11, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
+  @ApiProperty({ example: 11, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
   readonly hourEnd: number;
 
   @Type(() => OrderDishDto)
@@ -43,18 +43,18 @@ class OrderDto {
   @ApiObjectIdProperty()
   readonly userId: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty()
   readonly date: Date;
 
   @Type(() => SubOrderDto)
   @ApiProperty({ type: [SubOrderDto] })
   readonly subOrders: SubOrderDto[];
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     maxLength: ORDER_CONSTANTS.COMMENT.MAX_LENGTH,
     example: 'Additional requests for the restaurant.',
   })
-  readonly comment: string;
+  readonly comment?: string;
 }
 
 class CreateOrderDto extends OmitType(OrderDto, ['id', 'date', 'userId'] as const) {}
