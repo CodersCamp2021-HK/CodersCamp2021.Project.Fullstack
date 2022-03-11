@@ -43,7 +43,7 @@ class PartnerAddressController {
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const address = await this.createAddressHandler.exec({ ...createAddressDto, owner });
+    const address = await this.createAddressHandler.exec({ ...createAddressDto, role: Role.Partner, owner });
     res.setHeader('Location', `${url.href}/${address.id}`);
     return plainToInstance(AddressDto, address);
   }
