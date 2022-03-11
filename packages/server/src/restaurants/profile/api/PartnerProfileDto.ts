@@ -31,12 +31,6 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   @Expose()
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
-
-  // TODO: add logo
-
-  // @Expose()
-  // @ApiPropertyOptional()
-  // readonly logo: Buffer;
 }
 
 class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}

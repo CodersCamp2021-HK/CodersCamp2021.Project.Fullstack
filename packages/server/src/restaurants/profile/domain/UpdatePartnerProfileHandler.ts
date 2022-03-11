@@ -13,7 +13,7 @@ interface UpdatePartnerProfileRequest {
   readonly cuisineType: CuisineTypes[];
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
-  // readonly logo: Buffer;
+  readonly logo: string;
 }
 
 @Injectable()
@@ -26,10 +26,7 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
       {
         name: req.name,
         description: req.description,
-
-        // TODO: add logo
-        // logo: {},
-
+        logo: req.logo,
         cuisineType: req.cuisineType,
         tags: req.tags,
         bankAccountNumber: req.bankAccountNumber,
