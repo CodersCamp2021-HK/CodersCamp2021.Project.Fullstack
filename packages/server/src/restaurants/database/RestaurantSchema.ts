@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { PHONE_NUMBER } from '../../auth/shared';
@@ -85,7 +85,7 @@ class Restaurant {
   phoneNumber: string;
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
   @Expose()
@@ -112,7 +112,7 @@ class Restaurant {
   profileCompleted: boolean;
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Dish' }] })
   dishes: Dish[];
 
   @Expose()

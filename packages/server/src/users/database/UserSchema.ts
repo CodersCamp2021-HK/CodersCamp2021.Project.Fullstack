@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
 import { Order } from '../../orders/database/OrderSchema';
@@ -55,7 +55,7 @@ class User {
   phoneNumber: string;
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Address' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
   @Expose()
@@ -74,15 +74,15 @@ class User {
   card: Card;
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Restaurant' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Restaurant' }] })
   favouriteRestaurants: Restaurant[];
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Dish' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Dish' }] })
   favouriteDishes: Dish[];
 
   @Expose()
-  @Prop({ type: [{ type: ObjectId, ref: 'Order' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Order' }] })
   orders: Order[];
 
   @Expose()
