@@ -2267,6 +2267,7 @@ __metadata:
     lodash: ^4.17.21
     mongodb: 4.3.1
     mongoose: ^6.2.2
+    multer: ^1.4.4
     passport: ^0.5.2
     passport-jwt: ^4.0.0
     prettier: ^2.5.1
@@ -14095,7 +14096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multer@npm:1.4.4, multer@npm:^1.4.3":
+"multer@npm:1.4.4, multer@npm:^1.4.3, multer@npm:^1.4.4":
   version: 1.4.4
   resolution: "multer@npm:1.4.4"
   dependencies:

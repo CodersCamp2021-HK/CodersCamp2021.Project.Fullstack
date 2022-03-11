@@ -3,11 +3,15 @@ import { plainToInstance } from 'class-transformer';
 
 import { ApiAuthorization, ApiController, ApiGet, ApiUpdate, PartnerId, Role } from '../../../shared';
 import { GetRestaurantHandler } from '../../domain/GetRestaurantHandler';
+import { UpdatePartnerProfileHandler } from '../domain/UpdatePartnerProfileHandler';
 import { PartnerProfileDto, UpdatePartnerProfileDto } from './PartnerProfileDto';
 
 @ApiController({ path: 'partner/profile', name: "Partner's profile", description: "Operations on partner's profile" })
 class PartnerProfileController {
-  constructor(private readonly getRestaurantHandler: GetRestaurantHandler) {}
+  constructor(
+    private readonly getRestaurantHandler: GetRestaurantHandler,
+    private readonly updatePartnerProfileHandler: UpdatePartnerProfileHandler,
+  ) {}
 
   @ApiGet({ path: '', name: 'profile', response: PartnerProfileDto })
   @ApiAuthorization(Role.Partner)
@@ -19,9 +23,8 @@ class PartnerProfileController {
 
   @ApiUpdate({ path: '', name: 'profile' })
   @ApiAuthorization(Role.Partner)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@PartnerId() partnerId: string, @Body() updatePartnerProfileDto: UpdatePartnerProfileDto) {
-    return null; // TODO: Hook up UpdatePartnerProfileHandler (issue #22), remove eslint-disable comment above
+    return this.updatePartnerProfileHandler.exec({ id: partnerId, ...updatePartnerProfileDto });
   }
 }
 

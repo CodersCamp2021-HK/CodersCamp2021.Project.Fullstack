@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
-import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
@@ -32,7 +31,7 @@ class CreateDishHandler implements Handler<CreateDishRequest, Dish> {
   ) {}
 
   async exec(req: CreateDishRequest): Promise<Dish> {
-    const created = await this.dishModel.create({ ...req, restaurant: new ObjectId(req.restaurant) });
+    const created = await this.dishModel.create(req);
     await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
     return plainToInstance(Dish, created);
   }

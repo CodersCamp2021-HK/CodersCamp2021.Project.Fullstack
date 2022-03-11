@@ -6,7 +6,6 @@ import { Connection, Model } from 'mongoose';
 
 import { Address, AddressDocument } from '../../src/addresses/database';
 import { AppModule } from '../../src/AppModule';
-import { Article, ArticleDocument } from '../../src/articles/database';
 import { Auth, AuthDocument } from '../../src/auth/database';
 import { Restaurant, RestaurantDocument } from '../../src/restaurants/database';
 import { Dish, DishDocument } from '../../src/restaurants/dishes/database';
@@ -24,10 +23,6 @@ class DatabaseProxy {
 
   async close() {
     await this.app.close();
-  }
-
-  get articleModel() {
-    return this.app.get<Model<ArticleDocument>>(getModelToken(Article.name));
   }
 
   get dishModel() {
