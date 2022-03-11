@@ -1,5 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Document, SchemaTypes } from 'mongoose';
 
@@ -11,14 +11,31 @@ import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 type UserDocument = User & Document<ObjectId>;
 
 const USER_CONSTANTS = Object.freeze({
+  NAME: Object.freeze({
+    MIN_LENGTH: 3,
+    MAX_LENGTH: 35,
+  }),
   CARD: Object.freeze({
     NUMBER: {
       REGEX:
         /^(?:4[0-9]{12}(?:[0-9]{3})?)|(?:3[47][0-9]{13})|(?:5[1-5][0-9]{14})|(?:6(?:011|5[0-9][0-9])[0-9]{12})|(?:(?:2131|1800|35\d{3})\d{11})|(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/,
     },
+    EXPIRATION_DATE: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})',
     CVC: { MIN_LENGTH: 3, MAX_LENGTH: 4 },
   }),
 });
+
+@Exclude()
+class Card {
+  @Expose()
+  number: string;
+
+  @Expose()
+  expirationDate: string;
+
+  @Expose()
+  securityCode: string;
+}
 
 @Exclude()
 @Schema({
@@ -41,10 +58,12 @@ class User {
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
+  @Expose()
+  @Type(() => Card)
   @Prop(
     raw({
       number: { type: String, match: USER_CONSTANTS.CARD.NUMBER.REGEX },
-      expirationDate: { type: Date },
+      expirationDate: { type: String },
       securityCode: {
         type: String,
         min: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
@@ -52,7 +71,7 @@ class User {
       },
     }),
   )
-  card: object[];
+  card: Card;
 
   @Expose()
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Restaurant' }] })
@@ -76,5 +95,5 @@ class User {
 
 const UserSchema = SchemaFactory.createForClass(User);
 
-export { User, UserSchema };
+export { Card, User, USER_CONSTANTS, UserSchema };
 export type { UserDocument };
