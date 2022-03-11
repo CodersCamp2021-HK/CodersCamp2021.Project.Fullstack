@@ -1,0 +1,13 @@
+
+@userUrl = {{baseUrl}}/users/profile
+### first you need login
+### get user profile
+GET {{userUrl}}
+
+### update user profile
+PUT {{userUrl}}
+
+{
+  "name":"John",
+  "surname": "Doe"
+}
