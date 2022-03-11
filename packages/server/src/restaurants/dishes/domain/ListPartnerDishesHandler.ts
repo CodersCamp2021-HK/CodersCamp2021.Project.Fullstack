@@ -12,7 +12,6 @@ class ListPartnerDishesHandler implements Handler<ListDishesRequest, Paginated<D
   constructor(@InjectModel(Dish.name) private dishModel: Model<DishDocument>) {}
 
   async exec(req: ListDishesRequest) {
-    console.log(req);
     const offset = (req.page - 1) * req.limit;
     const queryFilter = { restaurant: req.partnerId };
     const dishDocsQuery = this.dishModel.find(queryFilter).skip(offset).limit(req.limit);
