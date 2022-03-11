@@ -11,11 +11,16 @@ import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 type UserDocument = User & Document<ObjectId>;
 
 const USER_CONSTANTS = Object.freeze({
+  NAME: Object.freeze({
+    MIN_LENGTH: 3,
+    MAX_LENGTH: 35,
+  }),
   CARD: Object.freeze({
     NUMBER: {
       REGEX:
         /^(?:4[0-9]{12}(?:[0-9]{3})?)|(?:3[47][0-9]{13})|(?:5[1-5][0-9]{14})|(?:6(?:011|5[0-9][0-9])[0-9]{12})|(?:(?:2131|1800|35\d{3})\d{11})|(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/,
     },
+    EXPIRATION_DATE: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})',
     CVC: { MIN_LENGTH: 3, MAX_LENGTH: 4 },
   }),
 });

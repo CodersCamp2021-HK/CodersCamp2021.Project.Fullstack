@@ -177,7 +177,7 @@ function ApiGet(options: ApiGetOptions): MethodDecorator {
   const path = options.path ?? ':id';
   const rname = options.name ?? pickName(options.response);
   const defaultOpertion = {
-    summary: `Retrive a ${rname} by id.`,
+    summary: `Retrieve a ${rname} by id.`,
   };
 
   return applyDecorators(
@@ -208,7 +208,7 @@ function ApiList(options: ApiListOptions): MethodDecorator {
   const path = options.path ?? '';
   const rname = options.name ?? pickName(options.response);
   const defaultOpertion = {
-    summary: `Retrive a list of ${rname}.`,
+    summary: `Retrieve a list of ${rname}.`,
   };
   return applyDecorators(
     ApiOperation({

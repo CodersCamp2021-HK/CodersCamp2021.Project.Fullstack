@@ -7,11 +7,12 @@ import { DishController } from './dishes/api/DishController';
 import { PartnerDishController } from './dishes/api/PartnerDishController';
 import { RestaurantDishController } from './dishes/api/RestaurantDishController';
 import { Dish, DishSchema } from './dishes/database';
-import { CreateDishHandler, ListAllDishesHandler } from './dishes/domain';
+import { CreateDishHandler, GetDishHandler, ListAllDishesHandler, ListPartnerDishesHandler } from './dishes/domain';
 import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
 import { PartnerProfileController } from './profile/api/PartnerProfileController';
+import { UpdatePartnerProfileHandler } from './profile/domain';
 
 @Module({
   imports: [
@@ -24,8 +25,18 @@ import { PartnerProfileController } from './profile/api/PartnerProfileController
     RestaurantDishController,
     PartnerDishController,
     DishController,
+    PartnerProfileController,
   ],
-  providers: [RestaurantsFacade, ListRestaurantsHandler, GetRestaurantHandler, CreateDishHandler, ListAllDishesHandler],
+  providers: [
+    RestaurantsFacade,
+    ListRestaurantsHandler,
+    GetRestaurantHandler,
+    GetDishHandler,
+    CreateDishHandler,
+    ListAllDishesHandler,
+    ListPartnerDishesHandler,
+    UpdatePartnerProfileHandler,
+  ],
   exports: [RestaurantsFacade],
 })
 class RestaurantsModule {}

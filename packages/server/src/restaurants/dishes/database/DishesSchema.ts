@@ -1,8 +1,10 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
+import { DBImage } from '../../../image/shared';
+import { ExposeId } from '../../../shared/api/decorators';
 import { Restaurant } from '../../database';
 
 type DishDocument = Dish & Document<ObjectId>;
@@ -98,8 +100,9 @@ class Dish {
   price: number;
 
   @Expose()
+  @Type(() => DBImage)
   @Prop()
-  photo: Buffer;
+  photo: DBImage;
 
   @Expose()
   @Prop()
@@ -195,7 +198,8 @@ class Dish {
   carbohydrates: NutritionalValue;
 
   @Expose()
-  @Prop({ type: ObjectId, ref: 'Restaurant', required: true })
+  @ExposeId()
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Restaurant', required: true })
   restaurant: Restaurant;
 
   @Expose()

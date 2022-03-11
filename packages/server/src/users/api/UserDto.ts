@@ -3,27 +3,44 @@ import { Type } from 'class-transformer';
 
 import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
+import { USER_CONSTANTS } from './../database';
 
 class CardDto {
   @ApiPropertyOptional({
+    pattern: USER_CONSTANTS.CARD.NUMBER.REGEX.source,
     example: '4562574783836030',
   })
   readonly number: string;
 
-  @ApiPropertyOptional({ pattern: '([0-9]{4})-(?:[0-9]{2})-([0-9]{2})', example: '2022-10-12' })
+  @ApiPropertyOptional({
+    pattern: USER_CONSTANTS.CARD.EXPIRATION_DATE,
+    example: '2022-10-12',
+  })
   readonly expirationDate: string;
 
-  @ApiPropertyOptional({ example: '722' })
+  @ApiPropertyOptional({
+    minLength: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
+    maxLength: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
+    example: '722',
+  })
   readonly securityCode: string;
 }
 class UserDto {
   @ApiObjectIdProperty()
   readonly id: string;
 
-  @ApiPropertyOptional({ example: 'Jan' })
+  @ApiPropertyOptional({
+    minLength: USER_CONSTANTS.NAME.MIN_LENGTH,
+    maxLength: USER_CONSTANTS.NAME.MAX_LENGTH,
+    example: 'Jan',
+  })
   readonly name: string;
 
-  @ApiPropertyOptional({ example: 'Kowalski' })
+  @ApiPropertyOptional({
+    minLength: USER_CONSTANTS.NAME.MIN_LENGTH,
+    maxLength: USER_CONSTANTS.NAME.MAX_LENGTH,
+    example: 'Kowalski',
+  })
   readonly surname: string;
 
   @ApiEmailProperty({ required: false })
