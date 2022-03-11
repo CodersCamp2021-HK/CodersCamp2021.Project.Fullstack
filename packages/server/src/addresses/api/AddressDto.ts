@@ -1,15 +1,20 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
 
 import { ApiObjectIdProperty } from '../../shared';
 import { ADDRESS_CONSTANTS } from '../database';
 
+@Exclude()
 class AddressDto {
+  @Expose()
   @ApiObjectIdProperty()
   readonly id: string;
 
+  @Expose()
   @ApiProperty({ example: 'Street' })
   readonly street: string;
 
+  @Expose()
   @ApiProperty({
     pattern: ADDRESS_CONSTANTS.STREET_NUMBER.REGEX.source,
     maxLength: ADDRESS_CONSTANTS.STREET_NUMBER.MAX_LENGTH,
@@ -17,6 +22,7 @@ class AddressDto {
   })
   readonly streetNumber: string;
 
+  @Expose()
   @ApiProperty({
     pattern: ADDRESS_CONSTANTS.APARTMENT_NUMBER.REGEX.source,
     required: false,
@@ -24,6 +30,7 @@ class AddressDto {
   })
   readonly apartmentNumber: string;
 
+  @Expose()
   @ApiProperty({
     pattern: ADDRESS_CONSTANTS.FLOOR.REGEX.source,
     required: false,
@@ -31,9 +38,11 @@ class AddressDto {
   })
   readonly floor: string;
 
+  @Expose()
   @ApiProperty({ example: 'City' })
   readonly city: string;
 
+  @Expose()
   @ApiProperty({
     pattern: ADDRESS_CONSTANTS.POSTCODE.REGEX.source,
     example: '00-000',
