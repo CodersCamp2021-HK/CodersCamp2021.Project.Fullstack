@@ -38,4 +38,5 @@ describe(`${PATH}`, () => {
     expect(res.status).toBe(HttpStatus.OK);
     expect(res.body).toEqual(expect.objectContaining(dish));
   });
+
 });
