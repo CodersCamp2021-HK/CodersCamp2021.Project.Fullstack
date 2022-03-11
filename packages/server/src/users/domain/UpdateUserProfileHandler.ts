@@ -9,7 +9,6 @@ interface UpdateUserProfileRequest {
   readonly id: string;
   readonly name: string;
   readonly surname: string;
-  readonly email: string;
   readonly phoneNumber: string;
   readonly card: Card;
   readonly profileCompleted: boolean;
@@ -23,7 +22,6 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
     const result = await this.userModule.findByIdAndUpdate(req.id, {
       name: req.name,
       surname: req.surname,
-      email: req.email,
       phoneNumber: req.phoneNumber,
       card: req.card,
     });

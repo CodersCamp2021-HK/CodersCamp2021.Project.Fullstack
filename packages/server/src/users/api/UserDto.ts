@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
-import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorators';
+import { ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
 import { USER_CONSTANTS } from './../database';
 
@@ -42,9 +42,6 @@ class UserDto {
     example: 'Kowalski',
   })
   readonly surname: string;
-
-  @ApiEmailProperty({ required: false })
-  readonly email: string;
 
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;

@@ -1288,7 +1288,6 @@
         "properties": {
           "name": { "type": "string" },
           "surname": { "type": "string" },
-          "email": { "type": "string" },
           "phoneNumber": { "type": "string" },
           "card": { "type": "object" },
           "profileCompleted": { "type": "boolean", "default": false }
