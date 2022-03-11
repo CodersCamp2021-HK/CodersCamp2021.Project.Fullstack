@@ -13,6 +13,7 @@ interface CreateAddressRequest {
   readonly floor: string;
   readonly city: string;
   readonly postcode: string;
+  readonly owner: string;
 }
 
 @Injectable()
@@ -20,7 +21,7 @@ class CreateAddressHandler implements Handler<CreateAddressRequest, Address> {
   constructor(@InjectModel(Address.name) private addressModel: Model<AddressDocument>) {}
 
   async exec(req: CreateAddressRequest): Promise<Address> {
-    const created = await this.addressModel.create({ ...req });
+    const created = await this.addressModel.create(req);
     return plainToInstance(Address, created);
   }
 }
