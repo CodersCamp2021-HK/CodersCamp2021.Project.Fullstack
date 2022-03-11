@@ -17,7 +17,7 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, ListPartnerDishesHandler,  DeleteDishHandler} from '../domain';
+import { CreateDishHandler, DeleteDishHandler, ListPartnerDishesHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -68,8 +68,7 @@ class PartnerDishController {
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async deleteOne(@PartnerId() restaurant: string, @Param('id') dishId: string) {
-
-      return this.deleteDishHandler.exec({ restaurantId: restaurant, id: dishId });
+    return this.deleteDishHandler.exec({ restaurantId: restaurant, id: dishId });
 
     // TODO: Also remove dish from restaurant's dish array!!!
     return null; // TODO: Hook up DeleteDishHandler, remove eslint-disable comment above

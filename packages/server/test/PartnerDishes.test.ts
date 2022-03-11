@@ -49,11 +49,10 @@ describe(`${PATH}`, () => {
     expect(res.body).toEqual(expect.objectContaining(reqBody));
   });
 
-
   it('DELETE /:id', async () => {
     // Given
     const accessToken = accessTokenAsCookie(
-        fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
+      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
     );
     const dish = dishDto({ restaurant: RESTAURANT_ID });
     const created = await fixture.db.dishModel.create(dish);
@@ -71,5 +70,4 @@ describe(`${PATH}`, () => {
     // Then
     expect(res1.status).toBe(HttpStatus.NOT_FOUND);
   });
-  
 });
