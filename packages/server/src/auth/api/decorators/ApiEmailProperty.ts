@@ -1,9 +1,9 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
 import { EMAIL } from '../../shared';
 
-function ApiEmailProperty(): PropertyDecorator {
+function ApiEmailProperty(rest?: ApiPropertyOptions): PropertyDecorator {
   return applyDecorators(
     ApiProperty({
       type: 'string',
@@ -11,6 +11,7 @@ function ApiEmailProperty(): PropertyDecorator {
       maxLength: EMAIL.MAX_LEN,
       example: 'user@email.com',
       description: 'RFC 5322 standard email format',
+      ...rest,
     }),
   );
 }

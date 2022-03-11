@@ -1289,13 +1289,7 @@
           "name": { "type": "string" },
           "surname": { "type": "string" },
           "phoneNumber": { "type": "string" },
-          "addressId": { "type": "array", "items": { "type": "string" } },
-          "favouriteRestaurants": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
-          },
-          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
-          "orders": { "type": "array", "items": { "type": "string" } },
+          "card": { "type": "object" },
           "profileCompleted": { "type": "boolean", "default": false }
         },
         "required": ["favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
