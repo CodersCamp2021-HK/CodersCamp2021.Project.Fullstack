@@ -41,7 +41,7 @@ class RestaurantDishController {
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const paginatedDishes = await this.listDishesHandler.exec({page, limit, partnerId});
+    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, partnerId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }

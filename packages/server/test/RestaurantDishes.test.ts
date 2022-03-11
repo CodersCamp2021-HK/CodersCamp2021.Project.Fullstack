@@ -1,6 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
-import { initE2eFixture } from './E2eFixture';
+
 import { dishDto } from './ApiDtoUtils';
+import { initE2eFixture } from './E2eFixture';
 
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
 const PATH = `/api/restaurants/${RESTAURANT_ID}/dishes`;
@@ -25,7 +26,5 @@ describe(`${PATH}`, () => {
     // Then
     expect(res.status).toBe(HttpStatus.OK);
     expect(res.body.data).toHaveLength(2);
-
   });
-
 });
