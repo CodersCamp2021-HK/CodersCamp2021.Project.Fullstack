@@ -66,12 +66,8 @@ class PartnerDishController {
   @ApiObjectIdParam()
   @ApiDelete({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async deleteOne(@PartnerId() restaurant: string, @Param('id') dishId: string) {
     return this.deleteDishHandler.exec({ restaurantId: restaurant, id: dishId });
-
-    // TODO: Also remove dish from restaurant's dish array!!!
-    return null; // TODO: Hook up DeleteDishHandler, remove eslint-disable comment above
   }
 }
 
