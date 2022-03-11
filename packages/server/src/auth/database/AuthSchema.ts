@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 import { Role } from '../../shared';
 import { EMAIL } from '../shared';
@@ -31,7 +31,7 @@ class Auth {
   })
   role: Role;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, default: undefined })
+  @Prop({ type: SchemaTypes.ObjectId, default: undefined })
   entityId?: ObjectId;
 
   @Prop({ default: false })
