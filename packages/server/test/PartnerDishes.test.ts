@@ -48,4 +48,26 @@ describe(`${PATH}`, () => {
     expect(res.status).toBe(HttpStatus.CREATED);
     expect(res.body).toEqual(expect.objectContaining(reqBody));
   });
+
+  it('DELETE /:id', async () => {
+    // Given
+    const accessToken = accessTokenAsCookie(
+      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
+    );
+    const dish = dishDto({ restaurant: RESTAURANT_ID });
+    const created = await fixture.db.dishModel.create(dish);
+    const id = created._id?.toString();
+
+    // When;
+    const res0 = await fixture.agent().delete(`${PATH}/${id}`).set('Cookie', [accessToken]);
+
+    // Then
+    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
+
+    // When
+    const res1 = await fixture.agent().delete(`${PATH}/${id}`).set('Cookie', [accessToken]);
+
+    // Then
+    expect(res1.status).toBe(HttpStatus.NOT_FOUND);
+  });
 });
