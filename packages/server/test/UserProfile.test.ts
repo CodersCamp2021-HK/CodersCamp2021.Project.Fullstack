@@ -57,5 +57,6 @@ describe(`${PATH}`, () => {
     expect(resp_get.body.surname).toEqual(reqBody.surname);
     expect(resp_get.body.phoneNumber).toEqual(reqBody.phoneNumber);
     expect(resp_get.body.card).toEqual(reqBody.card);
+    expect(resp_get.body.profileCompleted).toEqual(true);
   });
 });
