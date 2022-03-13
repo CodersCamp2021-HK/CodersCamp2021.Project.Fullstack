@@ -17,7 +17,7 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, ListPartnerDishesHandler } from '../domain';
+import { CreateDishHandler, ListPartnerDishesHandler, UpdateDishHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -26,6 +26,7 @@ class PartnerDishController {
   constructor(
     private readonly createDishHandler: CreateDishHandler,
     private readonly listPartnerDishesHandler: ListPartnerDishesHandler,
+    private readonly updateDishHandler: UpdateDishHandler,
   ) {}
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
@@ -59,7 +60,7 @@ class PartnerDishController {
   @ApiAuthorization(Role.Partner)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@PartnerId() restaurant: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
-    return null; // TODO: Hook up UpdateDishHandler, remove eslint-disable comment above
+    return this.updateDishHandler.exec({ restaurantId: restaurant, dish: dishId, ...UpdateDishDto });
   }
 
   @ApiObjectIdParam()
