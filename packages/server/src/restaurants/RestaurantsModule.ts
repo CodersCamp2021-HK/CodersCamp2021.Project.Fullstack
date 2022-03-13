@@ -9,6 +9,7 @@ import { RestaurantDishController } from './dishes/api/RestaurantDishController'
 import { Dish, DishSchema } from './dishes/database';
 import {
   CreateDishHandler,
+  DeleteDishHandler,
   GetDishHandler,
   ListAllDishesHandler,
   ListPartnerDishesHandler,
@@ -40,6 +41,7 @@ import { UpdatePartnerProfileHandler } from './profile/domain';
     GetDishHandler,
     CreateDishHandler,
     UpdateDishHandler,
+    DeleteDishHandler,
     ListAllDishesHandler,
     ListPartnerDishesHandler,
     UpdatePartnerProfileHandler,
