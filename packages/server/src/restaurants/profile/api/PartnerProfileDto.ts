@@ -33,6 +33,6 @@ class PartnerProfileDto extends PickType(RestaurantDto, [
   readonly phoneNumber: string;
 }
 
-class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id'] as const) {}
+class UpdatePartnerProfileDto extends OmitType(PartnerProfileDto, ['id', 'logo'] as const) {}
 
 export { PartnerProfileDto, UpdatePartnerProfileDto };
