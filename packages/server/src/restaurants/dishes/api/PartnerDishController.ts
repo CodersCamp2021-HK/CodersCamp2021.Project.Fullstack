@@ -59,7 +59,6 @@ class PartnerDishController {
   @ApiObjectIdParam()
   @ApiUpdate({ name: 'dish' })
   @ApiAuthorization(Role.Partner)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(@PartnerId() restaurant: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
     return this.updateDishHandler.exec({ restaurantId: restaurant, id: dishId, ...updateDishDto });
   }

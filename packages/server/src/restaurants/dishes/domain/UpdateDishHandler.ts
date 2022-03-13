@@ -30,8 +30,6 @@ class UpdateDishHandler implements Handler<UpdateDishRequest, Dish | undefined |
   ) {}
   async exec(req: UpdateDishRequest): Promise<Dish | undefined | null> {
     await this.restaurantModel.updateOne({ _id: req.restaurantId }, { $pull: { dishes: req.id } });
-    console.log(req.id);
-    console.log(req.name);
     const result = await this.dishModel.findOneAndUpdate(
       { _id: req.id, restaurant: req.restaurantId },
       {
