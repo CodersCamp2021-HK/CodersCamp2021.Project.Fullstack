@@ -112,9 +112,17 @@ describe(`${PATH}`, () => {
     expect(resp_get.body.data[0].carbohydrates).toEqual(reqBody.carbohydrates);
 
     // When
-    const wrong_token_resp = await fixture.agent().put(`${PATH}/${id}`).set('Cookie', ['21321312']).send(reqBody);
+    let wrong_id = '111e1acfa3f9ad63169a0000';
+    if (id === wrong_id) {
+      wrong_id = '222e1acfa3f9ad63169a0000';
+    }
+    const wrong_token_resp = await fixture
+      .agent()
+      .put(`${PATH}/${'111e1acfa3f9ad63169a0000'}`)
+      .set('Cookie', [accessToken])
+      .send(reqBody);
     //Then
-    expect(wrong_token_resp.status).toBe(HttpStatus.UNAUTHORIZED);
+    expect(wrong_token_resp.status).toBe(HttpStatus.NOT_FOUND);
   });
 
   it('DELETE /:id', async () => {
