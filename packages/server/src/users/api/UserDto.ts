@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 
 import { ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
@@ -25,10 +25,14 @@ class CardDto {
   })
   readonly securityCode: string;
 }
+
+@Exclude()
 class UserDto {
+  @Expose()
   @ApiObjectIdProperty()
   readonly id: string;
 
+  @Expose()
   @ApiPropertyOptional({
     minLength: USER_CONSTANTS.NAME.MIN_LENGTH,
     maxLength: USER_CONSTANTS.NAME.MAX_LENGTH,
@@ -36,6 +40,7 @@ class UserDto {
   })
   readonly name: string;
 
+  @Expose()
   @ApiPropertyOptional({
     minLength: USER_CONSTANTS.NAME.MIN_LENGTH,
     maxLength: USER_CONSTANTS.NAME.MAX_LENGTH,
@@ -43,9 +48,11 @@ class UserDto {
   })
   readonly surname: string;
 
+  @Expose()
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
 
+  @Expose()
   @Type(() => CardDto)
   @ApiProperty({
     required: false,
@@ -53,6 +60,7 @@ class UserDto {
   })
   readonly card: CardDto;
 
+  @Expose()
   @ApiPropertyOptional({
     default: false,
   })
