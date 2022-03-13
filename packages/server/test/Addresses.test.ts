@@ -1,17 +1,11 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { CreateAddressDto } from '../src/addresses/api/AddressDto';
-import { addressDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
+import { addressDto, initE2eFixture } from './shared';
 
 const PATH = '/api/addresses';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
-
-  afterEach(async () => {
-    await fixture.db.addressModel.deleteMany();
-  });
 
   it('GET /:id', async () => {
     // Given
@@ -29,7 +23,7 @@ describe(`${PATH}`, () => {
 
   it('POST /', async () => {
     // Given
-    const reqBody: CreateAddressDto = addressDto();
+    const reqBody = addressDto();
 
     // When
     const res = await fixture.req.post(PATH).send(reqBody);

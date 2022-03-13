@@ -1,11 +1,8 @@
 import { Get, HttpStatus } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { ObjectId } from 'mongodb';
 
 import { ApiAuthentication, ApiAuthorization, ApiController, PartnerId, Role, UserId } from '../src/shared';
-import { loginDto, registerPartnerDto, registerUserDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
-import { accessTokenAsCookie } from './shared';
+import { accessTokenAsCookie, initE2eFixture, loginDto, registerPartnerDto, registerUserDto } from './shared';
 
 const PATH = '/api/auth';
 const REGISTER_AS_PARTNER_REL_PATH = '/register/partner';
@@ -195,10 +192,9 @@ describe(`${PATH}`, () => {
       const invalidAccessToken = accessTokenAsCookie(
         'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjE2NzdjYTY5MGZiODFjZDkwMmUzOWQiLCJyb2xlIjoiVXNlciIsImlhdCI6MTY0NTcxNzczNSwiZXhwIjoxNjQ4MzA5NzM1LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjQwMDAifQ.mBMvY4HSvNwzoGJHzO_D-EAfSPoltLcFmZuFbeqCWRKVyEAPJXiPPFEL2L0tvG4LsrwU_uitRxkIadyWuuKPkQ',
       );
-      const agent = fixture.agent();
 
       // When
-      const res = await agent.post(LOGOUT_PATH).set('Cookie', [invalidAccessToken]).send();
+      const res = await fixture.req.post(LOGOUT_PATH).set('Cookie', [invalidAccessToken]).send();
 
       // Then
       expect(res.statusCode).toBe(HttpStatus.UNAUTHORIZED);
@@ -206,12 +202,10 @@ describe(`${PATH}`, () => {
 
     it('should return 204 when user provided valid cookie', async () => {
       // Given
-      const accessToken = fixture.app.get(JwtService).sign({});
-      const validAccessToken = accessTokenAsCookie(accessToken);
-      const agent = fixture.agent();
+      const agent = fixture.agent(Role.User);
 
       // When
-      const res = await agent.post(LOGOUT_PATH).set('Cookie', [validAccessToken]).send();
+      const res = await agent.post(LOGOUT_PATH).send();
 
       // Then
       expect(res.statusCode).toBe(HttpStatus.NO_CONTENT);
