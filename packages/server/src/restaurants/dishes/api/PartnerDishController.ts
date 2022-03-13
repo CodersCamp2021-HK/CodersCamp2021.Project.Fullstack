@@ -51,7 +51,9 @@ class PartnerDishController {
     @Url() url: URL,
   ) {
     const dish = await this.createDishHandler.exec({ ...createDishDto, restaurant });
-    res.setHeader('Location', `${url.href}/${dish.id}`);
+    if (dish != null) {
+      res.setHeader('Location', `${url.href}/${dish.id}`);
+    }
     return plainToInstance(DishDto, dish);
   }
 

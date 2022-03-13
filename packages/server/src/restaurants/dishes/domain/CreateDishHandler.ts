@@ -24,16 +24,22 @@ interface CreateDishRequest {
 }
 
 @Injectable()
-class CreateDishHandler implements Handler<CreateDishRequest, Dish> {
+class CreateDishHandler implements Handler<CreateDishRequest, Dish | null> {
   constructor(
     @InjectModel(Dish.name) private dishModel: Model<DishDocument>,
     @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
   ) {}
 
-  async exec(req: CreateDishRequest): Promise<Dish> {
-    const created = await this.dishModel.create(req);
-    await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
-    return plainToInstance(Dish, created);
+  async exec(req: CreateDishRequest): Promise<Dish | null> {
+    const restaurant = await this.restaurantModel.findById(req.restaurant);
+
+    if (restaurant?.profileCompleted) {
+      const created = await this.dishModel.create(req);
+      await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
+
+      return plainToInstance(Dish, created);
+    }
+    return null;
   }
 }
 

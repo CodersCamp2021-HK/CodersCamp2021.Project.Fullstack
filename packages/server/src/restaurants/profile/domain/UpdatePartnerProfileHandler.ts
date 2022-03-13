@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import _ from 'lodash';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
@@ -13,7 +14,6 @@ interface UpdatePartnerProfileRequest {
   readonly cuisineType: CuisineTypes[];
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
-  // readonly logo: Buffer;
 }
 
 @Injectable()
@@ -21,23 +21,27 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
-    const result = await this.restaurantModel.findOneAndUpdate(
-      { _id: req.id },
-      {
-        name: req.name,
-        description: req.description,
+    const filter = { _id: req.id };
+    const update = {
+      name: req.name ? req.name : null,
+      description: req.description ? req.description : null,
+      cuisineType: req.cuisineType ? req.cuisineType : null,
+      tags: req.tags ? req.tags : null,
+      bankAccountNumber: req.bankAccountNumber ? req.bankAccountNumber : null,
+      phoneNumber: req.phoneNumber ? req.phoneNumber : null,
+    };
 
-        // TODO: add logo
-        // logo: {},
-
-        cuisineType: req.cuisineType,
-        tags: req.tags,
-        bankAccountNumber: req.bankAccountNumber,
-        phoneNumber: req.phoneNumber,
-      },
-    );
+    const result = await this.restaurantModel.findOneAndUpdate(filter, update, { new: true });
 
     if (result === null) return null;
+
+    const isNotNull = (val) => val != null;
+
+    if (_.values(result?.toObject()).every(isNotNull)) {
+      result.profileCompleted = true;
+      result.save();
+    }
+
     return undefined;
   }
 }
