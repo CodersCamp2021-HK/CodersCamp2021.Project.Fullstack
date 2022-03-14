@@ -100,4 +100,4 @@ class Order {
 
 const OrderSchema = SchemaFactory.createForClass(Order);
 
-export { Order, ORDER_CONSTANTS, OrderSchema };
+export { Order, ORDER_CONSTANTS, OrderSchema, SubOrder };

@@ -1,33 +1,17 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { initE2eFixture } from './E2eFixture';
+import { initE2eFixture, restaurantDto } from './shared';
 
 const PATH = '/api/restaurants';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  afterEach(async () => {
-    await fixture.db.restaurantModel.deleteMany();
-  });
-
   it('GET /', async () => {
     // Given
-    const restaurants = [
-      {
-        name: 'Restaurant 1',
-        description: 'Test!',
-        cuisineType: ['włoska'],
-        tags: ['pizza'],
-        profileCompleted: true,
-      },
-      { name: 'Restaurant 2', profileCompleted: false },
-      {
-        name: 'Restaurant 3',
-        description: 'Test!',
-        profileCompleted: true,
-      },
-    ];
+    const restaurantsWithCompletedProfile = [restaurantDto(), restaurantDto()];
+    const restaurantsWithoutCompletedProfile = [restaurantDto({ profileCompleted: false })];
+    const restaurants = [...restaurantsWithCompletedProfile, ...restaurantsWithoutCompletedProfile];
     await fixture.db.restaurantModel.create(restaurants);
 
     // When
@@ -35,18 +19,12 @@ describe(`${PATH}`, () => {
 
     // Then
     expect(resp.status).toBe(HttpStatus.OK);
-    expect(resp.body.data).toHaveLength(restaurants.filter((rest) => rest?.profileCompleted).length);
+    expect(resp.body.data).toHaveLength(restaurantsWithCompletedProfile.length);
   });
 
   it('GET /:id', async () => {
     // Given
-    const restaurant = {
-      name: 'Restaurant',
-      description: 'Test!',
-      cuisineType: ['włoska'],
-      tags: ['pizza'],
-      profileCompleted: true,
-    };
+    const restaurant = restaurantDto();
     const created = await fixture.db.restaurantModel.create(restaurant);
     const id = created._id?.toString();
 
