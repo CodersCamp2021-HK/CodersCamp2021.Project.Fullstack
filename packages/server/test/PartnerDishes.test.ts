@@ -39,6 +39,9 @@ describe(`${PATH}`, () => {
     const accessToken = accessTokenAsCookie(
       fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
     );
+
+    await fixture.db.restaurantModel.create({_id: RESTAURANT_ID, profileCompleted: true});
+
     const reqBody: CreateDishDto = dishDto();
 
     // When

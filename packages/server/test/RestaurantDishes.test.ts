@@ -21,8 +21,6 @@ describe(`${PATH}`, () => {
     // When
     const res = await fixture.req.get(PATH);
 
-    console.log(res.body);
-
     // Then
     expect(res.status).toBe(HttpStatus.OK);
     expect(res.body.data).toHaveLength(2);
