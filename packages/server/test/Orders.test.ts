@@ -1,7 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 
-import { CreateOrderDto } from '../src/orders/api/OrderDto';
 import { Role } from '../src/shared';
 import { initE2eFixture, orderDto } from './shared';
 
@@ -17,6 +16,7 @@ describe(`${PATH}`, () => {
     const addressId = reqBody.addressId;
     const dishId = reqBody.subOrders[0].dishes[0].dishId;
     const agent = fixture.agent(Role.User, userId);
+    await fixture.db.userModel.create({ _id: userId, profileCompleted: true });
 
     // When
     const resp = await agent.post(PATH).send(reqBody);
