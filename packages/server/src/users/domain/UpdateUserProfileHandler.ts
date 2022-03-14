@@ -30,6 +30,8 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
       { returnDocument: 'after' },
     );
 
+    if (result === null) return null;
+
     if (
       result?.name !== undefined &&
       result?.surname !== undefined &&
@@ -43,8 +45,6 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         },
       );
     }
-
-    if (result === null) return null;
 
     return undefined;
   }
