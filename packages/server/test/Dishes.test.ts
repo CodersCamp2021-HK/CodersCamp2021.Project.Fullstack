@@ -1,7 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { dishDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
+import { dishDto, initE2eFixture } from './shared';
 
 const PATH = '/api/dishes';
 
