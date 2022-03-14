@@ -1,12 +1,15 @@
 import { INestApplication, Type } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
-import { AppModule } from '../src/AppModule';
-import { createSwaggerDocument, setupOpenApiValidator } from '../src/config';
-import { DatabaseProxy } from '../tools/database/DatabaseProxy';
+import { AppModule } from '../../src/AppModule';
+import { createSwaggerDocument, setupOpenApiValidator } from '../../src/config';
+import { Role } from '../../src/shared';
+import { DatabaseProxy } from '../../tools/database/DatabaseProxy';
+import { accessTokenAsCookie } from './TestUtils';
 
 type E2eFixtureOptions = Readonly<{
   debug?: boolean;
@@ -58,8 +61,17 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
     get req() {
       return request(app.getHttpServer());
     },
-    agent: () => {
-      return request.agent(app.getHttpServer());
+    agent: (role?: Role, sub?: string) => {
+      const agent = request.agent(app.getHttpServer());
+      if (!role) {
+        return agent;
+      }
+
+      const accessToken = accessTokenAsCookie(app.get(JwtService).sign({ role, sub }));
+
+      agent.jar.setCookie(accessToken);
+
+      return agent;
     },
   });
 }
