@@ -7,8 +7,9 @@ import { ImageModule } from './image';
 import { OrderModule } from './orders';
 import { RestaurantsModule } from './restaurants';
 import { UsersModule } from './users';
+import { MailModule } from './mail';
 
-const featureModules = [AddressesModule, AuthModule, RestaurantsModule, UsersModule, OrderModule, ImageModule];
+const featureModules = [AddressesModule, AuthModule, RestaurantsModule, UsersModule, OrderModule, ImageModule, MailModule];
 
 @Module({
   imports: [AppConfigModule, ...featureModules],
