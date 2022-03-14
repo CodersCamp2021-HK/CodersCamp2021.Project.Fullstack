@@ -1,32 +1,51 @@
 import { HttpStatus } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
+import { Role } from '../src/shared';
 import { addressDto, initE2eFixture } from './shared';
 
-const PATH = '/api/addresses';
+const USER_PATH = '/api/users/addresses';
+const PARTNER_PATH = '/api/partner/addresses';
 
-describe(`${PATH}`, () => {
+const ENDPOINT_ROLES = [
+  {
+    role: Role.User,
+    path: USER_PATH,
+  },
+  {
+    role: Role.Partner,
+    path: PARTNER_PATH,
+  },
+];
+
+describe(`${USER_PATH} & ${PARTNER_PATH}`, () => {
   const fixture = initE2eFixture();
 
-  it('GET /:id', async () => {
+  it.each(ENDPOINT_ROLES)('GET /:id (role:$role) (path:$path)', async ({ role, path }) => {
     // Given
+    const owner = new ObjectId().toString();
+    const agent = fixture.agent(role, owner);
+
     const address = addressDto();
-    const created = await fixture.db.addressModel.create(address);
+    const created = await fixture.db.addressModel.create({ ...address, owner });
     const id = created._id?.toString();
 
     // When
-    const res = await fixture.req.get(`${PATH}/${id}`);
+    const res = await agent.get(`${path}/${id}`);
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
     expect(created).toEqual(expect.objectContaining(res.body));
   });
 
-  it('POST /', async () => {
+  it.each(ENDPOINT_ROLES)('POST / (role:$role) (path:$path)', async ({ role, path }) => {
     // Given
+    const sub = new ObjectId().toString();
     const reqBody = addressDto();
+    const agent = fixture.agent(role, sub);
 
     // When
-    const res = await fixture.req.post(PATH).send(reqBody);
+    const res = await agent.post(path).send(reqBody);
 
     // Then
     expect(res.status).toBe(HttpStatus.CREATED);

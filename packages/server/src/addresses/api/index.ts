@@ -1,1 +1,2 @@
-export * from './AddressesController';
+export * from './PartnerAddressController';
+export * from './UserAddressController';
