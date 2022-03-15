@@ -9,6 +9,7 @@ import {
   ApiGet,
   ApiList,
   ApiObjectIdParam,
+  ApiUpdate,
   createPaginationLink,
   Pagination,
   PaginationQuery,
@@ -16,7 +17,7 @@ import {
   Url,
   UserId,
 } from '../../shared';
-import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler } from '../domain';
+import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler, RemoveAddressFromProfile } from '../domain';
 import { AddressDto, CreateAddressDto } from './AddressDto';
 import { AddressListDto } from './AddressListDto';
 
@@ -26,6 +27,7 @@ class UserAddressController {
     private readonly getAddressHandler: GetAddressHandler,
     private readonly createAddressHandler: CreateAddressHandler,
     private readonly listAddressesHandler: ListAddressesHandler,
+    private readonly removeAddressFromProfile: RemoveAddressFromProfile,
   ) {}
 
   @ApiObjectIdParam()
@@ -61,6 +63,12 @@ class UserAddressController {
     const paginatedAddresses = await this.listAddressesHandler.exec({ page, limit, ownerId });
     resp.setHeader('Link', createPaginationLink(url, paginatedAddresses.pages));
     return plainToInstance(AddressListDto, paginatedAddresses);
+  }
+
+  @ApiUpdate({ name: 'address' })
+  @ApiAuthorization(Role.User)
+  async removeAddress(@UserId() owner: string, @Param('id') id: string) {
+    return this.removeAddressFromProfile.exec({ id, owner, role: Role.User });
   }
 }
 

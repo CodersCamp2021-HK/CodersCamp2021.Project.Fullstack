@@ -5,7 +5,7 @@ import { Restaurant, RestaurantSchema } from '../restaurants/database';
 import { User, UserSchema } from '../users/database';
 import { PartnerAddressController, UserAddressController } from './api';
 import { Address, AddressSchema } from './database';
-import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler } from './domain';
+import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler, RemoveAddressFromProfile } from './domain';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler } from '.
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [UserAddressController, PartnerAddressController],
-  providers: [CreateAddressHandler, GetAddressHandler, ListAddressesHandler],
+  providers: [CreateAddressHandler, GetAddressHandler, ListAddressesHandler, RemoveAddressFromProfile],
 })
 class AddressesModule {}
 
