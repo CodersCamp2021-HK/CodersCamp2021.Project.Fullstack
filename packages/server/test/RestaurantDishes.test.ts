@@ -1,7 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { dishDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
+import { dishDto, initE2eFixture } from './shared';
 
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
 const PATH = `/api/restaurants/${RESTAURANT_ID}/dishes`;
@@ -20,8 +19,6 @@ describe(`${PATH}`, () => {
 
     // When
     const res = await fixture.req.get(PATH);
-
-    console.log(res.body);
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
