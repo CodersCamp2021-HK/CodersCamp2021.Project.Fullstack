@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
-import { AddressDto } from '../../addresses/api/AddressDto';
 import { ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
 import { USER_CONSTANTS } from './../database';
@@ -60,14 +59,6 @@ class UserDto {
     type: CardDto,
   })
   readonly card: CardDto;
-
-  @Expose()
-  @Type(() => AddressDto)
-  @ApiProperty({
-    required: false,
-    type: [AddressDto],
-  })
-  readonly addressId: AddressDto[];
 
   @Expose()
   @ApiPropertyOptional({
