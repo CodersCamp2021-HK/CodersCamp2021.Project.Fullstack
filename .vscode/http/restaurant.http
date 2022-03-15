@@ -1,0 +1,108 @@
+@partnerUrl = {{baseUrl}}/partner
+@restaurantsUrl = {{baseUrl}}/restaurants
+@dishesUrl = {{baseUrl}}/dishes
+
+### get partners's profile
+# 🔒 only for authenticated partners
+# @name getPartnerProfile
+GET {{partnerUrl}}/profile
+
+### update partners's profile
+# 🔒 only for authenticated partners
+PUT {{partnerUrl}}/profile
+
+{
+  "name": "Resto bar",
+  "description": "Opis restauracji.",
+  "cuisineType": [
+    "włoska"
+  ],
+  "tags": [
+    "pizza",
+    "zdrowa"
+  ],
+  "bankAccountNumber": "72920080748556126838146923",
+  "phoneNumber": "800500300"
+}
+
+### get a single restaurant
+GET {{restaurantsUrl}}/{{getPartnerProfile.response.body.$.id}}
+
+### get all restaurants
+GET {{restaurantsUrl}}
+
+### create an address
+# 🔒 only for authenticated partners
+# @name createPartnerAddress
+POST {{partnerUrl}}/addresses
+
+{
+  "street": "Street",
+  "streetNumber": "1A",
+  "apartmentNumber": "1",
+  "floor": "1",
+  "city": "City",
+  "postcode": "00-000"
+}
+
+### get a single address
+# 🔒 only for authenticated partners
+GET {{partnerUrl}}/addresses/{{createPartnerAddress.response.body.$.id}}
+
+### create a dish
+# 🔒 only for authenticated partners
+# @name createDish
+POST {{partnerUrl}}/dishes
+
+{
+  "name": "Danie 1",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "description": "Opis dania",
+  "price": 2350,
+  "tags": [
+    "ostre",
+    "gluten free"
+  ],
+  "ingredients": [
+    {
+      "name": "bazylia",
+      "canBeExcluded": false
+    }
+  ],
+  "allergens": [
+    "orzechy"
+  ],
+  "portionWeight": 0,
+  "calories": {
+    "per100g": 0,
+    "perPortion": 0
+  },
+  "fats": {
+    "per100g": 0,
+    "perPortion": 0
+  },
+  "proteins": {
+    "per100g": 0,
+    "perPortion": 0
+  },
+  "carbohydrates": {
+    "per100g": 0,
+    "perPortion": 0
+  }
+}
+
+### get all partner's dishes
+# 🔒 only for authenticated partners
+GET {{partnerUrl}}/dishes
+
+### get all dishes
+GET {{dishesUrl}}
+
+### get a single dish
+GET {{dishesUrl}}/{{createDish.response.body.$.id}}
+
+### delete a dish
+DELETE {{partnerUrl}}/dishes/{{createDish.response.body.$.id}}
