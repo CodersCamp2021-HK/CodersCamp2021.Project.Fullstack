@@ -7,13 +7,18 @@ import {
   ApiController,
   ApiCreate,
   ApiGet,
+  ApiList,
   ApiObjectIdParam,
+  createPaginationLink,
+  Pagination,
+  PaginationQuery,
   PartnerId,
   Role,
   Url,
 } from '../../shared';
-import { CreateAddressHandler, GetAddressHandler } from '../domain';
+import { CreateAddressHandler, GetAddressHandler, ListAddressesHandler } from '../domain';
 import { AddressDto, CreateAddressDto } from './AddressDto';
+import { AddressListDto } from './AddressListDto';
 
 @ApiController({
   path: 'partner/addresses',
@@ -24,6 +29,7 @@ class PartnerAddressController {
   constructor(
     private readonly getAddressHandler: GetAddressHandler,
     private readonly createAddressHandler: CreateAddressHandler,
+    private readonly listAddressesHandler: ListAddressesHandler,
   ) {}
 
   @ApiObjectIdParam()
@@ -46,6 +52,19 @@ class PartnerAddressController {
     const address = await this.createAddressHandler.exec({ ...createAddressDto, role: Role.Partner, owner });
     res.setHeader('Location', `${url.href}/${address.id}`);
     return plainToInstance(AddressDto, address);
+  }
+
+  @ApiList({ name: 'addresses', response: AddressListDto, link: true })
+  @ApiAuthorization(Role.Partner)
+  async list(
+    @PartnerId() ownerId: string,
+    @Pagination() { page, limit }: PaginationQuery,
+    @Res({ passthrough: true }) resp: Response,
+    @Url() url: URL,
+  ) {
+    const paginatedAddresses = await this.listAddressesHandler.exec({ page, limit, ownerId });
+    resp.setHeader('Link', createPaginationLink(url, paginatedAddresses.pages));
+    return plainToInstance(AddressListDto, paginatedAddresses);
   }
 }
 
