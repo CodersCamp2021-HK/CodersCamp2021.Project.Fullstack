@@ -21,6 +21,25 @@ const ENDPOINT_ROLES = [
 describe(`${USER_PATH} & ${PARTNER_PATH}`, () => {
   const fixture = initE2eFixture();
 
+  it.each(ENDPOINT_ROLES)('GET / (role:$role) (path:$path)', async ({ role, path }) => {
+    // Given
+    const owner = new ObjectId().toString();
+    const agent = fixture.agent(role, owner);
+    const addresses = [
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+    ];
+    await fixture.db.addressModel.create(addresses);
+
+    // When
+    const res = await agent.get(`${path}/`);
+
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(res.body.data).toHaveLength(addresses.length);
+  });
+
   it.each(ENDPOINT_ROLES)('GET /:id (role:$role) (path:$path)', async ({ role, path }) => {
     // Given
     const owner = new ObjectId().toString();
