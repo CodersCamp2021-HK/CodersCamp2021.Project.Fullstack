@@ -1,13 +1,31 @@
+@authUrl = {{baseUrl}}/auth
+@usersUrl = {{baseUrl}}/users
 
-@userUrl = {{baseUrl}}/users/profile
-### first you need login
-### get user profile
-GET {{userUrl}}
-
-### update user profile
-PUT {{userUrl}}
+### register as user
+POST {{authUrl}}/register/user
 
 {
-  "name":"John",
+  "email": "user@email.com",
+  "password": "Password1"
+}
+
+### login
+POST {{authUrl}}/login
+
+{
+  "email": "user@email.com",
+  "role": "User",
+  "password": "Password1",
+  "rememberMe": false
+}
+
+### get user's profile
+GET {{usersUrl}}/profile
+
+### update user's profile
+PUT {{usersUrl}}/profile
+
+{
+  "name": "John",
   "surname": "Doe"
 }
