@@ -31,12 +31,12 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
     );
 
     if (result === null) return null;
-
-    if (
-      result?.name !== undefined &&
-      result?.surname !== undefined &&
-      result?.phoneNumber !== undefined &&
-      result?.card !== undefined
+    else if (
+      result.name !== undefined &&
+      result.surname !== undefined &&
+      result.phoneNumber !== undefined &&
+      result.card !== undefined &&
+      result.addressId.length > 0
     ) {
       await this.userModule.findOneAndUpdate(
         { _id: req.id },
