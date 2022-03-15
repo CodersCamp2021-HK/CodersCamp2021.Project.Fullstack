@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -30,13 +30,12 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order | null> {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async exec(req: CreateOrderRequest): Promise<Order | null> {
+  async exec(req: CreateOrderRequest): Promise<Order> {
     const user = await this.userModel.findById(req.userId);
     if (user?.profileCompleted) {
       const created = await this.orderModel.create({ ...req, date: new Date() });
       return plainToInstance(Order, created);
-    }
-    return null;
+    } else throw new ForbiddenException();
   }
 }
 
