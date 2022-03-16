@@ -37,6 +37,7 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
 
     // i tutaj jest problem z tym req.subOrders.dishes.dishId
     // const dishData = await this.dishModel.findById({ _id: req.subOrders.dishes.dishId });
+    // więc jak to zadziala to wtedy nizej będzie dishPrice: dishData?.price
 
     await this.orderModel.updateOne({ id: req.id }, { dishPrice: 100 });
 
