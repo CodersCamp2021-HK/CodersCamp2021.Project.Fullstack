@@ -34,8 +34,11 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
 
   async exec(req: CreateOrderRequest): Promise<Order> {
     const created = await this.orderModel.create({ ...req, date: new Date() });
-    const dishData = await this.dishModel.findOne({});
-    await this.orderModel.updateOne({ id: req.id }, { dishPrice: dishData?.price });
+
+    // i tutaj jest problem z tym req.subOrders.dishes.dishId
+    // const dishData = await this.dishModel.findById({ _id: req.subOrders.dishes.dishId });
+
+    await this.orderModel.updateOne({ id: req.id }, { dishPrice: 100 });
 
     return plainToInstance(Order, created);
   }
