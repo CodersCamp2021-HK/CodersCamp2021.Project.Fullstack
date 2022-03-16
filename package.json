@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",
+    "@nestjs/config": "^1.2.0",
     "handlebars": "^4.7.7",
     "nodemailer": "^6.7.2"
   }
