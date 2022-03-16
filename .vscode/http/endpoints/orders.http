@@ -1,0 +1,22 @@
+### submit an order
+# 🔒 only for authenticated users
+POST {{baseUrl}}/orders
+
+{
+  "addressId": "6200218668fc82e7bdf15088",
+  "subOrders": [
+    {
+      "deliveryDate": "2022-03-15T20:33:03.795Z",
+      "hourStart": 8,
+      "hourEnd": 11,
+      "dishes": [
+        {
+          "dishId": "6200218668fc82e7bdf15088",
+          "count": 1,
+          "excludedIngredients": []
+        }
+      ]
+    }
+  ],
+  "comment": "Additional requests for the restaurant."
+}
