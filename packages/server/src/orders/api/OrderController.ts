@@ -21,6 +21,7 @@ class OrderController {
     const order = await this.createOrderHandler.exec({
       ...createOrderDto,
       userId,
+      id: '',
     });
     res.setHeader('Location', `${url.href}/${order.id}`);
     return plainToInstance(OrderDto, order);

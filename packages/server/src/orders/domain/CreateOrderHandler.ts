@@ -3,11 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
 
-import { Dish, DishDocument } from '../../restaurants/dishes/database';
+import { Dish, DishDocument, DishSchema } from '../../restaurants/dishes/database';
 import { Handler } from '../../shared';
 import { Order, OrderDocument } from '../database';
 
 interface CreateOrderRequest {
+  readonly id: string;
   addressId: string;
   userId: string;
   dishPrice: number;
@@ -33,10 +34,9 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
 
   async exec(req: CreateOrderRequest): Promise<Order> {
     const created = await this.orderModel.create({ ...req, date: new Date() });
-    const cena = await this.dishModel.findById('6231b2a1aa17f1ade2e26590');
-    const result = await this.orderModel.updateOne({ dishPrice: 31 });
-    console.log(cena?.price);
-    console.log(result);
+    const dishData = await this.dishModel.findOne({});
+    await this.orderModel.updateOne({ id: req.id }, { dishPrice: dishData?.price });
+
     return plainToInstance(Order, created);
   }
 }
