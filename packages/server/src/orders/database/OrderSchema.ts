@@ -31,10 +31,6 @@ class OrderDish {
   readonly dishId: Dish;
 
   @Expose()
-  @Prop({ type: Number, ref: 'Dish', required: true })
-  readonly dishPrice: Dish;
-
-  @Expose()
   @Prop({ default: ORDER_CONSTANTS.COUNT.MIN, min: ORDER_CONSTANTS.COUNT.MIN })
   readonly count: number;
 
@@ -85,6 +81,10 @@ class Order {
   @ExposeId()
   @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
   readonly userId: User;
+
+  @Expose()
+  @Prop({ type: Number, ref: 'Dish', required: false })
+  readonly dishPrice: Dish;
 
   @Expose()
   @Prop({ required: true })

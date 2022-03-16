@@ -39,6 +39,10 @@ class OrderDto {
   @ApiObjectIdProperty()
   readonly addressId: string;
 
+  @Type(() => Number)
+  @ApiPropertyOptional()
+  readonly dishPrice: number;
+
   @Type(() => String)
   @ApiObjectIdProperty()
   readonly userId: string;
