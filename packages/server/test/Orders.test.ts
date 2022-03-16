@@ -16,7 +16,7 @@ describe(`${PATH}`, () => {
     const addressId = reqBody.addressId;
     const dishId = reqBody.subOrders[0].dishes[0].dishId;
     const agent = fixture.agent(Role.User, userId);
-    await fixture.db.userModel.create({ _id: userId, profileCompleted: false });
+    await fixture.db.userModel.create({ _id: userId, addressId: [] });
 
     // When
     const resp0 = await agent.post(PATH).send(reqBody);
@@ -29,8 +29,15 @@ describe(`${PATH}`, () => {
     const resp1 = await agent.post(PATH).send(reqBody);
 
     // Then
-    expect(resp1.status).toBe(HttpStatus.CREATED);
-    expect(resp1.body).toEqual(expect.objectContaining({ addressId, userId }));
-    expect(resp1.body.subOrders[0].dishes).toEqual([{ dishId, count: 1, excludedIngredients: [] }]);
+    expect(resp1.status).toBe(HttpStatus.FORBIDDEN);
+
+    // When
+    await fixture.db.userModel.findByIdAndUpdate(userId, { $set: { addressId: [new ObjectId().toString()] } });
+    const resp2 = await agent.post(PATH).send(reqBody);
+
+    // Then
+    expect(resp2.status).toBe(HttpStatus.CREATED);
+    expect(resp2.body).toEqual(expect.objectContaining({ addressId, userId }));
+    expect(resp2.body.subOrders[0].dishes).toEqual([{ dishId, count: 1, excludedIngredients: [] }]);
   });
 });

@@ -35,8 +35,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
       result.name !== undefined &&
       result.surname !== undefined &&
       result.phoneNumber !== undefined &&
-      result.card !== undefined &&
-      result.addressId.length > 0
+      result.card !== undefined
     ) {
       await this.userModule.findOneAndUpdate(
         { _id: req.id },

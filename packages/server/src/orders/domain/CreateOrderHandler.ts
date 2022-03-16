@@ -32,7 +32,7 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order | null> {
 
   async exec(req: CreateOrderRequest): Promise<Order> {
     const user = await this.userModel.findById(req.userId);
-    if (user?.profileCompleted) {
+    if (user?.profileCompleted && user?.addressId.length > 0) {
       const created = await this.orderModel.create({ ...req, date: new Date() });
       return plainToInstance(Order, created);
     } else throw new ForbiddenException();
