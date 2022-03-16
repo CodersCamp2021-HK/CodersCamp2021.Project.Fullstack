@@ -1,6 +1,4 @@
-
 @authUrl = {{baseUrl}}/auth
-
 
 ### register as user
 POST {{authUrl}}/register/user
@@ -20,7 +18,7 @@ POST {{authUrl}}/register/partner
   "nip": "1234563218"
 }
 
-### login
+### login as user
 POST {{authUrl}}/login
 
 {
@@ -30,6 +28,16 @@ POST {{authUrl}}/login
   "rememberMe": false
 }
 
+### login as partner
+POST {{authUrl}}/login
+
+{
+  "email": "partner@email.com",
+  "role": "Partner",
+  "password": "Password1",
+  "rememberMe": false
+}
 
 ### logout
+# 🔒 only for authenticated users or partners
 POST {{authUrl}}/logout
