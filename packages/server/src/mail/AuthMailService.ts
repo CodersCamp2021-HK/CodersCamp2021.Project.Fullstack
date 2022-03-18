@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 
-import { Auth } from './../auth/database';
+import { Auth } from '../auth/database';
 
 @Injectable()
-export class MailService {
+export class AuthMailService {
   constructor(private mailerService: MailerService) {}
 
   async sendUserConfirmation(user: Auth, token: string) {
@@ -13,10 +13,10 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       from: '"Support Team" <support@example.com>',
-      subject: 'Welcome! Confirm your email',
-      template: 'templates/confirmation',
+      subject: 'Gratulacje! Potwierdź swój email.',
+      template: 'templates/user_confirmation',
       context: {
-        name: user.entityId,
+        name: user.email,
         url,
       },
     });

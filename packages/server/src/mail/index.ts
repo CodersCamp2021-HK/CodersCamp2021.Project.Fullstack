@@ -1,2 +1,3 @@
+export * from './AuthMailService';
 export * from './MailModule';
-export * from './MailService';
+export * from './OrderMailService';
