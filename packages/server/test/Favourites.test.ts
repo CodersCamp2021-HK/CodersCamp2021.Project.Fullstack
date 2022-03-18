@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { initE2eFixture } from './E2eFixture';
+import { initE2eFixture } from './shared';
 
 const PATH = '/api/users/favourite';
 

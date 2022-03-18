@@ -1,11 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
-import { dishDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
-import { accessTokenAsCookie } from './shared';
+import { dishDto, initE2eFixture } from './shared';
 
 const PATH = '/api/partner/dishes';
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
@@ -15,9 +12,7 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const accessToken = accessTokenAsCookie(
-      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
-    );
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
     const dishes = [
       dishDto({ restaurant: RESTAURANT_ID }),
       dishDto({ restaurant: RESTAURANT_ID }),
@@ -27,7 +22,7 @@ describe(`${PATH}`, () => {
     await fixture.db.dishModel.create(dishes);
 
     // When
-    const res = await fixture.req.get(PATH).set('Cookie', [accessToken]);
+    const res = await agent.get(PATH);
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);
@@ -36,13 +31,11 @@ describe(`${PATH}`, () => {
 
   it('POST /', async () => {
     // Given
-    const accessToken = accessTokenAsCookie(
-      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
-    );
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
     const reqBody: CreateDishDto = dishDto();
 
     // When
-    const res = await fixture.agent().post(PATH).set('Cookie', [accessToken]).send(reqBody);
+    const res = await agent.post(PATH).send(reqBody);
 
     // Then
     expect(res.status).toBe(HttpStatus.CREATED);
@@ -51,21 +44,19 @@ describe(`${PATH}`, () => {
 
   it('DELETE /:id', async () => {
     // Given
-    const accessToken = accessTokenAsCookie(
-      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
-    );
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
     const dish = dishDto({ restaurant: RESTAURANT_ID });
     const created = await fixture.db.dishModel.create(dish);
     const id = created._id?.toString();
 
     // When;
-    const res0 = await fixture.agent().delete(`${PATH}/${id}`).set('Cookie', [accessToken]);
+    const res0 = await agent.delete(`${PATH}/${id}`);
 
     // Then
     expect(res0.status).toBe(HttpStatus.NO_CONTENT);
 
     // When
-    const res1 = await fixture.agent().delete(`${PATH}/${id}`).set('Cookie', [accessToken]);
+    const res1 = await agent.delete(`${PATH}/${id}`);
 
     // Then
     expect(res1.status).toBe(HttpStatus.NOT_FOUND);

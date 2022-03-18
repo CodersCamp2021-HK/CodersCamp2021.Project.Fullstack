@@ -1,12 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { ObjectId } from 'mongodb';
 
-import { CreateAddressDto } from '../src/addresses/api/AddressDto';
 import { Role } from '../src/shared';
-import { addressDto } from './ApiDtoUtils';
-import { initE2eFixture } from './E2eFixture';
-import { accessTokenAsCookie } from './shared';
+import { addressDto, initE2eFixture } from './shared';
 
 const USER_PATH = '/api/users/addresses';
 const PARTNER_PATH = '/api/partner/addresses';
@@ -25,42 +21,79 @@ const ENDPOINT_ROLES = [
 describe(`${USER_PATH} & ${PARTNER_PATH}`, () => {
   const fixture = initE2eFixture();
 
-  afterEach(async () => {
-    await fixture.db.addressModel.deleteMany();
+  it.each(ENDPOINT_ROLES)('GET / (role:$role) (path:$path)', async ({ role, path }) => {
+    // Given
+    const owner = new ObjectId().toString();
+    const agent = fixture.agent(role, owner);
+    const addresses = [
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+    ];
+    await fixture.db.addressModel.create(addresses);
+
+    // When
+    const res = await agent.get(`${path}/`);
+
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(res.body.data).toHaveLength(addresses.length);
   });
 
-  it('GET /:id', async () => {
-    for (const { role, path } of ENDPOINT_ROLES) {
-      // Given
-      const owner = new ObjectId().toString();
-      const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role, sub: owner }));
+  it.each(ENDPOINT_ROLES)('GET /:id (role:$role) (path:$path)', async ({ role, path }) => {
+    // Given
+    const owner = new ObjectId().toString();
+    const agent = fixture.agent(role, owner);
 
-      const address = addressDto();
-      const created = await fixture.db.addressModel.create({ ...address, owner });
-      const id = created._id?.toString();
+    const address = addressDto();
+    const created = await fixture.db.addressModel.create({ ...address, owner });
+    const id = created._id?.toString();
 
-      // When
-      const res = await fixture.req.get(`${path}/${id}`).set('Cookie', [accessToken]);
+    // When
+    const res = await agent.get(`${path}/${id}`);
 
-      // Then
-      expect(res.status).toBe(HttpStatus.OK);
-      expect(created).toEqual(expect.objectContaining(res.body));
-    }
+    // Then
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(created).toEqual(expect.objectContaining(res.body));
   });
 
-  it('POST /', async () => {
-    for (const { role, path } of ENDPOINT_ROLES) {
-      // Given
-      const sub = new ObjectId().toString();
-      const reqBody: CreateAddressDto = addressDto();
-      const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role, sub }));
+  it.each(ENDPOINT_ROLES)('POST / (role:$role) (path:$path)', async ({ role, path }) => {
+    // Given
+    const sub = new ObjectId().toString();
+    const reqBody = addressDto();
+    const agent = fixture.agent(role, sub);
 
-      // When
-      const res = await fixture.req.post(path).set('Cookie', [accessToken]).send(reqBody);
+    // When
+    const res = await agent.post(path).send(reqBody);
 
-      // Then
-      expect(res.status).toBe(HttpStatus.CREATED);
-      expect(res.body).toEqual(expect.objectContaining(reqBody));
-    }
+    // Then
+    expect(res.status).toBe(HttpStatus.CREATED);
+    expect(res.body).toEqual(expect.objectContaining(reqBody));
+  });
+
+  it.each(ENDPOINT_ROLES)('PUT / (role:$role) (path:$path)', async ({ role, path }) => {
+    // Given
+    const owner = new ObjectId().toString();
+    const agent = fixture.agent(role, owner);
+    const addresses = [
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+      { ...addressDto(), owner },
+    ];
+    const addressesList = await fixture.db.addressModel.create(addresses);
+    const addressId = addressesList[0]._id;
+
+    // When
+    const res0 = await agent.put(`${path}/${addressId}`);
+
+    // Then
+    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
+
+    // When
+    const res1 = await agent.get(`${path}/`);
+
+    // Then
+    expect(res1.status).toBe(HttpStatus.OK);
+    expect(res1.body.data).toHaveLength(addresses.length - 1);
   });
 });
