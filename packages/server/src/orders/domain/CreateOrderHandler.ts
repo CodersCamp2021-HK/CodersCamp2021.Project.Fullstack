@@ -24,7 +24,7 @@ interface CreateOrderRequest {
 }
 
 @Injectable()
-class CreateOrderHandler implements Handler<CreateOrderRequest, Order | null> {
+class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
   constructor(
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,

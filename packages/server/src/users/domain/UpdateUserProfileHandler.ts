@@ -31,7 +31,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
     );
 
     if (result === null) return null;
-    else if (
+    if (
       result.name !== undefined &&
       result.surname !== undefined &&
       result.phoneNumber !== undefined &&
