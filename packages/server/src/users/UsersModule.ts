@@ -5,13 +5,14 @@ import { UsersController } from './api';
 import { User, UserSchema } from './database';
 import { GetUserHandler } from './domain';
 import { UpdateUserProfileHandler } from './domain/UpdateUserProfileHandler';
-import { FavouriteDishListController, FavouriteRestaurantListController } from './favourites/api';
+import { FavouriteDishesController, FavouriteRestaurantListController } from './favourites/api';
+import { ListFavouriteDishesHandler } from './favourites/domain';
 import { UsersFacade } from './infra';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
-  controllers: [FavouriteRestaurantListController, FavouriteDishListController, UsersController],
-  providers: [UsersFacade, GetUserHandler, UpdateUserProfileHandler],
+  controllers: [FavouriteRestaurantListController, FavouriteDishesController, UsersController],
+  providers: [UsersFacade, GetUserHandler, UpdateUserProfileHandler, ListFavouriteDishesHandler],
   exports: [UsersFacade],
 })
 class UsersModule {}
