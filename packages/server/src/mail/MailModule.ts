@@ -1,28 +1,26 @@
+import { Global, Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Global, Module } from '@nestjs/common';
-import { MailService } from './MailService';
 import { join } from 'path';
-import { ConfigService } from '@nestjs/config';
+import { env } from 'process';
 
-@Global() // 👈 optional to make module global
+import { MailService } from './MailService';
+
+@Global()
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      // imports: [ConfigModule], // import module if not enabled globally
-      useFactory: async (config: ConfigService) => ({
-        // transport: config.get("MAIL_TRANSPORT"),
-        // or
+      useFactory: async () => ({
         transport: {
-          host: config.get('MAIL_HOST'),
+          host: env.MAIL_HOST,
           secure: false,
           auth: {
-            user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PASSWORD'),
+            user: env.MAIL_USER,
+            pass: env.MAIL_PASSWORD,
           },
         },
         defaults: {
-          from: `"No Reply" <${config.get('MAIL_FROM')}>`,
+          from: `"No Reply" <${env.MAIL_FROM}>`,
         },
         template: {
           dir: join(__dirname, 'templates'),
@@ -32,7 +30,6 @@ import { ConfigService } from '@nestjs/config';
           },
         },
       }),
-      inject: [ConfigService],
     }),
   ],
   providers: [MailService],
