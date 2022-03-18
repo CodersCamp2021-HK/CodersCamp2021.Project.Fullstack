@@ -1,11 +1,14 @@
-import { Res } from '@nestjs/common';
+import { Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
+import { FavouriteDishDto } from '../../../restaurants/dishes/api/DishDto';
 import {
   ApiAuthorization,
   ApiController,
   ApiList,
+  ApiObjectIdParam,
+  ApiUpdate,
   createPaginationLink,
   Pagination,
   PaginationQuery,
@@ -13,7 +16,7 @@ import {
   Url,
   UserId,
 } from '../../../shared';
-import { ListFavouriteDishesHandler } from '../domain';
+import { AddFavouriteDishHandler, ListFavouriteDishesHandler } from '../domain';
 import { FavouriteDishListDto } from './FavouriteDishListDto';
 
 @ApiController({
@@ -22,7 +25,10 @@ import { FavouriteDishListDto } from './FavouriteDishListDto';
   description: "Operations on user's favourite dishes",
 })
 class FavouriteDishesController {
-  constructor(private readonly listFavouriteDishesHandler: ListFavouriteDishesHandler) {}
+  constructor(
+    private readonly listFavouriteDishesHandler: ListFavouriteDishesHandler,
+    private readonly addFavouriteDishHandler: AddFavouriteDishHandler,
+  ) {}
 
   @ApiList({ name: 'dishes', response: FavouriteDishListDto, link: true })
   @ApiAuthorization(Role.User)
@@ -35,6 +41,14 @@ class FavouriteDishesController {
     const paginatedDishes = await this.listFavouriteDishesHandler.exec({ ...pagination, userId });
     resp.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(FavouriteDishListDto, paginatedDishes);
+  }
+
+  @ApiObjectIdParam()
+  @ApiUpdate({ name: 'dish', response: FavouriteDishDto })
+  @ApiAuthorization(Role.User)
+  async add(@UserId() userId: string, @Param('id') dishId: string) {
+    const dish = await this.addFavouriteDishHandler.exec({ userId, dishId });
+    return plainToInstance(FavouriteDishDto, dish);
   }
 }
 

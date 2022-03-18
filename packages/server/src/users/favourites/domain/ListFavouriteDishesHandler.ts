@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -10,6 +11,7 @@ interface ListFavouriteDishesRequest extends PaginationQuery {
   readonly userId: string;
 }
 
+@Injectable()
 class ListFavouriteDishesHandler implements Handler<ListFavouriteDishesRequest, Paginated<Dish>> {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
