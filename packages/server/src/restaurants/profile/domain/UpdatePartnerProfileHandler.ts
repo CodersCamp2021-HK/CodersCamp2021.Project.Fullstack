@@ -37,7 +37,7 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
 
     const isNotNull = (val) => val != null;
 
-    if (_.values(result?.toObject()).every(isNotNull)) {
+    if (!_.values(result?.toObject()).some(_.isNull)) {
       result.profileCompleted = true;
       result.save();
     }
