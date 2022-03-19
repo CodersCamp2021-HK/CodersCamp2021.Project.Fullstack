@@ -9,7 +9,7 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
-  ParamDishFilters,
+  ParamDishesFilter,
   Url,
 } from '../../../shared';
 import { DishFilters, ListDishesHandler } from '../domain';
@@ -30,7 +30,7 @@ class RestaurantDishController {
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
-    @ParamDishFilters() filters: DishFilters,
+    @ParamDishesFilter() filters: DishFilters,
   ) {
     const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));

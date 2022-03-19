@@ -13,7 +13,7 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
-  ParamDishFilters,
+  ParamDishesFilter,
   PartnerId,
   Role,
   Url,
@@ -37,7 +37,7 @@ class PartnerDishController {
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
-    @ParamDishFilters() filters: DishFilters,
+    @ParamDishesFilter() filters: DishFilters,
   ) {
     const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
