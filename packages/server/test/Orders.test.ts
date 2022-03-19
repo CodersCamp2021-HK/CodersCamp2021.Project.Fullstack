@@ -1,7 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 
-import { CreateOrderDto } from '../src/orders/api/OrderDto';
 import { Role } from '../src/shared';
 import { initE2eFixture, orderDto } from './shared';
 
@@ -17,13 +16,28 @@ describe(`${PATH}`, () => {
     const addressId = reqBody.addressId;
     const dishId = reqBody.subOrders[0].dishes[0].dishId;
     const agent = fixture.agent(Role.User, userId);
+    await fixture.db.userModel.create({ _id: userId, addressId: [] });
 
     // When
-    const resp = await agent.post(PATH).send(reqBody);
+    const resp0 = await agent.post(PATH).send(reqBody);
 
     // Then
-    expect(resp.status).toBe(HttpStatus.CREATED);
-    expect(resp.body).toEqual(expect.objectContaining({ addressId, userId }));
-    expect(resp.body.subOrders[0].dishes).toEqual([{ dishId, count: 1, excludedIngredients: [] }]);
+    expect(resp0.status).toBe(HttpStatus.FORBIDDEN);
+
+    // When
+    await fixture.db.userModel.findByIdAndUpdate(userId, { $set: { profileCompleted: true } });
+    const resp1 = await agent.post(PATH).send(reqBody);
+
+    // Then
+    expect(resp1.status).toBe(HttpStatus.FORBIDDEN);
+
+    // When
+    await fixture.db.userModel.findByIdAndUpdate(userId, { $set: { addressId: [new ObjectId().toString()] } });
+    const resp2 = await agent.post(PATH).send(reqBody);
+
+    // Then
+    expect(resp2.status).toBe(HttpStatus.CREATED);
+    expect(resp2.body).toEqual(expect.objectContaining({ addressId, userId }));
+    expect(resp2.body.subOrders[0].dishes).toEqual([{ dishId, count: 1, excludedIngredients: [] }]);
   });
 });
