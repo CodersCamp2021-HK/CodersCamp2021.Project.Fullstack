@@ -9,9 +9,11 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  QueryFilters,
   Url,
 } from '../../../shared';
-import { ListDishesHandler } from '../domain';
+import { DishTags, MealType } from '../database';
+import { DishFilters, ListDishesHandler } from '../domain';
 import { DishListDto } from './DishListDto';
 
 @ApiController({
@@ -26,11 +28,17 @@ class RestaurantDishController {
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   async list(
     @Param('restaurantId') restaurantId: string,
-    @Pagination() { page, limit }: PaginationQuery,
+    @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
+    @QueryFilters([
+      { name: 'city', required: false },
+      { name: 'mealType', required: false, enum: MealType, enumName: 'MealTypeEnum', isArray: true },
+      { name: 'tags', required: false, enum: DishTags, enumName: 'DishTagEnum', isArray: true },
+    ])
+    filters: DishFilters,
   ) {
-    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, restaurantId });
+    const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }

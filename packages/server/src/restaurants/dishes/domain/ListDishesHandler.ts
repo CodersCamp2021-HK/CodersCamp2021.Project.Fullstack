@@ -22,7 +22,14 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
 
   async exec(req: ListDishesRequest) {
     const offset = (req.page - 1) * req.limit;
-    const queryFilter = _.omitBy({ restaurant: req.restaurantId }, _.isNil);
+    const queryFilter = _.omitBy(
+      {
+        restaurant: req.restaurantId,
+        mealType: req.mealType ? { $all: req.mealType } : null,
+        tags: req.tags ? { $all: req.tags } : null,
+      },
+      _.isNil,
+    );
     const dishDocsQuery = this.dishModel.find(queryFilter).skip(offset).limit(req.limit);
     const countQuery = this.dishModel.countDocuments();
     const [dishDocs, count] = await Promise.all([dishDocsQuery.exec(), countQuery.exec()]);
