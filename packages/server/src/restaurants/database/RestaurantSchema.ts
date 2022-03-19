@@ -85,6 +85,7 @@ class Restaurant {
   phoneNumber: string;
 
   @Expose()
+  @Type(() => Address)
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Address' }] })
   addressId: Address[];
 
