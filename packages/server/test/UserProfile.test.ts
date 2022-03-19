@@ -1,4 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
 import { Role } from '../src/shared';
 import { initE2eFixture, userDto } from './shared';
@@ -25,9 +26,8 @@ describe(`${PATH}`, () => {
 
   it('PUT /', async () => {
     // Given
-    const user = userDto({ profileCompleted: false });
-    const created = await fixture.db.userModel.create(user);
-    const id = created._id?.toString();
+    const id = new ObjectId().toString();
+    await fixture.db.userModel.create({ _id: id });
     const agent = fixture.agent(Role.User, id);
     const reqBody = {
       name: 'John',
@@ -37,15 +37,17 @@ describe(`${PATH}`, () => {
     };
 
     // When
-    const res0 = await agent.put(PATH).send(reqBody);
+    const res0 = await agent.get(PATH);
 
     // Then
-    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
+    expect(res0.body.profileCompleted).toEqual(false);
 
     // When
+    await agent.put(PATH).send(reqBody);
     const res1 = await agent.get(PATH);
 
     // Then
+    expect(res1.body.profileCompleted).toEqual(true);
     expect(res1.body.name).toEqual(reqBody.name);
     expect(res1.body.surname).toEqual(reqBody.surname);
     expect(res1.body.phoneNumber).toEqual(reqBody.phoneNumber);
