@@ -23,12 +23,12 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
     const filter = { _id: req.id };
     const update = {
-      name: req.name ? req.name : null,
-      description: req.description ? req.description : null,
-      cuisineType: req.cuisineType ? req.cuisineType : null,
-      tags: req.tags ? req.tags : null,
-      bankAccountNumber: req.bankAccountNumber ? req.bankAccountNumber : null,
-      phoneNumber: req.phoneNumber ? req.phoneNumber : null,
+      name: req.name || null,
+      description: req.description || null,
+      cuisineType: req.cuisineType || null,
+      tags: req.tags || null,
+      bankAccountNumber: req.bankAccountNumber || null,
+      phoneNumber: req.phoneNumber || null,
     };
 
     const result = await this.restaurantModel.findOneAndUpdate(filter, update, { new: true });
