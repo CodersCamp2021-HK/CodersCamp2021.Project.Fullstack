@@ -7,7 +7,7 @@ import { User, UserSchema } from './database';
 import { GetUserHandler } from './domain';
 import { UpdateUserProfileHandler } from './domain/UpdateUserProfileHandler';
 import { FavouriteDishesController, FavouriteRestaurantListController } from './favourites/api';
-import { AddFavouriteDishHandler, ListFavouriteDishesHandler } from './favourites/domain';
+import { AddFavouriteDishHandler, ListFavouriteDishesHandler, RemoveFavouriteDishHandler } from './favourites/domain';
 import { UsersFacade } from './infra';
 
 @Module({
@@ -22,6 +22,7 @@ import { UsersFacade } from './infra';
     UpdateUserProfileHandler,
     ListFavouriteDishesHandler,
     AddFavouriteDishHandler,
+    RemoveFavouriteDishHandler,
   ],
   exports: [UsersFacade],
 })

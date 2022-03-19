@@ -6,6 +6,7 @@ import { FavouriteDishDto } from '../../../restaurants/dishes/api/DishDto';
 import {
   ApiAuthorization,
   ApiController,
+  ApiDelete,
   ApiList,
   ApiObjectIdParam,
   ApiUpdate,
@@ -16,7 +17,7 @@ import {
   Url,
   UserId,
 } from '../../../shared';
-import { AddFavouriteDishHandler, ListFavouriteDishesHandler } from '../domain';
+import { AddFavouriteDishHandler, ListFavouriteDishesHandler, RemoveFavouriteDishHandler } from '../domain';
 import { FavouriteDishListDto } from './FavouriteDishListDto';
 
 @ApiController({
@@ -28,6 +29,7 @@ class FavouriteDishesController {
   constructor(
     private readonly listFavouriteDishesHandler: ListFavouriteDishesHandler,
     private readonly addFavouriteDishHandler: AddFavouriteDishHandler,
+    private readonly removeFavouriteDishHandler: RemoveFavouriteDishHandler,
   ) {}
 
   @ApiList({ name: 'dishes', response: FavouriteDishListDto, link: true })
@@ -49,6 +51,13 @@ class FavouriteDishesController {
   async add(@UserId() userId: string, @Param('id') dishId: string) {
     const dish = await this.addFavouriteDishHandler.exec({ userId, dishId });
     return plainToInstance(FavouriteDishDto, dish);
+  }
+
+  @ApiObjectIdParam()
+  @ApiDelete({ name: 'dish' })
+  @ApiAuthorization(Role.User)
+  async remove(@UserId() userId: string, @Param('id') dishId: string) {
+    return this.removeFavouriteDishHandler.exec({ userId, dishId });
   }
 }
 
