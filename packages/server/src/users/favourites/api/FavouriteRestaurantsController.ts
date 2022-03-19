@@ -1,9 +1,28 @@
-import { Param } from '@nestjs/common';
+import { Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { Response } from 'express';
 
 import { FavouriteRestaurantDto } from '../../../restaurants/api/RestaurantDto';
-import { ApiAuthorization, ApiController, ApiDelete, ApiObjectIdParam, ApiUpdate, Role, UserId } from '../../../shared';
-import { AddFavouriteRestaurantHandler, RemoveFavouriteRestaurantHandler } from '../domain';
+import {
+  ApiAuthorization,
+  ApiController,
+  ApiDelete,
+  ApiList,
+  ApiObjectIdParam,
+  ApiUpdate,
+  createPaginationLink,
+  Pagination,
+  PaginationQuery,
+  Role,
+  Url,
+  UserId,
+} from '../../../shared';
+import {
+  AddFavouriteRestaurantHandler,
+  ListFavouriteRestaurantsHandler,
+  RemoveFavouriteRestaurantHandler,
+} from '../domain';
+import { FavouriteRestaurantListDto } from './FavouriteRestaurantListDto';
 
 @ApiController({
   path: 'users/favourite/restaurants',
@@ -14,6 +33,7 @@ class FavouriteRestaurantsController {
   constructor(
     private readonly addFavouriteRestaurantHandler: AddFavouriteRestaurantHandler,
     private readonly removeFavouriteRestaurantHandler: RemoveFavouriteRestaurantHandler,
+    private readonly listFavouriteRestaurantsHandler: ListFavouriteRestaurantsHandler,
   ) {}
 
   @ApiObjectIdParam()
@@ -29,6 +49,19 @@ class FavouriteRestaurantsController {
   @ApiDelete({ name: 'restaurant' })
   async deleteOne(@UserId() userId: string, @Param('id') restaurantId: string) {
     return this.removeFavouriteRestaurantHandler.exec({ userId: userId, restaurantId: restaurantId });
+  }
+
+  @ApiList({ name: 'restaurants', response: FavouriteRestaurantListDto, link: true })
+  @ApiAuthorization(Role.User)
+  async list(
+    @UserId() userId,
+    @Pagination() pagination: PaginationQuery,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+  ) {
+    const paginatedRestaurants = await this.listFavouriteRestaurantsHandler.exec({ ...pagination, userId });
+    res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
+    return plainToInstance(FavouriteRestaurantListDto, paginatedRestaurants);
   }
 }
 
