@@ -17,7 +17,7 @@ import {
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, DeleteDishHandler, ListPartnerDishesHandler } from '../domain';
+import { CreateDishHandler, DeleteDishHandler, ListDishesHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -25,19 +25,19 @@ import { DishListDto } from './DishListDto';
 class PartnerDishController {
   constructor(
     private readonly createDishHandler: CreateDishHandler,
-    private readonly listPartnerDishesHandler: ListPartnerDishesHandler,
+    private readonly listDishesHandler: ListDishesHandler,
     private readonly deleteDishHandler: DeleteDishHandler,
   ) {}
 
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   @ApiAuthorization(Role.Partner)
   async list(
-    @PartnerId() partnerId: string,
+    @PartnerId() restaurantId: string,
     @Pagination() { page, limit }: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
   ) {
-    const paginatedDishes = await this.listPartnerDishesHandler.exec({ page, limit, partnerId });
+    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }

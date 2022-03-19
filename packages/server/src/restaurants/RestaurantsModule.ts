@@ -7,13 +7,7 @@ import { DishController } from './dishes/api/DishController';
 import { PartnerDishController } from './dishes/api/PartnerDishController';
 import { RestaurantDishController } from './dishes/api/RestaurantDishController';
 import { Dish, DishSchema } from './dishes/database';
-import {
-  CreateDishHandler,
-  DeleteDishHandler,
-  GetDishHandler,
-  ListAllDishesHandler,
-  ListPartnerDishesHandler,
-} from './dishes/domain';
+import { CreateDishHandler, DeleteDishHandler, GetDishHandler, ListDishesHandler } from './dishes/domain';
 import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
 import { RestaurantsFacade } from './infra';
@@ -40,8 +34,7 @@ import { UpdatePartnerProfileHandler } from './profile/domain';
     GetDishHandler,
     CreateDishHandler,
     DeleteDishHandler,
-    ListAllDishesHandler,
-    ListPartnerDishesHandler,
+    ListDishesHandler,
     UpdatePartnerProfileHandler,
   ],
   exports: [RestaurantsFacade],

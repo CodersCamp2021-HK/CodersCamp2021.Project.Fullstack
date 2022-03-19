@@ -7,9 +7,9 @@ import { Handler, Paginated, PaginationQuery } from '../../shared';
 import { CuisineTypes, Restaurant, RestaurantDocument, RestaurantTags } from '../database';
 
 export interface RestaurantFilters {
-  city: string;
-  cuisineType: CuisineTypes[];
-  tags: RestaurantTags[];
+  readonly city?: string;
+  readonly cuisineType?: CuisineTypes[];
+  readonly tags?: RestaurantTags[];
 }
 
 type ListRestaurantsRequest = PaginationQuery & RestaurantFilters;

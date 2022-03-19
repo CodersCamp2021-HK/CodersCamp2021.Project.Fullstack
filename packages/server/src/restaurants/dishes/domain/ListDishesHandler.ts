@@ -1,19 +1,28 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
+import _ from 'lodash';
 import { Model } from 'mongoose';
 
 import { Handler, Paginated, PaginationQuery } from '../../../shared';
-import { Dish, DishDocument } from '../database';
+import { Dish, DishDocument, DishTags, MealType } from '../database';
 
-interface ListDishesRequest extends PaginationQuery {
-  readonly partnerId: string;
+export interface DishFilters {
+  readonly city?: string;
+  readonly mealType?: MealType[];
+  readonly tags?: DishTags[];
 }
-class ListPartnerDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | Dish | null> {
+
+type ListDishesRequest = PaginationQuery &
+  DishFilters & {
+    readonly restaurantId?: string;
+  };
+
+class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | Dish | null> {
   constructor(@InjectModel(Dish.name) private dishModel: Model<DishDocument>) {}
 
   async exec(req: ListDishesRequest) {
     const offset = (req.page - 1) * req.limit;
-    const queryFilter = { restaurant: req.partnerId };
+    const queryFilter = _.omitBy({ restaurant: req.restaurantId }, _.isNil);
     const dishDocsQuery = this.dishModel.find(queryFilter).skip(offset).limit(req.limit);
     const countQuery = this.dishModel.countDocuments();
     const [dishDocs, count] = await Promise.all([dishDocsQuery.exec(), countQuery.exec()]);
@@ -21,4 +30,4 @@ class ListPartnerDishesHandler implements Handler<ListDishesRequest, Paginated<D
   }
 }
 
-export { ListPartnerDishesHandler };
+export { ListDishesHandler };
