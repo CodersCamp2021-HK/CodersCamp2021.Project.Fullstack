@@ -10,10 +10,9 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
-  QueryFilters,
+  ParamDishFilters,
   Url,
 } from '../../../shared';
-import { DishTags, MealType } from '../database';
 import { DishFilters, GetDishHandler, ListDishesHandler } from '../domain';
 import { DishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
@@ -39,12 +38,7 @@ class DishController {
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
-    @QueryFilters([
-      { name: 'city', required: false },
-      { name: 'mealType', required: false, enum: MealType, enumName: 'MealTypeEnum', isArray: true },
-      { name: 'tags', required: false, enum: DishTags, enumName: 'DishTagEnum', isArray: true },
-    ])
-    filters: DishFilters,
+    @ParamDishFilters() filters: DishFilters,
   ) {
     const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));

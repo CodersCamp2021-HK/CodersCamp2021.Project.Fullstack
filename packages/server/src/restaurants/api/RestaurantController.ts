@@ -10,10 +10,9 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
-  QueryFilters,
+  ParamRestaurantsFilter,
   Url,
 } from '../../shared';
-import { CuisineTypes, RestaurantTags } from '../database';
 import { GetRestaurantHandler } from '../domain/GetRestaurantHandler';
 import { ListRestaurantsHandler, RestaurantFilters } from '../domain/ListRestaurantsHandler';
 import { RestaurantDto } from './RestaurantDto';
@@ -39,12 +38,7 @@ class RestaurantController {
     @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
-    @QueryFilters([
-      { name: 'city', required: false },
-      { name: 'cuisineType', required: false, enum: CuisineTypes, enumName: 'CuisineTypeEnum', isArray: true },
-      { name: 'tags', required: false, enum: RestaurantTags, enumName: 'RestaurantTagEnum', isArray: true },
-    ])
-    filters: RestaurantFilters,
+    @ParamRestaurantsFilter() filters: RestaurantFilters,
   ) {
     const paginatedRestaurants = await this.listRestaurantsHandler.exec({ ...pagination, ...filters });
     res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
