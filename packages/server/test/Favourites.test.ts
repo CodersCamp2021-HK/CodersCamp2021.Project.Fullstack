@@ -45,7 +45,7 @@ describe(`${PATH}`, () => {
     const formattedDish = plainToInstance(FavouriteDishDto, createdDish);
     const dishId = formattedDish.id;
     const createdUser = await fixture.db.userModel.create({});
-    const agent = fixture.agent(Role.User, createdUser._id?.toString());
+    const agent = fixture.agent(Role.User, createdUser.id);
     const fakeDishId = new ObjectId().toString();
 
     // When
@@ -56,5 +56,20 @@ describe(`${PATH}`, () => {
     expect(resValid.status).toBe(HttpStatus.OK);
     expect(resValid.body).toEqual(formattedDish);
     expect(resInvalid.status).toBe(HttpStatus.NOT_FOUND);
+  });
+
+  it('DELETE /dishes/:id', async () => {
+    // Given
+    const createdDish = await fixture.db.dishModel.create(dishDto({ restaurant: RESTAURANT_ID }));
+    const createdUser = await fixture.db.userModel.create({ favouriteDishes: [createdDish] });
+    const agent = fixture.agent(Role.User, createdUser.id);
+
+    // When
+    const res0 = await agent.delete(`${PATH}/dishes/${createdDish.id}`);
+    const res1 = await agent.delete(`${PATH}/dishes/${createdDish.id}`);
+
+    // Then
+    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
+    expect(res1.status).toBe(HttpStatus.NOT_FOUND);
   });
 });
