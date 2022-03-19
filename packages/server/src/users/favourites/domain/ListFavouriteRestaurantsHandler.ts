@@ -1,0 +1,2 @@
+class ListFavouriteRestaurantHandler {}
+export { ListFavouriteRestaurantHandler };
