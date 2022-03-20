@@ -11,11 +11,16 @@ interface RemoveFavouriteRestaurantRequest {
 }
 
 @Injectable()
-class RemoveFavouriteRestaurantHandler implements Handler<RemoveFavouriteRestaurantRequest, void> {
+class RemoveFavouriteRestaurantHandler implements Handler<RemoveFavouriteRestaurantRequest, null | undefined> {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async exec(req: RemoveFavouriteRestaurantRequest): Promise<void> {
-    await this.userModel.findByIdAndUpdate(req.userId, { $pull: { favouriteRestaurants: req.restaurantId } });
+  async exec(req: RemoveFavouriteRestaurantRequest): Promise<null | undefined> {
+    const user = await this.userModel
+      .findByIdAndUpdate(req.userId, { $pull: { favouriteRestaurants: req.restaurantId } })
+      .populate('favouriteRestaurants');
+
+    if (!user?.favouriteRestaurants.some((restaurant) => restaurant.id === req.restaurantId)) return null;
+    return undefined;
   }
 }
 

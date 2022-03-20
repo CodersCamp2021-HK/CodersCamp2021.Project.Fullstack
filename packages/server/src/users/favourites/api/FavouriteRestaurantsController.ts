@@ -47,8 +47,8 @@ class FavouriteRestaurantsController {
   @ApiObjectIdParam()
   @ApiAuthorization(Role.User)
   @ApiDelete({ name: 'restaurant' })
-  async deleteOne(@UserId() userId: string, @Param('id') restaurantId: string) {
-    return this.removeFavouriteRestaurantHandler.exec({ userId: userId, restaurantId: restaurantId });
+  async remove(@UserId() userId: string, @Param('id') restaurantId: string) {
+    return this.removeFavouriteRestaurantHandler.exec({ userId, restaurantId });
   }
 
   @ApiList({ name: 'restaurants', response: FavouriteRestaurantListDto, link: true })

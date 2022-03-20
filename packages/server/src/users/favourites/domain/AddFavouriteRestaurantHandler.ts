@@ -23,7 +23,7 @@ class AddFavouriteRestaurantHandler implements Handler<AddFavouriteRestaurantReq
     const restaurant = await this.restaurantModel.findById(req.restaurantId);
     if (!restaurant) return null;
 
-    await this.userModel.findByIdAndUpdate(req.userId, { $push: { favouriteRestaurants: restaurant } });
+    await this.userModel.findByIdAndUpdate(req.userId, { $addToSet: { favouriteRestaurants: restaurant } });
 
     return plainToInstance(Restaurant, restaurant);
   }
