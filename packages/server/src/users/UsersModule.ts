@@ -6,17 +6,20 @@ import { UsersController } from './api';
 import { User, UserSchema } from './database';
 import { GetUserHandler } from './domain';
 import { UpdateUserProfileHandler } from './domain/UpdateUserProfileHandler';
-import { FavouriteDishListController, FavouriteRestaurantsController } from './favourites/api';
+import { FavouriteDishesController, FavouriteRestaurantsController } from './favourites/api';
 import {
+  AddFavouriteDishHandler,
   AddFavouriteRestaurantHandler,
+  ListFavouriteDishesHandler,
   ListFavouriteRestaurantsHandler,
+  RemoveFavouriteDishHandler,
   RemoveFavouriteRestaurantHandler,
 } from './favourites/domain';
 import { UsersFacade } from './infra';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), RestaurantsModule],
-  controllers: [FavouriteRestaurantsController, FavouriteDishListController, UsersController],
+  controllers: [FavouriteRestaurantsController, FavouriteDishesController, UsersController],
   providers: [
     UsersFacade,
     GetUserHandler,
@@ -24,6 +27,9 @@ import { UsersFacade } from './infra';
     AddFavouriteRestaurantHandler,
     ListFavouriteRestaurantsHandler,
     RemoveFavouriteRestaurantHandler,
+    ListFavouriteDishesHandler,
+    AddFavouriteDishHandler,
+    RemoveFavouriteDishHandler,
   ],
   exports: [UsersFacade],
 })
