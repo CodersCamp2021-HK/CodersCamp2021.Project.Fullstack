@@ -7,7 +7,7 @@ import { Restaurant, RestaurantDocument } from '../../database';
 import { Allergens, Dish, DishDocument, DishTags, Ingredient, MealType, NutritionalValue } from '../database';
 
 interface UpdateDishRequest {
-  readonly id: string;
+  readonly dishId: string;
   readonly restaurantId: string;
   readonly name: string;
   readonly mealType: MealType[];
@@ -29,9 +29,9 @@ class UpdateDishHandler implements Handler<UpdateDishRequest, Dish | undefined |
     @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
   ) {}
   async exec(req: UpdateDishRequest): Promise<Dish | undefined | null> {
-    await this.restaurantModel.updateOne({ _id: req.restaurantId }, { $pull: { dishes: req.id } });
+    await this.restaurantModel.updateOne({ _id: req.restaurantId }, { $pull: { dishes: req.dishId } });
     const result = await this.dishModel.findOneAndUpdate(
-      { _id: req.id, restaurant: req.restaurantId },
+      { _id: req.dishId, restaurant: req.restaurantId },
       {
         name: req.name,
         mealType: req.mealType,

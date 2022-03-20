@@ -48,9 +48,7 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const accessToken = accessTokenAsCookie(
-      fixture.app.get(JwtService).sign({ role: Role.Partner, sub: RESTAURANT_ID }),
-    );
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
     const dish = dishDto({ restaurant: RESTAURANT_ID });
     const created = await fixture.db.dishModel.create(dish);
     const id = created._id?.toString();
@@ -87,11 +85,11 @@ describe(`${PATH}`, () => {
     };
 
     // When;
-    const resp_put = await fixture.agent().put(`${PATH}/${id}`).set('Cookie', [accessToken]).send(reqBody);
+    const resp_put = await agent.put(`${PATH}/${id}`).send(reqBody);
     // Then
     expect(resp_put.status).toBe(HttpStatus.NO_CONTENT);
 
-    const resp_get = await fixture.req.get(PATH).set('Cookie', [accessToken]);
+    const resp_get = await agent.get(PATH);
     expect(resp_get.body.data[0].name).toEqual(reqBody.name);
     expect(resp_get.body.data[0].mealType).toEqual(reqBody.mealType);
     expect(resp_get.body.data[0].description).toEqual(reqBody.description);
@@ -109,11 +107,7 @@ describe(`${PATH}`, () => {
     if (id === wrong_id) {
       wrong_id = '222e1acfa3f9ad63169a0000';
     }
-    const wrong_token_resp = await fixture
-      .agent()
-      .put(`${PATH}/${'111e1acfa3f9ad63169a0000'}`)
-      .set('Cookie', [accessToken])
-      .send(reqBody);
+    const wrong_token_resp = await agent.put(`${PATH}/${'111e1acfa3f9ad63169a0000'}`).send(reqBody);
     //Then
     expect(wrong_token_resp.status).toBe(HttpStatus.NOT_FOUND);
   });
