@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { Dish, DishSchema } from '../restaurants/dishes/database';
+import { RestaurantsModule } from '../restaurants';
 import { UsersController } from './api';
 import { User, UserSchema } from './database';
 import { GetUserHandler } from './domain';
@@ -11,10 +11,7 @@ import { AddFavouriteDishHandler, ListFavouriteDishesHandler, RemoveFavouriteDis
 import { UsersFacade } from './infra';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: Dish.name, schema: DishSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), RestaurantsModule],
   controllers: [FavouriteRestaurantListController, FavouriteDishesController, UsersController],
   providers: [
     UsersFacade,
