@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { plainToInstance } from 'class-transformer';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { RestaurantsFacade } from '../../../restaurants';
-import { Restaurant } from '../../../restaurants/database';
 import { Handler } from '../../../shared';
 import { User, UserDocument } from '../../database';
 
@@ -14,19 +13,21 @@ interface AddFavouriteRestaurantRequest {
 }
 
 @Injectable()
-class AddFavouriteRestaurantHandler implements Handler<AddFavouriteRestaurantRequest, Restaurant | null> {
+class AddFavouriteRestaurantHandler implements Handler<AddFavouriteRestaurantRequest, undefined | null> {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private readonly restaurantFacade: RestaurantsFacade,
   ) {}
 
-  async exec(req: AddFavouriteRestaurantRequest): Promise<Restaurant | null> {
-    const restaurant = await this.restaurantFacade.findById(req.restaurantId);
-    if (!restaurant) return null;
+  async exec(req: AddFavouriteRestaurantRequest): Promise<undefined | null> {
+    const restaurantExist = await this.restaurantFacade.exists(req.restaurantId);
+    if (!restaurantExist) return null;
 
-    await this.userModel.findByIdAndUpdate(req.userId, { $addToSet: { favouriteRestaurants: restaurant } });
+    await this.userModel.findByIdAndUpdate(req.userId, {
+      $addToSet: { favouriteRestaurants: new ObjectId(req.restaurantId) },
+    });
 
-    return plainToInstance(Restaurant, restaurant);
+    return undefined;
   }
 }
 

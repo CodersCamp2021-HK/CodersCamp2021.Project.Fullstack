@@ -13,8 +13,9 @@ class RestaurantsFacade {
     return restaurant.id;
   }
 
-  async findById(id: string) {
-    return this.restaurantModel.findById(id);
+  async exists(id: string) {
+    const restaurant = await this.restaurantModel.findById(id);
+    return restaurant !== null;
   }
 }
 

@@ -44,8 +44,7 @@ describe(`${PATH}`, () => {
     const resValid = await agent.put(`${PATH}/restaurants/${restaurantId}`);
 
     // Then
-    expect(resValid.status).toBe(HttpStatus.OK);
-    expect(resValid.body).toEqual(formattedRestaurant);
+    expect(resValid.status).toBe(HttpStatus.NO_CONTENT);
 
     // When
     const resCheck = await agent.get(`${PATH}/restaurants`);
