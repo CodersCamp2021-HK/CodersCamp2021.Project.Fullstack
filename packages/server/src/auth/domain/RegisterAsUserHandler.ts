@@ -31,10 +31,9 @@ class RegisterAsUserHandler implements Handler<RegisterAsUserRequest, void> {
     // TODO implement rest of register as user flow
     authDoc.verified = true;
 
-    // TODO pass non static token
-    await this.authMailService.sendUserConfirmation(authDoc, 'dcmDkmygBGIILTWaDeP0GFIljjf19R2C');
-
     await authDoc.save();
+    // TODO pass non static token
+    await this.authMailService.sendUserConfirmation(email, 'dcmDkmygBGIILTWaDeP0GFIljjf19R2C');
   }
 }
 
