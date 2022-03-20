@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -33,13 +33,13 @@ class CreateDishHandler implements Handler<CreateDishRequest, Dish | null> {
   async exec(req: CreateDishRequest): Promise<Dish | null> {
     const restaurant = await this.restaurantModel.findById(req.restaurant);
 
+    console.log(restaurant?.isCompleted);
     if (restaurant?.profileCompleted) {
       const created = await this.dishModel.create(req);
       await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
 
       return plainToInstance(Dish, created);
-    }
-    return null;
+    } else throw new UnprocessableEntityException();
   }
 }
 

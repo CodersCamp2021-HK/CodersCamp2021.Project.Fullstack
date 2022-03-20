@@ -1,5 +1,7 @@
+import { INestApplicationContext } from '@nestjs/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
+import _ from 'lodash';
 import { ObjectId } from 'mongodb';
 import { Document, SchemaTypes } from 'mongoose';
 
@@ -66,6 +68,22 @@ const RESTAURANT_CONSTANTS = Object.freeze({
   collection: 'restaurants',
 })
 class Restaurant {
+  get isCompleted() {
+    const requirements = {
+      name: this.name,
+      bankAccountNumber: this.bankAccountNumber,
+      phoneNumber: this.phoneNumber,
+      addressId: this.addressId,
+      logo: this.logo,
+      description: this.description,
+      cuisineType: this.cuisineType,
+      tags: this.tags,
+    };
+
+    if (!_.values(requirements).some(_.isNull)) return false;
+    return true;
+  }
+
   @Expose()
   @Prop({
     minlength: RESTAURANT_CONSTANTS.NAME.MIN_LENGTH,
@@ -120,6 +138,11 @@ class Restaurant {
 }
 
 const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
+const getter = Object?.getOwnPropertyDescriptor(Restaurant.prototype, 'isCompleted')?.get;
+
+RestaurantSchema.virtual('isCompleted').get(function () {
+  return getter;
+});
 
 export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
 export type { RestaurantDocument };

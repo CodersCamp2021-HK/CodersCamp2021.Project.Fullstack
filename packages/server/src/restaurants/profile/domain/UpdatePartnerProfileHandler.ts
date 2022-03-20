@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import _ from 'lodash';
 import { Model } from 'mongoose';
 
+import { Address } from '../../../addresses/database';
 import { Handler } from '../../../shared';
 import { CuisineTypes, Restaurant, RestaurantDocument, RestaurantTags } from '../../database';
 
@@ -14,6 +15,8 @@ interface UpdatePartnerProfileRequest {
   readonly cuisineType: CuisineTypes[];
   readonly bankAccountNumber: string;
   readonly phoneNumber: string;
+  // readonly logo: string;
+  // readonly addressId: Address[];
 }
 
 @Injectable()
@@ -29,18 +32,21 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
       tags: req.tags || null,
       bankAccountNumber: req.bankAccountNumber || null,
       phoneNumber: req.phoneNumber || null,
+      // logo: req.logo || null,
+      // addressId: req.address || null,
     };
+    // ma być dodany jakiś adressId oraz logo
 
-    const result = await this.restaurantModel.findOneAndUpdate(filter, update, { new: true });
+    const partnerDoc = await this.restaurantModel.findOne(filter);
+    const result = _.merge(partnerDoc, update);
 
+    result.save();
     if (result === null) return null;
 
-    const isNotNull = (val) => val != null;
-
-    if (!_.values(result?.toObject()).some(_.isNull)) {
-      result.profileCompleted = true;
-      result.save();
-    }
+    // if (!_.values(result?.toObject()).some(_.isNull)) {
+    //   result.profileCompleted = true;
+    //   result.save();
+    // }
 
     return undefined;
   }
