@@ -8,7 +8,7 @@ const PATH = '/api/partner/profile';
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto({ isCompleted: false }) }])(
+  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto() }])(
     'GET / - isCompleted: $restaurant.isCompleted',
     async ({ restaurant }) => {
       // Given
@@ -36,8 +36,12 @@ describe(`${PATH}`, () => {
       bankAccountNumber: '11111111111111111111111111',
       phoneNumber: '800500300',
       cuisineType: ['włoska'],
-      tags: ['wegetariańska'],
+      tags: ['wegetariańska', 'street food'],
+      addressId: ['62227771b256571bb24d4b16'],
+      logo: '/images/logo.png',
     };
+
+    console.log(reqBody);
 
     // When
     const res0 = await agent.put(PATH).send(reqBody);
