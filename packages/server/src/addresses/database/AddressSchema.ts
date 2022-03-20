@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose } from 'class-transformer';
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 type AddressDocument = Address & Document<ObjectId>;
 
@@ -14,6 +14,7 @@ const ADDRESS_CONSTANTS = Object.freeze({
   APARTMENT_NUMBER: Object.freeze({ REGEX: /^\d{1,3}$/ }),
   FLOOR: Object.freeze({ REGEX: /^\d{0,2}$/ }),
 });
+
 @Exclude()
 @Schema({
   collection: 'addresses',
@@ -52,6 +53,10 @@ class Address {
 
   @Expose()
   readonly id: string;
+
+  @Expose()
+  @Prop({ type: SchemaTypes.ObjectId })
+  readonly owner: ObjectId;
 }
 
 const AddressSchema = SchemaFactory.createForClass(Address);

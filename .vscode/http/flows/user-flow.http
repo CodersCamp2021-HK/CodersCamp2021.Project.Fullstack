@@ -1,0 +1,70 @@
+### register
+POST {{baseUrl}}/auth/register/user
+
+{
+  "email": "user@email.com",
+  "password": "Password1"
+}
+
+### login
+POST {{baseUrl}}/auth/login
+
+{
+  "email": "user@email.com",
+  "role": "User",
+  "password": "Password1",
+  "rememberMe": false
+}
+
+### complete the profile
+PUT {{baseUrl}}/users/profile
+
+{
+  "name": "Jan",
+  "surname": "Kowalski",
+  "phoneNumber": "800500300",
+  "card": {
+    "number": "4562574783836030",
+    "expirationDate": "2022-10-12",
+    "securityCode": "722"
+  }
+}
+
+### add an address
+# @name addUserAddress
+POST {{baseUrl}}/users/addresses
+
+{
+  "street": "Street",
+  "streetNumber": "1A",
+  "apartmentNumber": "1",
+  "floor": "1",
+  "city": "City",
+  "postcode": "00-000"
+}
+
+### submit an order
+POST {{baseUrl}}/orders
+
+{
+  "addressId": "{{addUserAddress.response.body.$.id}}",
+  "subOrders": [
+    {
+      "deliveryDate": "2022-03-15T20:33:03.795Z",
+      "hourStart": 8,
+      "hourEnd": 11,
+      "dishes": [
+        {
+          "dishId": "6200218668fc82e7bdf15088",
+          "count": 1,
+          "excludedIngredients": []
+        }
+      ]
+    }
+  ],
+  "comment": "Additional requests for the restaurant."
+}
+
+
+### logout
+POST {{baseUrl}}/auth/logout

@@ -1,29 +1,23 @@
 import { HttpStatus } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { ObjectId } from 'mongodb';
 
 import { Role } from '../src/shared';
-import { initE2eFixture } from './E2eFixture';
-import { accessTokenAsCookie } from './shared';
+import { initE2eFixture, userDto } from './shared';
 
 const PATH = '/api/users/profile';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  afterEach(async () => {
-    await fixture.db.userModel.deleteMany();
-  });
-
   it('GET /', async () => {
     // Given
-    const user = {};
-
+    const user = userDto();
     const created = await fixture.db.userModel.create(user);
     const id = created._id?.toString();
-    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.User, sub: id }));
+    const agent = fixture.agent(Role.User, id);
 
     // When
-    const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
+    const resp = await agent.get(PATH);
 
     // Then
     expect(resp.status).toBe(HttpStatus.OK);
@@ -32,13 +26,9 @@ describe(`${PATH}`, () => {
 
   it('PUT /', async () => {
     // Given
-    const user = {
-      name: 'User',
-      profileCompleted: false,
-    };
-    const created = await fixture.db.userModel.create(user);
-    const id = created._id?.toString();
-    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.User, sub: id }));
+    const id = new ObjectId().toString();
+    await fixture.db.userModel.create({ _id: id });
+    const agent = fixture.agent(Role.User, id);
     const reqBody = {
       name: 'John',
       surname: 'Doe',
@@ -47,15 +37,20 @@ describe(`${PATH}`, () => {
     };
 
     // When
-    const resp_put = await fixture.agent().put(PATH).set('Cookie', [accessToken]).send(reqBody);
+    const res0 = await agent.get(PATH);
 
     // Then
-    expect(resp_put.status).toBe(HttpStatus.NO_CONTENT);
+    expect(res0.body.profileCompleted).toEqual(false);
 
-    const resp_get = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
-    expect(resp_get.body.name).toEqual(reqBody.name);
-    expect(resp_get.body.surname).toEqual(reqBody.surname);
-    expect(resp_get.body.phoneNumber).toEqual(reqBody.phoneNumber);
-    expect(resp_get.body.card).toEqual(reqBody.card);
+    // When
+    await agent.put(PATH).send(reqBody);
+    const res1 = await agent.get(PATH);
+
+    // Then
+    expect(res1.body.profileCompleted).toEqual(true);
+    expect(res1.body.name).toEqual(reqBody.name);
+    expect(res1.body.surname).toEqual(reqBody.surname);
+    expect(res1.body.phoneNumber).toEqual(reqBody.phoneNumber);
+    expect(res1.body.card).toEqual(reqBody.card);
   });
 });
