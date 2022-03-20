@@ -23,7 +23,7 @@ interface UpdateDishRequest {
   readonly proteins: NutritionalValue;
   readonly carbohydrates: NutritionalValue;
 }
-type sth = Omit<UpdateDishRequest, 'restaurantId' | 'dishId'>;
+
 @Injectable()
 class UpdateDishHandler implements Handler<UpdateDishRequest, Dish | undefined | null> {
   constructor(
