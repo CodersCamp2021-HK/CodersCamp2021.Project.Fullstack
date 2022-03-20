@@ -6,8 +6,9 @@ import { Dish, DishDocument } from '../dishes/database';
 class DishesFacade {
   constructor(@InjectModel(Dish.name) private readonly dishModel: Model<DishDocument>) {}
 
-  async findById(id: string) {
-    return this.dishModel.findById(id);
+  async exists(id: string) {
+    const dish = await this.dishModel.findById(id);
+    return dish !== null;
   }
 }
 

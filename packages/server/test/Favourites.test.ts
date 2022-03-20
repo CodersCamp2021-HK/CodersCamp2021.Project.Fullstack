@@ -52,8 +52,7 @@ describe(`${PATH}`, () => {
     const resValid = await agent.put(`${PATH}/dishes/${dishId}`);
 
     // Then
-    expect(resValid.status).toBe(HttpStatus.OK);
-    expect(resValid.body).toEqual(formattedDish);
+    expect(resValid.status).toBe(HttpStatus.NO_CONTENT);
 
     // When
     const resCheck = await agent.get(`${PATH}/dishes`);
