@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import _ from 'lodash';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
@@ -22,6 +23,7 @@ interface UpdateDishRequest {
   readonly proteins: NutritionalValue;
   readonly carbohydrates: NutritionalValue;
 }
+type sth = Omit<UpdateDishRequest, 'restaurantId' | 'dishId'>;
 @Injectable()
 class UpdateDishHandler implements Handler<UpdateDishRequest, Dish | undefined | null> {
   constructor(
@@ -32,19 +34,7 @@ class UpdateDishHandler implements Handler<UpdateDishRequest, Dish | undefined |
     await this.restaurantModel.updateOne({ _id: req.restaurantId }, { $pull: { dishes: req.dishId } });
     const result = await this.dishModel.findOneAndUpdate(
       { _id: req.dishId, restaurant: req.restaurantId },
-      {
-        name: req.name,
-        mealType: req.mealType,
-        description: req.description,
-        price: req.price,
-        tags: req.tags,
-        ingredients: req.ingredients,
-        allergens: req.allergens,
-        portionWeight: req.portionWeight,
-        fats: req.fats,
-        proteins: req.proteins,
-        carbohydrates: req.carbohydrates,
-      },
+      _.omit(req, 'dishId', 'restaurantId'),
     );
     if (result === null) return null;
     return undefined;
