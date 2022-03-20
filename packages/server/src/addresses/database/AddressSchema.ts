@@ -55,7 +55,7 @@ class Address {
   readonly id: string;
 
   @Expose()
-  @Prop({ type: SchemaTypes.ObjectId, required: true })
+  @Prop({ type: SchemaTypes.ObjectId })
   readonly owner: ObjectId;
 }
 

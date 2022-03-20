@@ -1,0 +1,40 @@
+@usersUrl = {{baseUrl}}/users
+
+### get user's profile
+# 🔒 only for authenticated users
+GET {{usersUrl}}/profile
+
+### update user's profile
+# 🔒 only for authenticated users
+PUT {{usersUrl}}/profile
+
+{
+  "name": "John",
+  "surname": "Doe"
+}
+
+### get user's favourite dishes
+# 🔒 only for authenticated users
+GET {{usersUrl}}/favourite/dishes
+
+### get user's favourite restaurants
+# 🔒 only for authenticated users
+GET {{usersUrl}}/favourite/restaurants
+
+### create an address
+# 🔒 only for authenticated users
+# @name createUserAddress
+POST {{usersUrl}}/addresses
+
+{
+  "street": "Street",
+  "streetNumber": "1A",
+  "apartmentNumber": "1",
+  "floor": "1",
+  "city": "City",
+  "postcode": "00-000"
+}
+
+### get a single address
+# 🔒 only for authenticated users
+GET {{usersUrl}}/addresses/{{createUserAddress.response.body.$.id}}
