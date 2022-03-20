@@ -33,7 +33,17 @@ describe(`${PATH}`, () => {
     // Given
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
 
-    await fixture.db.restaurantModel.create({ _id: RESTAURANT_ID, isCompleted: true });
+    await fixture.db.restaurantModel.create({
+      _id: RESTAURANT_ID,
+      name: 'Resto',
+      bankAccountNumber: '72920080748556126838146923',
+      phoneNumber: '800500300',
+      addressId: ['62227771b256571bb24d4b16'],
+      logo: '/images/logo.png',
+      description: 'Smaczenie i tanio',
+      cuisineType: ['polska'],
+      tags: ['burgery'],
+    });
 
     const reqBody: CreateDishDto = dishDto();
 
