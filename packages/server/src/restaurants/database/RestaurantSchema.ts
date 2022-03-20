@@ -80,7 +80,7 @@ class Restaurant {
       tags: this.tags,
     };
 
-    if (!_.values(requirements).some(_.isNull)) return false;
+    if (_.values(requirements).some(_.isNil)) return false;
     return true;
   }
 
@@ -126,10 +126,6 @@ class Restaurant {
   tags: RestaurantTags[];
 
   @Expose()
-  @Prop({ default: false })
-  profileCompleted: boolean;
-
-  @Expose()
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Dish' }] })
   dishes: Dish[];
 
@@ -138,11 +134,13 @@ class Restaurant {
 }
 
 const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
-const getter = Object?.getOwnPropertyDescriptor(Restaurant.prototype, 'isCompleted')?.get;
 
-RestaurantSchema.virtual('isCompleted').get(function () {
-  return getter;
-});
+const getter = (() => {
+  const fn = Object.getOwnPropertyDescriptor(Restaurant.prototype, 'isCompleted')?.get;
+  if (!fn) throw new Error('Restaurant should have isCompleted getter');
+  return fn;
+})();
+RestaurantSchema.virtual('isCompleted').get(getter);
 
 export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
 export type { RestaurantDocument };

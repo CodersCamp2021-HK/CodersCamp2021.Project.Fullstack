@@ -33,8 +33,7 @@ class CreateDishHandler implements Handler<CreateDishRequest, Dish | null> {
   async exec(req: CreateDishRequest): Promise<Dish | null> {
     const restaurant = await this.restaurantModel.findById(req.restaurant);
 
-    console.log(restaurant?.isCompleted);
-    if (restaurant?.profileCompleted) {
+    if (restaurant?.isCompleted) {
       const created = await this.dishModel.create(req);
       await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
 

@@ -33,7 +33,7 @@ describe(`${PATH}`, () => {
     // Given
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
 
-    await fixture.db.restaurantModel.create({ _id: RESTAURANT_ID, profileCompleted: true });
+    await fixture.db.restaurantModel.create({ _id: RESTAURANT_ID, isCompleted: true });
 
     const reqBody: CreateDishDto = dishDto();
 

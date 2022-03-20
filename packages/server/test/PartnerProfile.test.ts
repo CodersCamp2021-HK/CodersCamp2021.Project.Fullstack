@@ -8,8 +8,8 @@ const PATH = '/api/partner/profile';
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto({ profileCompleted: false }) }])(
-    'GET / - profileCompleted: $restaurant.profileCompleted',
+  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto({ isCompleted: false }) }])(
+    'GET / - isCompleted: $restaurant.isCompleted',
     async ({ restaurant }) => {
       // Given
       const created = await fixture.db.restaurantModel.create(restaurant);
