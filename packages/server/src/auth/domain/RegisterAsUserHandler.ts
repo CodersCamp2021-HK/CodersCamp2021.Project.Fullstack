@@ -2,6 +2,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
+import { AuthMailService } from '../../mail';
 import { Handler, Role } from '../../shared';
 import { UsersFacade } from '../../users';
 import { Auth, AuthDocument } from '../database';
@@ -17,6 +18,7 @@ class RegisterAsUserHandler implements Handler<RegisterAsUserRequest, void> {
     @InjectModel(Auth.name) private readonly authModel: Model<AuthDocument>,
     private readonly passwordHasher: PasswordHasher,
     private readonly usersFacade: UsersFacade,
+    private readonly authMailService: AuthMailService,
   ) {}
 
   async exec(req: RegisterAsUserRequest): Promise<void> {
@@ -30,6 +32,8 @@ class RegisterAsUserHandler implements Handler<RegisterAsUserRequest, void> {
     authDoc.verified = true;
 
     await authDoc.save();
+    // TODO pass non static token
+    await this.authMailService.sendUserConfirmation(email, 'dcmDkmygBGIILTWaDeP0GFIljjf19R2C');
   }
 }
 

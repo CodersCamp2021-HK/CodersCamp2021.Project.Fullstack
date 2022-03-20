@@ -9,7 +9,7 @@ import { UsersModule } from '../users';
 import { AuthController } from './api';
 import { Auth, AuthSchema } from './database';
 import { LoginHandler, PasswordHasher, RegisterAsPartnerHandler, RegisterAsUserHandler } from './domain';
-import { JwtStrategy, Pbkdf2PasswordHasher } from './infra';
+import { AuthFacade, JwtStrategy, Pbkdf2PasswordHasher } from './infra';
 
 const PasswordHasherProvider: Provider = {
   provide: PasswordHasher,
@@ -35,7 +35,14 @@ const PasswordHasherProvider: Provider = {
     PassportModule,
   ],
   controllers: [AuthController],
-  providers: [PasswordHasherProvider, LoginHandler, RegisterAsPartnerHandler, RegisterAsUserHandler, JwtStrategy],
+  providers: [
+    PasswordHasherProvider,
+    LoginHandler,
+    RegisterAsPartnerHandler,
+    RegisterAsUserHandler,
+    JwtStrategy,
+    AuthFacade,
+  ],
 })
 class AuthModule {}
 
