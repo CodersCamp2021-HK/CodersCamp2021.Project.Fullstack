@@ -50,11 +50,22 @@ describe(`${PATH}`, () => {
 
     // When
     const resValid = await agent.put(`${PATH}/dishes/${dishId}`);
-    const resInvalid = await agent.put(`${PATH}/dishes/${fakeDishId}`);
 
     // Then
     expect(resValid.status).toBe(HttpStatus.OK);
     expect(resValid.body).toEqual(formattedDish);
+
+    // When
+    const resCheck = await agent.get(`${PATH}/dishes`);
+
+    // Then
+    expect(resCheck.status).toBe(HttpStatus.OK);
+    expect(resCheck.body.data).toEqual(expect.arrayContaining([formattedDish]));
+
+    // When
+    const resInvalid = await agent.put(`${PATH}/dishes/${fakeDishId}`);
+
+    // Then
     expect(resInvalid.status).toBe(HttpStatus.NOT_FOUND);
   });
 
@@ -66,10 +77,21 @@ describe(`${PATH}`, () => {
 
     // When
     const res0 = await agent.delete(`${PATH}/dishes/${createdDish.id}`);
-    const res1 = await agent.delete(`${PATH}/dishes/${createdDish.id}`);
 
     // Then
     expect(res0.status).toBe(HttpStatus.NO_CONTENT);
+
+    // When
+    const res1 = await agent.delete(`${PATH}/dishes/${createdDish.id}`);
+
+    // Then
     expect(res1.status).toBe(HttpStatus.NOT_FOUND);
+
+    // When
+    const res2 = await agent.get(`${PATH}/dishes`);
+
+    // Then
+    expect(res2.status).toBe(HttpStatus.OK);
+    expect(res2.body.data).toHaveLength(0);
   });
 });
