@@ -41,8 +41,6 @@ describe(`${PATH}`, () => {
       logo: '/images/logo.png',
     };
 
-    console.log(reqBody);
-
     // When
     const res0 = await agent.put(PATH).send(reqBody);
 

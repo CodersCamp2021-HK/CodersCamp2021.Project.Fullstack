@@ -9,8 +9,37 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const restaurantsWithCompletedProfile = [restaurantDto(), restaurantDto()];
-    const restaurantsWithoutCompletedProfile = [restaurantDto({ isCompleted: false })];
+    const restaurantsWithCompletedProfile = [
+      restaurantDto({
+        logo: {
+          data: {
+            $binary: '',
+            $type: '0',
+          },
+          contentType: 'image/png',
+        },
+        addressId: [],
+        cuisineType: [],
+        description: 'Opis restauracji 1.',
+        id: '623774489efe8105017a2521',
+        name: 'Resto bar 1',
+        tags: [],
+        bankAccountNumber: '11111111111111111111111111',
+      }),
+      restaurantDto({
+        logo: {
+          data: {},
+        },
+        addressId: [],
+        cuisineType: [],
+        description: 'Opis restauracji 1.',
+        id: '623774489efe8105017a2521',
+        name: 'Resto bar 1',
+        tags: [],
+        bankAccountNumber: '11111111111111111111111111',
+      }),
+    ];
+    const restaurantsWithoutCompletedProfile = [restaurantDto()];
     const restaurants = [...restaurantsWithCompletedProfile, ...restaurantsWithoutCompletedProfile];
     await fixture.db.restaurantModel.create(restaurants);
 
