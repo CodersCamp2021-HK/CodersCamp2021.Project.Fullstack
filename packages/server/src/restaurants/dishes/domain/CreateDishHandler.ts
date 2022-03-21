@@ -21,6 +21,7 @@ interface CreateDishRequest {
   readonly proteins: NutritionalValue;
   readonly carbohydrates: NutritionalValue;
   readonly restaurant: string;
+  readonly updated: boolean;
 }
 
 @Injectable()

@@ -123,7 +123,7 @@ export interface DishDto {
   /**
    *
    * @type {boolean}
-   * @memberof UserDto
+   * @memberof DishDto
    */
   updated: boolean;
 

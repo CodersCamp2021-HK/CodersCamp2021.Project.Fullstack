@@ -106,7 +106,7 @@ export interface UpdateDishDto {
   /**
    *
    * @type {boolean}
-   * @memberof UpdateUserDto
+   * @memberof UpdateDishDto
    */
    updated: boolean;
 }
