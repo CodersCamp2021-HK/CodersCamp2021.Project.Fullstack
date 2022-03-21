@@ -17,7 +17,7 @@ import {
 } from './dishes/domain';
 import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
 import { ListRestaurantsHandler } from './domain/ListRestaurantsHandler';
-import { RestaurantsFacade } from './infra';
+import { DishesFacade, RestaurantsFacade } from './infra';
 import { PartnerProfileController } from './profile/api/PartnerProfileController';
 import { UpdatePartnerProfileHandler } from './profile/domain';
 
@@ -36,6 +36,7 @@ import { UpdatePartnerProfileHandler } from './profile/domain';
   ],
   providers: [
     RestaurantsFacade,
+    DishesFacade,
     ListRestaurantsHandler,
     GetRestaurantHandler,
     GetDishHandler,
@@ -46,7 +47,7 @@ import { UpdatePartnerProfileHandler } from './profile/domain';
     ListPartnerDishesHandler,
     UpdatePartnerProfileHandler,
   ],
-  exports: [RestaurantsFacade],
+  exports: [RestaurantsFacade, DishesFacade],
 })
 class RestaurantsModule {}
 

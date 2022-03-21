@@ -1,2 +1,2 @@
-export { RestaurantsFacade } from './infra';
+export { DishesFacade, RestaurantsFacade } from './infra';
 export * from './RestaurantsModule';

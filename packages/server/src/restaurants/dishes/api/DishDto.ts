@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional, OmitType, PickType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
 import { ApiImageProperty, ApiObjectIdProperty } from '../../../shared';
@@ -25,10 +25,13 @@ class NutritionalValueDto {
   readonly perPortion: number;
 }
 
+@Exclude()
 class DishDto {
+  @Expose()
   @ApiObjectIdProperty()
   readonly id: string;
 
+  @Expose()
   @ApiProperty({
     minLength: DISH_CONSTANTS.DISH_LEN_STR.MIN_LENGTH,
     maxLength: DISH_CONSTANTS.DISH_LEN_STR.MAX_LENGTH,
@@ -36,9 +39,11 @@ class DishDto {
   })
   readonly name: string;
 
+  @Expose()
   @ApiImageProperty(ImageType.DishPhoto)
   readonly photo: string;
 
+  @Expose()
   @ApiProperty({
     required: false,
     enum: MealType,
@@ -48,15 +53,18 @@ class DishDto {
   })
   readonly mealType: MealType[];
 
+  @Expose()
   @ApiProperty({
     required: false,
     example: 'Opis dania',
   })
   readonly description: string;
 
+  @Expose()
   @ApiProperty({ example: 2350 })
   readonly price: number;
 
+  @Expose()
   @ApiProperty({
     required: false,
     enum: DishTags,
@@ -66,6 +74,7 @@ class DishDto {
   })
   readonly tags: DishTags[];
 
+  @Expose()
   @Type(() => IngredientDto)
   @ApiProperty({
     required: false,
@@ -73,6 +82,7 @@ class DishDto {
   })
   readonly ingredients: IngredientDto[];
 
+  @Expose()
   @ApiProperty({
     required: false,
     enum: Allergens,
@@ -82,33 +92,39 @@ class DishDto {
   })
   readonly allergens: Allergens[];
 
+  @Expose()
   @ApiProperty({ minimum: DISH_CONSTANTS.DISH_NUMBER.MIN })
   readonly portionWeight: number;
 
+  @Expose()
   @Type(() => NutritionalValueDto)
   @ApiProperty({
     type: NutritionalValueDto,
   })
   readonly calories: NutritionalValueDto;
 
+  @Expose()
   @Type(() => NutritionalValueDto)
   @ApiProperty({
     type: NutritionalValueDto,
   })
   readonly fats: NutritionalValueDto;
 
+  @Expose()
   @Type(() => NutritionalValueDto)
   @ApiProperty({
     type: NutritionalValueDto,
   })
   readonly proteins: NutritionalValueDto;
 
+  @Expose()
   @Type(() => NutritionalValueDto)
   @ApiProperty({
     type: NutritionalValueDto,
   })
   readonly carbohydrates: NutritionalValueDto;
 
+  @Expose()
   @Type(() => String)
   @ApiObjectIdProperty()
   readonly restaurant: string;
@@ -124,6 +140,7 @@ class CreateDishDto extends OmitType(DishDto, ['id', 'restaurant', 'photo'] as c
 
 class UpdateDishDto extends CreateDishDto {}
 
+@Exclude()
 class FavouriteDishDto extends PickType(DishDto, ['id', 'name', 'restaurant'] as const) {}
 
 export { CreateDishDto, DishDto, FavouriteDishDto, UpdateDishDto };
