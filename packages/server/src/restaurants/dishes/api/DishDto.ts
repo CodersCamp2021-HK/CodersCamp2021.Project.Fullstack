@@ -114,7 +114,9 @@ class DishDto {
   readonly restaurant: string;
 
   @Type(() => Boolean)
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    default: false,
+  })
   readonly updated: boolean;
 }
 
