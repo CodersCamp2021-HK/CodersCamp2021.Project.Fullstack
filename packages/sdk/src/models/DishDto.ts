@@ -120,6 +120,13 @@ export interface DishDto {
    * @memberof DishDto
    */
   restaurant: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof UserDto
+   */
+  updated: boolean;
+
 }
 
 export function DishDtoFromJSON(json: any): DishDto {
@@ -148,6 +155,7 @@ export function DishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     proteins: NutritionalValueDtoFromJSON(json['proteins']),
     carbohydrates: NutritionalValueDtoFromJSON(json['carbohydrates']),
     restaurant: json['restaurant'],
+    updated: json['updated'],
   };
 }
 
@@ -175,5 +183,6 @@ export function DishDtoToJSON(value?: DishDto | null): any {
     proteins: NutritionalValueDtoToJSON(value.proteins),
     carbohydrates: NutritionalValueDtoToJSON(value.carbohydrates),
     restaurant: value.restaurant,
+    updated: value.updated
   };
 }

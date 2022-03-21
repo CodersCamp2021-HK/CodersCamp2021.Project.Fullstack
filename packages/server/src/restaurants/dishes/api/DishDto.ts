@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
@@ -112,6 +112,10 @@ class DishDto {
   @Type(() => String)
   @ApiObjectIdProperty()
   readonly restaurant: string;
+
+  @Type(() => Boolean)
+  @ApiPropertyOptional()
+  readonly updated: boolean;
 }
 
 class CreateDishDto extends OmitType(DishDto, ['id', 'restaurant', 'photo'] as const) {}
