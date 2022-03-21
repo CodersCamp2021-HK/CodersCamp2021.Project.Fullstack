@@ -1,5 +1,13 @@
 
 # CodersCamp 2021 - Projekt Node.js
+
+<div align="center">
+
+[![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://coderscamp2021-hk.github.io/CodersCamp2021.Project.JavaScript/)
+[![Figma](https://img.shields.io/badge/-mockupy-blueviolet?logo=figma)](https://www.figma.com/file/2tFkNLS337vqoDmRMBYT7u/Project.JavaScript?node-id=5%3A1457)
+[![Codecov](https://img.shields.io/codecov/c/github/CodersCamp2021-HK/CodersCamp2021.Project.JavaScript?logo=codecov)](https://app.codecov.io/gh/CodersCamp2021-HK/CodersCamp2021.Project.JavaScript)
+
+</div>
 🍲🍝🍜 **BierzCoChcesz** 🍲🍝🍜 - projekt skierowany do ludzi, którzy nie lubią gdy narzuca im się wybory jedzeniowe a jednocześnie zwracają uwagę na wartości odżywcze swoich posiłków.
 Aplikacja pozwala na skomponowanie przez użytkownika diety na cały dzień składającej się z dań z ulubionych restauracji. W praktyce to system partnerski zrzeszający najlepsze restauracje.
 
