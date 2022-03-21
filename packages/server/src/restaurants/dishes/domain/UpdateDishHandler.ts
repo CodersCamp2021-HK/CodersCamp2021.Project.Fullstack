@@ -34,20 +34,10 @@ class UpdateDishHandler implements Handler<UpdateDishRequest, undefined | null> 
     @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
   ) {}
   async exec(req: UpdateDishRequest): Promise<undefined | null> {
-    //usuwanie dishId z restaurant.dishes
     await this.restaurantModel.updateOne({ _id: req.restaurant }, { $pull: { dishes: req.dishId } });
-
-    //update dania
-    // const result = await this.dishModel.findOneAndUpdate(
-    //   { _id: req.dishId, restaurant: req.restaurant },
-    //   _.omit(req, 'dishId', 'restaurantId'),
-    // );
-    // if (result === null) return null;
     const created = await this.dishModel.create(req);
     plainToInstance(Dish, created);
-    //dodanie flagi do starego dish
     await this.dishModel.findOneAndUpdate({ _id: req.dishId, restaurant: req.restaurant }, { updated: true });
-    //dodac nowy dish do restauran.dishes
     await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
 
     return undefined;
