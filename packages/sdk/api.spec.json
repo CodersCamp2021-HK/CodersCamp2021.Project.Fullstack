@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/api/users/addresses/{id}": {
+    "/api/addresses/{id}": {
       "get": {
-        "operationId": "UserAddressController_findById",
+        "operationId": "AddressesController_findById",
         "summary": "Retrieve a address by id.",
         "parameters": [
           {
@@ -28,32 +28,12 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["User's addresses"],
-        "security": [{ "cookie": [] }]
-      },
-      "put": {
-        "operationId": "UserAddressController_removeAddress",
-        "summary": "Update an existing address.",
-        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
-        "responses": {
-          "204": { "description": "The address has been successfully updated." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Address does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["User's addresses"],
-        "security": [{ "cookie": [] }]
+        "tags": ["Addresses"]
       }
     },
-    "/api/users/addresses": {
+    "/api/addresses": {
       "post": {
-        "operationId": "UserAddressController_create",
+        "operationId": "AddressesController_create",
         "summary": "Create a new address.",
         "parameters": [],
         "requestBody": {
@@ -75,156 +55,7 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["User's addresses"],
-        "security": [{ "cookie": [] }]
-      },
-      "get": {
-        "operationId": "UserAddressController_list",
-        "summary": "Retrieve a list of addresses.",
-        "parameters": [
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "schema": { "default": 1, "type": "number", "minimum": 1 }
-          },
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully returned list of addresses.",
-            "headers": { "link": { "schema": { "type": "string" } } },
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressListDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["User's addresses"],
-        "security": [{ "cookie": [] }]
-      }
-    },
-    "/api/partner/addresses/{id}": {
-      "get": {
-        "operationId": "PartnerAddressController_findById",
-        "summary": "Retrieve a address by id.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully returned address.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Address does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's addresses"],
-        "security": [{ "cookie": [] }]
-      },
-      "put": {
-        "operationId": "PartnerAddressController_removeAddress",
-        "summary": "Update an existing address.",
-        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
-        "responses": {
-          "204": { "description": "The address has been successfully updated." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Address does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's addresses"],
-        "security": [{ "cookie": [] }]
-      }
-    },
-    "/api/partner/addresses": {
-      "post": {
-        "operationId": "PartnerAddressController_create",
-        "summary": "Create a new address.",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateAddressDto" } } }
-        },
-        "responses": {
-          "201": {
-            "description": "The address has been successfully created.",
-            "headers": { "Location": { "schema": { "type": "string" } } },
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's addresses"],
-        "security": [{ "cookie": [] }]
-      },
-      "get": {
-        "operationId": "PartnerAddressController_list",
-        "summary": "Retrieve a list of addresses.",
-        "parameters": [
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "schema": { "default": 1, "type": "number", "minimum": 1 }
-          },
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": { "default": 10, "type": "number", "minimum": 1, "maximum": 100 }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully returned list of addresses.",
-            "headers": { "link": { "schema": { "type": "string" } } },
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressListDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's addresses"],
-        "security": [{ "cookie": [] }]
+        "tags": ["Addresses"]
       }
     },
     "/api/auth/register/partner": {
@@ -435,6 +266,42 @@
         "security": [{ "cookie": [] }]
       }
     },
+    "/api/restaurants/{restaurantId}/dishes/{id}": {
+      "get": {
+        "operationId": "RestaurantDishController_findById",
+        "summary": "Retrieve a dish by id.",
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned dish.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Restaurant's dishes"]
+      }
+    },
     "/api/restaurants/{restaurantId}/dishes": {
       "get": {
         "operationId": "RestaurantDishController_list",
@@ -475,6 +342,93 @@
           }
         },
         "tags": ["Restaurant's dishes"]
+      }
+    },
+    "/api/partner/dishes/{id}": {
+      "get": {
+        "operationId": "PartnerDishController_findById",
+        "summary": "Retrieve a dish by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned dish.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
+          },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      },
+      "put": {
+        "operationId": "PartnerDishController_update",
+        "summary": "Update an existing dish.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateDishDto" } } }
+        },
+        "responses": {
+          "204": { "description": "The dish has been successfully updated." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
+      },
+      "delete": {
+        "operationId": "PartnerDishController_deleteOne",
+        "summary": "Delete a dish.",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "The dish has been successfully deleted." },
+          "400": {
+            "description": "Parameters are not valid or they are missing.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
+          },
+          "404": { "description": "Dish does not exist." },
+          "default": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
+          }
+        },
+        "tags": ["Partner's dishes"],
+        "security": [{ "cookie": [] }]
       }
     },
     "/api/partner/dishes": {
@@ -540,97 +494,9 @@
         "security": [{ "cookie": [] }]
       }
     },
-    "/api/partner/dishes/{id}": {
-      "put": {
-        "operationId": "PartnerDishController_update",
-        "summary": "Update an existing dish.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateDishDto" } } }
-        },
-        "responses": {
-          "204": { "description": "The dish has been successfully updated." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Dish does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's dishes"],
-        "security": [{ "cookie": [] }]
-      },
-      "delete": {
-        "operationId": "PartnerDishController_deleteOne",
-        "summary": "Delete a dish.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "204": { "description": "The dish has been successfully deleted." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Dish does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Partner's dishes"],
-        "security": [{ "cookie": [] }]
-      }
-    },
-    "/api/dishes/{id}": {
-      "get": {
-        "operationId": "DishController_findDishById",
-        "summary": "Retrieve a dish by id.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully returned dish.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Dish does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["Dishes"]
-      }
-    },
     "/api/dishes": {
       "get": {
-        "operationId": "DishController_listAllDishes",
+        "operationId": "DishController_list",
         "summary": "Retrieve a list of dishes.",
         "parameters": [
           {
@@ -661,7 +527,7 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["Dishes"]
+        "tags": ["All dishes"]
       }
     },
     "/api/users/favourite/restaurants": {
@@ -704,7 +570,7 @@
     },
     "/api/users/favourite/dishes": {
       "get": {
-        "operationId": "FavouriteDishesController_list",
+        "operationId": "FavouriteDishListController_list",
         "summary": "Retrieve a list of dishes.",
         "parameters": [
           {
@@ -735,65 +601,7 @@
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
           }
         },
-        "tags": ["User's favourite dishes"],
-        "security": [{ "cookie": [] }]
-      }
-    },
-    "/api/users/favourite/dishes/{id}": {
-      "put": {
-        "operationId": "FavouriteDishesController_add",
-        "summary": "Update an existing dish.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The dish has been successfully updated.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FavouriteDishDto" } } }
-          },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Dish does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["User's favourite dishes"],
-        "security": [{ "cookie": [] }]
-      },
-      "delete": {
-        "operationId": "FavouriteDishesController_remove",
-        "summary": "Delete a dish.",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" }
-          }
-        ],
-        "responses": {
-          "204": { "description": "The dish has been successfully deleted." },
-          "400": {
-            "description": "Parameters are not valid or they are missing.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
-          },
-          "404": { "description": "Dish does not exist." },
-          "default": {
-            "description": "",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
-          }
-        },
-        "tags": ["User's favourite dishes"],
-        "security": [{ "cookie": [] }]
+        "tags": ["User's favourite dishes"]
       }
     },
     "/api/users/profile": {
@@ -981,10 +789,9 @@
   },
   "info": { "title": "App example", "description": "The app API description", "version": "1.0.0", "contact": {} },
   "tags": [
-    { "name": "Partner's addresses", "description": "Operations on partner's addresses" },
-    { "name": "User's addresses", "description": "Operations on user's addresses" },
+    { "name": "Addresses", "description": "Operations about addresses" },
     { "name": "Restaurants", "description": "Operations on restaurants" },
-    { "name": "Dishes", "description": "Operations on dishes" },
+    { "name": "All dishes", "description": "Operations on all dishes" },
     { "name": "Partner's dishes", "description": "Operations on partner's dishes" },
     { "name": "Restaurant's dishes", "description": "Operations on restaurant's dishes" },
     { "name": "Partner's profile", "description": "Operations on partner's profile" },
@@ -1054,14 +861,6 @@
         },
         "required": ["street", "streetNumber", "city", "postcode"]
       },
-      "AddressListDto": {
-        "type": "object",
-        "properties": {
-          "data": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
-          "pages": { "type": "number" }
-        },
-        "required": ["data", "pages"]
-      },
       "RegisterAsPartnerDto": {
         "type": "object",
         "properties": {
@@ -1069,7 +868,7 @@
             "type": "string",
             "format": "email",
             "maxLength": 64,
-            "example": "partner@email.com",
+            "example": "user@email.com",
             "description": "RFC 5322 standard email format"
           },
           "password": {
@@ -1230,6 +1029,7 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
           "logo": {
             "type": "string",
             "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
@@ -1244,7 +1044,7 @@
             "description": ""
           }
         },
-        "required": ["id", "cuisineType", "tags"]
+        "required": ["id", "cuisineType", "tags", "addressId"]
       },
       "UpdatePartnerProfileDto": {
         "type": "object",
@@ -1261,6 +1061,12 @@
             "example": ["pizza", "zdrowa"],
             "items": { "$ref": "#/components/schemas/RestaurantTagEnum" }
           },
+          "addressId": { "type": "array", "items": { "$ref": "#/components/schemas/AddressDto" } },
+          "logo": {
+            "type": "string",
+            "pattern": "\\/api\\/img\\/(restaurant|dish)\\/[0-9a-fA-F]{24}$",
+            "example": "https://coderscamp2021-hk-fullstack.herokuapp.com/api/img/restaurant/6200218668fc82e7bdf15088"
+          },
           "bankAccountNumber": { "type": "string", "pattern": "^\\d{26}$", "example": "72920080748556126838146923" },
           "phoneNumber": {
             "type": "string",
@@ -1270,7 +1076,7 @@
             "description": ""
           }
         },
-        "required": ["cuisineType", "tags"]
+        "required": ["cuisineType", "tags", "addressId"]
       },
       "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
       "DishTagsEnum": {
@@ -1356,7 +1162,8 @@
           "fats",
           "proteins",
           "carbohydrates",
-          "restaurant"
+          "restaurant",
+          "updated"
         ]
       },
       "DishListDto": {
@@ -1393,8 +1200,7 @@
           "calories": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "fats": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
-          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" },
-          "updated": { "type": "boolean", "default": false }
+          "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
         "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
       },
@@ -1427,7 +1233,7 @@
           "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "updated": { "type": "boolean", "default": false }
         },
-        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
+        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates", "updated"]
       },
       "FavouriteRestaurantDto": {
         "type": "object",
@@ -1462,55 +1268,34 @@
         },
         "required": ["data", "pages"]
       },
-      "CardDto": {
-        "type": "object",
-        "properties": {
-          "number": {
-            "type": "string",
-            "pattern": "^(?:4[0-9]{12}(?:[0-9]{3})?)|(?:3[47][0-9]{13})|(?:5[1-5][0-9]{14})|(?:6(?:011|5[0-9][0-9])[0-9]{12})|(?:(?:2131|1800|35\\d{3})\\d{11})|(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$",
-            "example": "4562574783836030"
-          },
-          "expirationDate": {
-            "type": "string",
-            "pattern": "([0-9]{4})-(?:[0-9]{2})-([0-9]{2})",
-            "example": "2022-10-12"
-          },
-          "securityCode": { "type": "string", "minLength": 3, "maxLength": 4, "example": "722" }
-        }
-      },
       "UserDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "name": { "type": "string", "minLength": 3, "maxLength": 35, "example": "Jan" },
-          "surname": { "type": "string", "minLength": 3, "maxLength": 35, "example": "Kowalski" },
-          "phoneNumber": {
-            "type": "string",
-            "format": "phoneNumber",
-            "maxLength": 14,
-            "example": "800500300",
-            "description": ""
+          "name": { "type": "string" },
+          "surname": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "addressId": { "type": "array", "items": { "type": "string" } },
+          "favouriteRestaurants": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FavouriteRestaurantDto" }
           },
-          "card": { "$ref": "#/components/schemas/CardDto" },
+          "favouriteDishes": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteDishDto" } },
+          "orders": { "type": "array", "items": { "type": "string" } },
           "profileCompleted": { "type": "boolean", "default": false }
         },
-        "required": ["id"]
+        "required": ["id", "favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
       "UpdateUserDto": {
         "type": "object",
         "properties": {
-          "name": { "type": "string", "minLength": 3, "maxLength": 35, "example": "Jan" },
-          "surname": { "type": "string", "minLength": 3, "maxLength": 35, "example": "Kowalski" },
-          "phoneNumber": {
-            "type": "string",
-            "format": "phoneNumber",
-            "maxLength": 14,
-            "example": "800500300",
-            "description": ""
-          },
-          "card": { "$ref": "#/components/schemas/CardDto" },
+          "name": { "type": "string" },
+          "surname": { "type": "string" },
+          "phoneNumber": { "type": "string" },
+          "card": { "type": "object" },
           "profileCompleted": { "type": "boolean", "default": false }
-        }
+        },
+        "required": ["favouriteRestaurants", "favouriteDishes", "orders", "profileCompleted"]
       },
       "OrderDishDto": {
         "type": "object",
@@ -1519,7 +1304,7 @@
           "count": { "type": "number", "minimum": 1 },
           "excludedIngredients": { "example": [], "type": "array", "items": { "type": "string" } }
         },
-        "required": ["dishId"]
+        "required": ["dishId", "count", "excludedIngredients"]
       },
       "SubOrderDto": {
         "type": "object",
@@ -1538,7 +1323,7 @@
           "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
           "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
         },
-        "required": ["addressId", "subOrders"]
+        "required": ["addressId", "subOrders", "comment"]
       },
       "OrderDto": {
         "type": "object",
@@ -1550,7 +1335,7 @@
           "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
           "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
         },
-        "required": ["id", "addressId", "userId", "date", "subOrders"]
+        "required": ["id", "addressId", "userId", "date", "subOrders", "comment"]
       },
       "StreamableFile": { "type": "object", "properties": {} },
       "UploadedImageDto": {
