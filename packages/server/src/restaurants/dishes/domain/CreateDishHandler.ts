@@ -32,13 +32,12 @@ class CreateDishHandler implements Handler<CreateDishRequest, Dish | null> {
 
   async exec(req: CreateDishRequest): Promise<Dish | null> {
     const restaurant = await this.restaurantModel.findById(req.restaurant);
+    if (!restaurant) return null;
+    if (!restaurant.isCompleted) throw new UnprocessableEntityException('Profile not completed');
 
-    if (restaurant?.isCompleted) {
-      const created = await this.dishModel.create(req);
-      await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
-
-      return plainToInstance(Dish, created);
-    } else throw new UnprocessableEntityException();
+    const created = await this.dishModel.create(req);
+    await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
+    return plainToInstance(Dish, created);
   }
 }
 

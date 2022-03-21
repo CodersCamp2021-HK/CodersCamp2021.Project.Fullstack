@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import _ from 'lodash';
 import { Model } from 'mongoose';
@@ -12,8 +12,8 @@ interface UpdatePartnerProfileRequest {
   readonly description: string;
   readonly tags: RestaurantTags[];
   readonly cuisineType: CuisineTypes[];
-  readonly bankAccountNumber: string;
-  readonly phoneNumber: string;
+  readonly bankAccountNumber?: string;
+  readonly phoneNumber?: string;
 }
 
 @Injectable()
@@ -21,22 +21,12 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
-    const filter = { _id: req.id };
-    const update = {
-      name: req.name || null,
-      description: req.description || null,
-      cuisineType: req.cuisineType || null,
-      tags: req.tags || null,
-      bankAccountNumber: req.bankAccountNumber || null,
-      phoneNumber: req.phoneNumber || null,
-    };
-
-    const partnerDoc = await this.restaurantModel.findOne(filter);
-    const result = _.merge(partnerDoc, { ...update, verified: partnerDoc?.isCompleted });
-
-    if (result === null) return null;
-    result.save();
-
+    const partnerDoc = await this.restaurantModel.findById(req.id);
+    if (!partnerDoc) return null;
+    _.assign(partnerDoc, _.omit(req, 'id'));
+    if (partnerDoc.verified && !partnerDoc.isCompleted) throw new UnprocessableEntityException('Profile not completed');
+    partnerDoc.verified = partnerDoc.isCompleted;
+    await partnerDoc.save();
     return undefined;
   }
 }

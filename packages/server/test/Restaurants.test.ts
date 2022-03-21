@@ -9,15 +9,8 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const restaurantsWithCompletedProfile = [
-      restaurantDto({
-        verified: true,
-      }),
-      restaurantDto({
-        verified: true,
-      }),
-    ];
-    const restaurantsWithoutCompletedProfile = [restaurantDto()];
+    const restaurantsWithCompletedProfile = [restaurantDto(), restaurantDto()];
+    const restaurantsWithoutCompletedProfile = [restaurantDto({ verified: false })];
     const restaurants = [...restaurantsWithCompletedProfile, ...restaurantsWithoutCompletedProfile];
     await fixture.db.restaurantModel.create(restaurants);
 
@@ -31,7 +24,7 @@ describe(`${PATH}`, () => {
 
   it('GET /:id', async () => {
     // Given
-    const restaurant = restaurantDto({ verified: true });
+    const restaurant = restaurantDto();
     const created = await fixture.db.restaurantModel.create(restaurant);
     const id = created._id?.toString();
 
