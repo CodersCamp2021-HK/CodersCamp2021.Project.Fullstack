@@ -5,11 +5,7 @@
     "baseUrl": "./",
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "allowJs": true,
+    "allowJs": true
   },
-  "include": ["**/*.ts", ".eslintrc.js"],
-  "typedocOptions": {
-    "entryPoints": ["./src/main.ts"],
-    "out": "docs"
-  }
+  "include": ["**/*.ts", ".eslintrc.js"]
 }
