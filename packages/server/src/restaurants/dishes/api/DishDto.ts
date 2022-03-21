@@ -129,6 +129,7 @@ class DishDto {
   @ApiObjectIdProperty()
   readonly restaurant: string;
 
+  @Expose()
   @Type(() => Boolean)
   @ApiPropertyOptional({
     default: false,
