@@ -1,4 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
@@ -103,12 +104,48 @@ describe(`${PATH}`, () => {
     expect(resp_get.body.data[0].fats).toEqual(reqBody.fats);
     expect(resp_get.body.data[0].proteins).toEqual(reqBody.proteins);
     expect(resp_get.body.data[0].carbohydrates).toEqual(reqBody.carbohydrates);
+  });
+
+  it('PUT /:wrongId', async () => {
+    // Given
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    const dish = dishDto({ restaurant: RESTAURANT_ID });
+    await fixture.db.dishModel.create(dish);
+    const reqBody = {
+      name: 'Danie 100',
+      mealType: ['śniadanie', 'lunch'],
+      description: 'Nowe ekstra danie',
+      price: 2400,
+      tags: ['wegańska', 'ostre'],
+      ingredients: [
+        {
+          name: 'cebula',
+          canBeExcluded: true,
+        },
+      ],
+      allergens: ['mleko'],
+      portionWeight: 100,
+      calories: {
+        per100g: 120,
+        perPortion: 10,
+      },
+      fats: {
+        per100g: 130,
+        perPortion: 20,
+      },
+      proteins: {
+        per100g: 140,
+        perPortion: 50,
+      },
+      carbohydrates: {
+        per100g: 100,
+        perPortion: 10,
+      },
+      updated: true,
+    };
 
     // When
-    let wrong_id = '111e1acfa3f9ad63169a0000';
-    if (id === wrong_id) {
-      wrong_id = '222e1acfa3f9ad63169a0000';
-    }
+    const wrong_id = new ObjectId().toString();
     const wrong_token_resp = await agent.put(`${PATH}/${wrong_id}`).send(reqBody);
     //Then
     expect(wrong_token_resp.status).toBe(HttpStatus.NOT_FOUND);
