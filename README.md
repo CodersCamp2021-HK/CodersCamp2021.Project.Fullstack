@@ -74,13 +74,9 @@ Sprawdzenie projektu za pomocą [ESLint](https://eslint.org/):
 ```bash
 yarn lint
 ```
-Uruchomienie testów jednostkowych:
+Uruchomienie wszystkich testów:
 ```bash
-yarn test:unit
-```
-Uruchomienie testów e2e:
-```bash
-yarn test:e2e
+yarn test
 ```
 <br/>
 <br/>
