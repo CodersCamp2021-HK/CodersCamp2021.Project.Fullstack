@@ -32,7 +32,7 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
     };
 
     const partnerDoc = await this.restaurantModel.findOne(filter);
-    const result = _.merge(partnerDoc, update);
+    const result = _.merge(partnerDoc, { ...update, verified: partnerDoc?.isCompleted });
 
     if (result === null) return null;
     result.save();

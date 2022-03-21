@@ -129,6 +129,10 @@ class Restaurant {
   dishes: Dish[];
 
   @Expose()
+  @Prop({ default: false })
+  verified: boolean;
+
+  @Expose()
   readonly id: string;
 }
 
@@ -139,6 +143,7 @@ const getter = (() => {
   if (!fn) throw new Error('Restaurant should have isCompleted getter');
   return fn;
 })();
+
 RestaurantSchema.virtual('isCompleted').get(getter);
 
 export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };

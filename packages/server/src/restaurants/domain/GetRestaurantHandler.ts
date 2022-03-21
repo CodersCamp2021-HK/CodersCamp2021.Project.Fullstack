@@ -15,7 +15,7 @@ class GetRestaurantHandler implements Handler<GetRestaurantRequest, Restaurant |
 
   async exec({ id, profileMustBeCompleted = true }: GetRestaurantRequest): Promise<Restaurant | null> {
     const restaurant = await this.restaurantModel.findById(id);
-    if (!restaurant || (profileMustBeCompleted && !restaurant?.isCompleted)) return null;
+    if (!restaurant || (profileMustBeCompleted && !restaurant?.verified)) return null;
     return plainToInstance(Restaurant, restaurant);
   }
 }

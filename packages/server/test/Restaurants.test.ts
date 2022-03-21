@@ -11,32 +11,10 @@ describe(`${PATH}`, () => {
     // Given
     const restaurantsWithCompletedProfile = [
       restaurantDto({
-        logo: {
-          data: {
-            $binary: '',
-            $type: '0',
-          },
-          contentType: 'image/png',
-        },
-        addressId: [],
-        cuisineType: [],
-        description: 'Opis restauracji 1.',
-        id: '623774489efe8105017a2521',
-        name: 'Resto bar 1',
-        tags: [],
-        bankAccountNumber: '11111111111111111111111111',
+        verified: true,
       }),
       restaurantDto({
-        logo: {
-          data: {},
-        },
-        addressId: [],
-        cuisineType: [],
-        description: 'Opis restauracji 1.',
-        id: '623774489efe8105017a2521',
-        name: 'Resto bar 1',
-        tags: [],
-        bankAccountNumber: '11111111111111111111111111',
+        verified: true,
       }),
     ];
     const restaurantsWithoutCompletedProfile = [restaurantDto()];
@@ -53,7 +31,7 @@ describe(`${PATH}`, () => {
 
   it('GET /:id', async () => {
     // Given
-    const restaurant = restaurantDto();
+    const restaurant = restaurantDto({ verified: true });
     const created = await fixture.db.restaurantModel.create(restaurant);
     const id = created._id?.toString();
 

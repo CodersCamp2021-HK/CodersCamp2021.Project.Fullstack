@@ -1,58 +1,67 @@
 import { HttpStatus } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { Role } from '../src/shared';
-import { initE2eFixture, restaurantDto } from './shared';
+import { accessTokenAsCookie } from './shared';
+import { initE2eFixture } from './shared/E2eFixture';
 
 const PATH = '/api/partner/profile';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto() }])(
-    'GET / - isCompleted: $restaurant.isCompleted',
-    async ({ restaurant }) => {
+  afterEach(async () => {
+    await fixture.db.restaurantModel.deleteMany();
+  });
+
+  it('GET /', async () => {
+    const restaurants = [
+      {
+        name: 'Incomplete restaurant',
+        phoneNumber: '123456789',
+        verified: false,
+      },
+      {
+        name: 'Completed restaurant',
+        description: 'A description.',
+        cuisineType: ['włoska'],
+        tags: ['zdrowa', 'pizza'],
+        bankAccountNumber: '72920080748556126838146923',
+        phoneNumber: '123456789',
+      },
+    ];
+
+    for (const restaurant of restaurants) {
       // Given
       const created = await fixture.db.restaurantModel.create(restaurant);
       const id = created._id?.toString();
-      const agent = fixture.agent(Role.Partner, id);
+      const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
 
       // When
-      const resp = await agent.get(PATH);
+      const resp = await fixture.agent().get(PATH).set('Cookie', [accessToken]).send();
 
       // Then
       expect(resp.status).toBe(HttpStatus.OK);
       expect(created).toEqual(expect.objectContaining(resp.body));
-    },
-  );
+    }
+  });
 
   it('PUT /', async () => {
+    const restaurant = {};
+
     // Given
-    const restaurant = restaurantDto();
     const created = await fixture.db.restaurantModel.create(restaurant);
     const id = created._id?.toString();
-    const agent = fixture.agent(Role.Partner, id);
+    const accessToken = accessTokenAsCookie(fixture.app.get(JwtService).sign({ role: Role.Partner, sub: id }));
     const reqBody = {
-      ...restaurant,
-      bankAccountNumber: '11111111111111111111111111',
-      phoneNumber: '800500300',
       cuisineType: ['włoska'],
-      tags: ['wegetariańska', 'street food'],
-      addressId: ['62227771b256571bb24d4b16'],
-      logo: '/images/logo.png',
+      tags: ['wegetariańska'],
     };
 
     // When
-    const res0 = await agent.put(PATH).send(reqBody);
+    const resp = await fixture.agent().put(PATH).set('Cookie', [accessToken]).send(reqBody);
 
     // Then
-    expect(res0.status).toBe(HttpStatus.NO_CONTENT);
-
-    // When
-    const res1 = await agent.get(PATH);
-
-    // Then
-    expect(res1.status).toBe(HttpStatus.OK);
-    expect(res1.body.cuisineType).toEqual(reqBody.cuisineType);
-    expect(res1.body.tags).toEqual(reqBody.tags);
+    expect(resp.status).toBe(HttpStatus.NO_CONTENT);
   });
 });

@@ -43,6 +43,7 @@ describe(`${PATH}`, () => {
       description: 'Smaczenie i tanio',
       cuisineType: ['polska'],
       tags: ['burgery'],
+      verified: true,
     });
 
     const reqBody: CreateDishDto = dishDto();
