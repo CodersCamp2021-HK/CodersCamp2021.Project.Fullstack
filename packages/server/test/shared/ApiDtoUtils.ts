@@ -68,6 +68,7 @@ function dishDto(overrides?: Partial<DishDto>) {
     fats: { per100g: 20, perPortion: 60 },
     proteins: { per100g: 20, perPortion: 60 },
     carbohydrates: { per100g: 20, perPortion: 60 },
+    updated: false,
     ...overrides,
   };
 }

@@ -82,10 +82,12 @@ describe(`${PATH}`, () => {
         per100g: 100,
         perPortion: 10,
       },
+      updated: true,
     };
 
     // When;
     const resp_put = await agent.put(`${PATH}/${id}`).send(reqBody);
+
     // Then
     expect(resp_put.status).toBe(HttpStatus.NO_CONTENT);
 
@@ -107,7 +109,7 @@ describe(`${PATH}`, () => {
     if (id === wrong_id) {
       wrong_id = '222e1acfa3f9ad63169a0000';
     }
-    const wrong_token_resp = await agent.put(`${PATH}/${'111e1acfa3f9ad63169a0000'}`).send(reqBody);
+    const wrong_token_resp = await agent.put(`${PATH}/${wrong_id}`).send(reqBody);
     //Then
     expect(wrong_token_resp.status).toBe(HttpStatus.NOT_FOUND);
   });
