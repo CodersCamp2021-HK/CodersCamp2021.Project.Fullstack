@@ -3,8 +3,9 @@
 
 <div align="center">
 
-[![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://coderscamp2021-hk-fullstack.herokuapp.com/)
-[![Figma](https://img.shields.io/badge/-brainstorming+wireframing-blueviolet?logo=figma)](https://www.figma.com/file/51gzaCTbilz6X9r0PZxmhX/Project.Fullstack?node-id=0%3A1)
+[![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://www.figma.com/file/51gzaCTbilz6X9r0PZxmhX/Project.Fullstack?node-id=0%3A1)
+[![Figma](https://img.shields.io/badge/-Figma-blueviolet?logo=figma)](https://www.figma.com/file/Cwxh4WHHLxBhhyxJQIgsI9/Project.Fullstack?node-id=10%3A13)
+[![Figma](https://img.shields.io/badge/-figJam-violet?logo=figJam)](https://www.figma.com/file/51gzaCTbilz6X9r0PZxmhX/Project.Fullstack?node-id=0%3A1)
 </div>
 
 <br/>
@@ -20,6 +21,7 @@ Aplikacja pozwala na skomponowanie przez użytkownika diety na cały dzień skł
 <br/>
 
 ### Główne:
+ - [TypeSript](https://www.typescriptlang.org/docs/)
  - [Docker](https://docs.docker.com/get-docker/)
  - [MongoDB](https://www.mongodb.com/)
  - [Mongoose](https://mongoosejs.com/)
@@ -27,12 +29,10 @@ Aplikacja pozwala na skomponowanie przez użytkownika diety na cały dzień skł
  - [Express](https://expressjs.com/)
  - [Nodemailer](https://nodemailer.com/)
  - [Swagger](https://swagger.io/tools/swaggerhub/?&utm_medium=ppcg&utm_source=aw&utm_term=swagger&utm_content=511173019632&utm_campaign=SEM_SwaggerHub_PR_EMEA_ENG_EXT_Prospecting&awsearchcpc=1&gclid=CjwKCAjwxOCRBhA8EiwA0X8hiwxh7NHt37o-DaApRMBtiZ25QonxHVTKTew0Pa2SYAC6nDVzJnYD3xoCejMQAvD_BwE&gclsrc=aw.ds)
- - [Figma](https://www.figma.com/files/recent?fuid=1047244325467558592)
 
 <br/>
 
 ### Pomocnicze:
-- TypeSript
 - Yarn
 - Jest
 - ESLint
