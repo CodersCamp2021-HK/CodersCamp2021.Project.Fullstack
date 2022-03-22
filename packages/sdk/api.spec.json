@@ -251,12 +251,12 @@
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdatePartnerProfileDto" } } }
         },
         "responses": {
-          "204": { "description": "The profile has been successfully updated." },
+          "200": { "description": "The profile has been successfully updated." },
           "400": {
             "description": "Parameters are not valid or they are missing.",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationErrorDto" } } }
           },
-          "404": { "description": "Profile does not exist." },
+          "404": { "description": "Dish does not exist." },
           "default": {
             "description": "",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DefaultResponseDto" } } }
