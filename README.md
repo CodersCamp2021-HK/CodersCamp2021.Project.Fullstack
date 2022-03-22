@@ -17,38 +17,6 @@
 <br/>
 <br/>
 
-## Korzystanie z aplikacji
-
-<br/>
-
-Osoba niezalogowana ma dostęp do listy restauracji i dań. Ponadto dania i restauracje może filtrować na podstawie miasta, rodzaju kuchni, rodzaju posiłku i tagów.
-Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować. Istnieje możliwość rejestracji jako restauracja partnerska (`Partner`) i zwykły użytkownik (`User`).
-
-**`Partner` – restauracja partnerska**
-
-1. Rejestruje się podając email oraz NIP i ustawiając hasło.
-
-2. Po rejestracji i zalogowaniu uzupełnia profil (nazwa restauracji, opis, logo, tagi, adres(y), telefon).
-
-3. Po uzupełnieniu profilu partner może dodawać dania (nazwa, opis dania, tagi, lista składników, alergeny, kaloryczność, wartości odżywcze).
-
-4. Partner może edytować i usuwać dania.
-
-**`User` - użytkownik**
-
-1. Rejestruje się podając email i ustawiając hasło.
-2. Po rejestracji i zalogowaniu może uzupełnić profil (imię, nazwisko, adres(y), nr telefonu, dane karty) lub zacząć kompletować zamówienie.
-3. Użytkownik może dodawać dania i restauracje do ulubionych.
-4. Zamawianie:
-
-   4.1. Złożenie zamówienia jest możliwe po uzupełnieniu danych na profilu.
-
-   4.2. Zamówienie składa się z posiłków rozplanowanych na kilka dni (docelowo 1-7 dni).
-
-   4.3. Użytkownik ustala godzinę, o której codziennie będzie otrzymywał posiłki na dany dzień.
-
-   4.4. Podczas dodawania dań użytkownik może spersonalizować posiłek poprzez usunięcie wybranych składników (wcześniej oznaczonych przez restaurację jako możliwe do usunięcia).
-
 ## 🖥️ Użyte technologie
 
 <br/>
@@ -81,6 +49,8 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
   <br/>
 
 ## ⚙️ Instalacja projektu
+
+<br/>
 
 Do przygotowania środowiska dev użyliśmy m.in. [Dockera](https://docs.docker.com/get-docker/), więc zakładamy, że jest on wcześniej zainstalowany i skonfigurowany.
 <br/>
@@ -124,7 +94,46 @@ yarn test
 <br/>
 <br/>
 
+## Korzystanie z aplikacji
+
+<br/>
+
+Osoba niezalogowana ma dostęp do listy restauracji i dań. Ponadto dania i restauracje może filtrować na podstawie miasta, rodzaju kuchni, rodzaju posiłku i tagów.
+Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować. Istnieje możliwość rejestracji jako restauracja partnerska (`Partner`) i zwykły użytkownik (`User`).
+
+**`Partner` – restauracja partnerska**
+
+1. Rejestruje się podając email oraz NIP i ustawiając hasło.
+
+2. Po rejestracji i zalogowaniu uzupełnia profil (nazwa restauracji, opis, logo, tagi, adres(y), telefon).
+
+3. Po uzupełnieniu profilu partner może dodawać dania (nazwa, opis dania, tagi, lista składników, alergeny, kaloryczność, wartości odżywcze).
+
+4. Partner może edytować i usuwać dania.
+
+**`User` - użytkownik**
+
+1. Rejestruje się podając email i ustawiając hasło.
+
+2. Po rejestracji i zalogowaniu może uzupełnić profil (imię, nazwisko, adres(y), nr telefonu, dane karty) lub zacząć kompletować zamówienie.
+
+3. Użytkownik może dodawać dania i restauracje do ulubionych.
+
+4. Zamawianie:
+
+   4.1. Złożenie zamówienia jest możliwe po uzupełnieniu danych na profilu.
+
+   4.2. Zamówienie składa się z posiłków rozplanowanych na kilka dni (docelowo 1-7 dni).
+
+   4.3. Użytkownik ustala godzinę, o której codziennie będzie otrzymywał posiłki na dany dzień.
+
+   4.4. Podczas dodawania dań użytkownik może spersonalizować posiłek poprzez usunięcie wybranych składników (wcześniej oznaczonych przez restaurację jako możliwe do usunięcia).
+
+<br/>
+
 ## 📢 Wykonywanie zapytań / testowanie endpointów 📣
+
+<br/>
 
 ### Swagger
 
@@ -150,6 +159,8 @@ Rozszerzenie do VSCode, które pozwala na wykonywanie zapytań z poziomu edytora
 <br/>
 
 ## 👨‍💻 Autorzy 👩‍💻
+
+<br/>
 
 **Mentor**: [@htk4](https://github.com/htk4)
 
