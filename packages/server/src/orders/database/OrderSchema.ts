@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
+import { ObjectId } from 'mongodb';
 import { Document, SchemaTypes } from 'mongoose';
 
 import { Address } from '../../addresses/database/AddressSchema';
@@ -7,7 +8,7 @@ import { Dish } from '../../restaurants/dishes/database/DishesSchema';
 import { ExposeId } from '../../shared';
 import { User } from '../../users/database/UserSchema';
 
-export type OrderDocument = Order & Document;
+export type OrderDocument = Order & Document<ObjectId>;
 
 const ORDER_CONSTANTS = Object.freeze({
   COMMENT: Object.freeze({

@@ -1,14 +1,19 @@
 import { HttpStatus } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
-import { dishDto, initE2eFixture } from './shared';
+import { dishDto, initE2eFixture, restaurantDto, updateDishDto } from './shared';
 
 const PATH = '/api/partner/dishes';
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
+
+  afterEach(async () => {
+    await fixture.db.dishModel.deleteMany();
+  });
 
   it('GET /', async () => {
     // Given
@@ -42,6 +47,43 @@ describe(`${PATH}`, () => {
     // Then
     expect(res.status).toBe(HttpStatus.CREATED);
     expect(res.body).toEqual(expect.objectContaining(reqBody));
+  });
+
+  it('PUT /:id', async () => {
+    // Given
+    const restaurant = restaurantDto({ profileCompleted: true });
+    const createRestaurant = await fixture.db.restaurantModel.create(restaurant);
+    const restaurantId = createRestaurant._id?.toString();
+    const agent = fixture.agent(Role.Partner, restaurantId);
+
+    const dish = dishDto({ restaurant: restaurantId });
+    const createdDish = await fixture.db.dishModel.create(dish);
+    const dishId = createdDish._id?.toString();
+    const reqBody = updateDishDto({ restaurant: restaurantId });
+    await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
+
+    // When;
+    const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
+
+    // Then
+    expect(resPut.status).toBe(HttpStatus.OK);
+
+    const resGet = await agent.get(PATH);
+    expect(resGet.body.data).toEqual(expect.arrayContaining([expect.objectContaining(reqBody)]));
+  });
+
+  it('PUT /:wrongId', async () => {
+    // Given
+    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    const dish = dishDto({ restaurant: RESTAURANT_ID });
+    await fixture.db.dishModel.create(dish);
+    const reqBody = updateDishDto({ restaurant: RESTAURANT_ID });
+
+    // When
+    const wrongId = new ObjectId().toString();
+    const wrongTokenResp = await agent.put(`${PATH}/${wrongId}`).send(reqBody);
+    //Then
+    expect(wrongTokenResp.status).toBe(HttpStatus.NOT_FOUND);
   });
 
   it('DELETE /:id', async () => {
