@@ -48,6 +48,27 @@ enum RestaurantTags {
   GlutenFree = 'gluten free',
 }
 
+enum OperationalCities {
+  Bialystok = 'Białystok',
+  Bydgoszcz = 'Bydgoszcz',
+  Gdansk = 'Gdańsk',
+  GorzowWielkopolski = 'Gorzów Wielkopolski',
+  Katowice = 'Katowice',
+  Kielce = 'Kielce',
+  Krakow = 'Kraków',
+  Lublin = 'Lublin',
+  Lodz = 'Łódź',
+  Olsztyn = 'Olsztyn',
+  Opole = 'Opole',
+  Poznan = 'Poznań',
+  Rzeszow = 'Rzeszów',
+  Szczecin = 'Szczecin',
+  Torun = 'Toruń',
+  Warszawa = 'Warszawa',
+  Wroclaw = 'Wrocław',
+  ZielonaGora = 'Zielona Góra',
+}
+
 const RESTAURANT_CONSTANTS = Object.freeze({
   NAME: Object.freeze({
     MIN_LENGTH: 1,
@@ -90,6 +111,10 @@ class Restaurant {
   addressId: Address[];
 
   @Expose()
+  @Prop()
+  operationalCities: OperationalCities[];
+
+  @Expose()
   @Type(() => DBImage)
   @Prop()
   logo: DBImage;
@@ -122,5 +147,5 @@ class Restaurant {
 
 const RestaurantSchema = SchemaFactory.createForClass(Restaurant);
 
-export { CuisineTypes, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
+export { CuisineTypes, OperationalCities, Restaurant, RESTAURANT_CONSTANTS, RestaurantSchema, RestaurantTags };
 export type { RestaurantDocument };
