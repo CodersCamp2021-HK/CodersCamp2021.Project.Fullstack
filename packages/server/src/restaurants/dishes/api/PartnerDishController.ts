@@ -57,10 +57,11 @@ class PartnerDishController {
   }
 
   @ApiObjectIdParam()
-  @ApiUpdate({ name: 'dish' })
+  @ApiUpdate({ name: 'dish', response: DishDto })
   @ApiAuthorization(Role.Partner)
   async update(@PartnerId() restaurant: string, @Param('id') dishId: string, @Body() updateDishDto: UpdateDishDto) {
-    return this.updateDishHandler.exec({ restaurant, dishId, ...updateDishDto });
+    const updatedDish = await this.updateDishHandler.exec({ restaurant, dishId, ...updateDishDto });
+    return plainToInstance(DishDto, updatedDish);
   }
 
   @ApiObjectIdParam()
