@@ -7,7 +7,7 @@ import { RegisterAsUserDto } from '../../src/auth/api/RegisterAsUserDto';
 import { Order } from '../../src/orders/database';
 import { CuisineTypes, Restaurant, RestaurantTags } from '../../src/restaurants/database';
 import { DishDto } from '../../src/restaurants/dishes/api/DishDto';
-import { Allergens, DishTags, MealType } from '../../src/restaurants/dishes/database';
+import { Allergens, Dish, DishTags, MealType } from '../../src/restaurants/dishes/database';
 import { Role } from '../../src/shared';
 import { UserDto } from '../../src/users/api/UserDto';
 
@@ -73,6 +73,28 @@ function dishDto(overrides?: Partial<DishDto>) {
   };
 }
 
+function updateDishDto(overrides?: Partial<DishDto>) {
+  return {
+    name: 'Danie 1 update',
+    mealType: [MealType.Lunch, MealType.Breakfast],
+    description: 'Opis dania update',
+    price: 1000,
+    tags: [DishTags.Spicy, DishTags.GlutenFree],
+    ingredients: [
+      { name: 'składnik 3', canBeExcluded: false },
+      { name: 'składnik 4', canBeExcluded: false },
+    ],
+    allergens: [Allergens.SesameSeeds],
+    portionWeight: 400,
+    calories: { per100g: 200, perPortion: 400 },
+    fats: { per100g: 10, perPortion: 40 },
+    proteins: { per100g: 20, perPortion: 50 },
+    carbohydrates: { per100g: 10, perPortion: 20 },
+    updated: false,
+    ...overrides,
+  };
+}
+
 function cardDto() {
   return {
     number: '4562574783836030',
@@ -124,4 +146,14 @@ function orderDto(overrides?: Partial<Order>) {
   };
 }
 
-export { addressDto, dishDto, loginDto, orderDto, registerPartnerDto, registerUserDto, restaurantDto, userDto };
+export {
+  addressDto,
+  dishDto,
+  loginDto,
+  orderDto,
+  registerPartnerDto,
+  registerUserDto,
+  restaurantDto,
+  updateDishDto,
+  userDto,
+};

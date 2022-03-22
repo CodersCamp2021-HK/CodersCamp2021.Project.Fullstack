@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
-import { dishDto, initE2eFixture, restaurantDto } from './shared';
+import { dishDto, initE2eFixture, restaurantDto, updateDishDto } from './shared';
 
 const PATH = '/api/partner/dishes';
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
@@ -57,7 +57,7 @@ describe(`${PATH}`, () => {
     const dish = dishDto({ restaurant: restaurantId });
     const createdDish = await fixture.db.dishModel.create(dish);
     const dishId = createdDish._id?.toString();
-    const reqBody = dishDto({ restaurant: restaurantId });
+    const reqBody = updateDishDto({ restaurant: restaurantId });
     await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
 
     // When;
@@ -75,38 +75,7 @@ describe(`${PATH}`, () => {
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
     const dish = dishDto({ restaurant: RESTAURANT_ID });
     await fixture.db.dishModel.create(dish);
-    const reqBody = {
-      name: 'Danie 100',
-      mealType: ['śniadanie', 'lunch'],
-      description: 'Nowe ekstra danie',
-      price: 2400,
-      tags: ['wegańska', 'ostre'],
-      ingredients: [
-        {
-          name: 'cebula',
-          canBeExcluded: true,
-        },
-      ],
-      allergens: ['mleko'],
-      portionWeight: 100,
-      calories: {
-        per100g: 120,
-        perPortion: 10,
-      },
-      fats: {
-        per100g: 130,
-        perPortion: 20,
-      },
-      proteins: {
-        per100g: 140,
-        perPortion: 50,
-      },
-      carbohydrates: {
-        per100g: 100,
-        perPortion: 10,
-      },
-      updated: true,
-    };
+    const reqBody = updateDishDto({ restaurant: RESTAURANT_ID });
 
     // When
     const wrong_id = new ObjectId().toString();
