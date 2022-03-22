@@ -24,6 +24,7 @@ class ListRestaurantsHandler implements Handler<ListRestaurantsRequest, Paginate
         profileCompleted: true,
         cuisineType: req.cuisineType ? { $all: req.cuisineType } : null,
         tags: req.tags ? { $all: req.tags } : null,
+        operationalCities: req.city,
       },
       _.isNil,
     );
