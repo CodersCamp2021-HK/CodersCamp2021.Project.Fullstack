@@ -113,7 +113,7 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
 
 **`User` - użytkownik**
 
-1. Rejestruje się podając email i ustawiając hasło.
+1. Rejestruje się podając email i ustawiając hasło. Użytkownik otrzymuje wiadomość e-mail potwierdzającą rejestrację.
 
 2. Po rejestracji i zalogowaniu może uzupełnić profil (imię, nazwisko, adres(y), nr telefonu, dane karty) lub zacząć kompletować zamówienie.
 
@@ -128,6 +128,8 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
    4.3. Użytkownik ustala godzinę, o której codziennie będzie otrzymywał posiłki na dany dzień.
 
    4.4. Podczas dodawania dań użytkownik może spersonalizować posiłek poprzez usunięcie wybranych składników (wcześniej oznaczonych przez restaurację jako możliwe do usunięcia).
+
+   4.5. Użytkownik otrzymuje wiadomość e-mail potwierdzającą złożenie zamówienia.
 
 <br/>
 
