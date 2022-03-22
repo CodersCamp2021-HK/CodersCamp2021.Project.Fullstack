@@ -12,8 +12,7 @@
 <br/>
 
 <p>
-🍲🍝🍜 <strong>BierzCoChcesz</strong> 🍲🍝🍜 projekt skierowany do ludzi, którzy nie lubią gdy narzuca im się wybory jedzeniowe a jednocześnie zwracają uwagę na wartości odżywcze swoich posiłków.
-Aplikacja pozwala na skomponowanie przez użytkownika diety na cały dzień składającej się z dań z ulubionych restauracji. W praktyce to system partnerski zrzeszający najlepsze restauracje.</p>
+🍲🍝🍜 <strong>JeszCoChcesz</strong> 🍲🍝🍜 catering skierowany do ludzi, którzy nie lubią, gdy narzuca im się wybory jedzeniowe, a jednocześnie dbają o zbilansowane odżywianie. Aplikacja wyliczy dla Ciebie wartości odżywcze Twoich posiłków, dzięki czemu będziesz mógł jeść ulubione dania przy jednoczesnym trzymaniu się wyznaczonej diety. Skomponuj swoje menu z dań z ulubionych restauracji, a my dostarczymy Ci zamówienie pod same drzwi. To także system partnerski zrzeszający najlepsze restauracje w Twoim mieście.</p>
 
 <br/>
 <br/>
