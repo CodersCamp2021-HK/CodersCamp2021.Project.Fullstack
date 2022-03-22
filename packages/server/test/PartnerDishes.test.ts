@@ -60,9 +60,9 @@ describe(`${PATH}`, () => {
     const createdDish = await fixture.db.dishModel.create(dish);
     const dishId = createdDish._id?.toString();
     const reqBody = updateDishDto({ restaurant: restaurantId });
-    await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
+    await fixture.db.restaurantModel.findByIdAndUpdate(restaurantId, { dishes: createdDish });
 
-    // When;
+    // When
     const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
 
     // Then
