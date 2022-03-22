@@ -22,18 +22,57 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
 
   async exec(req: ListDishesRequest) {
     const offset = (req.page - 1) * req.limit;
-    const queryFilter = _.omitBy(
-      {
-        restaurant: req.restaurantId,
-        mealType: req.mealType ? { $all: req.mealType } : null,
-        tags: req.tags ? { $all: req.tags } : null,
-      },
-      _.isNil,
-    );
-    const dishDocsQuery = this.dishModel.find(queryFilter).skip(offset).limit(req.limit);
-    const countQuery = this.dishModel.countDocuments();
-    const [dishDocs, count] = await Promise.all([dishDocsQuery.exec(), countQuery.exec()]);
+
+    const pipeline = this.getDishesFilterPipeline(req);
+
+    const dishDocsQuery = this.dishModel
+      .aggregate(pipeline)
+      .skip(offset)
+      .limit(req.limit)
+      .then((results) => results.map((dish) => this.dishModel.hydrate(dish)));
+
+    const countQuery = this.dishModel
+      .aggregate(pipeline)
+      .count('count')
+      .then((results) => results[0]?.count ?? 0);
+
+    const [dishDocs, count] = await Promise.all([dishDocsQuery, countQuery]);
     return { data: plainToInstance(Dish, dishDocs), pages: Math.ceil(count / req.limit) };
+  }
+
+  private getDishesFilterPipeline(req: DishFilters) {
+    return [
+      {
+        // https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
+        $lookup: {
+          from: 'restaurants',
+          localField: 'restaurant', // Location of restaurant id in dish
+          foreignField: '_id', // Name of ObjectId property in restaurant
+          as: 'restaurant', // New name for the looked up object (replace original one in this case)
+        },
+      },
+      {
+        // https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/
+        $unwind: {
+          path: '$restaurant', // Turn restaurant array into an object
+        },
+      },
+      {
+        // https://docs.mongodb.com/manual/reference/operator/aggregation/match/
+        $match: _.omitBy(
+          {
+            'restaurant.operationalCities': req.city,
+            mealType: req.mealType ? { $all: req.mealType } : null,
+            tags: req.tags ? { $all: req.tags } : null,
+          },
+          _.isNil,
+        ),
+      },
+      {
+        // https://docs.mongodb.com/manual/reference/operator/aggregation/set/
+        $set: { restaurant: '$restaurant._id' }, // Set the restaurant object back to id for hydration
+      },
+    ];
   }
 }
 
