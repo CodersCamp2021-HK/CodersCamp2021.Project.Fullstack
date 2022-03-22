@@ -97,24 +97,9 @@ function restaurantDto(overrides?: Partial<Restaurant>) {
     description: 'Opis restauracji.',
     cuisineType: [CuisineTypes.Mediterranean],
     tags: [RestaurantTags.Kebab, RestaurantTags.StreetFood],
-    verified: true,
-    ...overrides,
-  };
-}
-
-function partnerDto(overrides?: Partial<Restaurant>) {
-  return {
-    name: 'Resto bar',
-    description: 'Opis restauracji.',
-    cuisineType: [CuisineTypes.Mediterranean],
-    tags: [RestaurantTags.Kebab, RestaurantTags.StreetFood],
     bankAccountNumber: '72920080748556126838146923',
     phoneNumber: '800500300',
-    logo: {
-      data: '',
-      contentType: 'image/jpeg',
-    },
-    verified: true,
+    isCompleted: true,
     ...overrides,
   };
 }
@@ -140,14 +125,4 @@ function orderDto(overrides?: Partial<Order>) {
   };
 }
 
-export {
-  addressDto,
-  dishDto,
-  loginDto,
-  orderDto,
-  partnerDto,
-  registerPartnerDto,
-  registerUserDto,
-  restaurantDto,
-  userDto,
-};
+export { addressDto, dishDto, loginDto, orderDto, registerPartnerDto, registerUserDto, restaurantDto, userDto };

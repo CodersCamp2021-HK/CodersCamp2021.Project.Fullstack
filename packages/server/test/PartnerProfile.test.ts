@@ -1,15 +1,16 @@
 import { HttpStatus } from '@nestjs/common';
 
+import { AllowedContentType } from '../src/image/shared';
 import { Role } from '../src/shared';
-import { initE2eFixture, partnerDto, restaurantDto } from './shared';
+import { initE2eFixture, restaurantDto } from './shared';
 
 const PATH = '/api/partner/profile';
 
 describe(`${PATH}`, () => {
   const fixture = initE2eFixture();
 
-  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto({ verified: false }) }])(
-    'GET / - verified: $restaurant.verified',
+  it.each([{ restaurant: restaurantDto() }, { restaurant: restaurantDto({ isCompleted: false }) }])(
+    'GET / - isCompleted: $restaurant.isCompleted',
     async ({ restaurant }) => {
       // Given
       const created = await fixture.db.restaurantModel.create(restaurant);
@@ -27,8 +28,9 @@ describe(`${PATH}`, () => {
 
   it('PUT /', async () => {
     // Given
-    const restaurant = partnerDto();
-    const created = await fixture.db.restaurantModel.create(restaurant);
+    const logo = { data: Buffer.from('101001010101010010'), contentType: AllowedContentType.PNG };
+    const restaurant = restaurantDto();
+    const created = await fixture.db.restaurantModel.create({ ...restaurant, logo });
     const id = created._id?.toString();
     const agent = fixture.agent(Role.Partner, id);
     const reqBody = { ...restaurant, cuisineType: ['włoska'], tags: ['wegetariańska'] };

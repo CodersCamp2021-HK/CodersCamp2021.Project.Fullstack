@@ -10,7 +10,7 @@ describe(`${PATH}`, () => {
   it('GET /', async () => {
     // Given
     const restaurantsWithCompletedProfile = [restaurantDto(), restaurantDto()];
-    const restaurantsWithoutCompletedProfile = [restaurantDto({ verified: false })];
+    const restaurantsWithoutCompletedProfile = [restaurantDto({ isCompleted: false })];
     const restaurants = [...restaurantsWithCompletedProfile, ...restaurantsWithoutCompletedProfile];
     await fixture.db.restaurantModel.create(restaurants);
 

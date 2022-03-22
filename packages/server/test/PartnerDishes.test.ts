@@ -2,7 +2,7 @@ import { HttpStatus } from '@nestjs/common';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
-import { dishDto, initE2eFixture } from './shared';
+import { dishDto, initE2eFixture, restaurantDto } from './shared';
 
 const PATH = '/api/partner/dishes';
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
@@ -32,20 +32,7 @@ describe(`${PATH}`, () => {
   it('POST /', async () => {
     // Given
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
-
-    await fixture.db.restaurantModel.create({
-      _id: RESTAURANT_ID,
-      name: 'Resto',
-      bankAccountNumber: '72920080748556126838146923',
-      phoneNumber: '800500300',
-      addressId: ['62227771b256571bb24d4b16'],
-      logo: '/images/logo.png',
-      description: 'Smaczenie i tanio',
-      cuisineType: ['polska'],
-      tags: ['burgery'],
-      verified: true,
-    });
-
+    await fixture.db.restaurantModel.create({ ...restaurantDto(), _id: RESTAURANT_ID });
     const reqBody: CreateDishDto = dishDto();
 
     // When

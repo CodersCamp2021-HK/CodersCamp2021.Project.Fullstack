@@ -24,10 +24,30 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
     const partnerDoc = await this.restaurantModel.findById(req.id);
     if (!partnerDoc) return null;
     _.assign(partnerDoc, _.omit(req, 'id'));
-    if (partnerDoc.verified && !partnerDoc.isCompleted) throw new UnprocessableEntityException('Profile not completed');
-    partnerDoc.verified = partnerDoc.isCompleted;
+    const isValidUpdate = this.isValidUpdate(partnerDoc);
+    if (partnerDoc.isCompleted && !isValidUpdate) {
+      throw new UnprocessableEntityException('Update breaks completion requirements of partner profile');
+    }
+    if (!partnerDoc.isCompleted && isValidUpdate) {
+      partnerDoc.isCompleted = true;
+    }
     await partnerDoc.save();
     return undefined;
+  }
+
+  private isValidUpdate(partner: Restaurant) {
+    const requirements = [
+      partner.name,
+      partner.bankAccountNumber,
+      partner.phoneNumber,
+      partner.addressId,
+      partner.logo,
+      partner.description,
+      partner.cuisineType,
+      partner.tags,
+    ];
+
+    return requirements.every(_.negate(_.isNil));
   }
 }
 

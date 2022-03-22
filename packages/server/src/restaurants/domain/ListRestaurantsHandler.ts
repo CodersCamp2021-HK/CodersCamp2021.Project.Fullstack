@@ -10,7 +10,7 @@ class ListRestaurantsHandler implements Handler<PaginationQuery, Paginated<Resta
 
   async exec(req: PaginationQuery): Promise<Paginated<Restaurant>> {
     const offset = (req.page - 1) * req.limit;
-    const queryFilter = { verified: true };
+    const queryFilter = { isCompleted: true };
     const restaurantDocsQuery = this.restaurantModel.find(queryFilter).skip(offset).limit(req.limit);
     const countQuery = this.restaurantModel.countDocuments(queryFilter);
     const [restaurantDocs, count] = await Promise.all([restaurantDocsQuery.exec(), countQuery.exec()]);
