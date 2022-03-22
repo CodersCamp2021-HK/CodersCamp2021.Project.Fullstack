@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 import { CreateDishDto } from '../src/restaurants/dishes/api/DishDto';
 import { Role } from '../src/shared';
-import { dishDto, initE2eFixture } from './shared';
+import { dishDto, initE2eFixture, restaurantDto } from './shared';
 
 const PATH = '/api/partner/dishes';
 const RESTAURANT_ID = '6200218668fc82e7bdf15088';
@@ -49,61 +49,25 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
-    const dish = dishDto({ restaurant: RESTAURANT_ID });
-    const created = await fixture.db.dishModel.create(dish);
-    const id = created._id?.toString();
-    const reqBody = {
-      name: 'Danie 100',
-      mealType: ['śniadanie', 'lunch'],
-      description: 'Nowe ekstra danie',
-      price: 2400,
-      tags: ['wegańska', 'ostre'],
-      ingredients: [
-        {
-          name: 'cebula',
-          canBeExcluded: true,
-        },
-      ],
-      allergens: ['mleko'],
-      portionWeight: 100,
-      calories: {
-        per100g: 120,
-        perPortion: 10,
-      },
-      fats: {
-        per100g: 130,
-        perPortion: 20,
-      },
-      proteins: {
-        per100g: 140,
-        perPortion: 50,
-      },
-      carbohydrates: {
-        per100g: 100,
-        perPortion: 10,
-      },
-      updated: true,
-    };
+    const restaurant = restaurantDto({ profileCompleted: true });
+    const createRestaurant = await fixture.db.restaurantModel.create(restaurant);
+    const restaurantId = createRestaurant._id?.toString();
+    const agent = fixture.agent(Role.Partner, restaurantId);
+
+    const dish = dishDto({ restaurant: restaurantId });
+    const createdDish = await fixture.db.dishModel.create(dish);
+    const dishId = createdDish._id?.toString();
+    const reqBody = dishDto({ restaurant: restaurantId });
+    await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
 
     // When;
-    const resp_put = await agent.put(`${PATH}/${id}`).send(reqBody);
+    const resp_put = await agent.put(`${PATH}/${dishId}`).send(reqBody);
 
     // Then
-    expect(resp_put.status).toBe(HttpStatus.NO_CONTENT);
+    expect(resp_put.status).toBe(HttpStatus.OK);
 
     const resp_get = await agent.get(PATH);
-    expect(resp_get.body.data[0].name).toEqual(reqBody.name);
-    expect(resp_get.body.data[0].mealType).toEqual(reqBody.mealType);
-    expect(resp_get.body.data[0].description).toEqual(reqBody.description);
-    expect(resp_get.body.data[0].price).toEqual(reqBody.price);
-    expect(resp_get.body.data[0].tags).toEqual(reqBody.tags);
-    expect(resp_get.body.data[0].ingredients).toEqual(reqBody.ingredients);
-    expect(resp_get.body.data[0].allergens).toEqual(reqBody.allergens);
-    expect(resp_get.body.data[0].portionWeight).toEqual(reqBody.portionWeight);
-    expect(resp_get.body.data[0].fats).toEqual(reqBody.fats);
-    expect(resp_get.body.data[0].proteins).toEqual(reqBody.proteins);
-    expect(resp_get.body.data[0].carbohydrates).toEqual(reqBody.carbohydrates);
+    expect(resp_get.body.data).toEqual(expect.arrayContaining([expect.objectContaining(reqBody)]));
   });
 
   it('PUT /:wrongId', async () => {
