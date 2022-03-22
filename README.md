@@ -55,14 +55,14 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
 
 ### Główne:
 
-- [TypeSript](https://www.typescriptlang.org/docs/)
+- [TypeScript](https://www.typescriptlang.org/docs/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [MongoDB](https://www.mongodb.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [NestJS](https://nestjs.com/)
 - [Express](https://expressjs.com/)
 - [Nodemailer](https://nodemailer.com/)
-- [Swagger](https://swagger.io/tools/swaggerhub/?&utm_medium=ppcg&utm_source=aw&utm_term=swagger&utm_content=511173019632&utm_campaign=SEM_SwaggerHub_PR_EMEA_ENG_EXT_Prospecting&awsearchcpc=1&gclid=CjwKCAjwxOCRBhA8EiwA0X8hiwxh7NHt37o-DaApRMBtiZ25QonxHVTKTew0Pa2SYAC6nDVzJnYD3xoCejMQAvD_BwE&gclsrc=aw.ds)
+- [Swagger](https://swagger.io/tools/swaggerhub)
 
 <br/>
 
@@ -93,7 +93,7 @@ yarn install
 docker-compose up
 ```
 
-Obserowanie zmian w środowisku dev:
+Uruchomienie serwera developerskiego (aplikacja będzie dostępna pod http://localhost:4000/api):
 
 ```bash
 yarn dev
@@ -107,7 +107,7 @@ yarn build
 
 <br/>
 
-#### Pozostałe komendy
+### Pozostałe komendy
 
 Sprawdzenie projektu za pomocą [ESLint](https://eslint.org/):
 
