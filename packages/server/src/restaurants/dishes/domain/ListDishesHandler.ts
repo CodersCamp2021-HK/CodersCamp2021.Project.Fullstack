@@ -1,6 +1,7 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import _ from 'lodash';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Handler, Paginated, PaginationQuery } from '../../../shared';
@@ -40,7 +41,7 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
     return { data: plainToInstance(Dish, dishDocs), pages: Math.ceil(count / req.limit) };
   }
 
-  private getDishesFilterPipeline(req: DishFilters) {
+  private getDishesFilterPipeline(filters: DishFilters & { restaurantId?: string }) {
     return [
       {
         // https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
@@ -61,9 +62,10 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
         // https://docs.mongodb.com/manual/reference/operator/aggregation/match/
         $match: _.omitBy(
           {
-            'restaurant.operationalCities': req.city,
-            mealType: req.mealType ? { $all: req.mealType } : null,
-            tags: req.tags ? { $all: req.tags } : null,
+            'restaurant._id': filters.restaurantId ? new ObjectId(filters.restaurantId) : null,
+            'restaurant.operationalCities': filters.city,
+            mealType: filters.mealType ? { $all: filters.mealType } : null,
+            tags: filters.tags ? { $all: filters.tags } : null,
           },
           _.isNil,
         ),
