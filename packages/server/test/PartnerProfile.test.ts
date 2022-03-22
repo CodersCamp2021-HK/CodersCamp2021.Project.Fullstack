@@ -35,6 +35,7 @@ describe(`${PATH}`, () => {
       ...restaurant,
       cuisineType: ['włoska'],
       tags: ['wegetariańska'],
+      operationalCities: ['Kraków'],
     };
 
     // When
