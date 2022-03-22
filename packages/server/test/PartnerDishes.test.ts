@@ -61,13 +61,13 @@ describe(`${PATH}`, () => {
     await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
 
     // When;
-    const resp_put = await agent.put(`${PATH}/${dishId}`).send(reqBody);
+    const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
 
     // Then
-    expect(resp_put.status).toBe(HttpStatus.OK);
+    expect(resPut.status).toBe(HttpStatus.OK);
 
-    const resp_get = await agent.get(PATH);
-    expect(resp_get.body.data).toEqual(expect.arrayContaining([expect.objectContaining(reqBody)]));
+    const resGet = await agent.get(PATH);
+    expect(resGet.body.data).toEqual(expect.arrayContaining([expect.objectContaining(reqBody)]));
   });
 
   it('PUT /:wrongId', async () => {
@@ -78,10 +78,10 @@ describe(`${PATH}`, () => {
     const reqBody = updateDishDto({ restaurant: RESTAURANT_ID });
 
     // When
-    const wrong_id = new ObjectId().toString();
-    const wrong_token_resp = await agent.put(`${PATH}/${wrong_id}`).send(reqBody);
+    const wrongId = new ObjectId().toString();
+    const wrongTokenResp = await agent.put(`${PATH}/${wrongId}`).send(reqBody);
     //Then
-    expect(wrong_token_resp.status).toBe(HttpStatus.NOT_FOUND);
+    expect(wrongTokenResp.status).toBe(HttpStatus.NOT_FOUND);
   });
 
   it('DELETE /:id', async () => {
