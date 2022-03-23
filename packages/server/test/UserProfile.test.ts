@@ -37,20 +37,13 @@ describe(`${PATH}`, () => {
     };
 
     // When
-    const res0 = await agent.get(PATH);
-
-    // Then
-    expect(res0.body.profileCompleted).toEqual(false);
-
-    // When
     await agent.put(PATH).send(reqBody);
-    const res1 = await agent.get(PATH);
+    const res = await agent.get(PATH);
 
     // Then
-    expect(res1.body.profileCompleted).toEqual(true);
-    expect(res1.body.name).toEqual(reqBody.name);
-    expect(res1.body.surname).toEqual(reqBody.surname);
-    expect(res1.body.phoneNumber).toEqual(reqBody.phoneNumber);
-    expect(res1.body.card).toEqual(reqBody.card);
+    expect(res.body.name).toEqual(reqBody.name);
+    expect(res.body.surname).toEqual(reqBody.surname);
+    expect(res.body.phoneNumber).toEqual(reqBody.phoneNumber);
+    expect(res.body.card).toEqual(reqBody.card);
   });
 });

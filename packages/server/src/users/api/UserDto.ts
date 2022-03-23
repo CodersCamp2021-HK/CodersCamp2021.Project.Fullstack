@@ -59,12 +59,6 @@ class UserDto {
     type: CardDto,
   })
   readonly card: CardDto;
-
-  @Expose()
-  @ApiPropertyOptional({
-    default: false,
-  })
-  readonly profileCompleted: boolean;
 }
 
 class CreateUserDto extends OmitType(UserDto, ['id'] as const) {}
