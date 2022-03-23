@@ -134,12 +134,12 @@ class Restaurant {
   tags: RestaurantTags[];
 
   @Expose()
-  @Prop({ default: false })
-  profileCompleted: boolean;
-
-  @Expose()
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Dish' }] })
   dishes: Dish[];
+
+  @Expose()
+  @Prop({ default: false })
+  isCompleted: boolean;
 
   @Expose()
   readonly id: string;

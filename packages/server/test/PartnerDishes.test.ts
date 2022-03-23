@@ -39,6 +39,7 @@ describe(`${PATH}`, () => {
   it('POST /', async () => {
     // Given
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    await fixture.db.restaurantModel.create({ ...restaurantDto(), _id: RESTAURANT_ID });
     const reqBody: CreateDishDto = dishDto();
 
     // When
@@ -51,7 +52,7 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const restaurant = restaurantDto({ profileCompleted: true });
+    const restaurant = restaurantDto({ isCompleted: true });
     const createRestaurant = await fixture.db.restaurantModel.create(restaurant);
     const restaurantId = createRestaurant._id?.toString();
     const agent = fixture.agent(Role.Partner, restaurantId);

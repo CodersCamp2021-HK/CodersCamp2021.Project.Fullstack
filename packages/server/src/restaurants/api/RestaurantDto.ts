@@ -51,6 +51,7 @@ class RestaurantDto {
   readonly logo: string;
 }
 
+@Exclude()
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
 
 export { FavouriteRestaurantDto, RestaurantDto };

@@ -21,7 +21,7 @@ class ListRestaurantsHandler implements Handler<ListRestaurantsRequest, Paginate
     const offset = (req.page - 1) * req.limit;
     const queryFilter = _.omitBy(
       {
-        profileCompleted: true,
+        isCompleted: true,
         cuisineType: req.cuisineType ? { $all: req.cuisineType } : null,
         tags: req.tags ? { $all: req.tags } : null,
         operationalCities: req.city,
