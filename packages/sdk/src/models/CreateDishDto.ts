@@ -102,6 +102,13 @@ export interface CreateDishDto {
    * @memberof CreateDishDto
    */
   carbohydrates: NutritionalValueDto;
+
+  /**
+   *
+   * @type {boolean}
+   * @memberof CreateDishDto
+   */
+   updated: boolean;
 }
 
 export function CreateDishDtoFromJSON(json: any): CreateDishDto {
@@ -127,6 +134,7 @@ export function CreateDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
     fats: NutritionalValueDtoFromJSON(json['fats']),
     proteins: NutritionalValueDtoFromJSON(json['proteins']),
     carbohydrates: NutritionalValueDtoFromJSON(json['carbohydrates']),
+    updated: json['updated'],
   };
 }
 
@@ -151,5 +159,6 @@ export function CreateDishDtoToJSON(value?: CreateDishDto | null): any {
     fats: NutritionalValueDtoToJSON(value.fats),
     proteins: NutritionalValueDtoToJSON(value.proteins),
     carbohydrates: NutritionalValueDtoToJSON(value.carbohydrates),
+    updated: value.updated,
   };
 }
