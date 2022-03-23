@@ -4,9 +4,12 @@ import { DocumentBuilder, OpenAPIObject, SwaggerCustomOptions, SwaggerModule } f
 import { TagMap } from '../../shared';
 import { env } from '../Env';
 
+const APP_NAME = 'JeszCoChcesz';
+
 type SwaggerDocumentConfig = Readonly<{
   title: string;
   description: string;
+  contact: { name: string; url: string };
   version: string;
   path: string;
 }>;
@@ -17,14 +20,21 @@ type SwaggerConfig = Readonly<{
 }>;
 
 const defaultSwaggerDocumentConfig: SwaggerDocumentConfig = Object.freeze({
-  title: 'App example',
-  description: 'The app API description',
+  title: `${APP_NAME} API 🍲🍝🍜`,
+  description: `
+${APP_NAME} is an online food delivery system connecting restaurants with health-conscious users.
+The app automatically sums up all of the nutritional values helping you stick to your diet.
+`,
+  contact: {
+    name: 'CodersCamp 2021 - Project Fullstack',
+    url: 'https://github.com/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack',
+  },
   version: '1.0.0',
   path: 'api',
 });
 
 const defaultSwaggerCustomOptions: SwaggerCustomOptions = Object.freeze({
-  customSiteTitle: 'Fullstack API Docs',
+  customSiteTitle: `${APP_NAME} API Docs`,
   swaggerOptions: {
     tagsSorter: 'alpha',
     operationsSorter: 'alpha',
@@ -54,6 +64,7 @@ function createSwaggerDocument(app: INestApplication, config: SwaggerDocumentCon
     .addCookieAuth(env.ACCESS_TOKEN_NAME)
     .setTitle(config.title)
     .setDescription(config.description)
+    .setContact(config.contact.name, config.contact.url, '')
     .setVersion(config.version)
     .build();
   const document = SwaggerModule.createDocument(app, documentBase);

@@ -1,4 +1,4 @@
-# CodersCamp 2021 - Projekt Node.js
+# CodersCamp 2021 - Projekt Fullstack
 
 <div align="center">
 
