@@ -4,7 +4,6 @@
 
 [![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://coderscamp2021-hk-fullstack.herokuapp.com/api/)
 [![Codecov](https://img.shields.io/codecov/c/github/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack?logo=codecov)](https://app.codecov.io/gh/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack)
-[![Figma](https://img.shields.io/badge/-Figma-blueviolet?logo=figma)](https://www.figma.com/file/Cwxh4WHHLxBhhyxJQIgsI9/Project.Fullstack?node-id=10%3A13)
 [![Figma](https://img.shields.io/badge/-figJam-violet?logo=figJam)](https://www.figma.com/file/51gzaCTbilz6X9r0PZxmhX/Project.Fullstack?node-id=0%3A1)
 
 </div>
