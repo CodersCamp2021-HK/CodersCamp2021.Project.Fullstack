@@ -109,7 +109,6 @@ function userDto(overrides?: Partial<UserDto>) {
     surname: 'Kowalski',
     phoneNumber: '800500300',
     card: cardDto(),
-    profileCompleted: false,
     ...overrides,
   };
 }

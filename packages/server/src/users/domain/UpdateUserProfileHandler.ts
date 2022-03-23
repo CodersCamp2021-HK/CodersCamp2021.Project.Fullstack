@@ -11,7 +11,6 @@ interface UpdateUserProfileRequest {
   readonly surname: string;
   readonly phoneNumber: string;
   readonly card: Card;
-  readonly profileCompleted: boolean;
 }
 
 @Injectable()
@@ -31,20 +30,6 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
     );
 
     if (result === null) return null;
-    if (
-      result.name !== undefined &&
-      result.surname !== undefined &&
-      result.phoneNumber !== undefined &&
-      result.card !== undefined
-    ) {
-      await this.userModule.findOneAndUpdate(
-        { _id: req.id },
-        {
-          profileCompleted: true,
-        },
-      );
-    }
-
     return undefined;
   }
 }
