@@ -4,7 +4,7 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { AddressDto } from '../../addresses/api/AddressDto';
 import { ImageType } from '../../image/shared';
 import { ApiImageProperty, ApiObjectIdProperty } from '../../shared';
-import { CuisineTypes, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
+import { CuisineTypes, OperationalCities, RESTAURANT_CONSTANTS, RestaurantTags } from '../database';
 
 @Exclude()
 class RestaurantDto {
@@ -43,12 +43,15 @@ class RestaurantDto {
   readonly addressId: AddressDto[];
 
   @Expose()
+  @ApiProperty({ enum: OperationalCities, enumName: 'OperationalCityEnum', isArray: true, example: ['Wrocław'] })
+  readonly operationalCities: OperationalCities[];
+
+  @Expose()
   @ApiImageProperty(ImageType.RestaurantLogo)
   readonly logo: string;
 }
 
 @Exclude()
 class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
-class UpdateRestaurantDto extends PickType(RestaurantDto, ['cuisineType', 'tags'] as const) {}
 
-export { FavouriteRestaurantDto, RestaurantDto, UpdateRestaurantDto };
+export { FavouriteRestaurantDto, RestaurantDto };

@@ -5,4 +5,7 @@ export * from './ApiObjectIdDecorators';
 export * from './ApiOperationDecorators';
 export * from './ExposeId';
 export * from './PaginationDecorator';
+export * from './ParamDishesFilterDecorator';
+export * from './ParamRestaurantsFilterDecorator';
+export * from './QueryFiltersDecorator';
 export * from './UrlDecorator';

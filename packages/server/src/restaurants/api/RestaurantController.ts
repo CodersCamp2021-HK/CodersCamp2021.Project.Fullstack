@@ -10,10 +10,11 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  ParamRestaurantsFilter,
   Url,
 } from '../../shared';
 import { GetRestaurantHandler } from '../domain/GetRestaurantHandler';
-import { ListRestaurantsHandler } from '../domain/ListRestaurantsHandler';
+import { ListRestaurantsHandler, RestaurantFilters } from '../domain/ListRestaurantsHandler';
 import { RestaurantDto } from './RestaurantDto';
 import { RestaurantListDto } from './RestaurantListDto';
 
@@ -33,8 +34,13 @@ class RestaurantController {
   }
 
   @ApiList({ name: 'restaurants', response: RestaurantListDto, link: true })
-  async list(@Pagination() pagination: PaginationQuery, @Res({ passthrough: true }) res: Response, @Url() url: URL) {
-    const paginatedRestaurants = await this.listRestaurantsHandler.exec(pagination);
+  async list(
+    @Pagination() pagination: PaginationQuery,
+    @Res({ passthrough: true }) res: Response,
+    @Url() url: URL,
+    @ParamRestaurantsFilter() filters: RestaurantFilters,
+  ) {
+    const paginatedRestaurants = await this.listRestaurantsHandler.exec({ ...pagination, ...filters });
     res.setHeader('Link', createPaginationLink(url, paginatedRestaurants.pages));
     return plainToInstance(RestaurantListDto, paginatedRestaurants);
   }

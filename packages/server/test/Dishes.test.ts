@@ -1,4 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
+import _ from 'lodash';
 
 import { dishDto, initE2eFixture } from './shared';
 
@@ -9,11 +10,8 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const dishes = [
-      dishDto({ restaurant: '6200218668fc82e7bdf15087' }),
-      dishDto({ restaurant: '6200218668fc82e7bdf15088' }),
-      dishDto({ restaurant: '6200218668fc82e7bdf15089' }),
-    ];
+    const restaurantIds = await Promise.all(_.times(3, () => fixture.db.restaurantModel.create({}).then((r) => r.id)));
+    const dishes = restaurantIds.map((id) => dishDto({ restaurant: id }));
     await fixture.db.dishModel.create(dishes);
 
     // When

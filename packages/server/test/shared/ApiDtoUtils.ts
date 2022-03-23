@@ -7,7 +7,7 @@ import { RegisterAsUserDto } from '../../src/auth/api/RegisterAsUserDto';
 import { Order } from '../../src/orders/database';
 import { CuisineTypes, Restaurant, RestaurantTags } from '../../src/restaurants/database';
 import { DishDto } from '../../src/restaurants/dishes/api/DishDto';
-import { Allergens, Dish, DishTags, MealType } from '../../src/restaurants/dishes/database';
+import { Allergens, DishTags, MealType } from '../../src/restaurants/dishes/database';
 import { Role } from '../../src/shared';
 import { UserDto } from '../../src/users/api/UserDto';
 
