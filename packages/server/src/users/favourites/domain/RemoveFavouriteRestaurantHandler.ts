@@ -15,11 +15,12 @@ class RemoveFavouriteRestaurantHandler implements Handler<RemoveFavouriteRestaur
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async exec(req: RemoveFavouriteRestaurantRequest): Promise<null | undefined> {
-    const user = await this.userModel
-      .findByIdAndUpdate(req.userId, { $pull: { favouriteRestaurants: req.restaurantId } })
-      .populate('favouriteRestaurants');
+    const result = await this.userModel.updateOne(
+      { _id: req.userId },
+      { $pull: { favouriteRestaurants: req.restaurantId } },
+    );
 
-    if (!user?.favouriteRestaurants.some((restaurant) => restaurant.id === req.restaurantId)) return null;
+    if (result.modifiedCount === 0) return null;
     return undefined;
   }
 }
