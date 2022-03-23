@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -25,13 +25,17 @@ interface CreateDishRequest {
 }
 
 @Injectable()
-class CreateDishHandler implements Handler<CreateDishRequest, Dish> {
+class CreateDishHandler implements Handler<CreateDishRequest, Dish | null> {
   constructor(
     @InjectModel(Dish.name) private dishModel: Model<DishDocument>,
     @InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>,
   ) {}
 
-  async exec(req: CreateDishRequest): Promise<Dish> {
+  async exec(req: CreateDishRequest): Promise<Dish | null> {
+    const restaurant = await this.restaurantModel.findById(req.restaurant);
+    if (!restaurant) return null;
+    if (!restaurant.isCompleted) throw new UnprocessableEntityException('Profile not completed');
+
     const created = await this.dishModel.create(req);
     await this.restaurantModel.findByIdAndUpdate(req.restaurant, { $push: { dishes: created } });
     return plainToInstance(Dish, created);
