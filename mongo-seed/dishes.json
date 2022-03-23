@@ -1,0 +1,288 @@
+[{
+  "_id": {
+    "$oid": "623afb510b179ca11e8f422d"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afa0b0b179ca11e8f4224"
+  },
+  "carbohydrates": {
+    "per100g": 60,
+    "perPortion": 240
+  },
+  "proteins": {
+    "per100g": 30,
+    "perPortion": 120
+  },
+  "fats": {
+    "per100g": 20,
+    "perPortion": 80
+  },
+  "calories": {
+    "per100g": 100,
+    "perPortion": 400
+  },
+  "portionWeight": 400,
+  "allergens": [],
+  "ingredients": [
+    {
+      "name": "ser gouda",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afb510b179ca11e8f422e"
+      }
+    }
+  ],
+  "tags": [
+    "wegetariańska"
+  ],
+  "price": 30,
+  "description": "Prawdziwa włoska pizza z najlepszymi serami.",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Margerita",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "623afbb30b179ca11e8f4232"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afa0b0b179ca11e8f4224"
+  },
+  "carbohydrates": {
+    "per100g": 60,
+    "perPortion": 240
+  },
+  "proteins": {
+    "per100g": 30,
+    "perPortion": 120
+  },
+  "fats": {
+    "per100g": 20,
+    "perPortion": 80
+  },
+  "calories": {
+    "per100g": 100,
+    "perPortion": 400
+  },
+  "portionWeight": 400,
+  "allergens": [],
+  "ingredients": [
+    {
+      "name": "peperoni",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afbb30b179ca11e8f4233"
+      }
+    },
+    {
+      "name": "jalapeno",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afbb30b179ca11e8f4234"
+      }
+    }
+  ],
+  "tags": [
+    "ostre"
+  ],
+  "price": 40,
+  "description": "Prawdziwa włoska pizza z ostrym peperoni.",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Diavola",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "623afc1b0b179ca11e8f423e"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afa0b0b179ca11e8f4224"
+  },
+  "carbohydrates": {
+    "per100g": 60,
+    "perPortion": 240
+  },
+  "proteins": {
+    "per100g": 30,
+    "perPortion": 120
+  },
+  "fats": {
+    "per100g": 20,
+    "perPortion": 80
+  },
+  "calories": {
+    "per100g": 100,
+    "perPortion": 400
+  },
+  "portionWeight": 400,
+  "allergens": [],
+  "ingredients": [
+    {
+      "name": "ananas",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afc1b0b179ca11e8f423f"
+      }
+    },
+    {
+      "name": "szynka",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afc1b0b179ca11e8f4240"
+      }
+    }
+  ],
+  "tags": [],
+  "price": 35,
+  "description": "Pyszne danie, uciecha dla fanów ananasa.",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Hawajska",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "623afd620b179ca11e8f424f"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afc5b0b179ca11e8f4246"
+  },
+  "carbohydrates": {
+    "per100g": 10,
+    "perPortion": 600
+  },
+  "proteins": {
+    "per100g": 50,
+    "perPortion": 300
+  },
+  "fats": {
+    "per100g": 40,
+    "perPortion": 240
+  },
+  "calories": {
+    "per100g": 100,
+    "perPortion": 600
+  },
+  "portionWeight": 600,
+  "allergens": [
+    "mleko",
+    "jaja"
+  ],
+  "ingredients": [
+    {
+      "name": "frytki",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afd620b179ca11e8f4250"
+      }
+    }
+  ],
+  "tags": [],
+  "price": 30,
+  "description": "Duży schabowy, frytki i surówka",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Schabowy zestaw",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "623afdc30b179ca11e8f4254"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afc5b0b179ca11e8f4246"
+  },
+  "carbohydrates": {
+    "per100g": 30,
+    "perPortion": 90
+  },
+  "proteins": {
+    "per100g": 20,
+    "perPortion": 60
+  },
+  "fats": {
+    "per100g": 10,
+    "perPortion": 30
+  },
+  "calories": {
+    "per100g": 50,
+    "perPortion": 150
+  },
+  "portionWeight": 300,
+  "allergens": [],
+  "ingredients": [
+    {
+      "name": "skwarki",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afdc30b179ca11e8f4255"
+      }
+    }
+  ],
+  "tags": [],
+  "price": 20,
+  "description": "Pyszne pierogi z mięsem i skwarkami",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Pierogi z mięsem",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "623afdfe0b179ca11e8f4259"
+  },
+  "updated": false,
+  "restaurant": {
+    "$oid": "623afc5b0b179ca11e8f4246"
+  },
+  "carbohydrates": {
+    "per100g": 30,
+    "perPortion": 90
+  },
+  "proteins": {
+    "per100g": 20,
+    "perPortion": 60
+  },
+  "fats": {
+    "per100g": 10,
+    "perPortion": 30
+  },
+  "calories": {
+    "per100g": 50,
+    "perPortion": 150
+  },
+  "portionWeight": 300,
+  "allergens": [
+    "mleko"
+  ],
+  "ingredients": [
+    {
+      "name": "śmietana",
+      "canBeExcluded": true,
+      "_id": {
+        "$oid": "623afdfe0b179ca11e8f425a"
+      }
+    }
+  ],
+  "tags": [],
+  "price": 22,
+  "description": "Pyszne pierogi z jagodami i śmietaną.",
+  "mealType": [
+    "lunch",
+    "obiad"
+  ],
+  "name": "Pierogi z jagodami",
+  "__v": 0
+}]

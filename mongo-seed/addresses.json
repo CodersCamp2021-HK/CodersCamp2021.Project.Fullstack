@@ -1,0 +1,60 @@
+[
+  {
+    "_id": {
+      "$oid": "623af61e0b179ca11e8f4201"
+    },
+    "owner": {
+      "$oid": "623af5cf0b179ca11e8f41fd"
+    },
+    "postcode": "00-012",
+    "city": "Warszawa",
+    "floor": "1",
+    "apartmentNumber": "11",
+    "streetNumber": "1A",
+    "street": "Prosta"
+  },
+  {
+    "_id": {
+      "$oid": "623af6fc0b179ca11e8f4215"
+    },
+    "owner": {
+      "$oid": "623af6790b179ca11e8f420e"
+    },
+    "postcode": "50-012",
+    "city": "Wrocław",
+    "floor": "5",
+    "apartmentNumber": "74",
+    "streetNumber": "52",
+    "street": "Długa"
+  },
+  {
+    "_id": {
+      "$oid": "623afa330b179ca11e8f4228"
+    },
+    "owner": {
+      "$oid": "623afa0b0b179ca11e8f4224"
+    },
+    "postcode": "00-000",
+    "city": "Warszawa",
+    "floor": "0",
+    "apartmentNumber": "10",
+    "streetNumber": "22",
+    "street": "Przekątna",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "623afc830b179ca11e8f424a"
+    },
+    "owner": {
+      "$oid": "623afc5b0b179ca11e8f4246"
+    },
+    "postcode": "50-000",
+    "city": "Wrocław",
+    "floor": "0",
+    "apartmentNumber": "10",
+    "streetNumber": "12",
+    "street": "Wyszyńskiego",
+    "__v": 0
+  }
+]

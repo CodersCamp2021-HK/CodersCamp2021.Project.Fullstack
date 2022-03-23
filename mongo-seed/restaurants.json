@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "623afa0b0b179ca11e8f4224"
+  },
+  "dishes": [
+    {
+      "$oid": "623afb510b179ca11e8f422d"
+    },
+    {
+      "$oid": "623afbb30b179ca11e8f4232"
+    },
+    {
+      "$oid": "623afc100b179ca11e8f4238"
+    },
+    {
+      "$oid": "623afc1b0b179ca11e8f423e"
+    }
+  ],
+  "profileCompleted": false,
+  "tags": [
+    "pizza",
+    "zdrowa"
+  ],
+  "cuisineType": [
+    "włoska"
+  ],
+  "addressId": [
+    {
+      "$oid": "623afa330b179ca11e8f4228"
+    }
+  ],
+  "__v": 0,
+  "bankAccountNumber": "24124048239605057183872554",
+  "description": "Pyszna pizza i nie tylko.",
+  "name": "Resto bar",
+  "phoneNumber": "734234092"
+},{
+  "_id": {
+    "$oid": "623afc5b0b179ca11e8f4246"
+  },
+  "dishes": [
+    {
+      "$oid": "623afd620b179ca11e8f424f"
+    },
+    {
+      "$oid": "623afdc30b179ca11e8f4254"
+    },
+    {
+      "$oid": "623afdfe0b179ca11e8f4259"
+    }
+  ],
+  "profileCompleted": false,
+  "tags": [
+    "wegetariańska",
+    "zdrowa"
+  ],
+  "cuisineType": [
+    "polska"
+  ],
+  "addressId": [
+    {
+      "$oid": "623afc830b179ca11e8f424a"
+    }
+  ],
+  "__v": 0,
+  "bankAccountNumber": "05150015042752330610547624",
+  "description": "Obiady jak u babci",
+  "name": "Polska kuchnia",
+  "phoneNumber": "333444555"
+},{
+  "_id": {
+    "$oid": "623afe230b179ca11e8f4260"
+  },
+  "dishes": [],
+  "profileCompleted": false,
+  "tags": [],
+  "cuisineType": [],
+  "addressId": [],
+  "__v": 0
+}]
