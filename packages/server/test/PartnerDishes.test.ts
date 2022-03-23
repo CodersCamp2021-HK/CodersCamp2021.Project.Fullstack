@@ -50,7 +50,7 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const restaurant = restaurantDto({ profileCompleted: true });
+    const restaurant = restaurantDto({ isCompleted: true });
     const createRestaurant = await fixture.db.restaurantModel.create(restaurant);
     const restaurantId = createRestaurant._id?.toString();
     const agent = fixture.agent(Role.Partner, restaurantId);
@@ -59,9 +59,9 @@ describe(`${PATH}`, () => {
     const createdDish = await fixture.db.dishModel.create(dish);
     const dishId = createdDish._id?.toString();
     const reqBody = updateDishDto({ restaurant: restaurantId });
-    await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
+    await fixture.db.restaurantModel.updateOne({ _id: restaurantId }, { $push: { dishes: dishId } });
 
-    // When;
+    // When
     const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
 
     // Then
