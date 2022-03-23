@@ -1,2 +1,2 @@
 export { FavouriteDishesController } from './FavouriteDishesController';
-export { FavouriteRestaurantListController } from './FavouriteRestaurantListController';
+export { FavouriteRestaurantsController } from './FavouriteRestaurantsController';

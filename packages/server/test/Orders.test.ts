@@ -25,7 +25,7 @@ describe(`${PATH}`, () => {
     expect(resp0.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
 
     // When
-    await fixture.db.userModel.findByIdAndUpdate(userId, { ...userDto({ id: userId }) });
+    await fixture.db.userModel.findByIdAndUpdate(userId, userDto({ id: userId }));
     const resp1 = await agent.post(PATH).send(reqBody);
 
     // Then
