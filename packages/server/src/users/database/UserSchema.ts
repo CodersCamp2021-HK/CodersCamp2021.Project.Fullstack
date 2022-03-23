@@ -86,10 +86,6 @@ class User {
   orders: Order[];
 
   @Expose()
-  @Prop({ default: false })
-  profileCompleted: boolean;
-
-  @Expose()
   readonly id: string;
 }
 
