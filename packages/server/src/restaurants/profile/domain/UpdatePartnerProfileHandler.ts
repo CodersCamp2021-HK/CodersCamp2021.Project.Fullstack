@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import _ from 'lodash';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
@@ -11,8 +12,8 @@ interface UpdatePartnerProfileRequest {
   readonly description: string;
   readonly tags: RestaurantTags[];
   readonly cuisineType: CuisineTypes[];
-  readonly bankAccountNumber: string;
-  readonly phoneNumber: string;
+  readonly bankAccountNumber?: string;
+  readonly phoneNumber?: string;
 }
 
 @Injectable()
@@ -20,20 +21,33 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
   constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
   async exec(req: UpdatePartnerProfileRequest): Promise<null | undefined> {
-    const result = await this.restaurantModel.findOneAndUpdate(
-      { _id: req.id },
-      {
-        name: req.name,
-        description: req.description,
-        cuisineType: req.cuisineType,
-        tags: req.tags,
-        bankAccountNumber: req.bankAccountNumber,
-        phoneNumber: req.phoneNumber,
-      },
-    );
-
-    if (result === null) return null;
+    const partnerDoc = await this.restaurantModel.findById(req.id);
+    if (!partnerDoc) return null;
+    _.assign(partnerDoc, _.omit(req, 'id'));
+    const isValidUpdate = this.isValidUpdate(partnerDoc);
+    if (partnerDoc.isCompleted && !isValidUpdate) {
+      throw new UnprocessableEntityException('Update breaks completion requirements of partner profile');
+    }
+    if (!partnerDoc.isCompleted && isValidUpdate) {
+      partnerDoc.isCompleted = true;
+    }
+    await partnerDoc.save();
     return undefined;
+  }
+
+  private isValidUpdate(partner: Restaurant) {
+    const requirements = [
+      partner.name,
+      partner.bankAccountNumber,
+      partner.phoneNumber,
+      partner.addressId,
+      partner.logo,
+      partner.description,
+      partner.cuisineType,
+      partner.tags,
+    ];
+
+    return requirements.every(_.negate(_.isNil));
   }
 }
 

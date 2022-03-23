@@ -9,9 +9,10 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  ParamDishesFilter,
   Url,
 } from '../../../shared';
-import { ListPartnerDishesHandler } from '../domain';
+import { DishFilters, ListDishesHandler } from '../domain';
 import { DishListDto } from './DishListDto';
 
 @ApiController({
@@ -20,17 +21,18 @@ import { DishListDto } from './DishListDto';
   description: "Operations on restaurant's dishes",
 })
 class RestaurantDishController {
-  constructor(private readonly listDishesHandler: ListPartnerDishesHandler) {}
+  constructor(private readonly listDishesHandler: ListDishesHandler) {}
 
   @ApiObjectIdParam({ name: 'restaurantId' })
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   async list(
-    @Param('restaurantId') partnerId: string,
-    @Pagination() { page, limit }: PaginationQuery,
+    @Param('restaurantId') restaurantId: string,
+    @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
+    @ParamDishesFilter() filters: DishFilters,
   ) {
-    const paginatedDishes = await this.listDishesHandler.exec({ page, limit, partnerId });
+    const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }

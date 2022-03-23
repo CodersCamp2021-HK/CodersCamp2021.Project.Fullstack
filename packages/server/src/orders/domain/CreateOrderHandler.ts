@@ -1,4 +1,4 @@
-import { ForbiddenException } from '@nestjs/common';
+import { UnprocessableEntityException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -35,7 +35,7 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
 
   async exec(req: CreateOrderRequest): Promise<Order> {
     const user = await this.userModel.findById(req.userId);
-    if (user?.profileCompleted && user?.addressId.length > 0) {
+    if (user?.isCompleted) {
       const created = await this.orderModel.create({ ...req, date: new Date() });
       const mail = await this.authFacade.getEmailByUserId(req.userId);
 
@@ -43,7 +43,7 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
         await this.orderMailService.sendOrderConfirmation(mail, created.id);
       }
       return plainToInstance(Order, created);
-    } else throw new ForbiddenException();
+    } else throw new UnprocessableEntityException();
   }
 }
 
