@@ -1,5 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude, Expose, Type } from 'class-transformer';
+import _ from 'lodash';
 import { ObjectId } from 'mongodb';
 import { Document, SchemaTypes } from 'mongoose';
 
@@ -42,6 +43,14 @@ class Card {
   collection: 'users',
 })
 class User {
+  get isCompleted() {
+    return (
+      [this.name, this.surname, this.phoneNumber].every(_.negate(_.isNil)) &&
+      this.addressId.length > 0 &&
+      !_.isEmpty(this.card)
+    );
+  }
+
   @Expose()
   @Prop()
   name: string;
@@ -90,6 +99,14 @@ class User {
 }
 
 const UserSchema = SchemaFactory.createForClass(User);
+
+const getter = (() => {
+  const fn = Object.getOwnPropertyDescriptor(User.prototype, 'isCompleted')?.get;
+  if (!fn) throw new Error('User should have isCompleted getter');
+  return fn;
+})();
+
+UserSchema.virtual('isCompleted').get(getter);
 
 export { Card, User, USER_CONSTANTS, UserSchema };
 export type { UserDocument };
