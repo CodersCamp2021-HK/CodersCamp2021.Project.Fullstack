@@ -119,7 +119,9 @@ function restaurantDto(overrides?: Partial<Restaurant>) {
     description: 'Opis restauracji.',
     cuisineType: [CuisineTypes.Mediterranean],
     tags: [RestaurantTags.Kebab, RestaurantTags.StreetFood],
-    profileCompleted: true,
+    bankAccountNumber: '72920080748556126838146923',
+    phoneNumber: '800500300',
+    isCompleted: true,
     ...overrides,
   };
 }
