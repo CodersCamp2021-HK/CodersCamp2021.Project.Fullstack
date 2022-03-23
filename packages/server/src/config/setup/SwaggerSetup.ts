@@ -21,10 +21,7 @@ type SwaggerConfig = Readonly<{
 
 const defaultSwaggerDocumentConfig: SwaggerDocumentConfig = Object.freeze({
   title: `${APP_NAME} API 🍲🍝🍜`,
-  description: `
-${APP_NAME} is an online food delivery system connecting restaurants with health-conscious users.
-The app automatically sums up all of the nutritional values helping you stick to your diet.
-`,
+  description: `${APP_NAME} is an online food delivery system connecting restaurants with health-conscious users.`,
   externalDoc: {
     description: 'CodersCamp 2021 - Project Fullstack - GitHub',
     url: 'https://github.com/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack',
