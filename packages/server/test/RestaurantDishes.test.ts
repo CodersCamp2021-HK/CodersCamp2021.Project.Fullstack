@@ -2,23 +2,24 @@ import { HttpStatus } from '@nestjs/common';
 
 import { dishDto, initE2eFixture } from './shared';
 
-const RESTAURANT_ID = '6200218668fc82e7bdf15088';
-const PATH = `/api/restaurants/${RESTAURANT_ID}/dishes`;
+const path = (id) => `/api/restaurants/${id}/dishes`;
 
-describe(`${PATH}`, () => {
+describe(`${path(':id')}`, () => {
   const fixture = initE2eFixture();
 
   it('GET /', async () => {
     // Given
+    const { id: partnerId } = await fixture.db.restaurantModel.create({});
+    const { id: otherId } = await fixture.db.restaurantModel.create({});
     const dishes = [
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: '6200218668fc82e7bdf15089' }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: otherId }),
     ];
     await fixture.db.dishModel.create(dishes);
 
     // When
-    const res = await fixture.req.get(PATH);
+    const res = await fixture.req.get(path(partnerId));
 
     // Then
     expect(res.status).toBe(HttpStatus.OK);

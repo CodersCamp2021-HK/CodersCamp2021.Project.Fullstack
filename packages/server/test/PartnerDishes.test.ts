@@ -17,12 +17,14 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    const { id: partnerId } = await fixture.db.restaurantModel.create({});
+    const { id: otherId } = await fixture.db.restaurantModel.create({});
+    const agent = fixture.agent(Role.Partner, partnerId);
     const dishes = [
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: '6200218668fc82e7bdf15089' }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: otherId }),
     ];
     await fixture.db.dishModel.create(dishes);
 
@@ -37,6 +39,7 @@ describe(`${PATH}`, () => {
   it('POST /', async () => {
     // Given
     const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    await fixture.db.restaurantModel.create({ ...restaurantDto(), _id: RESTAURANT_ID });
     const reqBody: CreateDishDto = dishDto();
 
     // When
@@ -49,7 +52,7 @@ describe(`${PATH}`, () => {
 
   it('PUT /:id', async () => {
     // Given
-    const restaurant = restaurantDto({ profileCompleted: true });
+    const restaurant = restaurantDto({ isCompleted: true });
     const createRestaurant = await fixture.db.restaurantModel.create(restaurant);
     const restaurantId = createRestaurant._id?.toString();
     const agent = fixture.agent(Role.Partner, restaurantId);
@@ -58,9 +61,9 @@ describe(`${PATH}`, () => {
     const createdDish = await fixture.db.dishModel.create(dish);
     const dishId = createdDish._id?.toString();
     const reqBody = updateDishDto({ restaurant: restaurantId });
-    await fixture.db.restaurantModel.updateOne({ dishes: createdDish });
+    await fixture.db.restaurantModel.findByIdAndUpdate(restaurantId, { dishes: createdDish });
 
-    // When;
+    // When
     const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
 
     // Then

@@ -13,11 +13,12 @@ import {
   createPaginationLink,
   Pagination,
   PaginationQuery,
+  ParamDishesFilter,
   PartnerId,
   Role,
   Url,
 } from '../../../shared';
-import { CreateDishHandler, DeleteDishHandler, ListPartnerDishesHandler, UpdateDishHandler } from '../domain';
+import { CreateDishHandler, DeleteDishHandler, DishFilters, ListDishesHandler, UpdateDishHandler } from '../domain';
 import { CreateDishDto, DishDto, UpdateDishDto } from './DishDto';
 import { DishListDto } from './DishListDto';
 
@@ -25,7 +26,7 @@ import { DishListDto } from './DishListDto';
 class PartnerDishController {
   constructor(
     private readonly createDishHandler: CreateDishHandler,
-    private readonly listPartnerDishesHandler: ListPartnerDishesHandler,
+    private readonly listDishesHandler: ListDishesHandler,
     private readonly updateDishHandler: UpdateDishHandler,
     private readonly deleteDishHandler: DeleteDishHandler,
   ) {}
@@ -33,12 +34,13 @@ class PartnerDishController {
   @ApiList({ name: 'dishes', response: DishListDto, link: true })
   @ApiAuthorization(Role.Partner)
   async list(
-    @PartnerId() partnerId: string,
-    @Pagination() { page, limit }: PaginationQuery,
+    @PartnerId() restaurantId: string,
+    @Pagination() pagination: PaginationQuery,
     @Res({ passthrough: true }) res: Response,
     @Url() url: URL,
+    @ParamDishesFilter() filters: DishFilters,
   ) {
-    const paginatedDishes = await this.listPartnerDishesHandler.exec({ page, limit, partnerId });
+    const paginatedDishes = await this.listDishesHandler.exec({ ...pagination, ...filters, restaurantId });
     res.setHeader('Link', createPaginationLink(url, paginatedDishes.pages));
     return plainToInstance(DishListDto, paginatedDishes);
   }
@@ -52,6 +54,7 @@ class PartnerDishController {
     @Url() url: URL,
   ) {
     const dish = await this.createDishHandler.exec({ ...createDishDto, restaurant });
+    if (!dish) return null;
     res.setHeader('Location', `${url.href}/${dish.id}`);
     return plainToInstance(DishDto, dish);
   }

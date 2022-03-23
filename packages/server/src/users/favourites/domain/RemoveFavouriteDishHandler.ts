@@ -15,11 +15,9 @@ class RemoveFavouriteDishHandler implements Handler<RemoveFavouriteDishRequest, 
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async exec(req: RemoveFavouriteDishRequest): Promise<null | undefined> {
-    const user = await this.userModel
-      .findByIdAndUpdate(req.userId, { $pull: { favouriteDishes: req.dishId } })
-      .populate('favouriteDishes');
+    const result = await this.userModel.updateOne({ _id: req.userId }, { $pull: { favouriteDishes: req.dishId } });
 
-    if (!user?.favouriteDishes.some((dish) => dish.id === req.dishId)) return null;
+    if (result.modifiedCount === 0) return null;
     return undefined;
   }
 }

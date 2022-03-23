@@ -7,7 +7,7 @@ import { RegisterAsUserDto } from '../../src/auth/api/RegisterAsUserDto';
 import { Order } from '../../src/orders/database';
 import { CuisineTypes, Restaurant, RestaurantTags } from '../../src/restaurants/database';
 import { DishDto } from '../../src/restaurants/dishes/api/DishDto';
-import { Allergens, Dish, DishTags, MealType } from '../../src/restaurants/dishes/database';
+import { Allergens, DishTags, MealType } from '../../src/restaurants/dishes/database';
 import { Role } from '../../src/shared';
 import { UserDto } from '../../src/users/api/UserDto';
 
@@ -109,7 +109,6 @@ function userDto(overrides?: Partial<UserDto>) {
     surname: 'Kowalski',
     phoneNumber: '800500300',
     card: cardDto(),
-    profileCompleted: false,
     ...overrides,
   };
 }
@@ -120,7 +119,9 @@ function restaurantDto(overrides?: Partial<Restaurant>) {
     description: 'Opis restauracji.',
     cuisineType: [CuisineTypes.Mediterranean],
     tags: [RestaurantTags.Kebab, RestaurantTags.StreetFood],
-    profileCompleted: true,
+    bankAccountNumber: '72920080748556126838146923',
+    phoneNumber: '800500300',
+    isCompleted: true,
     ...overrides,
   };
 }

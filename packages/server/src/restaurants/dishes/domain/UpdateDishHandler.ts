@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
-import { NOTFOUND } from 'dns';
-import _, { update } from 'lodash';
 import { Model } from 'mongoose';
 
 import { Handler } from '../../../shared';
