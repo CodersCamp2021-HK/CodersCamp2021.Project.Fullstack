@@ -12,6 +12,11 @@ class RestaurantsFacade {
     const restaurant = plainToInstance(Restaurant, restaurantDoc);
     return restaurant.id;
   }
+
+  async exists(id: string) {
+    const restaurant = await this.restaurantModel.findById(id);
+    return restaurant !== null;
+  }
 }
 
 export { RestaurantsFacade };
