@@ -9,7 +9,7 @@ const APP_NAME = 'JeszCoChcesz';
 type SwaggerDocumentConfig = Readonly<{
   title: string;
   description: string;
-  contact: { name: string; url: string };
+  externalDoc: { description: string; url: string };
   version: string;
   path: string;
 }>;
@@ -25,8 +25,8 @@ const defaultSwaggerDocumentConfig: SwaggerDocumentConfig = Object.freeze({
 ${APP_NAME} is an online food delivery system connecting restaurants with health-conscious users.
 The app automatically sums up all of the nutritional values helping you stick to your diet.
 `,
-  contact: {
-    name: 'CodersCamp 2021 - Project Fullstack',
+  externalDoc: {
+    description: 'CodersCamp 2021 - Project Fullstack - GitHub',
     url: 'https://github.com/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack',
   },
   version: '1.0.0',
@@ -64,7 +64,7 @@ function createSwaggerDocument(app: INestApplication, config: SwaggerDocumentCon
     .addCookieAuth(env.ACCESS_TOKEN_NAME)
     .setTitle(config.title)
     .setDescription(config.description)
-    .setContact(config.contact.name, config.contact.url, '')
+    .setExternalDoc(config.externalDoc.description, config.externalDoc.url)
     .setVersion(config.version)
     .build();
   const document = SwaggerModule.createDocument(app, documentBase);
