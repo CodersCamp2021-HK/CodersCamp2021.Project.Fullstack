@@ -204,6 +204,10 @@ class Dish {
 
   @Expose()
   readonly id: string;
+
+  @Expose()
+  @Prop({ default: false })
+  updated: boolean;
 }
 
 const DishSchema = SchemaFactory.createForClass(Dish);
