@@ -33,7 +33,12 @@ describe(`${PATH}`, () => {
     const created = await fixture.db.restaurantModel.create({ ...restaurant, logo });
     const id = created._id?.toString();
     const agent = fixture.agent(Role.Partner, id);
-    const reqBody = { ...restaurant, cuisineType: ['włoska'], tags: ['wegetariańska'] };
+    const reqBody = {
+      ...restaurant,
+      cuisineType: ['włoska'],
+      tags: ['wegetariańska'],
+      operationalCities: ['Kraków'],
+    };
 
     // When
     const res0 = await agent.put(PATH).send(reqBody);

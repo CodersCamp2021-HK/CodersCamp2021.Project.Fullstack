@@ -11,8 +11,7 @@ import {
   CreateDishHandler,
   DeleteDishHandler,
   GetDishHandler,
-  ListAllDishesHandler,
-  ListPartnerDishesHandler,
+  ListDishesHandler,
   UpdateDishHandler,
 } from './dishes/domain';
 import { GetRestaurantHandler } from './domain/GetRestaurantHandler';
@@ -43,8 +42,7 @@ import { UpdatePartnerProfileHandler } from './profile/domain';
     CreateDishHandler,
     UpdateDishHandler,
     DeleteDishHandler,
-    ListAllDishesHandler,
-    ListPartnerDishesHandler,
+    ListDishesHandler,
     UpdatePartnerProfileHandler,
   ],
   exports: [RestaurantsFacade, DishesFacade],

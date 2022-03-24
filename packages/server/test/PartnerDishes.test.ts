@@ -17,12 +17,14 @@ describe(`${PATH}`, () => {
 
   it('GET /', async () => {
     // Given
-    const agent = fixture.agent(Role.Partner, RESTAURANT_ID);
+    const { id: partnerId } = await fixture.db.restaurantModel.create({});
+    const { id: otherId } = await fixture.db.restaurantModel.create({});
+    const agent = fixture.agent(Role.Partner, partnerId);
     const dishes = [
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: RESTAURANT_ID }),
-      dishDto({ restaurant: '6200218668fc82e7bdf15089' }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: partnerId }),
+      dishDto({ restaurant: otherId }),
     ];
     await fixture.db.dishModel.create(dishes);
 
@@ -59,7 +61,7 @@ describe(`${PATH}`, () => {
     const createdDish = await fixture.db.dishModel.create(dish);
     const dishId = createdDish._id?.toString();
     const reqBody = updateDishDto({ restaurant: restaurantId });
-    await fixture.db.restaurantModel.updateOne({ _id: restaurantId }, { $push: { dishes: dishId } });
+    await fixture.db.restaurantModel.findByIdAndUpdate(restaurantId, { dishes: createdDish });
 
     // When
     const resPut = await agent.put(`${PATH}/${dishId}`).send(reqBody);
