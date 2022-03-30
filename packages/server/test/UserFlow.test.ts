@@ -7,9 +7,12 @@ describe('User flow', () => {
   const fixture = initE2eFixture();
   let agent: SuperAgentTest;
 
+  beforeAll(() => {
+    agent = fixture.agent();
+  });
+
   it('Register user', async () => {
     // Given
-    agent = fixture.agent();
     const registrationData = {
       email: 'user@email.com',
       password: 'Password1',
