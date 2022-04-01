@@ -41,7 +41,6 @@ class UpdatePartnerProfileHandler implements Handler<UpdatePartnerProfileRequest
       partner.bankAccountNumber,
       partner.phoneNumber,
       partner.addressId,
-      partner.logo,
       partner.description,
       partner.cuisineType,
       partner.tags,
