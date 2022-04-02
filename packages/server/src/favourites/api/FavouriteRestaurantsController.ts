@@ -2,7 +2,6 @@ import { Param, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 
-import { FavouriteRestaurantDto } from '../../../restaurants/api/RestaurantDto';
 import {
   ApiAuthorization,
   ApiController,
@@ -16,13 +15,13 @@ import {
   Role,
   Url,
   UserId,
-} from '../../../shared';
+} from '../../shared';
 import {
   AddFavouriteRestaurantHandler,
   ListFavouriteRestaurantsHandler,
   RemoveFavouriteRestaurantHandler,
 } from '../domain';
-import { FavouriteRestaurantListDto } from './FavouriteRestaurantListDto';
+import { FavouriteRestaurantDto, FavouriteRestaurantListDto } from './FavouriteDtos';
 
 @ApiController({
   path: 'users/favourite/restaurants',

@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 import { AddressDto } from '../../addresses/api/AddressDto';
@@ -51,7 +51,4 @@ class RestaurantDto {
   readonly logo: string;
 }
 
-@Exclude()
-class FavouriteRestaurantDto extends PickType(RestaurantDto, ['id', 'name'] as const) {}
-
-export { FavouriteRestaurantDto, RestaurantDto };
+export { RestaurantDto };

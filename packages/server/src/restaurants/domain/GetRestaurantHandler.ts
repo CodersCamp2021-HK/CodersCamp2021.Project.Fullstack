@@ -14,7 +14,7 @@ class GetRestaurantHandler implements Handler<GetRestaurantRequest, Restaurant |
   constructor(@InjectModel(Restaurant.name) private restaurantModel: Model<RestaurantDocument>) {}
 
   async exec({ id, profileMustBeCompleted = true }: GetRestaurantRequest): Promise<Restaurant | null> {
-    const restaurant = await this.restaurantModel.findById(id);
+    const restaurant = await this.restaurantModel.findById(id).populate('addressId');
     if (!restaurant || (profileMustBeCompleted && !restaurant?.isCompleted)) return null;
     return plainToInstance(Restaurant, restaurant);
   }
