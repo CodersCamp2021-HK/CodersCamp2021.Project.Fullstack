@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
@@ -141,7 +141,4 @@ class CreateDishDto extends OmitType(DishDto, ['id', 'restaurant', 'photo'] as c
 
 class UpdateDishDto extends CreateDishDto {}
 
-@Exclude()
-class FavouriteDishDto extends PickType(DishDto, ['id', 'name', 'restaurant'] as const) {}
-
-export { CreateDishDto, DishDto, FavouriteDishDto, UpdateDishDto };
+export { CreateDishDto, DishDto, UpdateDishDto };
