@@ -1,2 +1,2 @@
-export { UsersFacade } from './infra';
+export { UsersFacade, UsersFavFacade } from './infra';
 export * from './UsersModule';

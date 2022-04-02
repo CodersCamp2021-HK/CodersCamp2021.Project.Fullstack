@@ -3,8 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import _ from 'lodash';
 import { ObjectId } from 'mongodb';
 
-import { FavouriteRestaurantDto } from '../src/restaurants/api/RestaurantDto';
-import { FavouriteDishDto } from '../src/restaurants/dishes/api/DishDto';
+import { FavouriteDishDto, FavouriteRestaurantDto } from '../src/favourites/api/FavouriteDtos';
 import { Role } from '../src/shared';
 import { dishDto, initE2eFixture, restaurantDto } from './shared';
 
