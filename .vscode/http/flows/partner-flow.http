@@ -31,6 +31,7 @@ PUT {{baseUrl}}/partner/profile
     "pizza",
     "zdrowa"
   ],
+  "operationalCities": [],
   "bankAccountNumber": "72920080748556126838146923",
   "phoneNumber": "800500300"
 }
