@@ -10,10 +10,10 @@ import logo from './logo.svg';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#cddc39',
+      main: '#1b5e20',
     },
     secondary: {
-      main: '#1b5e20',
+      main: '#cddc39',
     },
   },
 });
