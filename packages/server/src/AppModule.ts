@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AddressesModule } from './addresses';
 import { AuthModule } from './auth';
 import { AppConfigModule } from './config';
+import { FavouritesModule } from './favourites';
 import { ImageModule } from './image';
 import { MailModule } from './mail';
 import { OrderModule } from './orders';
@@ -14,6 +15,7 @@ const featureModules = [
   AuthModule,
   RestaurantsModule,
   UsersModule,
+  FavouritesModule,
   OrderModule,
   ImageModule,
   MailModule,

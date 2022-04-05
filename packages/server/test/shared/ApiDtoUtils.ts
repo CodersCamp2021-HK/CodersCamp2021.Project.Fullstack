@@ -68,6 +68,29 @@ function dishDto(overrides?: Partial<DishDto>) {
     fats: { per100g: 20, perPortion: 60 },
     proteins: { per100g: 20, perPortion: 60 },
     carbohydrates: { per100g: 20, perPortion: 60 },
+    updated: false,
+    ...overrides,
+  };
+}
+
+function updateDishDto(overrides?: Partial<DishDto>) {
+  return {
+    name: 'Danie 1 update',
+    mealType: [MealType.Lunch, MealType.Breakfast],
+    description: 'Opis dania update',
+    price: 1000,
+    tags: [DishTags.Spicy, DishTags.GlutenFree],
+    ingredients: [
+      { name: 'składnik 3', canBeExcluded: false },
+      { name: 'składnik 4', canBeExcluded: false },
+    ],
+    allergens: [Allergens.SesameSeeds],
+    portionWeight: 400,
+    calories: { per100g: 200, perPortion: 400 },
+    fats: { per100g: 10, perPortion: 40 },
+    proteins: { per100g: 20, perPortion: 50 },
+    carbohydrates: { per100g: 10, perPortion: 20 },
+    updated: false,
     ...overrides,
   };
 }
@@ -86,7 +109,6 @@ function userDto(overrides?: Partial<UserDto>) {
     surname: 'Kowalski',
     phoneNumber: '800500300',
     card: cardDto(),
-    profileCompleted: false,
     ...overrides,
   };
 }
@@ -97,7 +119,9 @@ function restaurantDto(overrides?: Partial<Restaurant>) {
     description: 'Opis restauracji.',
     cuisineType: [CuisineTypes.Mediterranean],
     tags: [RestaurantTags.Kebab, RestaurantTags.StreetFood],
-    profileCompleted: true,
+    bankAccountNumber: '72920080748556126838146923',
+    phoneNumber: '800500300',
+    isCompleted: true,
     ...overrides,
   };
 }
@@ -123,4 +147,14 @@ function orderDto(overrides?: Partial<Order>) {
   };
 }
 
-export { addressDto, dishDto, loginDto, orderDto, registerPartnerDto, registerUserDto, restaurantDto, userDto };
+export {
+  addressDto,
+  dishDto,
+  loginDto,
+  orderDto,
+  registerPartnerDto,
+  registerUserDto,
+  restaurantDto,
+  updateDishDto,
+  userDto,
+};

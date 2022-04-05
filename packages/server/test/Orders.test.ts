@@ -2,7 +2,7 @@ import { HttpStatus } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 
 import { Role } from '../src/shared';
-import { initE2eFixture, orderDto } from './shared';
+import { initE2eFixture, orderDto, userDto } from './shared';
 
 const PATH = '/api/orders';
 
@@ -22,14 +22,14 @@ describe(`${PATH}`, () => {
     const resp0 = await agent.post(PATH).send(reqBody);
 
     // Then
-    expect(resp0.status).toBe(HttpStatus.FORBIDDEN);
+    expect(resp0.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
 
     // When
-    await fixture.db.userModel.findByIdAndUpdate(userId, { $set: { profileCompleted: true } });
+    await fixture.db.userModel.findByIdAndUpdate(userId, userDto({ id: userId }));
     const resp1 = await agent.post(PATH).send(reqBody);
 
     // Then
-    expect(resp1.status).toBe(HttpStatus.FORBIDDEN);
+    expect(resp1.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
 
     // When
     await fixture.db.userModel.findByIdAndUpdate(userId, { $set: { addressId: [new ObjectId().toString()] } });
