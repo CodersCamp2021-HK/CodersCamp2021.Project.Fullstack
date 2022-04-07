@@ -13,6 +13,13 @@ const theme = createTheme({
     secondary: {
       main: '#cddc39',
     },
+    background: {
+      default: '#F4F3DD',
+    },
+  },
+  typography: {
+    fontFamily: 'Noto Sans',
+    fontSize: 14,
   },
 });
 
