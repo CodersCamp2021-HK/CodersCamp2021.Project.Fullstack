@@ -12,6 +12,11 @@ class UsersFacade {
     const user = plainToInstance(User, userDoc);
     return user.id;
   }
+
+  async canOrder(userId: string) {
+    const user = await this.userModel.findById(userId);
+    return user?.isCompleted ?? false;
+  }
 }
 
 export { UsersFacade };

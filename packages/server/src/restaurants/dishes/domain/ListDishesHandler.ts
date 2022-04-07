@@ -66,6 +66,7 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
             'restaurant.operationalCities': filters.city,
             mealType: filters.mealType ? { $all: filters.mealType } : null,
             tags: filters.tags ? { $all: filters.tags } : null,
+            updated: false,
           },
           _.isNil,
         ),
