@@ -33,6 +33,7 @@ class RegisterAsUserHandler implements Handler<RegisterAsUserRequest, void> {
 
     await authDoc.save();
     // TODO pass non static token
+
     await this.authMailService.sendUserConfirmation(email, 'dcmDkmygBGIILTWaDeP0GFIljjf19R2C');
   }
 }
