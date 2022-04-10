@@ -47,7 +47,7 @@ class CreateOrderHandler implements Handler<CreateOrderRequest, Order> {
     const created = await this.orderModel.create({ ...req, date: new Date() });
 
     const mail = await this.authFacade.getEmailByUserId(req.userId);
-    if (mail != null) {
+    if (mail != undefined) {
       await this.orderMailService.sendOrderConfirmation(mail, created.id);
     }
 
