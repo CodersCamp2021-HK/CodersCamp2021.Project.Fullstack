@@ -2,42 +2,10 @@ import './App.css';
 
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
 import { Home } from './pages';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1b5e20',
-    },
-    secondary: {
-      main: '#cddc39',
-    },
-    background: {
-      default: '#F4F3DD',
-    },
-  },
-  typography: {
-    fontFamily: 'Noto Sans',
-    fontSize: 14,
-    h1: {
-      fontWeight: 400,
-    },
-    h2: {
-      fontWeight: 400,
-    },
-  },
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        colorPrimary: {
-          backgroundColor: '#1B5E2014',
-        },
-      },
-    },
-  },
-});
+import { theme } from './theme';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
 const DEV_API_BASE_PATH = 'http://localhost:4000';
