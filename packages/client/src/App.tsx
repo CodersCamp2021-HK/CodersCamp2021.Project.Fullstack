@@ -28,6 +28,15 @@ const theme = createTheme({
       fontWeight: 400,
     },
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: '#1B5E2014',
+        },
+      },
+    },
+  },
 });
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';

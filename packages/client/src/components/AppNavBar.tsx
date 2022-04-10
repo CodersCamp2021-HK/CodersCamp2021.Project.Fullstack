@@ -21,7 +21,7 @@ const AppNavBar = () => {
   };
 
   return (
-    <AppBar sx={{ background: '#1B5E2014' }} position='fixed'>
+    <AppBar position='static'>
       <Toolbar sx={{ width: 'min(100%, 92rem)', mx: 'auto' }}>
         <Box sx={{ display: { xs: 'block', md: 'none' } }}>
           <IconButton size='large' onClick={handleMenuOpen} sx={{ p: 0 }}>
