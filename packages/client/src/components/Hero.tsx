@@ -16,7 +16,7 @@ const Hero = () => (
         Nie musisz dalej szukać
       </Typography>
       <Typography color='white' sx={{ typography: { sm: 'h2', xl: 'h1' }, maxWidth: '46rem' }}>
-        Wybieraj dania z najlepszych restauracji
+        Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Button variant='contained' color='secondary' sx={{ borderRadius: '2rem' }}>

@@ -21,6 +21,12 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Noto Sans',
     fontSize: 14,
+    h1: {
+      fontWeight: 400,
+    },
+    h2: {
+      fontWeight: 400,
+    },
   },
 });
 
