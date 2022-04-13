@@ -24,7 +24,8 @@ const App = () => (
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <Home />
-      <RegisterPage />
+      <RegisterPage userRole='Partner' />
+      <RegisterPage userRole='User' />
     </ThemeProvider>
   </>
 );
