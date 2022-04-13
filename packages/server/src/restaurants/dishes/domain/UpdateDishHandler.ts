@@ -22,7 +22,6 @@ interface UpdateDishRequest {
   readonly fats: NutritionalValue;
   readonly proteins: NutritionalValue;
   readonly carbohydrates: NutritionalValue;
-  readonly updated: boolean;
 }
 
 @Injectable()

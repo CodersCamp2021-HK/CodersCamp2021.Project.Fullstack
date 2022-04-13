@@ -1,7 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 import { SuperAgentTest } from 'supertest';
 
-import { addressDto, initE2eFixture, orderDto, userDto } from './shared';
+import { addressDto, dishDto, initE2eFixture, orderDto, userDto } from './shared';
 
 describe('User flow', () => {
   const fixture = initE2eFixture();
@@ -83,8 +84,8 @@ describe('User flow', () => {
 
   it('Create order', async () => {
     // Given
-    const order = orderDto();
-    const dishId = order.subOrders[0].dishes[0].dishId;
+    const { id: dishId } = await fixture.db.dishModel.create({ ...dishDto(), restaurant: new ObjectId().toString() });
+    const order = orderDto({}, dishId);
 
     // When
     const createOrderResp = await agent.post('/api/orders').send(order);

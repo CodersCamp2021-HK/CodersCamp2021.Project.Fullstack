@@ -1,6 +1,7 @@
 import { INestApplication, Type } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
+import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import request from 'supertest';
@@ -16,6 +17,11 @@ type E2eFixtureOptions = Readonly<{
   override?: (builder: TestingModuleBuilder) => TestingModuleBuilder;
   testControllers?: Type[];
 }>;
+class MailerServiceStub {
+  sendMail(sendMailOptions: ISendMailOptions) {
+    return Promise.resolve({ status: 200, options: sendMailOptions });
+  }
+}
 
 function initE2eFixture(options: E2eFixtureOptions = {}) {
   let app: INestApplication;
@@ -30,7 +36,9 @@ function initE2eFixture(options: E2eFixtureOptions = {}) {
       Test.createTestingModule({
         imports: [AppModule],
         controllers: options.testControllers,
-      }),
+      })
+        .overrideProvider(MailerService)
+        .useClass(MailerServiceStub),
     ).compile();
 
     app = moduleFixture.createNestApplication();

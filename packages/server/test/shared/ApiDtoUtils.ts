@@ -68,7 +68,6 @@ function dishDto(overrides?: Partial<DishDto>) {
     fats: { per100g: 20, perPortion: 60 },
     proteins: { per100g: 20, perPortion: 60 },
     carbohydrates: { per100g: 20, perPortion: 60 },
-    updated: false,
     ...overrides,
   };
 }
@@ -90,7 +89,6 @@ function updateDishDto(overrides?: Partial<DishDto>) {
     fats: { per100g: 10, perPortion: 40 },
     proteins: { per100g: 20, perPortion: 50 },
     carbohydrates: { per100g: 10, perPortion: 20 },
-    updated: false,
     ...overrides,
   };
 }
@@ -126,9 +124,8 @@ function restaurantDto(overrides?: Partial<Restaurant>) {
   };
 }
 
-function orderDto(overrides?: Partial<Order>) {
+function orderDto(overrides?: Partial<Order>, dishId = new ObjectId().toString()) {
   const addressId = new ObjectId().toString();
-  const dishId = new ObjectId().toString();
   return {
     addressId,
     subOrders: [

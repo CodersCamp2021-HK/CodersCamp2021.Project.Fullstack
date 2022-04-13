@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
@@ -128,13 +128,6 @@ class DishDto {
   @Type(() => String)
   @ApiObjectIdProperty()
   readonly restaurant: string;
-
-  @Expose()
-  @Type(() => Boolean)
-  @ApiPropertyOptional({
-    default: false,
-  })
-  readonly updated: boolean;
 }
 
 class CreateDishDto extends OmitType(DishDto, ['id', 'restaurant', 'photo'] as const) {}
