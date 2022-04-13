@@ -1,60 +1,113 @@
-[
-  {
-    "_id": {
-      "$oid": "623af61e0b179ca11e8f4201"
-    },
-    "owner": {
-      "$oid": "623af5cf0b179ca11e8f41fd"
-    },
-    "postcode": "00-012",
-    "city": "Warszawa",
-    "floor": "1",
-    "apartmentNumber": "11",
-    "streetNumber": "1A",
-    "street": "Prosta"
+[{
+  "_id": {
+    "$oid": "624c5021c18edb7b60c66315"
   },
-  {
-    "_id": {
-      "$oid": "623af6fc0b179ca11e8f4215"
-    },
-    "owner": {
-      "$oid": "623af6790b179ca11e8f420e"
-    },
-    "postcode": "50-012",
-    "city": "Wrocław",
-    "floor": "5",
-    "apartmentNumber": "74",
-    "streetNumber": "52",
-    "street": "Długa"
+  "owner": {
+    "$oid": "624c4f33c18edb7b60c662e3"
   },
-  {
-    "_id": {
-      "$oid": "623afa330b179ca11e8f4228"
-    },
-    "owner": {
-      "$oid": "623afa0b0b179ca11e8f4224"
-    },
-    "postcode": "00-000",
-    "city": "Warszawa",
-    "floor": "0",
-    "apartmentNumber": "10",
-    "streetNumber": "22",
-    "street": "Przekątna",
-    "__v": 0
+  "postcode": "50-250",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "1",
+  "streetNumber": "22",
+  "street": "Wyszyńskiego",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c5088c18edb7b60c6631d"
   },
-  {
-    "_id": {
-      "$oid": "623afc830b179ca11e8f424a"
-    },
-    "owner": {
-      "$oid": "623afc5b0b179ca11e8f4246"
-    },
-    "postcode": "50-000",
-    "city": "Wrocław",
-    "floor": "0",
-    "apartmentNumber": "10",
-    "streetNumber": "12",
-    "street": "Wyszyńskiego",
-    "__v": 0
-  }
-]
+  "owner": {
+    "$oid": "624c4f3bc18edb7b60c662e8"
+  },
+  "postcode": "50-210",
+  "city": "Wrocław",
+  "floor": "3",
+  "apartmentNumber": "2",
+  "streetNumber": "55",
+  "street": "Polaka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c50fac18edb7b60c66324"
+  },
+  "owner": {
+    "$oid": "624c4f40c18edb7b60c662ed"
+  },
+  "postcode": "02-120",
+  "city": "Warszawa",
+  "floor": "6",
+  "apartmentNumber": "12",
+  "streetNumber": "192",
+  "street": "Grójecka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c517dc18edb7b60c6632a"
+  },
+  "owner": {
+    "$oid": "624c4f46c18edb7b60c662f2"
+  },
+  "postcode": "00-453",
+  "city": "Warszawa",
+  "floor": "1",
+  "apartmentNumber": "9",
+  "streetNumber": "11",
+  "street": "Czerniakowska",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c5277c18edb7b60c66331"
+  },
+  "owner": {
+    "$oid": "624c4f7dc18edb7b60c662f7"
+  },
+  "postcode": "02-115",
+  "city": "Warszawa",
+  "floor": "1",
+  "apartmentNumber": "11",
+  "streetNumber": "22",
+  "street": "Grójecka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c55c1c18edb7b60c6635b"
+  },
+  "owner": {
+    "$oid": "624c4f91c18edb7b60c662fc"
+  },
+  "postcode": "52-012",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "22",
+  "streetNumber": "1",
+  "street": "Słowiańska",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c5870c18edb7b60c6638f"
+  },
+  "owner": {
+    "$oid": "624c4fbec18edb7b60c66301"
+  },
+  "postcode": "50-012",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "7",
+  "streetNumber": "11",
+  "street": "Grunwaldzka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "624c5ac7c18edb7b60c663c3"
+  },
+  "owner": {
+    "$oid": "624c4fc8c18edb7b60c66306"
+  },
+  "postcode": "00-213",
+  "city": "Warszawa",
+  "floor": "0",
+  "apartmentNumber": "22",
+  "streetNumber": "21",
+  "street": "Piękna",
+  "__v": 0
+}]
