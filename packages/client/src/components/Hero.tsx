@@ -13,10 +13,10 @@ const Hero = () => (
     }}
   >
     <Stack sx={{ p: 8, height: 1, maxWidth: '92rem', mx: 'auto' }} justifyContent='flex-end' spacing={4}>
-      <Typography color='secondary' variant='h5'>
+      <Typography variant='h5' color='secondary'>
         Nie musisz dalej szukać
       </Typography>
-      <Typography color='white' sx={{ typography: { sm: 'h2', xl: 'h1' }, maxWidth: '46rem' }}>
+      <Typography variant='h2' color='white' sx={{ typography: { sm: 'h2', xl: 'h1' }, maxWidth: '46rem' }}>
         Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
