@@ -43,6 +43,7 @@ const PasswordHasherProvider: Provider = {
     JwtStrategy,
     AuthFacade,
   ],
+  exports: [AuthFacade],
 })
 class AuthModule {}
 
