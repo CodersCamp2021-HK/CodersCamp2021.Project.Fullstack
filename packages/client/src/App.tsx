@@ -3,6 +3,7 @@ import './App.css';
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Home } from './pages';
 import { theme } from './theme';
@@ -23,7 +24,11 @@ const App = () => (
   <>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <Home />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   </>
 );
