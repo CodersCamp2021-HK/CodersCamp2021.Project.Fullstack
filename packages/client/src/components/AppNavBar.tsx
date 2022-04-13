@@ -1,6 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import { AppBar, Box, Button, Fab, IconButton, Link, Menu, MenuItem, Theme, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Link, Menu, MenuItem, Theme, Toolbar } from '@mui/material';
 import { useState } from 'react';
 
 import logo from '../assets/logo.svg';
@@ -84,9 +84,11 @@ const AppNavBar = () => {
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
-        <Fab href='/shoppingcart' color='secondary' sx={{ boxShadow: 0, ml: 2 }}>
-          <ShoppingBasketIcon color='primary' />
-        </Fab>
+        <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
+          <IconButton href='/shoppingcart' sx={{ p: 2 }}>
+            <ShoppingBasketIcon color='primary' />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
