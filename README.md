@@ -74,6 +74,13 @@ Wygenerowanie plików produkcyjnych:
 yarn build
 ```
 
+Usunięcie obecnej bazy danych (**UWAŻAĆ!!**):
+
+```bash
+docker exec -it coderscamp2021projectfullstack_mongodb_1 bash -c "mongo dev -u root -p root  --authenticationDatabase admin --eval 'db.dropDatabase()'"
+
+```
+
 Wgranie danych testowych do bazy (Windows = PS, inne systemy bez znaczenia):
 
 ```bash
