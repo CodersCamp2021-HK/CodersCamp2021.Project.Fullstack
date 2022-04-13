@@ -20,7 +20,7 @@ const Hero = () => (
         Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Button variant='contained' color='secondary' sx={{ borderRadius: '2rem' }}>
+        <Button href='/order' variant='contained' color='secondary' sx={{ borderRadius: '2rem' }}>
           Złóż zamówienie
         </Button>
         <IconButton color='secondary' size='small'>

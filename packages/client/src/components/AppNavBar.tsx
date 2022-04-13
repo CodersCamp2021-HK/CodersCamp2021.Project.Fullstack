@@ -1,11 +1,62 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import { AppBar, Box, Button, Fab, IconButton, Link, Menu, MenuItem, Toolbar, useTheme } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Fab,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Palette,
+  Theme,
+  Toolbar,
+  useTheme,
+} from '@mui/material';
 import { useState } from 'react';
 
 import logo from '../assets/logo.svg';
 
-const PAGES = ['O nas', 'Kontakt', 'Dostawa'] as const;
+const PAGES = [
+  {
+    name: 'O nas',
+    href: 'about',
+    pos: 'left',
+  },
+  {
+    name: 'Kontakt',
+    href: 'contact',
+    pos: 'left',
+  },
+  {
+    name: 'Dostawa',
+    href: 'delivery',
+    pos: 'left',
+  },
+  {
+    name: 'Logowanie',
+    href: 'login',
+    pos: 'right',
+    color: (palette: Palette) => palette.primary.main,
+  },
+  {
+    name: 'Rejestracja',
+    href: 'register',
+    pos: 'right',
+    color: (palette: Palette) => palette.secondary.dark,
+  },
+] as const;
+
+const pageToButton = (page: typeof PAGES[number], theme: Theme) => (
+  <Button
+    key={page.href}
+    href={page.href}
+    sx={{ color: 'color' in page ? page.color(theme.palette) : theme.palette.secondary.contrastText, px: 2 }}
+  >
+    {page.name}
+  </Button>
+);
 
 const AppNavBar = () => {
   const theme = useTheme();
@@ -36,29 +87,23 @@ const AppNavBar = () => {
             open={Boolean(menuAnchorElem)}
             onClose={handleMenuClosed}
           >
-            {[...PAGES, 'Logowanie', 'Rejestracja'].map((page) => (
-              <MenuItem key={page} onClick={handleMenuClosed}>
-                {page}
+            {PAGES.map((page) => (
+              <MenuItem key={page.href} component={Link} href={page.href}>
+                {page.name}
               </MenuItem>
             ))}
           </Menu>
         </Box>
-        {/* TODO: Change this when router is ready */}
         <Link href='/' sx={{ mx: 'auto' }}>
           <img src={logo} alt='JeszCoChcesz' style={{ display: 'block', height: '6rem', paddingBlock: '1rem' }} />
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>
-          {PAGES.map((page) => (
-            <Button key={page} sx={{ color: theme.palette.secondary.contrastText, px: 2 }}>
-              {page}
-            </Button>
-          ))}
+          {PAGES.filter((page) => page.pos === 'left').map((page) => pageToButton(page, theme))}
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-          <Button sx={{ color: theme.palette.primary.main, px: 2 }}>Logowanie</Button>
-          <Button sx={{ color: theme.palette.secondary.dark, px: 2 }}>Rejestracja</Button>
+          {PAGES.filter((page) => page.pos === 'right').map((page) => pageToButton(page, theme))}
         </Box>
-        <Fab color='secondary' sx={{ boxShadow: 0, ml: 2 }}>
+        <Fab href='/shoppingcart' color='secondary' sx={{ boxShadow: 0, ml: 2 }}>
           <ShoppingBasketIcon color='primary' />
         </Fab>
       </Toolbar>
