@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Home } from './pages';
+import { routes } from './routes';
 import { theme } from './theme';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
@@ -26,7 +27,7 @@ const App = () => (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path={routes.home} element={<Home />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

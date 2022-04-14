@@ -4,31 +4,32 @@ import { AppBar, Box, Button, IconButton, Link, Menu, MenuItem, Theme, Toolbar }
 import { useState } from 'react';
 
 import logo from '../assets/logo.svg';
+import { routes } from '../routes';
 
 const LEFT_PAGES = [
   {
     name: 'O nas',
-    href: 'about',
+    pathname: routes.about,
   },
   {
     name: 'Kontakt',
-    href: 'contact',
+    pathname: routes.contact,
   },
   {
     name: 'Dostawa',
-    href: 'delivery',
+    pathname: routes.delivery,
   },
 ] as const;
 
 const RIGHT_PAGES = [
   {
     name: 'Logowanie',
-    href: 'login',
+    pathname: routes.login,
     color: (theme: Theme) => theme.palette.primary.main,
   },
   {
     name: 'Rejestracja',
-    href: 'register',
+    pathname: routes.register,
     color: (theme: Theme) => theme.palette.secondary.dark,
   },
 ] as const;
@@ -37,8 +38,8 @@ const PAGES = [...LEFT_PAGES, ...RIGHT_PAGES] as const;
 
 const pageToButton = (page: typeof PAGES[number]) => (
   <Button
-    key={page.href}
-    href={page.href}
+    key={page.pathname}
+    href={page.pathname}
     sx={{ color: 'color' in page ? page.color : (theme) => theme.palette.secondary.contrastText, px: 2 }}
   >
     {page.name}
@@ -73,19 +74,19 @@ const AppNavBar = () => {
             onClose={handleMenuClosed}
           >
             {PAGES.map((page) => (
-              <MenuItem key={page.href} component={Link} href={page.href}>
+              <MenuItem key={page.pathname} component={Link} href={page.pathname}>
                 {page.name}
               </MenuItem>
             ))}
           </Menu>
         </Box>
-        <Link href='/' sx={{ mx: 'auto' }}>
+        <Link href={routes.home} sx={{ mx: 'auto' }}>
           <img src={logo} alt='JeszCoChcesz' style={{ display: 'block', height: '6rem', paddingBlock: '1rem' }} />
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
-          <IconButton href='/shoppingcart' sx={{ p: 2 }}>
+          <IconButton href={routes.shoppingCart} sx={{ p: 2 }}>
             <ShoppingBasketIcon color='primary' />
           </IconButton>
         </Box>
