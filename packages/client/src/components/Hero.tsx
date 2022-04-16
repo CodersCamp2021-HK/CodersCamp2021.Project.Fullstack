@@ -5,10 +5,7 @@ import hero from '../assets/hero.jpg';
 
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
 
-const SearchField = styled(
-  TextField,
-  {},
-)(({ theme }) => ({
+const SearchField = styled(TextField)(({ theme }) => ({
   background: theme.palette.common.white,
   '& .MuiInputBase-root': {
     paddingRight: 0,
@@ -52,7 +49,7 @@ const Hero = () => (
             ),
           }}
         />
-        <IconButton color='secondary' size='small'>
+        <IconButton href='#steps' color='secondary' size='small'>
           <ArrowDownward fontSize='large' />
         </IconButton>
       </Stack>

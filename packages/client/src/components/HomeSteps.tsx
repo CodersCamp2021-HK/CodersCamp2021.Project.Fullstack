@@ -6,7 +6,7 @@ import step3 from '../assets/steps/3.svg';
 import { HomeStep } from './HomeStep';
 
 const HomeSteps = () => (
-  <Stack p={{ xs: 4, s: 8, md: 16 }} spacing={8}>
+  <Stack id='steps' p={{ xs: 4, s: 8, md: 16 }} spacing={8}>
     <HomeStep number={1} title='Wpisz swoje miasto' img={step1}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non aliquet nunc. In hac habitasse platea dictumst.
       Pellentesque rutrum venenatis velit at maximus. Vestibulum cursus massa vel justo facilisis, vel facilisis metus
