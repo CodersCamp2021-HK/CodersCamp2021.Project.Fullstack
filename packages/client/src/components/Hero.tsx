@@ -1,9 +1,29 @@
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment, Stack, styled, TextField, Typography } from '@mui/material';
 
 import hero from '../assets/hero.jpg';
 
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
+
+const SearchField = styled(
+  TextField,
+  {},
+)(({ theme }) => ({
+  background: theme.palette.common.white,
+  '& .MuiInputBase-root': {
+    paddingRight: 0,
+  },
+  '& .MuiButton-root': {
+    paddingInline: 32,
+    paddingBlock: 16,
+  },
+  '& fieldset': {
+    margin: -1,
+  },
+  '&, & fieldset, & .MuiButton-root': {
+    borderRadius: 32,
+  },
+}));
 
 const Hero = () => (
   <Box
@@ -20,9 +40,18 @@ const Hero = () => (
         Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Button variant='contained' color='secondary' sx={{ borderRadius: '2rem' }}>
-          Złóż zamówienie
-        </Button>
+        <SearchField
+          placeholder='Wpisz miasto'
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <Button variant='contained' color='secondary' disableElevation>
+                  Wyszukaj
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+        />
         <IconButton color='secondary' size='small'>
           <ArrowDownward fontSize='large' />
         </IconButton>
