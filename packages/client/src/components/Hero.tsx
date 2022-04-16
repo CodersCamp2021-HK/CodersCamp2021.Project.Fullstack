@@ -6,7 +6,7 @@ import hero from '../assets/hero.jpg';
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
 
 const SearchField = styled(TextField)(({ theme }) => ({
-  background: theme.palette.common.white,
+  backgroundColor: theme.palette.common.white,
   '& .MuiInputBase-root': {
     paddingRight: 0,
   },
@@ -33,7 +33,11 @@ const Hero = () => (
       <Typography variant='h5' color='secondary'>
         Nie musisz dalej szukać
       </Typography>
-      <Typography variant='h2' color='white' sx={{ typography: { xs: 'h4', sm: 'h2', xl: 'h1' }, maxWidth: '45rem' }}>
+      <Typography
+        variant='h2'
+        color='common.white'
+        sx={{ typography: { xs: 'h4', sm: 'h2', xl: 'h1' }, maxWidth: '45rem' }}
+      >
         Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
       <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} justifyContent='space-between' alignItems='flex-start'>
