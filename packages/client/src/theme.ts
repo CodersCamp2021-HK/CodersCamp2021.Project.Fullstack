@@ -1,4 +1,6 @@
-import { createTheme } from '@mui/material';
+import { createTheme, LinkProps } from '@mui/material';
+
+import { LinkBehavior } from './linkBehavior';
 
 const theme = createTheme({
   palette: {
@@ -23,6 +25,16 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      } as LinkProps,
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
