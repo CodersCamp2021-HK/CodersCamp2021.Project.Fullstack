@@ -9,7 +9,7 @@ const theme = createTheme({
       main: '#cddc39',
     },
     background: {
-      default: '#F4F3DD',
+      default: '#D5DBD6',
     },
     common: {
       white: '#FFFFFF',
@@ -29,7 +29,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#1B5E2014',
+          backgroundColor: '#EDF3EE',
         },
       },
     },

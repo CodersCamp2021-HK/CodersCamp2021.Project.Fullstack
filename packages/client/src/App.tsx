@@ -1,5 +1,3 @@
-import './App.css';
-
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -20,12 +18,10 @@ const configuration = new Configuration({
 });
 
 const App = () => (
-  <>
+  <ThemeProvider theme={theme}>
     <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <Home />
-    </ThemeProvider>
-  </>
+    <Home />
+  </ThemeProvider>
 );
 
 export { App };

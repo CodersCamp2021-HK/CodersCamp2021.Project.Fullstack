@@ -32,14 +32,14 @@ const Hero = () => (
       background: HERO_BACKGROUND,
     }}
   >
-    <Stack sx={{ p: 8, height: 1, maxWidth: '92rem', mx: 'auto' }} justifyContent='flex-end' spacing={4}>
-      <Typography color='secondary' variant='h5'>
+    <Stack sx={{ p: { xs: 4, sm: 8 }, height: 1, maxWidth: '90rem', mx: 'auto' }} justifyContent='center' spacing={4}>
+      <Typography variant='h5' color='secondary'>
         Nie musisz dalej szukać
       </Typography>
-      <Typography color='white' sx={{ typography: { sm: 'h2', xl: 'h1' }, maxWidth: '46rem' }}>
+      <Typography variant='h2' color='white' sx={{ typography: { xs: 'h4', sm: 'h2', xl: 'h1' }, maxWidth: '45rem' }}>
         Wybieraj dania z&nbsp;najlepszych restauracji
       </Typography>
-      <Stack direction='row' justifyContent='space-between' alignItems='center'>
+      <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} justifyContent='space-between' alignItems='flex-start'>
         <SearchField
           placeholder='Wpisz miasto'
           InputProps={{
