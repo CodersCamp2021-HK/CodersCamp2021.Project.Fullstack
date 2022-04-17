@@ -1,3 +1,7 @@
+import { LinkProps } from '@mui/material';
+
+import { LinkBehavior } from './linkBehavior';
+
 type PaletteMode = 'light' | 'dark';
 
 const themeColors = {
@@ -27,6 +31,16 @@ const defaultTheme = {
     },
   },
   components: {
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      } as LinkProps,
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {

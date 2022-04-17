@@ -2,17 +2,68 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import { AppBar, Box, Button, Fab, IconButton, Link, Menu, MenuItem, Toolbar, Tooltip, useTheme } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Theme,
+  Toolbar,
+  Tooltip,
+  useTheme,
+} from '@mui/material';
 import { useContext, useState } from 'react';
 
 import logo from '../assets/logo.svg';
 import { ThemeContext } from '../context';
+import { routes } from '../routes';
 
-const PAGES = ['O nas', 'Kontakt', 'Dostawa'] as const;
+const LEFT_PAGES = [
+  {
+    name: 'O nas',
+    pathname: routes.about,
+  },
+  {
+    name: 'Kontakt',
+    pathname: routes.contact,
+  },
+  {
+    name: 'Dostawa',
+    pathname: routes.delivery,
+  },
+] as const;
+
+const RIGHT_PAGES = [
+  {
+    name: 'Logowanie',
+    pathname: routes.login,
+    color: (theme: Theme) => theme.palette.primary.main,
+  },
+  {
+    name: 'Rejestracja',
+    pathname: routes.register,
+    color: (theme: Theme) => theme.palette.secondary.dark,
+  },
+] as const;
 
 const AppNavBar = () => {
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
+
+  const PAGES = [...LEFT_PAGES, ...RIGHT_PAGES] as const;
+
+  const pageToButton = (page: typeof PAGES[number]) => (
+    <Button
+      key={page.pathname}
+      href={page.pathname}
+      sx={{ color: 'color' in page ? page.color : (theme) => theme.palette.text.primary, px: 2 }}
+    >
+      {page.name}
+    </Button>
+  );
 
   const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null);
 
@@ -40,40 +91,32 @@ const AppNavBar = () => {
             open={Boolean(menuAnchorElem)}
             onClose={handleMenuClosed}
           >
-            {[...PAGES, 'Logowanie', 'Rejestracja'].map((page) => (
-              <MenuItem sx={{ color: theme.palette.secondary.contrastText }} key={page} onClick={handleMenuClosed}>
-                {page}
+            {PAGES.map((page) => (
+              <MenuItem key={page.pathname} component={Link} href={page.pathname}>
+                {page.name}
               </MenuItem>
             ))}
           </Menu>
         </Box>
-        {/* TODO: Change this when router is ready */}
-        <Link href='/' sx={{ mx: 'auto' }}>
+        <Link href={routes.home} sx={{ mx: 'auto' }}>
           <img src={logo} alt='JeszCoChcesz' style={{ display: 'block', height: '6rem', paddingBlock: '1rem' }} />
         </Link>
-        <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>
-          {PAGES.map((page) => (
-            <Button key={page} sx={{ color: theme.palette.text.primary, px: 2 }}>
-              {page}
-            </Button>
-          ))}
+        <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
+        <Tooltip title={`tryb ${theme.palette.mode === 'dark' ? 'jasny' : 'ciemny'}`} placement='top'>
+          <IconButton
+            sx={{ ml: 1, color: theme.palette.primary.main }}
+            onClick={colorMode.toggleColorMode}
+            color='inherit'
+          >
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Tooltip>
+        <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
+          <IconButton href={routes.shoppingCart} sx={{ p: 2 }}>
+            <ShoppingBasketIcon color='primary' />
+          </IconButton>
         </Box>
-        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-          <Button sx={{ color: theme.palette.primary.main, px: 2 }}>Logowanie</Button>
-          <Button sx={{ color: theme.palette.secondary.dark, px: 2 }}>Rejestracja</Button>
-          <Tooltip title={`tryb ${theme.palette.mode === 'dark' ? 'jasny' : 'ciemny'}`} placement='top'>
-            <IconButton
-              sx={{ ml: 1, color: theme.palette.primary.main }}
-              onClick={colorMode.toggleColorMode}
-              color='inherit'
-            >
-              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Fab color='secondary' sx={{ boxShadow: 0, ml: 2 }}>
-          <ShoppingBasketIcon color='primary' />
-        </Fab>
       </Toolbar>
     </AppBar>
   );
