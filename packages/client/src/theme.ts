@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+type PaletteMode = 'light' | 'dark';
 
 const themeColors = {
   primary: {
@@ -10,7 +10,7 @@ const themeColors = {
 };
 const defaultTheme = {
   palette: {
-    mode: 'light',
+    mode: 'light' as PaletteMode,
     ...themeColors,
     background: {
       default: '#F4F3DD',
@@ -39,7 +39,7 @@ const defaultTheme = {
 
 const darkTheme = {
   palette: {
-    mode: 'dark',
+    mode: 'dark' as PaletteMode,
     ...themeColors,
   },
 };
