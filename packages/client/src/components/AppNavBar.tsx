@@ -47,7 +47,7 @@ const AppNavBar = () => {
     <Button
       key={page.pathname}
       href={page.pathname}
-      sx={{ color: 'color' in page ? page.color : (theme) => theme.palette.text.primary, px: 2 }}
+      sx={{ color: 'color' in page ? page.color : () => theme.palette.text.primary, px: 2 }}
     >
       {page.name}
     </Button>
@@ -100,7 +100,7 @@ const AppNavBar = () => {
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Tooltip>
-        <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
+        <Box sx={{ backgroundColor: () => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
           <IconButton href={routes.shoppingCart} sx={{ p: 2 }}>
             <ShoppingBasketIcon color='primary' />
           </IconButton>
