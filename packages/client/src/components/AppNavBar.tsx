@@ -2,56 +2,44 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Link,
-  Menu,
-  MenuItem,
-  Theme,
-  Toolbar,
-  Tooltip,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Box, Button, IconButton, Link, Menu, MenuItem, Toolbar, Tooltip, useTheme } from '@mui/material';
 import { useContext, useState } from 'react';
 
 import logo from '../assets/logo.svg';
 import { ThemeContext } from '../context';
 import { routes } from '../routes';
 
-const LEFT_PAGES = [
-  {
-    name: 'O nas',
-    pathname: routes.about,
-  },
-  {
-    name: 'Kontakt',
-    pathname: routes.contact,
-  },
-  {
-    name: 'Dostawa',
-    pathname: routes.delivery,
-  },
-] as const;
-
-const RIGHT_PAGES = [
-  {
-    name: 'Logowanie',
-    pathname: routes.login,
-    color: (theme: Theme) => theme.palette.primary.main,
-  },
-  {
-    name: 'Rejestracja',
-    pathname: routes.register,
-    color: (theme: Theme) => theme.palette.secondary.dark,
-  },
-] as const;
-
 const AppNavBar = () => {
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
+
+  const LEFT_PAGES = [
+    {
+      name: 'O nas',
+      pathname: routes.about,
+    },
+    {
+      name: 'Kontakt',
+      pathname: routes.contact,
+    },
+    {
+      name: 'Dostawa',
+      pathname: routes.delivery,
+    },
+  ] as const;
+
+  const RIGHT_PAGES = [
+    {
+      name: 'Logowanie',
+      pathname: routes.login,
+      color: () => theme.palette.primary.main,
+    },
+    {
+      name: 'Rejestracja',
+      pathname: routes.register,
+      color: () => theme.palette.secondary.dark,
+    },
+  ] as const;
 
   const PAGES = [...LEFT_PAGES, ...RIGHT_PAGES] as const;
 
