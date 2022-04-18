@@ -57,9 +57,12 @@ const Hero = () => (
             ),
           }}
         />
-        <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
-          <ArrowDownward fontSize='large' />
-        </IconButton>
+        <Stack alignItems='center'>
+          <Typography color='secondary'>Zobacz jak dokonać zamówienia</Typography>
+          <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
+            <ArrowDownward fontSize='large' />
+          </IconButton>
+        </Stack>
       </Stack>
     </Stack>
   </Box>
