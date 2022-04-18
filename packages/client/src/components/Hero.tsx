@@ -25,7 +25,7 @@ const SearchField = styled(TextField)(({ theme }) => ({
 const Hero = () => (
   <Box
     sx={{
-      height: 'calc(100vh - 6rem)',
+      minHeight: 'calc(100vh - 6rem)',
       background: HERO_BACKGROUND,
     }}
   >
