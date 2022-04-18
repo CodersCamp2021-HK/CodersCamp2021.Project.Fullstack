@@ -29,7 +29,11 @@ const Hero = () => (
       background: HERO_BACKGROUND,
     }}
   >
-    <Stack sx={{ p: { xs: 4, sm: 8 }, height: 1, maxWidth: '90rem', mx: 'auto' }} justifyContent='center' spacing={4}>
+    <Stack
+      sx={{ p: { xs: 4, sm: 8 }, minHeight: 'inherit', maxWidth: '90rem', mx: 'auto' }}
+      justifyContent='center'
+      spacing={4}
+    >
       <Typography variant='h5' color='secondary'>
         Nie musisz dalej szukać
       </Typography>
