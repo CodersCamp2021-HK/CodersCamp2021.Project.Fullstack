@@ -29,7 +29,7 @@ const HomeStep = ({ number, title, img, flipped, children }: HomeStepProps) => (
       </Stack>
     </Grid>
     <Grid item xs={12} lg={6}>
-      <img src={img} alt='' style={{ width: '100%' }} />
+      <img src={img} alt={`Ilustracja obrazująca krok ${number}.`} style={{ width: '100%' }} />
     </Grid>
   </Grid>
 );

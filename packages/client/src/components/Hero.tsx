@@ -53,7 +53,7 @@ const Hero = () => (
             ),
           }}
         />
-        <IconButton href='#steps' color='secondary' size='small'>
+        <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
           <ArrowDownward fontSize='large' />
         </IconButton>
       </Stack>
