@@ -1,8 +1,10 @@
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Home } from './pages';
+import { routes } from './routes';
 import { theme } from './theme';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
@@ -20,7 +22,11 @@ const configuration = new Configuration({
 const App = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <Home />
+    <BrowserRouter>
+      <Routes>
+        <Route path={routes.home} element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   </ThemeProvider>
 );
 
