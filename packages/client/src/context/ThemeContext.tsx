@@ -7,8 +7,7 @@ const ThemeContext = createContext({
   toggleColorMode: () => {},
 });
 
-const ThemeContextProvider = (props: { children: JSX.Element[] | JSX.Element }) => {
-  const { children } = props;
+const ThemeContextProvider = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
   const defaultMode = 'light';
   const ls = window.localStorage;
 
