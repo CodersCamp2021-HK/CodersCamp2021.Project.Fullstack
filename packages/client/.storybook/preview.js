@@ -1,6 +1,10 @@
+import { MemoryRouter } from "react-router";
+import { addDecorator } from "@storybook/react";
 import { ThemeProvider } from '@mui/material/styles';
-
+    
 import { theme } from '../src/theme';
+
+addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>);
 
 const themeProvider = (Story) => (
   <ThemeProvider theme={ theme }><Story /></ThemeProvider>
