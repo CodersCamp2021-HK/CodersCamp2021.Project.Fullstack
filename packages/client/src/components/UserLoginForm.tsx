@@ -1,6 +1,6 @@
 import { Box, Button, Checkbox, FormControlLabel, Link, TextField, Typography, useTheme } from '@mui/material';
 
-const PartnerLoginForm = () => {
+const UserLoginForm = () => {
   const theme = useTheme();
 
   return (
@@ -41,11 +41,11 @@ const PartnerLoginForm = () => {
         </Button>
         <Box sx={{ marginTop: '7rem', display: 'flex' }}>
           <Typography color={theme.palette.secondary.contrastText} variant='body1'>
-            Chcesz być naszym partnerem?
+            Nie masz konta?
             <Link sx={{ marginLeft: '10px' }} href='/'>
-              Dołącz do nas
+              Zarejestruj się
             </Link>
-            !
+            .
           </Typography>
         </Box>
       </Box>
@@ -53,4 +53,4 @@ const PartnerLoginForm = () => {
   );
 };
 
-export { PartnerLoginForm };
+export { UserLoginForm };
