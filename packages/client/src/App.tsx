@@ -4,7 +4,7 @@ import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { Home, PartnerLoginPage } from './pages';
+import { Home } from './pages';
 import { theme } from './theme';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
@@ -23,8 +23,7 @@ const App = () => (
   <>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      {/* <Home /> */}
-      <PartnerLoginPage />
+      <Home />
     </ThemeProvider>
   </>
 );
