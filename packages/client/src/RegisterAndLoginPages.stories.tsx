@@ -1,12 +1,11 @@
-import { PartnerRegisterPage } from './pages/PartnerRegisterPage';
 import { PartnerLoginPage } from './pages/PartnerLoginPage';
-import { UserRegisterPage } from './pages/UserRegisterPage';
+import { PartnerRegisterPage } from './pages/PartnerRegisterPage';
 import { UserLoginPage } from './pages/UserLoginPage';
-
+import { UserRegisterPage } from './pages/UserRegisterPage';
 
 export default {
   title: 'Pages/Register and Login Pages',
-  Page: {PartnerRegisterPage, PartnerLoginPage, UserRegisterPage, UserLoginPage},
+  Page: { PartnerRegisterPage, PartnerLoginPage, UserRegisterPage, UserLoginPage },
 };
 
 export const PartnerRegister = PartnerRegisterPage.bind({});
