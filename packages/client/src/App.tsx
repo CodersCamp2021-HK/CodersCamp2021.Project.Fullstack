@@ -3,7 +3,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Home } from './pages';
+import { Home, Summary } from './pages';
 import { routes } from './routes';
 import { theme } from './theme';
 
@@ -25,6 +25,7 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path={routes.home} element={<Home />} />
+        <Route path={routes.summary} element={<Summary />} />
       </Routes>
     </BrowserRouter>
   </ThemeProvider>

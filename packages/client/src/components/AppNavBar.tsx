@@ -86,7 +86,7 @@ const AppNavBar = () => {
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
-          <IconButton title='Koszyk' href={routes.shoppingCart} sx={{ p: 2 }}>
+          <IconButton title='Koszyk' href={routes.summary} sx={{ p: 2 }}>
             <ShoppingBasketIcon color='primary' />
           </IconButton>
         </Box>
