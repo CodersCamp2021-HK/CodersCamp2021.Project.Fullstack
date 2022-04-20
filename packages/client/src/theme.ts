@@ -17,7 +17,10 @@ const defaultTheme = {
     mode: 'light' as PaletteMode,
     ...themeColors,
     background: {
-      default: '#F4F3DD',
+      default: '#D5DBD6',
+    },
+    common: {
+      white: '#FFFFFF',
     },
   },
   typography: {
@@ -44,7 +47,7 @@ const defaultTheme = {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#1B5E2014',
+          backgroundColor: '#EDF3EE',
         },
       },
     },

@@ -1,5 +1,3 @@
-import './App.css';
-
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
