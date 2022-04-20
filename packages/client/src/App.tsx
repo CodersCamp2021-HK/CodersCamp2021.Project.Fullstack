@@ -1,11 +1,9 @@
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Home, Summary } from './pages';
 import { routes } from './routes';
-import { theme } from './theme';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
 const DEV_API_BASE_PATH = 'http://localhost:4000';
@@ -19,16 +17,24 @@ const configuration = new Configuration({
   basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
 });
 
-const App = () => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <BrowserRouter>
-      <Routes>
-        <Route path={routes.home} element={<Home />} />
-        <Route path={routes.summary} element={<Summary />} />
-      </Routes>
-    </BrowserRouter>
-  </ThemeProvider>
-);
+// const api = new RestaurantsApi(
+//   new Configuration({
+//     basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
+//   }),
+// );
+
+const App = () => {
+  return (
+    <>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path={routes.home} element={<Home />} />
+          <Route path={routes.summary} element={<Summary />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
 
 export { App };
