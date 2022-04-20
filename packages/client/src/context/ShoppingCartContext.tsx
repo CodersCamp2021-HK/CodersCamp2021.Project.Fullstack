@@ -3,14 +3,18 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 
 type SubOrder = Omit<SubOrderDto, 'hourStart' | 'hourEnd'>;
 
-const ShoppingCartContext = createContext({
-  cart: [] as SubOrder[],
+const ShoppingCartContext = createContext<{
+  cart: SubOrder[];
+  addDayToCart: (suborder: SubOrder) => void;
+}>({
+  cart: [],
+  addDayToCart: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
 
-  const addDayToCart = useCallback((subOrder: SubOrder) => setCart((existing) => [...existing, subOrder]), []);
+  const addDayToCart = useCallback((suborder: SubOrder) => setCart((existingDays) => [...existingDays, suborder]), []);
 
   const value = useMemo(() => ({ cart, addDayToCart }), [cart, addDayToCart]);
 
