@@ -1,9 +1,24 @@
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import { AppBar, Box, Button, IconButton, Link, Menu, MenuItem, Theme, Toolbar } from '@mui/material';
-import { useState } from 'react';
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Theme,
+  Toolbar,
+  Tooltip,
+  useTheme,
+} from '@mui/material';
+import { useContext, useState } from 'react';
 
 import logo from '../assets/logo.svg';
+import { ThemeContext } from '../context';
 import { routes } from '../routes';
 
 const LEFT_PAGES = [
@@ -40,13 +55,15 @@ const pageToButton = (page: typeof PAGES[number]) => (
   <Button
     key={page.pathname}
     href={page.pathname}
-    sx={{ color: 'color' in page ? page.color : (theme) => theme.palette.secondary.contrastText, px: 2 }}
+    sx={{ color: 'color' in page ? page.color : (theme: Theme) => theme.palette.text.primary, px: 2 }}
   >
     {page.name}
   </Button>
 );
-
 const AppNavBar = () => {
+  const colorMode = useContext(ThemeContext);
+  const theme = useTheme();
+
   const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -85,8 +102,17 @@ const AppNavBar = () => {
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
-        <Box sx={{ backgroundColor: (theme) => theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
-          <IconButton href={routes.shoppingCart} sx={{ p: 2 }}>
+        <Tooltip title={`tryb ${theme.palette.mode === 'dark' ? 'jasny' : 'ciemny'}`} placement='top'>
+          <IconButton
+            sx={{ ml: 1, color: theme.palette.primary.main }}
+            onClick={colorMode.toggleColorMode}
+            color='inherit'
+          >
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Tooltip>
+        <Box sx={{ backgroundColor: theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
+          <IconButton href={routes.shoppingCart} sx={{ p: 2 }} title='Koszyk'>
             <ShoppingBasketIcon color='primary' />
           </IconButton>
         </Box>

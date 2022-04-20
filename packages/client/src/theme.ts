@@ -1,17 +1,26 @@
-import { createTheme, LinkProps } from '@mui/material';
+import { LinkProps } from '@mui/material';
 
 import { LinkBehavior } from './linkBehavior';
 
-const theme = createTheme({
+type PaletteMode = 'light' | 'dark';
+
+const themeColors = {
+  primary: {
+    main: '#1b5e20',
+  },
+  secondary: {
+    main: '#cddc39',
+  },
+};
+const defaultTheme = {
   palette: {
-    primary: {
-      main: '#1b5e20',
-    },
-    secondary: {
-      main: '#cddc39',
-    },
+    mode: 'light' as PaletteMode,
+    ...themeColors,
     background: {
-      default: '#F4F3DD',
+      default: '#D5DBD6',
+    },
+    common: {
+      white: '#FFFFFF',
     },
   },
   typography: {
@@ -48,7 +57,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#1B5E2014',
+          backgroundColor: '#EDF3EE',
         },
       },
     },
@@ -60,6 +69,25 @@ const theme = createTheme({
       },
     },
   },
-});
+};
 
-export { theme };
+const darkTheme = {
+  palette: {
+    mode: 'dark' as PaletteMode,
+    ...themeColors,
+    background: {
+      default: '#303030',
+    },
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: '#303030',
+        },
+      },
+    },
+  },
+};
+
+export { darkTheme, defaultTheme };
