@@ -1,5 +1,3 @@
-import './App.css';
-
 import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -22,16 +20,14 @@ const configuration = new Configuration({
 });
 
 const App = () => (
-  <>
+  <ThemeProvider theme={theme}>
     <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path={routes.home} element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={routes.home} element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  </ThemeProvider>
 );
 
 export { App };

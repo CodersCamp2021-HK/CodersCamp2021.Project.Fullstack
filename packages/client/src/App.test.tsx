@@ -8,6 +8,6 @@ describe('<App/>', () => {
     render(<App />);
 
     // Then
-    expect(await screen.findByText(/Złóż zamówienie/)).toBeInTheDocument();
+    expect(await screen.findByText('Wybieraj dania z najlepszych restauracji')).toBeInTheDocument();
   });
 });
