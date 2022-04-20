@@ -1,7 +1,7 @@
-import { PartnerLoginPage } from './pages/PartnerLoginPage';
-import { PartnerRegisterPage } from './pages/PartnerRegisterPage';
-import { UserLoginPage } from './pages/UserLoginPage';
-import { UserRegisterPage } from './pages/UserRegisterPage';
+import { PartnerLoginPage } from './PartnerLoginPage';
+import { PartnerRegisterPage } from './PartnerRegisterPage';
+import { UserLoginPage } from './UserLoginPage';
+import { UserRegisterPage } from './UserRegisterPage';
 
 export default {
   title: 'Pages/Register and Login Pages',

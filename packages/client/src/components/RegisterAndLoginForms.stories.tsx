@@ -1,7 +1,7 @@
-import { PartnerLoginForm as PartnerLoginFormComponent } from './components/PartnerLoginForm';
-import { PartnerRegisterForm as PartnerRegisterFormComponent } from './components/PartnerRegisterForm';
-import { UserLoginForm as UserLoginFormComponent } from './components/UserLoginForm';
-import { UserRegisterForm as UserRegisterFormComponent } from './components/UserRegisterForm';
+import { PartnerLoginForm as PartnerLoginFormComponent } from './PartnerLoginForm';
+import { PartnerRegisterForm as PartnerRegisterFormComponent } from './PartnerRegisterForm';
+import { UserLoginForm as UserLoginFormComponent } from './UserLoginForm';
+import { UserRegisterForm as UserRegisterFormComponent } from './UserRegisterForm';
 
 export default {
   title: 'Components/Register and Login Forms',
