@@ -7,6 +7,7 @@ const routes = {
   register: 'register',
   shoppingCart: 'shopping-cart',
   order: 'order',
+  main: 'main',
 } as const;
 
 export { routes };

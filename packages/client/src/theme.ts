@@ -23,6 +23,9 @@ const theme = createTheme({
     h2: {
       fontWeight: 400,
     },
+    h5: {
+      fontWeight: 600,
+    },
   },
   components: {
     MuiLink: {
@@ -35,10 +38,24 @@ const theme = createTheme({
         LinkComponent: LinkBehavior,
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 50,
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
           backgroundColor: '#1B5E2014',
+        },
+      },
+    },
+    MuiCardMedia: {
+      styleOverrides: {
+        root: {
+          borderRadius: 50,
         },
       },
     },
