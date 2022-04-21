@@ -1,4 +1,3 @@
-import { NoEncryption } from '@mui/icons-material';
 import { LinkProps } from '@mui/material';
 import { green, lime } from '@mui/material/colors';
 
