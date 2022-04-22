@@ -18,7 +18,7 @@
  * @enum {string}
  */
 export enum DishTagsEnum {
-  Wegaska = 'wegańska',
+  Weganska = 'wegańska',
   Wegetariaska = 'wegetariańska',
   GlutenFree = 'gluten free',
   Ostre = 'ostre',
