@@ -17,7 +17,6 @@ const MediaCardsGrid = () => {
             fats: { perPortion: 250, per100g: 0 },
             proteins: { perPortion: 20, per100g: 0 },
             carbohydrates: { perPortion: 20, per100g: 0 },
-            updated: true,
           }}
         />
       </Grid>
@@ -32,7 +31,6 @@ const MediaCardsGrid = () => {
             fats: { perPortion: 250, per100g: 0 },
             proteins: { perPortion: 20, per100g: 0 },
             carbohydrates: { perPortion: 20, per100g: 0 },
-            updated: true,
           }}
         />
       </Grid>
@@ -47,7 +45,6 @@ const MediaCardsGrid = () => {
             fats: { perPortion: 250, per100g: 0 },
             proteins: { perPortion: 20, per100g: 0 },
             carbohydrates: { perPortion: 20, per100g: 0 },
-            updated: true,
           }}
         />
       </Grid>
@@ -62,7 +59,6 @@ const MediaCardsGrid = () => {
             fats: { perPortion: 250, per100g: 0 },
             proteins: { perPortion: 20, per100g: 0 },
             carbohydrates: { perPortion: 20, per100g: 0 },
-            updated: true,
           }}
         />
       </Grid>
@@ -77,7 +73,6 @@ const MediaCardsGrid = () => {
             fats: { perPortion: 250, per100g: 0 },
             proteins: { perPortion: 20, per100g: 0 },
             carbohydrates: { perPortion: 20, per100g: 0 },
-            updated: true,
           }}
         />
       </Grid>
