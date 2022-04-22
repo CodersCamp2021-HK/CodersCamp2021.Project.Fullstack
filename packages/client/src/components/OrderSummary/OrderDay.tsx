@@ -3,6 +3,7 @@ import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/mate
 
 import { SubOrder } from '../../context';
 import { OrderDateHeader } from './OrderDateHeader';
+import { OrderDayFooter } from './OrderDayFooter';
 import { OrderDish } from './OrderDish';
 
 const OrderColumnNames = () => (
@@ -36,6 +37,7 @@ const OrderDay = ({ suborder, dishMap }: OrderDayProps) => {
           ))}
         </TableBody>
       </Table>
+      <OrderDayFooter />
     </Box>
   );
 };

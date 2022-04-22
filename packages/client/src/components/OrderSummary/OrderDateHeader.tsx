@@ -1,4 +1,4 @@
-import { Create } from '@mui/icons-material';
+import Create from '@mui/icons-material/Create';
 import { IconButton, Stack, Typography } from '@mui/material';
 import { capitalize } from 'lodash';
 

@@ -1,5 +1,6 @@
 import { DishDto, OrderDishDto } from '@fullstack/sdk/src';
-import { Create, DeleteOutline } from '@mui/icons-material';
+import Create from '@mui/icons-material/Create';
+import DeleteOutline from '@mui/icons-material/DeleteOutline';
 import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
 
 interface OrderDishProps {
