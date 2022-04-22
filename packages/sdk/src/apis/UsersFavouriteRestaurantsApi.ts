@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -17,6 +17,9 @@ import {
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
+  FavouriteRestaurantDto,
+  FavouriteRestaurantDtoFromJSON,
+  FavouriteRestaurantDtoToJSON,
   FavouriteRestaurantListDto,
   FavouriteRestaurantListDtoFromJSON,
   FavouriteRestaurantListDtoToJSON,
@@ -25,15 +28,68 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
+export interface UsersFavouriteRestaurantsApiAddRequest {
+  id: string;
+}
+
 export interface UsersFavouriteRestaurantsApiListRequest {
   page?: number;
   limit?: number;
+}
+
+export interface UsersFavouriteRestaurantsApiRemoveRequest {
+  id: string;
 }
 
 /**
  *
  */
 export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
+  /**
+   * Update an existing restaurant.
+   */
+  async addRaw(
+    requestParameters: UsersFavouriteRestaurantsApiAddRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<FavouriteRestaurantDto>> {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter requestParameters.id was null or undefined when calling add.',
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request(
+      {
+        path: `/api/users/favourite/restaurants/{id}`.replace(
+          `{${'id'}}`,
+          encodeURIComponent(String(requestParameters.id)),
+        ),
+        method: 'PUT',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides,
+    );
+
+    return new runtime.JSONApiResponse(response, (jsonValue) => FavouriteRestaurantDtoFromJSON(jsonValue));
+  }
+
+  /**
+   * Update an existing restaurant.
+   */
+  async add(
+    requestParameters: UsersFavouriteRestaurantsApiAddRequest,
+    initOverrides?: RequestInit,
+  ): Promise<FavouriteRestaurantDto> {
+    const response = await this.addRaw(requestParameters, initOverrides);
+    return await response.value();
+  }
+
   /**
    * Retrieve a list of restaurants.
    */
@@ -75,5 +131,49 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
   ): Promise<FavouriteRestaurantListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
+  }
+
+  /**
+   * Delete a restaurant.
+   */
+  async removeRaw(
+    requestParameters: UsersFavouriteRestaurantsApiRemoveRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter requestParameters.id was null or undefined when calling remove.',
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request(
+      {
+        path: `/api/users/favourite/restaurants/{id}`.replace(
+          `{${'id'}}`,
+          encodeURIComponent(String(requestParameters.id)),
+        ),
+        method: 'DELETE',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides,
+    );
+
+    return new runtime.VoidApiResponse(response);
+  }
+
+  /**
+   * Delete a restaurant.
+   */
+  async remove(
+    requestParameters: UsersFavouriteRestaurantsApiRemoveRequest,
+    initOverrides?: RequestInit,
+  ): Promise<void> {
+    await this.removeRaw(requestParameters, initOverrides);
   }
 }

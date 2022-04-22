@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -14,15 +14,24 @@
 
 import * as runtime from '../runtime';
 import {
+  CuisineTypeEnum,
+  CuisineTypeEnumFromJSON,
+  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
+  OperationalCityEnum,
+  OperationalCityEnumFromJSON,
+  OperationalCityEnumToJSON,
   RestaurantDto,
   RestaurantDtoFromJSON,
   RestaurantDtoToJSON,
   RestaurantListDto,
   RestaurantListDtoFromJSON,
   RestaurantListDtoToJSON,
+  RestaurantTagEnum,
+  RestaurantTagEnumFromJSON,
+  RestaurantTagEnumToJSON,
   ValidationErrorDto,
   ValidationErrorDtoFromJSON,
   ValidationErrorDtoToJSON,
@@ -33,6 +42,9 @@ export interface RestaurantsApiFindByIdRequest {
 }
 
 export interface RestaurantsApiListRequest {
+  city?: OperationalCityEnum;
+  cuisineType?: Array<CuisineTypeEnum>;
+  tags?: Array<RestaurantTagEnum>;
   page?: number;
   limit?: number;
 }
@@ -91,6 +103,18 @@ export class RestaurantsApi extends runtime.BaseAPI {
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<RestaurantListDto>> {
     const queryParameters: any = {};
+
+    if (requestParameters.city !== undefined) {
+      queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.cuisineType) {
+      queryParameters['cuisineType'] = requestParameters.cuisineType;
+    }
+
+    if (requestParameters.tags) {
+      queryParameters['tags'] = requestParameters.tags;
+    }
 
     if (requestParameters.page !== undefined) {
       queryParameters['page'] = requestParameters.page;
