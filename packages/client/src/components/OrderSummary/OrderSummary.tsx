@@ -22,6 +22,8 @@ const OrderDaysDisplay = ({ cart, dishMap }: OrderDaysDisplayProps) => (
   </>
 );
 
+const allDishes = (cart: SubOrder[]) => cart.flatMap((suborder) => suborder.dishes);
+
 interface OrderSummaryProps {
   nextStep: () => void;
 }
@@ -32,11 +34,13 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
   const [dishMap, setDishMap] = useState<Record<string, DishDto>>({});
 
   useEffect(() => {
-    new Set(cart.flatMap((suborder) => suborder.dishes)).forEach(async ({ dishId }) => {
+    new Set(allDishes(cart)).forEach(async ({ dishId }) => {
       const dish = await dishesApi.findDishById({ id: dishId });
       setDishMap((oldMap) => ({ ...oldMap, [dishId]: dish }));
     });
   }, [cart]);
+
+  const price = allDishes(cart).reduce((sum, { dishId, count = 1 }) => sum + (dishMap[dishId]?.price ?? 0) * count, 0);
 
   return (
     <Grid container spacing={4}>
@@ -44,7 +48,7 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
         <OrderDaysDisplay cart={cart} dishMap={dishMap} />
       </Grid>
       <Grid item xs={12} md={4}>
-        <OrderPriceDisplay nextStep={nextStep} />
+        <OrderPriceDisplay price={price} nextStep={nextStep} />
       </Grid>
     </Grid>
   );
