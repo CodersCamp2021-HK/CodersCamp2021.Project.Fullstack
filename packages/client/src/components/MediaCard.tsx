@@ -1,3 +1,4 @@
+import { DishDto } from '@fullstack/sdk';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -7,31 +8,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
 type CardProps = {
-  name: string;
-  content: string;
-  img: {
-    url: string;
-    alt: string;
-  };
-  price: number;
-  calories: {
-    perPortion: number;
-  };
-  fats: {
-    perPortion: number;
-  };
-  proteins: {
-    perPortion: number;
-  };
-  carbohydrates: {
-    perPortion: number;
-  };
+  dish: Omit<DishDto, 'id' | 'restaurant' | 'portionWeight'>;
 };
 
-const MediaCard = ({ name, content, img, price, calories, fats, proteins, carbohydrates }: CardProps) => {
+const MediaCard = ({ dish }: CardProps) => {
+  const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
   return (
     <Card sx={{ maxWidth: 340 }}>
-      <CardMedia component='img' height='320' image={img.url} alt={img.alt} />
+      <CardMedia component='img' height='320' image={photo} alt='' />
       <CardContent>
         <Typography
           gutterBottom
@@ -44,14 +28,14 @@ const MediaCard = ({ name, content, img, price, calories, fats, proteins, carboh
         >
           Tłuszcze: {fats.perPortion}, Białka: {proteins.perPortion}, Węglowodany: {carbohydrates.perPortion}
         </Typography>
-        <Typography sx={{ paddingTop: '0.5rem' }} gutterBottom variant='h5'>
+        <Typography pt={1} gutterBottom variant='h5'>
           {name}
           <Typography color='text.secondary' component='span' variant='subtitle1' pl={1}>
             ({calories.perPortion} kcal)
           </Typography>
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          {content}
+          {description}
         </Typography>
         <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: '1rem' }}>
           <Typography mr={2} variant='h5' color='primary.main'>

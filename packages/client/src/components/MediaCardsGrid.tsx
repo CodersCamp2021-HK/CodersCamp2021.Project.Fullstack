@@ -8,62 +8,77 @@ const MediaCardsGrid = () => {
     <Grid container spacing={2} pt={6}>
       <Grid item>
         <MediaCard
-          name='Bowl japoński'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-          img={{ url: cardImg, alt: '' }}
-          price={32}
-          calories={{ perPortion: 550 }}
-          fats={{ perPortion: 250 }}
-          proteins={{ perPortion: 20 }}
-          carbohydrates={{ perPortion: 50 }}
+          dish={{
+            name: 'Bowl japoński',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+            photo: cardImg,
+            price: 32,
+            calories: { perPortion: 550, per100g: 0 },
+            fats: { perPortion: 250, per100g: 0 },
+            proteins: { perPortion: 20, per100g: 0 },
+            carbohydrates: { perPortion: 20, per100g: 0 },
+            updated: true,
+          }}
         />
       </Grid>
       <Grid item>
         <MediaCard
-          name='Bowl japoński'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-          img={{ url: cardImg, alt: '' }}
-          price={32}
-          calories={{ perPortion: 550 }}
-          fats={{ perPortion: 250 }}
-          proteins={{ perPortion: 20 }}
-          carbohydrates={{ perPortion: 50 }}
+          dish={{
+            name: 'Bowl japoński',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+            photo: cardImg,
+            price: 32,
+            calories: { perPortion: 550, per100g: 0 },
+            fats: { perPortion: 250, per100g: 0 },
+            proteins: { perPortion: 20, per100g: 0 },
+            carbohydrates: { perPortion: 20, per100g: 0 },
+            updated: true,
+          }}
         />
       </Grid>
       <Grid item>
         <MediaCard
-          name='Bowl japoński'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-          img={{ url: cardImg, alt: '' }}
-          price={32}
-          calories={{ perPortion: 550 }}
-          fats={{ perPortion: 250 }}
-          proteins={{ perPortion: 20 }}
-          carbohydrates={{ perPortion: 50 }}
+          dish={{
+            name: 'Bowl japoński',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+            photo: cardImg,
+            price: 32,
+            calories: { perPortion: 550, per100g: 0 },
+            fats: { perPortion: 250, per100g: 0 },
+            proteins: { perPortion: 20, per100g: 0 },
+            carbohydrates: { perPortion: 20, per100g: 0 },
+            updated: true,
+          }}
         />
       </Grid>
       <Grid item>
         <MediaCard
-          name='Bowl japoński'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-          img={{ url: cardImg, alt: '' }}
-          price={32}
-          calories={{ perPortion: 550 }}
-          fats={{ perPortion: 250 }}
-          proteins={{ perPortion: 20 }}
-          carbohydrates={{ perPortion: 50 }}
+          dish={{
+            name: 'Bowl japoński',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+            photo: cardImg,
+            price: 32,
+            calories: { perPortion: 550, per100g: 0 },
+            fats: { perPortion: 250, per100g: 0 },
+            proteins: { perPortion: 20, per100g: 0 },
+            carbohydrates: { perPortion: 20, per100g: 0 },
+            updated: true,
+          }}
         />
       </Grid>
       <Grid item>
         <MediaCard
-          name='Bowl japoński'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-          img={{ url: cardImg, alt: '' }}
-          price={32}
-          calories={{ perPortion: 550 }}
-          fats={{ perPortion: 250 }}
-          proteins={{ perPortion: 20 }}
-          carbohydrates={{ perPortion: 50 }}
+          dish={{
+            name: 'Bowl japoński',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+            photo: cardImg,
+            price: 32,
+            calories: { perPortion: 550, per100g: 0 },
+            fats: { perPortion: 250, per100g: 0 },
+            proteins: { perPortion: 20, per100g: 0 },
+            carbohydrates: { perPortion: 20, per100g: 0 },
+            updated: true,
+          }}
         />
       </Grid>
     </Grid>
