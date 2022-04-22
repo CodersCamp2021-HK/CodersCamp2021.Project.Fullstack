@@ -5,7 +5,7 @@ import { MediaCard } from './MediaCard';
 
 const MediaCardsGrid = () => {
   return (
-    <Grid container spacing={2} sx={{ paddingTop: '3rem' }}>
+    <Grid container spacing={2} pt={6}>
       <Grid item>
         <MediaCard
           name='Bowl japoński'
