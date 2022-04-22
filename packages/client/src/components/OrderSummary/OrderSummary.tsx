@@ -1,4 +1,4 @@
-import { DishDto, DishesApi } from '@fullstack/sdk/src';
+import { DishDto, DishesApi } from '@fullstack/sdk';
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 
