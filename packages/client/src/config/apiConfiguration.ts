@@ -12,4 +12,4 @@ const apiConfiguration = new Configuration({
   basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
 });
 
-export { apiConfiguration}
+export { apiConfiguration };
