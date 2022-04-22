@@ -1,6 +1,7 @@
 import { SubOrderDto } from '@fullstack/sdk';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
+// TODO: Remove this type and use SubOrderDto when API gets updated
 type SubOrder = Omit<SubOrderDto, 'hourStart' | 'hourEnd'>;
 
 const ShoppingCartContext = createContext<{
@@ -24,3 +25,4 @@ const ShoppingCartProvider = ({ children }: { children: React.ReactNode }) => {
 const useShoppingCart = () => useContext(ShoppingCartContext);
 
 export { ShoppingCartProvider, useShoppingCart };
+export type { SubOrder };
