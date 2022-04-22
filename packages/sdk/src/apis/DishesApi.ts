@@ -17,6 +17,9 @@ import {
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
+  DishDto,
+  DishDtoFromJSON,
+  DishDtoToJSON,
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
@@ -28,8 +31,11 @@ import {
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface RestaurantsDishesApiListRequest {
-  restaurantId: string;
+export interface DishesApiFindDishByIdRequest {
+  id: string;
+}
+
+export interface DishesApiListAllDishesRequest {
   city?: OperationalCityEnum;
   mealType?: Array<string>;
   tags?: Array<string>;
@@ -40,21 +46,53 @@ export interface RestaurantsDishesApiListRequest {
 /**
  *
  */
-export class RestaurantsDishesApi extends runtime.BaseAPI {
+export class DishesApi extends runtime.BaseAPI {
   /**
-   * Retrieve a list of dishes.
+   * Retrieve a dish by id.
    */
-  async listRaw(
-    requestParameters: RestaurantsDishesApiListRequest,
+  async findDishByIdRaw(
+    requestParameters: DishesApiFindDishByIdRequest,
     initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<DishListDto>> {
-    if (requestParameters.restaurantId === null || requestParameters.restaurantId === undefined) {
+  ): Promise<runtime.ApiResponse<DishDto>> {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
-        'restaurantId',
-        'Required parameter requestParameters.restaurantId was null or undefined when calling list.',
+        'id',
+        'Required parameter requestParameters.id was null or undefined when calling findDishById.',
       );
     }
 
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request(
+      {
+        path: `/api/dishes/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(requestParameters.id))),
+        method: 'GET',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides,
+    );
+
+    return new runtime.JSONApiResponse(response, (jsonValue) => DishDtoFromJSON(jsonValue));
+  }
+
+  /**
+   * Retrieve a dish by id.
+   */
+  async findDishById(requestParameters: DishesApiFindDishByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
+    const response = await this.findDishByIdRaw(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Retrieve a list of dishes.
+   */
+  async listAllDishesRaw(
+    requestParameters: DishesApiListAllDishesRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
 
     if (requestParameters.city !== undefined) {
@@ -81,10 +119,7 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
 
     const response = await this.request(
       {
-        path: `/api/restaurants/{restaurantId}/dishes`.replace(
-          `{${'restaurantId'}}`,
-          encodeURIComponent(String(requestParameters.restaurantId)),
-        ),
+        path: `/api/dishes`,
         method: 'GET',
         headers: headerParameters,
         query: queryParameters,
@@ -98,8 +133,11 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
    * Retrieve a list of dishes.
    */
-  async list(requestParameters: RestaurantsDishesApiListRequest, initOverrides?: RequestInit): Promise<DishListDto> {
-    const response = await this.listRaw(requestParameters, initOverrides);
+  async listAllDishes(
+    requestParameters: DishesApiListAllDishesRequest = {},
+    initOverrides?: RequestInit,
+  ): Promise<DishListDto> {
+    const response = await this.listAllDishesRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }

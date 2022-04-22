@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -56,7 +56,7 @@ export interface OrderDto {
    * @type {string}
    * @memberof OrderDto
    */
-  comment: string;
+  comment?: string;
 }
 
 export function OrderDtoFromJSON(json: any): OrderDto {
@@ -73,7 +73,7 @@ export function OrderDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     userId: json['userId'],
     date: new Date(json['date']),
     subOrders: (json['subOrders'] as Array<any>).map(SubOrderDtoFromJSON),
-    comment: json['comment'],
+    comment: !exists(json, 'comment') ? undefined : json['comment'],
   };
 }
 
