@@ -1,15 +1,15 @@
 import { Box, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import { useState } from 'react';
 
-import { AppNavBar, SummaryCart } from '../components';
+import { AppNavBar, OrderSummary } from '../components';
 
 const STEPS = [
-  { label: 'Podsumowanie', element: SummaryCart },
+  { label: 'Podsumowanie', element: OrderSummary },
   { label: 'Uzupełnij dane', element: 'div' },
   { label: 'Zapłać i zamów', element: 'div' },
 ];
 
-const Summary = () => {
+const ShoppingCart = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const nextStep = () => {
@@ -39,4 +39,4 @@ const Summary = () => {
   );
 };
 
-export { Summary };
+export { ShoppingCart };

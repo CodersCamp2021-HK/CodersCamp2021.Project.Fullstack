@@ -112,7 +112,7 @@ const AppNavBar = () => {
           </IconButton>
         </Tooltip>
         <Box sx={{ backgroundColor: theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
-          <IconButton href={routes.summary} sx={{ p: 2 }} title='Koszyk'>
+          <IconButton href={routes.shoppingCart} sx={{ p: 2 }} title='Koszyk'>
             <ShoppingBasketIcon color='primary' />
           </IconButton>
         </Box>

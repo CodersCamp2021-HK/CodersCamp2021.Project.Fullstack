@@ -5,7 +5,7 @@ const routes = {
   delivery: '/delivery',
   login: '/login',
   register: '/register',
-  summary: '/summary',
+  shoppingCart: '/shopping-cart',
   order: '/order',
 } as const;
 

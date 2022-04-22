@@ -3,4 +3,4 @@ export * from './Footer';
 export * from './Hero';
 export * from './HomeStep';
 export * from './HomeSteps';
-export * from './SummaryCart';
+export * from './OrderSummary';
