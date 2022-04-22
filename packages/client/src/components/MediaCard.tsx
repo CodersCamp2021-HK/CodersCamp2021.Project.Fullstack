@@ -54,7 +54,7 @@ const MediaCard = ({ name, content, img, price, calories, fats, proteins, carboh
           {content}
         </Typography>
         <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: '1rem' }}>
-          <Typography sx={{ marginRight: '1rem' }} variant='h5' color='primary.main'>
+          <Typography mr={2} variant='h5' color='primary.main'>
             {price} zł
           </Typography>
           <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />}>
