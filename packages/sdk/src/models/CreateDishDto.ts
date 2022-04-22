@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -16,7 +16,6 @@ import { exists, mapValues } from '../runtime';
 import { AllergensEnum, AllergensEnumFromJSON, AllergensEnumFromJSONTyped, AllergensEnumToJSON } from './AllergensEnum';
 import { DishTagsEnum, DishTagsEnumFromJSON, DishTagsEnumFromJSONTyped, DishTagsEnumToJSON } from './DishTagsEnum';
 import { IngredientDto, IngredientDtoFromJSON, IngredientDtoFromJSONTyped, IngredientDtoToJSON } from './IngredientDto';
-import { MealTypeEnum, MealTypeEnumFromJSON, MealTypeEnumFromJSONTyped, MealTypeEnumToJSON } from './MealTypeEnum';
 import {
   NutritionalValueDto,
   NutritionalValueDtoFromJSON,
@@ -38,10 +37,10 @@ export interface CreateDishDto {
   name: string;
   /**
    *
-   * @type {Array<MealTypeEnum>}
+   * @type {Array<string>}
    * @memberof CreateDishDto
    */
-  mealType?: Array<MealTypeEnum>;
+  mealType?: Array<string>;
   /**
    *
    * @type {string}
@@ -102,13 +101,6 @@ export interface CreateDishDto {
    * @memberof CreateDishDto
    */
   carbohydrates: NutritionalValueDto;
-
-  /**
-   *
-   * @type {boolean}
-   * @memberof CreateDishDto
-   */
-   updated: boolean;
 }
 
 export function CreateDishDtoFromJSON(json: any): CreateDishDto {
@@ -121,7 +113,7 @@ export function CreateDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
   }
   return {
     name: json['name'],
-    mealType: !exists(json, 'mealType') ? undefined : (json['mealType'] as Array<any>).map(MealTypeEnumFromJSON),
+    mealType: !exists(json, 'mealType') ? undefined : json['mealType'],
     description: !exists(json, 'description') ? undefined : json['description'],
     price: json['price'],
     tags: !exists(json, 'tags') ? undefined : (json['tags'] as Array<any>).map(DishTagsEnumFromJSON),
@@ -134,7 +126,6 @@ export function CreateDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
     fats: NutritionalValueDtoFromJSON(json['fats']),
     proteins: NutritionalValueDtoFromJSON(json['proteins']),
     carbohydrates: NutritionalValueDtoFromJSON(json['carbohydrates']),
-    updated: json['updated'],
   };
 }
 
@@ -147,7 +138,7 @@ export function CreateDishDtoToJSON(value?: CreateDishDto | null): any {
   }
   return {
     name: value.name,
-    mealType: value.mealType === undefined ? undefined : (value.mealType as Array<any>).map(MealTypeEnumToJSON),
+    mealType: value.mealType,
     description: value.description,
     price: value.price,
     tags: value.tags === undefined ? undefined : (value.tags as Array<any>).map(DishTagsEnumToJSON),
@@ -159,6 +150,5 @@ export function CreateDishDtoToJSON(value?: CreateDishDto | null): any {
     fats: NutritionalValueDtoToJSON(value.fats),
     proteins: NutritionalValueDtoToJSON(value.proteins),
     carbohydrates: NutritionalValueDtoToJSON(value.carbohydrates),
-    updated: value.updated,
   };
 }

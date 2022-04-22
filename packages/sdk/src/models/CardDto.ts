@@ -16,45 +16,45 @@ import { exists, mapValues } from '../runtime';
 /**
  *
  * @export
- * @interface FavouriteDishDto
+ * @interface CardDto
  */
-export interface FavouriteDishDto {
+export interface CardDto {
   /**
    *
    * @type {string}
-   * @memberof FavouriteDishDto
+   * @memberof CardDto
    */
-  id: string;
+  number?: string;
   /**
    *
    * @type {string}
-   * @memberof FavouriteDishDto
+   * @memberof CardDto
    */
-  name: string;
+  expirationDate?: string;
   /**
    *
    * @type {string}
-   * @memberof FavouriteDishDto
+   * @memberof CardDto
    */
-  restaurant: string;
+  securityCode?: string;
 }
 
-export function FavouriteDishDtoFromJSON(json: any): FavouriteDishDto {
-  return FavouriteDishDtoFromJSONTyped(json, false);
+export function CardDtoFromJSON(json: any): CardDto {
+  return CardDtoFromJSONTyped(json, false);
 }
 
-export function FavouriteDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): FavouriteDishDto {
+export function CardDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): CardDto {
   if (json === undefined || json === null) {
     return json;
   }
   return {
-    id: json['id'],
-    name: json['name'],
-    restaurant: json['restaurant'],
+    number: !exists(json, 'number') ? undefined : json['number'],
+    expirationDate: !exists(json, 'expirationDate') ? undefined : json['expirationDate'],
+    securityCode: !exists(json, 'securityCode') ? undefined : json['securityCode'],
   };
 }
 
-export function FavouriteDishDtoToJSON(value?: FavouriteDishDto | null): any {
+export function CardDtoToJSON(value?: CardDto | null): any {
   if (value === undefined) {
     return undefined;
   }
@@ -62,8 +62,8 @@ export function FavouriteDishDtoToJSON(value?: FavouriteDishDto | null): any {
     return null;
   }
   return {
-    id: value.id,
-    name: value.name,
-    restaurant: value.restaurant,
+    number: value.number,
+    expirationDate: value.expirationDate,
+    securityCode: value.securityCode,
   };
 }
