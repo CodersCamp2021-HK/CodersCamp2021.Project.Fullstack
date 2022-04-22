@@ -46,12 +46,7 @@ const MediaCard = ({ name, content, img, price, calories, fats, proteins, carboh
         </Typography>
         <Typography sx={{ paddingTop: '0.5rem' }} gutterBottom variant='h5'>
           {name}
-          <Typography
-            color='text.secondary'
-            component='span'
-            variant='subtitle1'
-            sx={{ display: 'inline', paddingLeft: '0.5rem' }}
-          >
+          <Typography color='text.secondary' component='span' variant='subtitle1' pl={1}>
             ({calories.perPortion} kcal)
           </Typography>
         </Typography>
