@@ -13,43 +13,43 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import { DishDto, DishDtoFromJSON, DishDtoFromJSONTyped, DishDtoToJSON } from './DishDto';
+import { AddressDto, AddressDtoFromJSON, AddressDtoFromJSONTyped, AddressDtoToJSON } from './AddressDto';
 
 /**
  *
  * @export
- * @interface DishListDto
+ * @interface AddressListDto
  */
-export interface DishListDto {
+export interface AddressListDto {
   /**
    *
-   * @type {Array<DishDto>}
-   * @memberof DishListDto
+   * @type {Array<AddressDto>}
+   * @memberof AddressListDto
    */
-  data: Array<DishDto>;
+  data: Array<AddressDto>;
   /**
    *
    * @type {number}
-   * @memberof DishListDto
+   * @memberof AddressListDto
    */
   pages: number;
 }
 
-export function DishListDtoFromJSON(json: any): DishListDto {
-  return DishListDtoFromJSONTyped(json, false);
+export function AddressListDtoFromJSON(json: any): AddressListDto {
+  return AddressListDtoFromJSONTyped(json, false);
 }
 
-export function DishListDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): DishListDto {
+export function AddressListDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressListDto {
   if (json === undefined || json === null) {
     return json;
   }
   return {
-    data: (json['data'] as Array<any>).map(DishDtoFromJSON),
+    data: (json['data'] as Array<any>).map(AddressDtoFromJSON),
     pages: json['pages'],
   };
 }
 
-export function DishListDtoToJSON(value?: DishListDto | null): any {
+export function AddressListDtoToJSON(value?: AddressListDto | null): any {
   if (value === undefined) {
     return undefined;
   }
@@ -57,7 +57,7 @@ export function DishListDtoToJSON(value?: DishListDto | null): any {
     return null;
   }
   return {
-    data: (value.data as Array<any>).map(DishDtoToJSON),
+    data: (value.data as Array<any>).map(AddressDtoToJSON),
     pages: value.pages,
   };
 }
