@@ -1,6 +1,6 @@
 import Container from '@mui/material/Container';
 
-import { AppNavBar, MediaCardsGrid } from '../components';
+import { AppNavBar, MediaCardsGrid } from '../../components';
 
 const Main = () => (
   <>

@@ -17,9 +17,9 @@ import {
 } from '@mui/material';
 import { useContext, useState } from 'react';
 
-import logo from '../assets/logo.svg';
-import { ThemeContext } from '../context';
-import { routes } from '../routes';
+import logo from '../../assets/logo.svg';
+import { routes } from '../../config';
+import { ThemeContext } from '../../contexts';
 
 const LEFT_PAGES = [
   {

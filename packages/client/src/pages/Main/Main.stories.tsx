@@ -1,4 +1,4 @@
-import { Main as MainComponent } from '../pages/Main';
+import { Main as MainComponent } from './Main';
 
 export default {
   title: 'Main',

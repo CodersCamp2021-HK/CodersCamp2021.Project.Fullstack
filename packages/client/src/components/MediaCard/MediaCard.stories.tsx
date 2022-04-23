@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { MediaCard } from '../components/MediaCard';
+import { MediaCard } from './MediaCard';
 
 export default {
   title: 'MediaCard',

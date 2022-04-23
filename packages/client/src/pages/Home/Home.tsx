@@ -1,5 +1,4 @@
-import { AppNavBar, Footer, Hero } from '../components';
-import { HomeSteps } from '../components/HomeSteps';
+import { AppNavBar, Footer, Hero, HomeSteps } from '../../components';
 
 const Home = () => (
   <>

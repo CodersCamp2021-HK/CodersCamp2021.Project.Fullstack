@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 
-import cardImg from '../assets/default.png';
+import cardImg from '../../assets/placeholder.png';
 import { MediaCard } from './MediaCard';
 
 const MediaCardsGrid = () => {

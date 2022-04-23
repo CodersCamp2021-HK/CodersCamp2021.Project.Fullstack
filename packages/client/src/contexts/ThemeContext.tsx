@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createContext, useMemo, useState } from 'react';
 
-import { darkTheme, defaultTheme } from '../theme';
+import { darkTheme, defaultTheme } from '../config';
 
 const ThemeContext = createContext({
   toggleColorMode: () => {},

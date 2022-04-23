@@ -1,7 +1,7 @@
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import { Box, Button, IconButton, InputAdornment, Stack, styled, TextField, Typography } from '@mui/material';
 
-import hero from '../assets/hero.jpg';
+import hero from '../../assets/hero.jpg';
 
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
 

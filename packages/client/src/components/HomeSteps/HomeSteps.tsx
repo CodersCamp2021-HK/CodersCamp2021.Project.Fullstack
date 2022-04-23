@@ -1,8 +1,8 @@
 import { Stack } from '@mui/material';
 
-import step1 from '../assets/steps/1.svg';
-import step2 from '../assets/steps/2.svg';
-import step3 from '../assets/steps/3.svg';
+import step1 from '../../assets/steps/1.svg';
+import step2 from '../../assets/steps/2.svg';
+import step3 from '../../assets/steps/3.svg';
 import { HomeStep } from './HomeStep';
 
 const HomeSteps = () => (

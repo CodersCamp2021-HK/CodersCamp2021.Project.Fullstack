@@ -2,8 +2,8 @@ import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { routes } from './config';
 import { Home, Main } from './pages';
-import { routes } from './routes';
 
 const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
 const DEV_API_BASE_PATH = 'http://localhost:4000';
