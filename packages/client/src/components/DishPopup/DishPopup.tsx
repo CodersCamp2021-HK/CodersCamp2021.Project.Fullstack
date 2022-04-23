@@ -42,46 +42,30 @@ const DishPopup = () => {
       >
         <Box sx={style}>
           <Grid container spacing={2}>
-            <Grid item xs={12} lg={4}>
+            <Grid item xs={4} lg={4}>
               <img src={burger} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={8}
-              justifyContent='center'
-              textAlign='center'
-              justifySelf='center'
-              alignSelf='center'
-            >
+            <Grid item xs={8} lg={8} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Typography variant='h4' sx={{ p: 2 }}>
                 Bowl japoński
               </Typography>
-              <Typography sx={{ p: 2 }}>
+              <Typography sx={{ pb: 2 }}>
                 Restauracja: <Link href='#'>Tokio Bar</Link>
               </Typography>
-              <Typography sx={{ p: 2 }} textAlign='left'>
+              <Typography sx={{ pb: 2 }} textAlign='left'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec diam ligula, blandit vel turpis ac,
                 commodo ultricies felis. Integer scelerisque facilisis felis. Phasellus sed dignissim risus, vitae
                 ultricies odio.
               </Typography>
               <TagsAllergens />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={4}
-              justifyContent='center'
-              textAlign='center'
-              justifySelf='center'
-              alignSelf='center'
-            >
+            <Grid item xs={4} lg={4} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Portion />
             </Grid>
-            <Grid item xs={12} lg={5}>
+            <Grid item xs={5} lg={5}>
               <Ingredients />
             </Grid>
-            <Grid item xs={12} lg={3} justifyContent='space-between'>
+            <Grid item xs={3} lg={3} justifyContent='space-between'>
               <Typography variant='h5'>Wybierz liczbę</Typography>
               <DaysList />
               <Typography variant='h5' justifyContent='end' justifySelf='end'>

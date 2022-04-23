@@ -5,10 +5,8 @@ const Item = (props: BoxProps) => {
   return (
     <Box
       sx={{
-        m: 1,
-        width: '5rem',
-        textAlign: 'center',
-        p: 1,
+        textAlign: 'left',
+        p: 0.1,
         ...sx,
       }}
       {...other}
@@ -20,12 +18,12 @@ const TagsAllergens = () => (
     <Item>
       <Typography variant='h6'>Tagi: </Typography>
     </Item>
-    <Item>
+    <Item sx={{ pl: 1 }}>
       <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
         WEGE
       </Typography>
     </Item>
-    <Item>
+    <Item sx={{ pl: 1, pr: 1 }}>
       <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
         OSTRE
       </Typography>
@@ -33,12 +31,12 @@ const TagsAllergens = () => (
     <Item>
       <Typography variant='h6'>Alergeny: </Typography>
     </Item>
-    <Item>
+    <Item sx={{ pl: 1 }}>
       <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
         JAJKA
       </Typography>
     </Item>
-    <Item>
+    <Item sx={{ pl: 1 }}>
       <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
         SKORUPIAKI
       </Typography>
