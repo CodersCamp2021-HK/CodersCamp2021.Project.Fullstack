@@ -68,8 +68,10 @@ const DishPopup = () => {
             <Grid item xs={3} lg={3}>
               <Typography variant='h5'>Wybierz liczbę</Typography>
               <DaysList />
-              <Typography variant='h5'>32 zł</Typography>
-              <Button variant='contained' sx={{ borderRadius: 28 }}>
+              <Typography variant='h5' color='primary.main'>
+                32 zł
+              </Typography>
+              <Button variant='contained' sx={{ borderRadius: 28, bgcolor: 'secondary.main', color: 'black' }}>
                 <AddIcon />
                 Dodaj do koszyka
               </Button>
