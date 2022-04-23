@@ -14,7 +14,7 @@ type CardProps = {
 const MediaCard = ({ dish }: CardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
   return (
-    <Card sx={{ maxWidth: 340 }}>
+    <Card sx={{ maxWidth: 360, borderRadius: '50px' }}>
       <CardMedia component='img' height='320' image={photo} alt='' />
       <CardContent>
         <Typography
@@ -38,8 +38,8 @@ const MediaCard = ({ dish }: CardProps) => {
           {description}
         </Typography>
         <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: '1rem' }}>
-          <Typography mr={2} variant='h5' color='primary.main'>
-            {price} zł
+          <Typography mr={1} variant='h5' color='primary.main'>
+            {(price / 100).toFixed(2)} zł
           </Typography>
           <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />}>
             Dodaj do koszyka
