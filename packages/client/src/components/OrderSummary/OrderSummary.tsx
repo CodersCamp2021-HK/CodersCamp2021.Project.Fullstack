@@ -1,5 +1,5 @@
 import { DishDto, DishesApi } from '@fullstack/sdk';
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
@@ -15,11 +15,11 @@ interface OrderDaysDisplayProps {
 }
 
 const OrderDaysDisplay = ({ cart, dishMap }: OrderDaysDisplayProps) => (
-  <>
+  <Stack spacing={9}>
     {cart.map((suborder) => (
       <OrderDay key={suborder.deliveryDate.toISOString()} suborder={suborder} dishMap={dishMap} />
     ))}
-  </>
+  </Stack>
 );
 
 const allDishes = (cart: SubOrder[]) => cart.flatMap((suborder) => suborder.dishes);
@@ -44,10 +44,10 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={9}>
         <OrderDaysDisplay cart={cart} dishMap={dishMap} />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         <OrderPriceDisplay price={price} nextStep={nextStep} />
       </Grid>
     </Grid>
