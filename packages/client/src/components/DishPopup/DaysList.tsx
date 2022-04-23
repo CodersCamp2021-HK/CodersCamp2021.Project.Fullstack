@@ -13,7 +13,7 @@ const DaysList = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ pb: 5 }}>
       <FormControl fullWidth>
         <InputLabel id='demo-simple-select-label'>Liczba dań</InputLabel>
         <Select

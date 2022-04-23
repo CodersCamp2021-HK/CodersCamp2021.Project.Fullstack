@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-import burger from '../../assets/burger.jpg';
+import bowl from '../../assets/bowl.jpg';
 import { DaysList } from './DaysList';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
@@ -43,7 +43,7 @@ const DishPopup = () => {
         <Box sx={style}>
           <Grid container spacing={2}>
             <Grid item xs={4} lg={4}>
-              <img src={burger} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
+              <img src={bowl} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
             </Grid>
             <Grid item xs={8} lg={8} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Typography variant='h4' sx={{ p: 2 }}>
@@ -65,12 +65,10 @@ const DishPopup = () => {
             <Grid item xs={5} lg={5}>
               <Ingredients />
             </Grid>
-            <Grid item xs={3} lg={3} justifyContent='space-between'>
+            <Grid item xs={3} lg={3}>
               <Typography variant='h5'>Wybierz liczbę</Typography>
               <DaysList />
-              <Typography variant='h5' justifyContent='end' justifySelf='end'>
-                32 zł
-              </Typography>
+              <Typography variant='h5'>32 zł</Typography>
               <Button variant='contained' sx={{ borderRadius: 28 }}>
                 <AddIcon />
                 Dodaj do koszyka
