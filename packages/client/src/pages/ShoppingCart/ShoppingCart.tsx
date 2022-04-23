@@ -1,29 +1,17 @@
 import { Box, Stack, Step, StepLabel, Stepper } from '@mui/material';
-import { useState } from 'react';
 
 import { AppNavBar, OrderSummary } from '../../components';
 
-const STEPS = [
-  { label: 'Podsumowanie', element: OrderSummary },
-  { label: 'Uzupełnij dane', element: 'div' },
-  { label: 'Zapłać i zamów', element: 'div' },
-];
+const STEPS = ['Podsumowanie', 'Uzupełnij dane', 'Zapłać i zamów'] as const;
 
 const ShoppingCart = () => {
-  const [activeStep] = useState(0);
-
-  // TODO: Implement navigation to next step
-  const nextStep = () => {};
-
-  const StepElement = STEPS[activeStep].element;
-
   return (
     <>
       <AppNavBar />
       <Stack px={6} py={10} gap={10}>
         <Box minWidth='70vw' marginX='auto'>
-          <Stepper alternativeLabel activeStep={activeStep}>
-            {STEPS.map(({ label }) => {
+          <Stepper alternativeLabel activeStep={0}>
+            {STEPS.map((label) => {
               return (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
@@ -32,7 +20,8 @@ const ShoppingCart = () => {
             })}
           </Stepper>
         </Box>
-        <StepElement nextStep={nextStep} />
+        {/* TODO: Navigation to next step */}
+        <OrderSummary nextStep={() => {}} />
       </Stack>
     </>
   );
