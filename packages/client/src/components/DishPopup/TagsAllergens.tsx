@@ -6,7 +6,7 @@ const Item = (props: BoxProps) => {
     <Box
       sx={{
         m: 1,
-        width: 100,
+        width: '5rem',
         textAlign: 'center',
         p: 1,
         ...sx,

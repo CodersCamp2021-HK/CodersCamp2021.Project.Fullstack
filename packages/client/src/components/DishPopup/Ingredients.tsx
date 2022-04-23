@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -38,56 +39,59 @@ const Ingredients = () => {
   } = state;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <FormControl sx={{ m: 3 }} component='fieldset' variant='standard'>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox checked={ingredient1} onChange={handleChange} name='ingredient1' />}
-            label='Składnik 1'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient2} onChange={handleChange} name='ingredient2' />}
-            label='Składnik 2'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient3} onChange={handleChange} name='ingredient3' />}
-            label='Składnik 3'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient4} onChange={handleChange} name='ingredient4' />}
-            label='Składnik 4'
-          />
-        </FormGroup>
-      </FormControl>
-      <FormControl component='fieldset' sx={{ m: 3 }} variant='standard'>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox checked={ingredient5} onChange={handleChange} name='ingredient5' />}
-            label='Składnik 5'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient6} onChange={handleChange} name='ingredient6' />}
-            label='Składnik 6'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient7} onChange={handleChange} name='ingredient7' />}
-            label='Składnik 7'
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ingredient8} onChange={handleChange} name='ingredient8' />}
-            label='Składnik 8'
-          />
-        </FormGroup>
-      </FormControl>
-      <FormControl component='fieldset' sx={{ m: 3 }} variant='standard'>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox checked={ingredient9} onChange={handleChange} name='ingredient9' />}
-            label='Składnik 9'
-          />
-        </FormGroup>
-      </FormControl>
-    </Box>
+    <>
+      <Typography variant='h5'>Składniki</Typography>
+      <Box sx={{ display: 'flex' }}>
+        <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={ingredient1} onChange={handleChange} name='ingredient1' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient2} onChange={handleChange} name='ingredient2' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient3} onChange={handleChange} name='ingredient3' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient4} onChange={handleChange} name='ingredient4' />}
+              label='Składnik'
+            />
+          </FormGroup>
+        </FormControl>
+        <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={ingredient5} onChange={handleChange} name='ingredient5' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient6} onChange={handleChange} name='ingredient6' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient7} onChange={handleChange} name='ingredient7' />}
+              label='Składnik'
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ingredient8} onChange={handleChange} name='ingredient8' />}
+              label='Składnik'
+            />
+          </FormGroup>
+        </FormControl>
+        <FormControl component='fieldset' variant='standard'>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={ingredient9} onChange={handleChange} name='ingredient9' />}
+              label='Składnik'
+            />
+          </FormGroup>
+        </FormControl>
+      </Box>
+    </>
   );
 };
 
