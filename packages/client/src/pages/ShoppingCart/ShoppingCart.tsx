@@ -10,11 +10,10 @@ const STEPS = [
 ];
 
 const ShoppingCart = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep] = useState(0);
 
-  const nextStep = () => {
-    setActiveStep((step) => step + 1);
-  };
+  // TODO: Implement navigation to next step
+  const nextStep = () => {};
 
   const StepElement = STEPS[activeStep].element;
 
