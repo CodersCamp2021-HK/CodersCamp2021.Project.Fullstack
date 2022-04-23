@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -20,6 +20,12 @@ import {
   CuisineTypeEnumFromJSONTyped,
   CuisineTypeEnumToJSON,
 } from './CuisineTypeEnum';
+import {
+  OperationalCityEnum,
+  OperationalCityEnumFromJSON,
+  OperationalCityEnumFromJSONTyped,
+  OperationalCityEnumToJSON,
+} from './OperationalCityEnum';
 import {
   RestaurantTagEnum,
   RestaurantTagEnumFromJSON,
@@ -71,6 +77,12 @@ export interface RestaurantDto {
   addressId: Array<AddressDto>;
   /**
    *
+   * @type {Array<OperationalCityEnum>}
+   * @memberof RestaurantDto
+   */
+  operationalCities: Array<OperationalCityEnum>;
+  /**
+   *
    * @type {string}
    * @memberof RestaurantDto
    */
@@ -92,6 +104,7 @@ export function RestaurantDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
     cuisineType: (json['cuisineType'] as Array<any>).map(CuisineTypeEnumFromJSON),
     tags: (json['tags'] as Array<any>).map(RestaurantTagEnumFromJSON),
     addressId: (json['addressId'] as Array<any>).map(AddressDtoFromJSON),
+    operationalCities: (json['operationalCities'] as Array<any>).map(OperationalCityEnumFromJSON),
     logo: !exists(json, 'logo') ? undefined : json['logo'],
   };
 }
@@ -110,6 +123,7 @@ export function RestaurantDtoToJSON(value?: RestaurantDto | null): any {
     cuisineType: (value.cuisineType as Array<any>).map(CuisineTypeEnumToJSON),
     tags: (value.tags as Array<any>).map(RestaurantTagEnumToJSON),
     addressId: (value.addressId as Array<any>).map(AddressDtoToJSON),
+    operationalCities: (value.operationalCities as Array<any>).map(OperationalCityEnumToJSON),
     logo: value.logo,
   };
 }

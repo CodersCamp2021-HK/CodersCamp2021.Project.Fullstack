@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -16,7 +16,6 @@ import { exists, mapValues } from '../runtime';
 import { AllergensEnum, AllergensEnumFromJSON, AllergensEnumFromJSONTyped, AllergensEnumToJSON } from './AllergensEnum';
 import { DishTagsEnum, DishTagsEnumFromJSON, DishTagsEnumFromJSONTyped, DishTagsEnumToJSON } from './DishTagsEnum';
 import { IngredientDto, IngredientDtoFromJSON, IngredientDtoFromJSONTyped, IngredientDtoToJSON } from './IngredientDto';
-import { MealTypeEnum, MealTypeEnumFromJSON, MealTypeEnumFromJSONTyped, MealTypeEnumToJSON } from './MealTypeEnum';
 import {
   NutritionalValueDto,
   NutritionalValueDtoFromJSON,
@@ -50,10 +49,10 @@ export interface DishDto {
   photo?: string;
   /**
    *
-   * @type {Array<MealTypeEnum>}
+   * @type {Array<string>}
    * @memberof DishDto
    */
-  mealType?: Array<MealTypeEnum>;
+  mealType?: Array<string>;
   /**
    *
    * @type {string}
@@ -120,13 +119,6 @@ export interface DishDto {
    * @memberof DishDto
    */
   restaurant: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof DishDto
-   */
-  updated: boolean;
-
 }
 
 export function DishDtoFromJSON(json: any): DishDto {
@@ -141,7 +133,7 @@ export function DishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     id: json['id'],
     name: json['name'],
     photo: !exists(json, 'photo') ? undefined : json['photo'],
-    mealType: !exists(json, 'mealType') ? undefined : (json['mealType'] as Array<any>).map(MealTypeEnumFromJSON),
+    mealType: !exists(json, 'mealType') ? undefined : json['mealType'],
     description: !exists(json, 'description') ? undefined : json['description'],
     price: json['price'],
     tags: !exists(json, 'tags') ? undefined : (json['tags'] as Array<any>).map(DishTagsEnumFromJSON),
@@ -155,7 +147,6 @@ export function DishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     proteins: NutritionalValueDtoFromJSON(json['proteins']),
     carbohydrates: NutritionalValueDtoFromJSON(json['carbohydrates']),
     restaurant: json['restaurant'],
-    updated: json['updated'],
   };
 }
 
@@ -170,7 +161,7 @@ export function DishDtoToJSON(value?: DishDto | null): any {
     id: value.id,
     name: value.name,
     photo: value.photo,
-    mealType: value.mealType === undefined ? undefined : (value.mealType as Array<any>).map(MealTypeEnumToJSON),
+    mealType: value.mealType,
     description: value.description,
     price: value.price,
     tags: value.tags === undefined ? undefined : (value.tags as Array<any>).map(DishTagsEnumToJSON),
@@ -183,6 +174,5 @@ export function DishDtoToJSON(value?: DishDto | null): any {
     proteins: NutritionalValueDtoToJSON(value.proteins),
     carbohydrates: NutritionalValueDtoToJSON(value.carbohydrates),
     restaurant: value.restaurant,
-    updated: value.updated
   };
 }

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -26,6 +26,9 @@ import {
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
+  OperationalCityEnum,
+  OperationalCityEnumFromJSON,
+  OperationalCityEnumToJSON,
   UpdateDishDto,
   UpdateDishDtoFromJSON,
   UpdateDishDtoToJSON,
@@ -42,11 +45,10 @@ export interface PartnersDishesApiDeleteOneRequest {
   id: string;
 }
 
-export interface PartnersDishesApiFindByIdRequest {
-  id: string;
-}
-
 export interface PartnersDishesApiListRequest {
+  city?: OperationalCityEnum;
+  mealType?: Array<string>;
+  tags?: Array<string>;
   page?: number;
   limit?: number;
 }
@@ -141,45 +143,6 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Retrieve a dish by id.
-   */
-  async findByIdRaw(
-    requestParameters: PartnersDishesApiFindByIdRequest,
-    initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<DishDto>> {
-    if (requestParameters.id === null || requestParameters.id === undefined) {
-      throw new runtime.RequiredError(
-        'id',
-        'Required parameter requestParameters.id was null or undefined when calling findById.',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    const response = await this.request(
-      {
-        path: `/api/partner/dishes/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(requestParameters.id))),
-        method: 'GET',
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response, (jsonValue) => DishDtoFromJSON(jsonValue));
-  }
-
-  /**
-   * Retrieve a dish by id.
-   */
-  async findById(requestParameters: PartnersDishesApiFindByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
-    const response = await this.findByIdRaw(requestParameters, initOverrides);
-    return await response.value();
-  }
-
-  /**
    * Retrieve a list of dishes.
    */
   async listRaw(
@@ -187,6 +150,18 @@ export class PartnersDishesApi extends runtime.BaseAPI {
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
+
+    if (requestParameters.city !== undefined) {
+      queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.mealType) {
+      queryParameters['mealType'] = requestParameters.mealType;
+    }
+
+    if (requestParameters.tags) {
+      queryParameters['tags'] = requestParameters.tags;
+    }
 
     if (requestParameters.page !== undefined) {
       queryParameters['page'] = requestParameters.page;
@@ -225,7 +200,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   async updateRaw(
     requestParameters: PartnersDishesApiUpdateRequest,
     initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<void>> {
+  ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
         'id',
@@ -257,13 +232,14 @@ export class PartnersDishesApi extends runtime.BaseAPI {
       initOverrides,
     );
 
-    return new runtime.VoidApiResponse(response);
+    return new runtime.JSONApiResponse(response, (jsonValue) => DishDtoFromJSON(jsonValue));
   }
 
   /**
    * Update an existing dish.
    */
-  async update(requestParameters: PartnersDishesApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
-    await this.updateRaw(requestParameters, initOverrides);
+  async update(requestParameters: PartnersDishesApiUpdateRequest, initOverrides?: RequestInit): Promise<DishDto> {
+    const response = await this.updateRaw(requestParameters, initOverrides);
+    return await response.value();
   }
 }
