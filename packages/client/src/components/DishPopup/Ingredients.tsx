@@ -3,8 +3,6 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormLabel from '@mui/material/FormLabel';
 import * as React from 'react';
 
 const Ingredients = () => {
@@ -62,7 +60,6 @@ const Ingredients = () => {
         </FormGroup>
       </FormControl>
       <FormControl component='fieldset' sx={{ m: 3 }} variant='standard'>
-        <FormLabel />
         <FormGroup>
           <FormControlLabel
             control={<Checkbox checked={ingredient5} onChange={handleChange} name='ingredient5' />}
@@ -83,7 +80,6 @@ const Ingredients = () => {
         </FormGroup>
       </FormControl>
       <FormControl component='fieldset' sx={{ m: 3 }} variant='standard'>
-        <FormLabel />
         <FormGroup>
           <FormControlLabel
             control={<Checkbox checked={ingredient9} onChange={handleChange} name='ingredient9' />}

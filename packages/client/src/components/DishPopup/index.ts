@@ -1,3 +1,4 @@
-// export * from './DishPopup'
+export * from './DaysList';
 export * from './Ingredients';
-export * from './Tags';
+export * from './Portion';
+export * from './TagsAllergens';

@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 
 const Item = (props: BoxProps) => {
   const { sx, ...other } = props;
@@ -15,7 +15,7 @@ const Item = (props: BoxProps) => {
     />
   );
 };
-const Tags = () => (
+const Portion = () => (
   <Box sx={{ flexDirection: 'column' }}>
     <Item>
       <Typography variant='h5'>W porcji 300g</Typography>
@@ -43,4 +43,4 @@ const Tags = () => (
   </Box>
 );
 
-export { Tags };
+export { Portion };

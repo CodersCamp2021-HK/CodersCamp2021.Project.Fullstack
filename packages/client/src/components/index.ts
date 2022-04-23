@@ -1,4 +1,5 @@
 export * from './AppNavBar';
+export * from './DishPopup';
 export * from './Footer';
 export * from './Hero';
 export * from './HomeSteps';
