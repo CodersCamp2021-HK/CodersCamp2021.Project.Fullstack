@@ -45,10 +45,10 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12} md={9}>
+      <Grid item xs={12} xl={9}>
         <OrderDaysDisplay cart={cart} dishMap={dishMap} />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} xl={3} order={{ xs: -1, xl: 1 }}>
         <OrderPriceDisplay price={price} nextStep={nextStep} />
       </Grid>
     </Grid>

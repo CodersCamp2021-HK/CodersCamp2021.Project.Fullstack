@@ -6,11 +6,13 @@ interface OrderPriceDisplayProps {
 }
 
 const OrderPriceDisplay = ({ price, nextStep }: OrderPriceDisplayProps) => (
-  <Stack p={4} bgcolor='common.white' gap={4}>
-    <Stack direction='row' justifyContent='space-between' alignItems='center'>
-      <Typography variant='h4'>Do zapłaty</Typography>
-      <Typography variant='h5' fontWeight='bold'>
-        {price} zł
+  <Stack p={4} bgcolor='background.paper' gap={4}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent='space-between' alignItems='center'>
+      <Typography variant='h4' sx={{ typography: { xs: 'h5', xl: 'h4' } }}>
+        Do zapłaty
+      </Typography>
+      <Typography variant='h5' sx={{ typography: { xs: 'h6', xl: 'h5' } }}>
+        <strong>{price} zł</strong>
       </Typography>
     </Stack>
     <Button

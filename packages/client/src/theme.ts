@@ -12,6 +12,7 @@ const themeColors = {
     main: '#cddc39',
   },
 };
+
 const defaultTheme = {
   palette: {
     mode: 'light' as PaletteMode,
@@ -58,6 +59,9 @@ const darkTheme = {
   palette: {
     mode: 'dark' as PaletteMode,
     ...themeColors,
+    background: {
+      paper: '#303030',
+    },
   },
 };
 

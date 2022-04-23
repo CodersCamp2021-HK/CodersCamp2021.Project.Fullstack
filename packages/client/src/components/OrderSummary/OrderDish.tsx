@@ -7,6 +7,14 @@ import { Box, Chip, IconButton, Stack, TableCell, TableRow, Typography } from '@
 
 import defaultPhoto from '../../assets/default.png';
 
+const NUMBER_TYPOGRAPHY = {
+  variant: 'h5',
+  sx: {
+    typography: { xs: 'h6', xl: 'h5' },
+    fontWeight: { xs: '500', xl: 'bold' },
+  },
+} as const;
+
 interface OrderDishProps {
   dishMap: Record<string, DishDto>;
   orderDish: OrderDishDto;
@@ -49,16 +57,14 @@ const OrderDish = ({ dishMap, orderDish }: OrderDishProps) => {
         </ul>
       </TableCell>
       <TableCell align='center'>
-        <Typography variant='h5' fontWeight='bold'>
-          {dish.price} zł
-        </Typography>
+        <Typography {...NUMBER_TYPOGRAPHY}>{dish.price} zł</Typography>
       </TableCell>
       <TableCell align='center'>
         <Stack direction='row' justifyContent='center' alignItems='center'>
           <IconButton>
             <Remove />
           </IconButton>
-          <Typography variant='h5' fontWeight='bold' px={1}>
+          <Typography {...NUMBER_TYPOGRAPHY} px={1}>
             {count}
           </Typography>
           <IconButton>
@@ -67,7 +73,7 @@ const OrderDish = ({ dishMap, orderDish }: OrderDishProps) => {
         </Stack>
       </TableCell>
       <TableCell align='center'>
-        <Typography variant='h5' fontWeight='bold' color='secondary.dark'>
+        <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark'>
           {dish.price * count} zł
         </Typography>
       </TableCell>

@@ -7,15 +7,19 @@ import { OrderDayFooter } from './OrderDayFooter';
 import { OrderDish } from './OrderDish';
 
 const OrderDayTable = styled(Table)(({ theme }) => ({
-  background: theme.palette.common.white,
-  color: theme.palette.secondary.contrastText,
+  background: theme.palette.background.paper,
   '& .MuiTableCell-root': {
     color: 'inherit',
   },
 }));
 
 const OrderColumnNames = () => (
-  <TableRow sx={{ color: ({ palette }) => palette.primary.main, textTransform: 'uppercase' }}>
+  <TableRow
+    sx={{
+      color: ({ palette }) => (palette.mode === 'light' ? palette.primary.main : palette.secondary.main),
+      textTransform: 'uppercase',
+    }}
+  >
     <TableCell />
     <TableCell>Danie</TableCell>
     <TableCell>
