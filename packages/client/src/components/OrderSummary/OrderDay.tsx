@@ -1,4 +1,4 @@
-import { DishDto } from '@fullstack/sdk/src';
+import { DishDto } from '@fullstack/sdk';
 import { styled, Table, TableBody, TableCell, TableRow } from '@mui/material';
 
 import { SubOrder } from '../../context';
@@ -45,7 +45,7 @@ const OrderDay = ({ suborder, dishMap }: OrderDayProps) => {
           <OrderDish key={orderDish.dishId} orderDish={orderDish} dishMap={dishMap} />
         ))}
       </TableBody>
-      <OrderDayFooter />
+      <OrderDayFooter dishes={suborder.dishes} dishMap={dishMap} />
     </OrderDayTable>
   );
 };

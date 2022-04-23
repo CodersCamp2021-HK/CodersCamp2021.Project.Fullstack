@@ -1,4 +1,4 @@
-import { DishDto, OrderDishDto } from '@fullstack/sdk/src';
+import { DishDto, OrderDishDto } from '@fullstack/sdk';
 import Add from '@mui/icons-material/Add';
 import Create from '@mui/icons-material/Create';
 import DeleteOutline from '@mui/icons-material/DeleteOutline';
@@ -36,7 +36,9 @@ const OrderDish = ({ dishMap, orderDish }: OrderDishProps) => {
           <Typography variant='body2' pb={1}>
             Wartość na porcję
           </Typography>
-          <Chip label='KCAL: 550, T: 20, B: 50, W: 200' />
+          <Chip
+            label={`KCAL: ${dish.calories.perPortion}, T: ${dish.fats.perPortion}, B: ${dish.proteins.perPortion}, W: ${dish.carbohydrates.perPortion}`}
+          />
         </Stack>
       </TableCell>
       <TableCell>

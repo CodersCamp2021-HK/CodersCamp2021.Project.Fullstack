@@ -6,6 +6,7 @@ import { apiConfiguration } from '../../config';
 import { SubOrder, useShoppingCart } from '../../context';
 import { OrderDay } from './OrderDay';
 import { OrderPriceDisplay } from './OrderPriceDisplay';
+import { sumDishProperty } from './shared';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
@@ -40,7 +41,7 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
     });
   }, [cart]);
 
-  const price = allDishes(cart).reduce((sum, { dishId, count = 1 }) => sum + (dishMap[dishId]?.price ?? 0) * count, 0);
+  const price = sumDishProperty(allDishes(cart), dishMap, 'price');
 
   return (
     <Grid container spacing={4}>
