@@ -1,7 +1,7 @@
 import { Box, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import { useState } from 'react';
 
-import { AppNavBar, OrderSummary } from '../components';
+import { AppNavBar, OrderSummary } from '../../components';
 
 const STEPS = [
   { label: 'Podsumowanie', element: OrderSummary },
