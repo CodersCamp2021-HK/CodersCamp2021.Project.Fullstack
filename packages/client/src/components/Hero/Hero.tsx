@@ -6,7 +6,7 @@ import hero from '../../assets/hero.jpg';
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
 
 const SearchField = styled(TextField)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.background.paper,
   '& .MuiInputBase-root': {
     paddingRight: 0,
   },

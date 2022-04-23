@@ -9,9 +9,9 @@ interface HomeStepProps {
 }
 
 const StepHeader = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.secondary.main,
   '&::first-letter': {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.mode === 'light' ? theme.palette.secondary.main : theme.palette.primary.dark,
     padding: '0.4em 0.8em',
     margin: '-0.4em -0.8em',
     borderRadius: '4rem',
