@@ -1,6 +1,6 @@
-import { DishDto, OrderDishDto } from '@fullstack/sdk';
 import { Chip, styled, Table, TableBody, TableCell, TableFooter, TableRow, Typography } from '@mui/material';
 
+import { SubOrderDish } from '../../context';
 import { sumDishProperty } from './shared';
 
 const NutrientsTableBody = styled(TableBody)(() => ({
@@ -35,12 +35,11 @@ const NUTRIENTS = [
 ] as const;
 
 interface OrderDayFooterProps {
-  dishes: OrderDishDto[];
-  dishMap: Record<string, DishDto>;
+  dishes: SubOrderDish[];
 }
 
-const OrderDayFooter = ({ dishes, dishMap }: OrderDayFooterProps) => {
-  const dayPrice = sumDishProperty(dishes, dishMap, 'price');
+const OrderDayFooter = ({ dishes }: OrderDayFooterProps) => {
+  const dayPrice = sumDishProperty(dishes, 'price');
 
   return (
     <TableFooter sx={({ palette }) => ({ color: palette.common.white, background: palette.primary.light })}>
@@ -55,7 +54,7 @@ const OrderDayFooter = ({ dishes, dishMap }: OrderDayFooterProps) => {
                 <TableRow key={label}>
                   <TableCell>{label}</TableCell>
                   <TableCell>
-                    {sumDishProperty(dishes, dishMap, path)} {unit}
+                    {sumDishProperty(dishes, path)} {unit}
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,24 +1,18 @@
-import { DishDto, DishesApi } from '@fullstack/sdk';
 import { Grid, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
 
-import { apiConfiguration } from '../../config';
 import { SubOrder, useShoppingCart } from '../../context';
 import { OrderDay } from './OrderDay';
 import { OrderPriceDisplay } from './OrderPriceDisplay';
 import { sumDishProperty } from './shared';
 
-const dishesApi = new DishesApi(apiConfiguration);
-
 interface OrderDaysDisplayProps {
   cart: SubOrder[];
-  dishMap: Record<string, DishDto>;
 }
 
-const OrderDaysDisplay = ({ cart, dishMap }: OrderDaysDisplayProps) => (
+const OrderDaysDisplay = ({ cart }: OrderDaysDisplayProps) => (
   <Stack spacing={9}>
     {cart.map((suborder) => (
-      <OrderDay key={suborder.deliveryDate.toISOString()} suborder={suborder} dishMap={dishMap} />
+      <OrderDay key={suborder.deliveryDate.toISOString()} suborder={suborder} />
     ))}
   </Stack>
 );
@@ -32,21 +26,12 @@ interface OrderSummaryProps {
 const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
   const { cart } = useShoppingCart();
 
-  const [dishMap, setDishMap] = useState<Record<string, DishDto>>({});
-
-  useEffect(() => {
-    new Set(allDishes(cart)).forEach(async ({ dishId }) => {
-      const dish = await dishesApi.findDishById({ id: dishId });
-      setDishMap((oldMap) => ({ ...oldMap, [dishId]: dish }));
-    });
-  }, [cart]);
-
-  const price = sumDishProperty(allDishes(cart), dishMap, 'price');
+  const price = sumDishProperty(allDishes(cart), 'price');
 
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} xl={9}>
-        <OrderDaysDisplay cart={cart} dishMap={dishMap} />
+        <OrderDaysDisplay cart={cart} />
       </Grid>
       <Grid item xs={12} xl={3} order={{ xs: -1, xl: 1 }}>
         <OrderPriceDisplay price={price} nextStep={nextStep} />

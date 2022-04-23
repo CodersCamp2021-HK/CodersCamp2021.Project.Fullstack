@@ -1,7 +1,6 @@
-import { DishDto, OrderDishDto } from '@fullstack/sdk';
 import { styled, Table, TableBody, TableCell, TableRow } from '@mui/material';
 
-import { SubOrder } from '../../context';
+import { SubOrder, SubOrderDish } from '../../context';
 import { OrderDateHeader } from './OrderDateHeader';
 import { OrderDayFooter } from './OrderDayFooter';
 import { OrderDish } from './OrderDish';
@@ -34,32 +33,24 @@ const OrderColumnNames = () => (
   </TableRow>
 );
 
-const orderDishKey = (orderDish: OrderDishDto) =>
-  `${orderDish.dishId}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
+const orderDishKey = (orderDish: SubOrderDish) =>
+  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
 
 interface OrderDayProps {
   suborder: SubOrder;
-  dishMap: Record<string, DishDto>;
 }
 
-const OrderDay = ({ suborder, dishMap }: OrderDayProps) => {
+const OrderDay = ({ suborder }: OrderDayProps) => {
   return (
     <OrderDayTable>
       <OrderDateHeader date={suborder.deliveryDate} />
       <TableBody>
         <OrderColumnNames />
-        {suborder.dishes
-          .filter((orderDish) => dishMap[orderDish.dishId])
-          .map((orderDish) => (
-            <OrderDish
-              key={orderDishKey(orderDish)}
-              dish={dishMap[orderDish.dishId]}
-              count={orderDish.count ?? 1}
-              excludedIngredients={orderDish.excludedIngredients ?? []}
-            />
-          ))}
+        {suborder.dishes.map((orderDish) => (
+          <OrderDish key={orderDishKey(orderDish)} orderDish={orderDish} />
+        ))}
       </TableBody>
-      <OrderDayFooter dishes={suborder.dishes} dishMap={dishMap} />
+      <OrderDayFooter dishes={suborder.dishes} />
     </OrderDayTable>
   );
 };

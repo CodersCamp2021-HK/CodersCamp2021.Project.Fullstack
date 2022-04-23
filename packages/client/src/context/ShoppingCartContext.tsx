@@ -1,8 +1,11 @@
-import { SubOrderDto } from '@fullstack/sdk';
+import { DishDto, OrderDishDto } from '@fullstack/sdk';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-// TODO: Remove this type and use SubOrderDto when API gets updated
-type SubOrder = Omit<SubOrderDto, 'hourStart' | 'hourEnd'>;
+type SubOrderDish = Omit<OrderDishDto, 'dishId'> & { dish: DishDto };
+interface SubOrder {
+  deliveryDate: Date;
+  dishes: SubOrderDish[];
+}
 
 const ShoppingCartContext = createContext<{
   cart: SubOrder[];
@@ -25,4 +28,4 @@ const ShoppingCartProvider = ({ children }: { children: React.ReactNode }) => {
 const useShoppingCart = () => useContext(ShoppingCartContext);
 
 export { ShoppingCartProvider, useShoppingCart };
-export type { SubOrder };
+export type { SubOrder, SubOrderDish };
