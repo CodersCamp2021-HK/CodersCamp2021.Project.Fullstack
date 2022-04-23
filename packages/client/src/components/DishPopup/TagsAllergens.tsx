@@ -19,12 +19,12 @@ const TagsAllergens = () => (
       <Typography variant='h6'>Tagi: </Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
+      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
         WEGE
       </Typography>
     </Item>
     <Item sx={{ pl: 1, pr: 1 }}>
-      <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
+      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
         OSTRE
       </Typography>
     </Item>
@@ -32,12 +32,12 @@ const TagsAllergens = () => (
       <Typography variant='h6'>Alergeny: </Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
+      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
         JAJKA
       </Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' border={1} borderRadius='16px' color='primary' padding={1} bgcolor='#FFFF'>
+      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
         SKORUPIAKI
       </Typography>
     </Item>

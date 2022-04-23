@@ -22,22 +22,22 @@ const Portion = () => (
     <Box sx={{ flexDirection: 'column' }}>
       <Item />
       <Item>
-        <Typography border={1} borderRadius='16px' color='primary'>
+        <Typography borderRadius='16px' bgcolor='primary.background'>
           Kalorie: 500
         </Typography>
       </Item>
       <Item>
-        <Typography border={1} borderRadius='16px' color='primary'>
+        <Typography borderRadius='16px' bgcolor='primary.background'>
           Tłuszcze: 100
         </Typography>
       </Item>
       <Item>
-        <Typography border={1} borderRadius='16px' color='primary'>
+        <Typography borderRadius='16px' bgcolor='primary.background'>
           Białka: 50
         </Typography>
       </Item>
       <Item>
-        <Typography border={1} borderRadius='16px' color='primary'>
+        <Typography borderRadius='16px' bgcolor='primary.background'>
           Węglowodany: 200
         </Typography>
       </Item>
