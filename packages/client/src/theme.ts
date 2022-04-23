@@ -1,4 +1,5 @@
 import { LinkProps } from '@mui/material';
+import { green, lime } from '@mui/material/colors';
 
 import { LinkBehavior } from './linkBehavior';
 
@@ -6,10 +7,52 @@ type PaletteMode = 'light' | 'dark';
 
 const themeColors = {
   primary: {
-    main: '#1b5e20',
+    main: green[900],
+    background: 'rgba(27,94,32,8%)',
   },
   secondary: {
-    main: '#cddc39',
+    main: lime[500],
+  },
+};
+
+const commonComponents = {
+  MuiLink: {
+    defaultProps: {
+      component: LinkBehavior,
+    } as LinkProps,
+  },
+  MuiButtonBase: {
+    defaultProps: {
+      LinkComponent: LinkBehavior,
+    },
+  },
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        height: '48px',
+        boxShadow: 'none',
+        borderRadius: 50,
+        '&:hover': {
+          boxShadow: 'none',
+        },
+      },
+    },
+  },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        marginBottom: '1rem',
+      },
+    },
+  },
+  MuiCardMedia: {
+    styleOverrides: {
+      root: {
+        borderRadius: 50,
+      },
+    },
   },
 };
 
@@ -33,18 +76,12 @@ const defaultTheme = {
     h2: {
       fontWeight: 400,
     },
+    h5: {
+      fontWeight: 600,
+    },
   },
   components: {
-    MuiLink: {
-      defaultProps: {
-        component: LinkBehavior,
-      } as LinkProps,
-    },
-    MuiButtonBase: {
-      defaultProps: {
-        LinkComponent: LinkBehavior,
-      },
-    },
+    ...commonComponents,
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
@@ -60,7 +97,17 @@ const darkTheme = {
     mode: 'dark' as PaletteMode,
     ...themeColors,
     background: {
-      paper: '#303030',
+      default: '#303030',
+    },
+  },
+  components: {
+    ...commonComponents,
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: '#303030',
+        },
+      },
     },
   },
 };
