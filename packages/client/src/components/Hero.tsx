@@ -50,19 +50,22 @@ const Hero = () => (
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <Button variant='contained' color='secondary' disableElevation>
+                <Button sx={{ height: 'auto' }} variant='contained' color='secondary' disableElevation>
                   Wyszukaj
                 </Button>
               </InputAdornment>
             ),
           }}
         />
-        <Stack alignItems='center'>
-          <Typography color='secondary'>Zobacz jak dokonać zamówienia</Typography>
-          <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
-            <ArrowDownward fontSize='large' />
-          </IconButton>
-        </Stack>
+      </Stack>
+      <Stack alignItems='center' sx={{ position: 'absolute', right: 0, bottom: 0, p: { xs: 4, sm: 8 } }}>
+        <Typography color='secondary' textAlign='center'>
+          Zobacz jak <br />
+          złożyć zamówienie
+        </Typography>
+        <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
+          <ArrowDownward fontSize='large' />
+        </IconButton>
       </Stack>
     </Stack>
   </Box>
