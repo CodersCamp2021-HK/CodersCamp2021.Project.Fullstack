@@ -6,7 +6,7 @@ const Item = (props: BoxProps) => {
     <Box
       sx={{
         m: 1,
-        width: '20rem',
+        // width: '20rem',
         textAlign: 'center',
         pb: 0.3,
         pl: 2,
@@ -18,7 +18,7 @@ const Item = (props: BoxProps) => {
 };
 const Portion = () => (
   <>
-    <Typography variant='h5'>W porcji 300g</Typography>
+    <Typography variant='h6'>W porcji 300g</Typography>
     <Box sx={{ flexDirection: 'column' }}>
       <Item />
       <Item>

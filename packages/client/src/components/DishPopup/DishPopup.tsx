@@ -66,7 +66,7 @@ const DishPopup = () => {
               <Ingredients />
             </Grid>
             <Grid item xs={3} lg={3}>
-              <Typography variant='h5'>Wybierz liczbę</Typography>
+              <Typography variant='h6'>Wybierz liczbę</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
                 32 zł

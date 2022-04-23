@@ -40,7 +40,7 @@ const Ingredients = () => {
 
   return (
     <>
-      <Typography variant='h5'>Składniki</Typography>
+      <Typography variant='h6'>Składniki</Typography>
       <Box sx={{ display: 'flex' }}>
         <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
           <FormGroup>
