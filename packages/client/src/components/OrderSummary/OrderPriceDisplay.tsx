@@ -12,7 +12,7 @@ const OrderPriceDisplay = ({ price, nextStep }: OrderPriceDisplayProps) => (
         Do zapłaty
       </Typography>
       <Typography variant='h5' sx={{ typography: { xs: 'h6', xl: 'h5' } }}>
-        <strong>{price} zł</strong>
+        <strong>{(price / 100).toFixed(2)} zł</strong>
       </Typography>
     </Stack>
     <Button

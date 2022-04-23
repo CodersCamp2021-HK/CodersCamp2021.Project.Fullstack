@@ -52,7 +52,7 @@ const OrderDish = ({ dish, count, excludedIngredients }: OrderDishProps) => (
       </ul>
     </TableCell>
     <TableCell align='center'>
-      <Typography {...NUMBER_TYPOGRAPHY}>{dish.price} zł</Typography>
+      <Typography {...NUMBER_TYPOGRAPHY}>{(dish.price / 100).toFixed(2)} zł</Typography>
     </TableCell>
     <TableCell align='center'>
       <Stack direction='row' justifyContent='center' alignItems='center'>
@@ -69,7 +69,7 @@ const OrderDish = ({ dish, count, excludedIngredients }: OrderDishProps) => (
     </TableCell>
     <TableCell align='center'>
       <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark'>
-        {dish.price * count} zł
+        {((dish.price * count) / 100).toFixed(2)} zł
       </Typography>
     </TableCell>
     <TableCell>

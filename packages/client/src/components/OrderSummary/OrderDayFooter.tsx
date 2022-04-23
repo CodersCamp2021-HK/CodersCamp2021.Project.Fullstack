@@ -65,7 +65,7 @@ const OrderDayFooter = ({ dishes, dishMap }: OrderDayFooterProps) => {
         <TableCell colSpan={3} />
         <TableCell align='center'>
           <Chip
-            label={`${dayPrice} zł`}
+            label={`${(dayPrice / 100).toFixed(2)} zł`}
             sx={({ palette }) => ({
               backgroundColor: palette.secondary.dark,
               color: palette.primary.contrastText,
