@@ -45,9 +45,16 @@ const OrderDay = ({ suborder, dishMap }: OrderDayProps) => {
       <OrderDateHeader date={suborder.deliveryDate} />
       <TableBody>
         <OrderColumnNames />
-        {suborder.dishes.map((orderDish) => (
-          <OrderDish key={orderDish.dishId} orderDish={orderDish} dishMap={dishMap} />
-        ))}
+        {suborder.dishes
+          .filter((orderDish) => dishMap[orderDish.dishId])
+          .map((orderDish) => (
+            <OrderDish
+              key={orderDish.dishId}
+              dish={dishMap[orderDish.dishId]}
+              count={orderDish.count ?? 1}
+              excludedIngredients={orderDish.excludedIngredients ?? []}
+            />
+          ))}
       </TableBody>
       <OrderDayFooter dishes={suborder.dishes} dishMap={dishMap} />
     </OrderDayTable>
