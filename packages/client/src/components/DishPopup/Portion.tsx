@@ -6,7 +6,8 @@ const Item = (props: BoxProps) => {
     <Box
       sx={{
         m: 1,
-        // width: '20rem',
+        width: '85%',
+
         textAlign: 'center',
         pb: 0.3,
         pl: 2,
@@ -16,30 +17,28 @@ const Item = (props: BoxProps) => {
     />
   );
 };
+
+const style = {
+  borderRadius: '16px',
+  bgcolor: 'primary.background',
+  padding: 1,
+};
 const Portion = () => (
   <>
     <Typography variant='h6'>W porcji 300g</Typography>
     <Box sx={{ flexDirection: 'column' }}>
       <Item />
       <Item>
-        <Typography borderRadius='16px' bgcolor='primary.background'>
-          Kalorie: 500
-        </Typography>
+        <Typography sx={style}>KALORIE: 500</Typography>
       </Item>
       <Item>
-        <Typography borderRadius='16px' bgcolor='primary.background'>
-          Tłuszcze: 100
-        </Typography>
+        <Typography sx={style}>TŁUSZCZE: 100</Typography>
       </Item>
       <Item>
-        <Typography borderRadius='16px' bgcolor='primary.background'>
-          Białka: 50
-        </Typography>
+        <Typography sx={style}>BIAŁKA: 50</Typography>
       </Item>
       <Item>
-        <Typography borderRadius='16px' bgcolor='primary.background'>
-          Węglowodany: 200
-        </Typography>
+        <Typography sx={style}>WĘGLOWODANY: 200</Typography>
       </Item>
     </Box>
   </>

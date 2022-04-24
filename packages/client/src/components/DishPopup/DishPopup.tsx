@@ -25,7 +25,6 @@ const style = {
   width: '80rem',
   height: '43rem',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
@@ -51,7 +50,7 @@ const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
               <Typography sx={{ pb: 2 }}>
                 Restauracja: <Link href='#'>Tokio Bar</Link>
               </Typography>
-              <Typography sx={{ pb: 2 }} textAlign='left'>
+              <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec diam ligula, blandit vel turpis ac,
                 commodo ultricies felis. Integer scelerisque facilisis felis. Phasellus sed dignissim risus, vitae
                 ultricies odio.
@@ -70,8 +69,15 @@ const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
               <Typography variant='h5' color='primary.main'>
                 32 zł
               </Typography>
-              <Button variant='contained' sx={{ borderRadius: 28, bgcolor: 'secondary.main', color: 'black' }}>
-                <AddIcon />
+              <Button
+                variant='contained'
+                color='secondary'
+                sx={{
+                  width: '100%',
+                  mt: '2rem',
+                }}
+                startIcon={<AddIcon />}
+              >
                 Dodaj do koszyka
               </Button>
             </Grid>

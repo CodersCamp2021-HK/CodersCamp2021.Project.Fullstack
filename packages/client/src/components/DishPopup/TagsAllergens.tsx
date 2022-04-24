@@ -13,33 +13,33 @@ const Item = (props: BoxProps) => {
     />
   );
 };
+
+const style = {
+  variant: 'caption',
+  borderRadius: '16px',
+  color: 'white',
+  bgcolor: 'primary.main',
+  padding: 1,
+};
 const TagsAllergens = () => (
   <Box sx={{ flexDirection: 'row', display: 'flex' }}>
     <Item>
       <Typography variant='h6'>Tagi: </Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
-        WEGE
-      </Typography>
+      <Typography sx={style}>WEGE</Typography>
     </Item>
     <Item sx={{ pl: 1, pr: 1 }}>
-      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
-        OSTRE
-      </Typography>
+      <Typography sx={style}>OSTRE</Typography>
     </Item>
     <Item>
       <Typography variant='h6'>Alergeny: </Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
-        JAJKA
-      </Typography>
+      <Typography sx={style}>JAJKA</Typography>
     </Item>
     <Item sx={{ pl: 1 }}>
-      <Typography variant='overline' borderRadius='16px' color='white' bgcolor='primary.main' padding={1}>
-        SKORUPIAKI
-      </Typography>
+      <Typography sx={style}>SKORUPIAKI</Typography>
     </Item>
   </Box>
 );
