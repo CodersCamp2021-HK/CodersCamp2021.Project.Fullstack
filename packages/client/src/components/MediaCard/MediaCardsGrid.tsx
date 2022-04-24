@@ -11,15 +11,12 @@ const MediaCardsGrid = () => {
         mealType: ['lunch', 'obiad'],
         description: 'Opis dania',
         price: 23,
-        tags: ['ostre', 'gluten free'],
         ingredients: [
           {
             name: 'bazylia',
-
             canBeExcluded: false,
           },
         ],
-        allergens: ['orzechy'],
         portionWeight: 0,
         calories: {
           per100g: 0,
@@ -46,14 +43,12 @@ const MediaCardsGrid = () => {
         mealType: ['lunch', 'obiad'],
         description: 'Opis dania',
         price: 25,
-        tags: ['ostre', 'gluten free'],
         ingredients: [
           {
             name: 'bazylia',
             canBeExcluded: false,
           },
         ],
-        allergens: ['orzechy'],
         portionWeight: 0,
         calories: {
           per100g: 0,
@@ -80,14 +75,12 @@ const MediaCardsGrid = () => {
         mealType: ['lunch', 'obiad'],
         description: 'Opis dania',
         price: 20,
-        tags: ['ostre', 'gluten free'],
         ingredients: [
           {
             name: 'bazylia',
             canBeExcluded: false,
           },
         ],
-        allergens: ['orzechy'],
         portionWeight: 0,
         calories: {
           per100g: 0,
