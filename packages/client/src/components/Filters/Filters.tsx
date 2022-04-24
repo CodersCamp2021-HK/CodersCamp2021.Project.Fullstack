@@ -1,4 +1,4 @@
-import { CuisineTypeEnum, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
+import { DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, Stack } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
@@ -128,12 +128,6 @@ const Filters = () => {
     <>
       <Stack onClick={() => handleChecked}>
         <CheckboxList parentCallback={checked} filtersName='mealType' listLabel='Rodzaj dania' filters={MealTypeEnum} />
-        <CheckboxList
-          parentCallback={checked}
-          filtersName='cuisineType'
-          listLabel='Rodzaj kuchni'
-          filters={CuisineTypeEnum}
-        />
         <CheckboxList parentCallback={checked} filtersName='tags' listLabel='Tagi' filters={DishTagsEnum} />
       </Stack>
       <Box>
