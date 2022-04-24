@@ -1,4 +1,4 @@
-import cardImg from '../../assets/default.png';
+import cardImg from '../../assets/placeholder.png';
 import { SideCartItem as SideCartItemComponent } from './SideCartItem';
 
 export default {

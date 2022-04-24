@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import { SubOrderDish } from '../../context/ShoppingCartContext';
+import { SubOrderDish } from '../../contexts';
 import { SideCartItem } from './SideCartItem';
 
 interface SuborderSummaryProps {

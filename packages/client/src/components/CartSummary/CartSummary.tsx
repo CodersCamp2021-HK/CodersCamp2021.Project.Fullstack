@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import { SetStateAction } from 'react';
 
-import cardImg from '../../assets/default.png';
-import { routes } from '../../routes';
+import cardImg from '../../assets/placeholder.png';
+import { routes } from '../../config/routes';
 import { DatePicker } from './DatePicker';
 import { SuborderSummary } from './SuborderSummary';
 
