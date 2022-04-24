@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
 
 import bowl from '../../assets/bowl.jpg';
 import { DaysList } from './DaysList';
@@ -48,6 +47,7 @@ const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
                 Bowl japoński
               </Typography>
               <Typography sx={{ pb: 2 }}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 Restauracja: <Link href='#'>Tokio Bar</Link>
               </Typography>
               <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>

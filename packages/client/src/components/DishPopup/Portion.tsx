@@ -7,7 +7,6 @@ const Item = (props: BoxProps) => {
       sx={{
         m: 1,
         width: '85%',
-
         textAlign: 'center',
         pb: 0.3,
         pl: 2,
