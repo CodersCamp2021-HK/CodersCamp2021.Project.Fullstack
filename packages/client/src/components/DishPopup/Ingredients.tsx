@@ -8,20 +8,10 @@ import FormGroup from '@mui/material/FormGroup';
 import * as React from 'react';
 
 type IngredientsProps = {
-  dish: Omit<DishDto, 'id'>;
+  ingredients: Omit<DishDto, 'id'>;
 };
-const Ingredients = ({ dish }: IngredientsProps) => {
-  const [state, setState] = React.useState({
-    ingredient1: false,
-    ingredient2: false,
-    ingredient3: false,
-    ingredient4: false,
-    ingredient5: false,
-    ingredient6: false,
-    ingredient7: false,
-    ingredient8: false,
-    ingredient9: false,
-  });
+const Ingredients = ({ ingredients }: IngredientsProps) => {
+  const [state, setState] = React.useState([Boolean]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({
@@ -30,71 +20,36 @@ const Ingredients = ({ dish }: IngredientsProps) => {
     });
   };
 
-  const {
-    ingredient1,
-    ingredient2,
-    ingredient3,
-    ingredient4,
-    ingredient5,
-    ingredient6,
-    ingredient7,
-    ingredient8,
-    ingredient9,
-  } = state;
-
   return (
     <>
       <Typography variant='h6'>Składniki</Typography>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ flexDirection: 'row', display: 'flex', flexWrap: 'wrap' }}>
         <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={dish.ingredients[0].canBeExcluded} onChange={handleChange} name='ingredient1' />
-              }
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient2} onChange={handleChange} name='ingredient2' />}
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient3} onChange={handleChange} name='ingredient3' />}
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient4} onChange={handleChange} name='ingredient4' />}
-              label='Składnik'
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox checked={ingredient5} onChange={handleChange} name='ingredient5' />}
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient6} onChange={handleChange} name='ingredient6' />}
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient7} onChange={handleChange} name='ingredient7' />}
-              label='Składnik'
-            />
-            <FormControlLabel
-              control={<Checkbox checked={ingredient8} onChange={handleChange} name='ingredient8' />}
-              label='Składnik'
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl component='fieldset' variant='standard'>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox checked={ingredient9} onChange={handleChange} name='ingredient9' />}
-              label='Składnik'
-            />
-          </FormGroup>
+          {(ingredients.ingredients ?? []).length > 0 ? (
+            <FormGroup>
+              {ingredients.ingredients?.map((tag) =>
+                tag.canBeExcluded ? (
+                  <FormControlLabel
+                    control={<Checkbox checked={tag.canBeExcluded} onChange={handleChange} name={tag.name} />}
+                    label={tag.name}
+                    key={tag.name}
+                  />
+                ) : (
+                  <FormControlLabel
+                    control={<Checkbox checked={tag.canBeExcluded} onChange={handleChange} name={tag.name} />}
+                    label={tag.name}
+                    key={tag.name}
+                    disabled
+                    checked
+                  />
+                ),
+              )}
+            </FormGroup>
+          ) : (
+            <Typography variant='h6' sx={{ pl: 1, pr: 1 }}>
+              Brak
+            </Typography>
+          )}
         </FormControl>
       </Box>
     </>

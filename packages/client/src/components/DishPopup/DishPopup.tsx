@@ -60,7 +60,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Portion dish={dish} />
             </Grid>
             <Grid item xs={5} lg={5}>
-              {/* <Ingredients /> */}
+              <Ingredients ingredients={dish} />
             </Grid>
             <Grid item xs={3} lg={3}>
               <Typography variant='h6'>Wybierz liczbę dań</Typography>

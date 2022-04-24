@@ -1,4 +1,4 @@
-import { AllergensEnum, DishDto, DishTagsEnum } from '@fullstack/sdk/src';
+import { AllergensEnum, DishTagsEnum } from '@fullstack/sdk/src';
 import { Box, BoxProps, Typography } from '@mui/material';
 
 type TagsAllergensProps = {
@@ -27,7 +27,7 @@ const style = {
   padding: 1,
 };
 const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
-  <Box sx={{ flexDirection: 'row', display: 'flex' }}>
+  <Box sx={{ flexDirection: 'row', display: 'flex', flexWrap: 'wrap' }}>
     {(tags ?? []).length > 0 ? (
       <>
         <Item>
