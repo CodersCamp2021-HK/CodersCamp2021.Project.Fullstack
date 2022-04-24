@@ -63,7 +63,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Ingredients />
             </Grid>
             <Grid item xs={3} lg={3}>
-              <Typography variant='h6'>Wybierz liczbę dni</Typography>
+              <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
                 {dish.price}

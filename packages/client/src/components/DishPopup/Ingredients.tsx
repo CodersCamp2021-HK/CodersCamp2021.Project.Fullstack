@@ -1,3 +1,4 @@
+import { DishDto } from '@fullstack/sdk/src';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,7 +7,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import * as React from 'react';
 
-const Ingredients = () => {
+type IngredientsProps = {
+  dish: Omit<DishDto, 'id'>;
+};
+const Ingredients = ({ dish }: IngredientsProps) => {
   const [state, setState] = React.useState({
     ingredient1: false,
     ingredient2: false,
@@ -45,7 +49,9 @@ const Ingredients = () => {
         <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox checked={ingredient1} onChange={handleChange} name='ingredient1' />}
+              control={
+                <Checkbox checked={dish.ingredients[0].canBeExcluded} onChange={handleChange} name='ingredient1' />
+              }
               label='Składnik'
             />
             <FormControlLabel
