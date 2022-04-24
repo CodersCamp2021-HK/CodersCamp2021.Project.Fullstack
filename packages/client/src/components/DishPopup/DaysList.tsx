@@ -7,10 +7,10 @@ import _ from 'lodash';
 import * as React from 'react';
 
 const DaysList = () => {
-  const [mealCount, setMealCount] = React.useState('');
+  const [mealCount, setMealCount] = React.useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setMealCount(event.target.value as string);
+    setMealCount(parseInt(event.target.value, 10));
   };
 
   return (
@@ -20,7 +20,7 @@ const DaysList = () => {
         <Select
           labelId='demo-simple-select-label'
           id='demo-simple-select'
-          value={mealCount}
+          value={mealCount.toString()}
           label='mealCount'
           onChange={handleChange}
         >
