@@ -1,52 +1,45 @@
 import { CuisineTypeEnum, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { useState } from 'react';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Box, Button } from '@mui/material';
+import { useRef, useState } from 'react';
 
-type FiltersProps = {
-  listLabel: string;
-  filters: DishTagsEnum | CuisineTypeEnum | MealTypeEnum;
-};
+import { CheckboxList } from '../Filter';
 
-const CheckboxList = ({ listLabel, filters }: FiltersProps) => (
-  <FormControl sx={{ m: 3 }} component='fieldset' variant='standard'>
-    <FormLabel component='legend'>{listLabel}</FormLabel>
-    <FormGroup>
-      {Object.keys(filters).map((key: string) => {
-        return <FormControlLabel key={key} control={<Checkbox />} label={filters[key]} />;
-      })}
-    </FormGroup>
-  </FormControl>
-);
+const Filters = () => {
+  const filtersList = useRef(null);
+  const [checked, setChecked] = useState([]);
 
-const BasicSelect = () => {
-  const [sort, setSort] = useState('');
+  const handleChecked = (e) => {
+    let updatedList = [...checked];
 
-  const handleChange = (event) => {
-    setSort(event.target.value);
+    if (e.target.checked) {
+      updatedList = [...checked, e.target.value];
+    } else {
+      updatedList = updatedList.filter((item) => item !== e.target.value);
+    }
+    setChecked(updatedList);
+  };
+
+  const clearCheckboxes = (e) => {
+    checked.map((item) => {
+      filtersList.current.querySelector(`[value=${item}]`).checked = false;
+    });
   };
 
   return (
-    <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
-      <InputLabel id='demo-simple-select-label'>Sortuj</InputLabel>
-      <Select
-        labelId='demo-simple-select-label'
-        id='demo-simple-select'
-        value={sort}
-        label='Sortuj'
-        onChange={handleChange}
-      >
-        <MenuItem value={0}>wg. ceny rosnąco</MenuItem>
-        <MenuItem value={1}>wg. kaloryczności rosnąco</MenuItem>
-      </Select>
-    </FormControl>
+    <Box>
+      <Box onClick={handleChecked} ref={filtersList}>
+        <CheckboxList listLabel='Tagi' filters={DishTagsEnum} />
+        <CheckboxList listLabel='Rodzaj kuchni' filters={CuisineTypeEnum} />
+        <CheckboxList listLabel='Rodzaj kuchni' filters={MealTypeEnum} />
+      </Box>
+      <Box>
+        <Button onClick={clearCheckboxes} fullWidth={false} variant='contained' size='small' startIcon={<ClearIcon />}>
+          wyczyść
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
-export { BasicSelect, CheckboxList };
+export { Filters };

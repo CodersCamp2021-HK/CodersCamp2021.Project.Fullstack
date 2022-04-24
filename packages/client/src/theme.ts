@@ -28,12 +28,14 @@ const commonComponents = {
   MuiButton: {
     styleOverrides: {
       root: {
-        height: '48px',
         boxShadow: 'none',
         borderRadius: 50,
         '&:hover': {
           boxShadow: 'none',
         },
+      },
+      sizeLarge: {
+        height: '48px',
       },
     },
   },
