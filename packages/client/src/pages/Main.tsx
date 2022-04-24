@@ -12,7 +12,6 @@ const Main = () => {
 
   return (
     <>
-      <AppNavBar />
       <Container maxWidth={false}>
         <Stack sx={{ flex: 1 }} direction='row'>
           <Stack
