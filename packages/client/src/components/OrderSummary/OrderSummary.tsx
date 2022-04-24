@@ -1,6 +1,6 @@
 import { Grid, Stack } from '@mui/material';
 
-import { SubOrder, useShoppingCart } from '../../context';
+import { SubOrder, useShoppingCart } from '../../contexts';
 import { OrderDay } from './OrderDay';
 import { OrderPriceDisplay } from './OrderPriceDisplay';
 import { sumDishProperty } from './shared';

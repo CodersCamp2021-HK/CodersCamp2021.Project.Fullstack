@@ -4,8 +4,8 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline';
 import Remove from '@mui/icons-material/Remove';
 import { Box, Chip, IconButton, Stack, TableCell, TableRow, Typography } from '@mui/material';
 
-import defaultPhoto from '../../assets/default.png';
-import { SubOrderDish } from '../../context';
+import defaultPhoto from '../../assets/placeholder.png';
+import { SubOrderDish } from '../../contexts';
 
 const NUMBER_TYPOGRAPHY = {
   variant: 'h5',

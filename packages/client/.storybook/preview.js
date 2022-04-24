@@ -1,8 +1,8 @@
-import '../src/index.css';
+import '../src/config/index.css';
 
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import { defaultTheme } from '../src/theme';
+import { defaultTheme } from '../src/config';
 import { MemoryRouter } from 'react-router-dom';
 import { createTheme, CssBaseline } from '@mui/material';
 
