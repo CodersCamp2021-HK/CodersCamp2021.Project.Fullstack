@@ -66,7 +66,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
-                {dish.price}
+                {dish.price}zł
               </Typography>
               <Button
                 variant='contained'

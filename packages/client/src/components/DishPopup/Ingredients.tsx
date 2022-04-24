@@ -21,43 +21,37 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
   return (
     <>
       <Typography variant='h6'>Składniki</Typography>
-      <Box sx={{ flexDirection: 'row', display: 'flex', flexWrap: 'wrap' }}>
-        <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
-          {(ingredients.ingredients ?? []).length > 0 ? (
-            <FormGroup>
-              {ingredients.ingredients?.map(
-                (tag, idx) => (
-                  // tag.canBeExcluded ? (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={isIncluded[idx]}
-                        onChange={() => handleToggle(idx)}
-                        name={tag.name}
-                        disabled={!tag.canBeExcluded}
-                      />
-                    }
-                    label={tag.name}
-                    key={tag.name}
+      <Box>
+        {(ingredients.ingredients ?? []).length > 0 ? (
+          <Box
+            sx={{
+              flexDirection: 'column',
+              display: 'flex',
+              flexFlow: 'column-wrap',
+              flexWrap: 'wrap',
+              height: '15rem',
+            }}
+          >
+            {ingredients.ingredients?.map((ingredient, idx) => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isIncluded[idx]}
+                    onChange={() => handleToggle(idx)}
+                    name={ingredient.name}
+                    disabled={!ingredient.canBeExcluded}
                   />
-                ),
-                // ) : (
-                //   <FormControlLabel
-                //     control={<Checkbox name={tag.name} />}
-                //     label={tag.name}
-                //     key={tag.name}
-                //     disabled
-                //     checked
-                //   />
-                // ),
-              )}
-            </FormGroup>
-          ) : (
-            <Typography variant='h6' sx={{ pl: 1, pr: 1 }}>
-              Brak
-            </Typography>
-          )}
-        </FormControl>
+                }
+                label={ingredient.name}
+                key={ingredient.name}
+              />
+            ))}
+          </Box>
+        ) : (
+          <Typography variant='h6' sx={{ pl: 1, pr: 1 }}>
+            Brak
+          </Typography>
+        )}
       </Box>
     </>
   );
