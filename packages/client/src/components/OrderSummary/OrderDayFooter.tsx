@@ -1,6 +1,6 @@
 import { Chip, styled, Table, TableBody, TableCell, TableFooter, TableRow, Typography } from '@mui/material';
 
-import { SubOrderDish } from '../../context';
+import { SubOrderDish } from '../../contexts';
 import { sumDishProperty } from './shared';
 
 const NutrientsTableBody = styled(TableBody)(() => ({
