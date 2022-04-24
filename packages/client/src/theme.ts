@@ -14,6 +14,7 @@ const themeColors = {
     main: lime[500],
   },
 };
+
 const commonComponents = {
   MuiLink: {
     defaultProps: {
