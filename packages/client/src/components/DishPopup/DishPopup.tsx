@@ -13,6 +13,10 @@ import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
 
+interface DishPopupHandlers {
+  open: boolean;
+  onClose: () => void;
+}
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -26,17 +30,12 @@ const style = {
   p: 4,
 };
 
-const DishPopup = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={onClose}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >

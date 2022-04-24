@@ -6,8 +6,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 
 import cardImg from '../../assets/placeholder.png';
+import { DishPopup } from './DishPopup';
 
 type CardProps = {
   dish: Omit<DishDto, 'id' | 'restaurant' | 'portionWeight'>;
@@ -15,9 +17,13 @@ type CardProps = {
 
 const MediaCard = ({ dish }: CardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
-    <Card sx={{ maxWidth: 360, borderRadius: '50px' }}>
-      <CardMedia component='img' height='320' image={photo || cardImg} alt='' />
+    <Card sx={{ maxWidth: 340 }}>
+      <CardMedia component='img' height='320' image={photo} alt='' onClick={handleOpen} />
+      <DishPopup open={open} onClose={handleClose} />
       <CardContent>
         <Typography
           gutterBottom
