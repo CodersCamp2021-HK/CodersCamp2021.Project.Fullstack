@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
+import cardImg from '../assets/default.png';
+
 type CardProps = {
   dish: Omit<DishDto, 'id' | 'restaurant' | 'portionWeight'>;
 };
@@ -15,7 +17,7 @@ const MediaCard = ({ dish }: CardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
   return (
     <Card sx={{ maxWidth: 340 }}>
-      <CardMedia component='img' height='320' image={photo} alt='' />
+      <CardMedia component='img' height='320' image={photo || cardImg} alt='' />
       <CardContent>
         <Typography
           gutterBottom
