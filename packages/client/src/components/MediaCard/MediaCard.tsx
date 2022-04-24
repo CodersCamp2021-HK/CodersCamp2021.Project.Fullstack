@@ -12,7 +12,7 @@ import cardImg from '../../assets/placeholder.png';
 import { DishPopup } from './DishPopup';
 
 type CardProps = {
-  dish: Omit<DishDto, 'id' | 'restaurant' | 'portionWeight'>;
+  dish: Omit<DishDto, 'id'>;
 };
 
 const MediaCard = ({ dish }: CardProps) => {
@@ -23,7 +23,7 @@ const MediaCard = ({ dish }: CardProps) => {
   return (
     <Card sx={{ maxWidth: 340 }}>
       <CardMedia component='img' height='320' image={photo} alt='' onClick={handleOpen} />
-      <DishPopup open={open} onClose={handleClose} />
+      <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
         <Typography
           gutterBottom

@@ -1,3 +1,4 @@
+import { DishDto } from '@fullstack/sdk';
 import AddIcon from '@mui/icons-material/Add';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -6,13 +7,13 @@ import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
-import bowl from '../../assets/bowl.jpg';
 import { DaysList } from './DaysList';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
 
 interface DishPopupHandlers {
+  dish: Omit<DishDto, 'id'>;
   open: boolean;
   onClose: () => void;
 }
@@ -28,7 +29,7 @@ const style = {
   p: 4,
 };
 
-const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
+const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
   return (
     <div>
       <Modal
@@ -40,34 +41,32 @@ const DishPopup = ({ open, onClose }: DishPopupHandlers) => {
         <Box sx={style}>
           <Grid container spacing={2}>
             <Grid item xs={4} lg={4}>
-              <img src={bowl} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
+              <img src={dish.photo} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
             </Grid>
             <Grid item xs={8} lg={8} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Typography variant='h4' sx={{ p: 2 }}>
-                Bowl japoński
+                {dish.name}
               </Typography>
               <Typography sx={{ pb: 2 }}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                Restauracja: <Link href='#'>Tokio Bar</Link>
+                Restauracja: <Link href='#'>{dish.restaurant}</Link>
               </Typography>
               <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec diam ligula, blandit vel turpis ac,
-                commodo ultricies felis. Integer scelerisque facilisis felis. Phasellus sed dignissim risus, vitae
-                ultricies odio.
+                {dish.description}
               </Typography>
               <TagsAllergens />
             </Grid>
             <Grid item xs={4} lg={4} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
-              <Portion />
+              <Portion dish={dish} />
             </Grid>
             <Grid item xs={5} lg={5}>
               <Ingredients />
             </Grid>
             <Grid item xs={3} lg={3}>
-              <Typography variant='h6'>Wybierz liczbę</Typography>
+              <Typography variant='h6'>Wybierz liczbę dni</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
-                32 zł
+                {dish.price}
               </Typography>
               <Button
                 variant='contained'

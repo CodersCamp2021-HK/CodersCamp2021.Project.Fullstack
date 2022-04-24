@@ -1,5 +1,9 @@
+import { DishDto } from '@fullstack/sdk';
 import { Box, BoxProps, Typography } from '@mui/material';
 
+type PortionProps = {
+  dish: Omit<DishDto, 'id'>;
+};
 const Item = (props: BoxProps) => {
   const { sx, ...other } = props;
   return (
@@ -22,22 +26,22 @@ const style = {
   bgcolor: 'primary.background',
   padding: 1,
 };
-const Portion = () => (
+const Portion = ({ dish }: PortionProps) => (
   <>
-    <Typography variant='h6'>W porcji 300g</Typography>
+    <Typography variant='h6'>W porcji {dish.portionWeight}g</Typography>
     <Box sx={{ flexDirection: 'column' }}>
       <Item />
       <Item>
-        <Typography sx={style}>KALORIE: 500</Typography>
+        <Typography sx={style}>KALORIE: {dish.calories.perPortion}</Typography>
       </Item>
       <Item>
-        <Typography sx={style}>TŁUSZCZE: 100</Typography>
+        <Typography sx={style}>TŁUSZCZE: {dish.fats.perPortion}</Typography>
       </Item>
       <Item>
-        <Typography sx={style}>BIAŁKA: 50</Typography>
+        <Typography sx={style}>BIAŁKA: {dish.proteins.perPortion}</Typography>
       </Item>
       <Item>
-        <Typography sx={style}>WĘGLOWODANY: 200</Typography>
+        <Typography sx={style}>WĘGLOWODANY: {dish.carbohydrates.perPortion}</Typography>
       </Item>
     </Box>
   </>
