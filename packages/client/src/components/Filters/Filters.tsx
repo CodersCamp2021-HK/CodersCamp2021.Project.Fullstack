@@ -104,7 +104,7 @@ const CheckboxList = ({ listLabel, filters, filtersName, parentCallback }: Check
 const Filters = () => {
   const [checked, setChecked] = useState<{ name: string | null; value: string | null }[]>([]);
 
-  const handleChecked = (e: ChangeEvent) => {
+  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
     let updatedList = [...checked];
 
     if (e.target?.getAttribute('type') === 'checkbox') {
