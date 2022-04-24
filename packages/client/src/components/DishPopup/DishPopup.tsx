@@ -54,13 +54,13 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                 {dish.description}
               </Typography>
-              <TagsAllergens />
+              <TagsAllergens allergens={dish.allergens} tags={dish.tags} />
             </Grid>
             <Grid item xs={4} lg={4} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Portion dish={dish} />
             </Grid>
             <Grid item xs={5} lg={5}>
-              <Ingredients />
+              {/* <Ingredients /> */}
             </Grid>
             <Grid item xs={3} lg={3}>
               <Typography variant='h6'>Wybierz liczbę dań</Typography>

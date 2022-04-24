@@ -20,6 +20,7 @@ const MediaCard = ({ dish }: CardProps) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return (
     <Card sx={{ maxWidth: 340 }}>
       <CardMedia component='img' height='320' image={photo} alt='' onClick={handleOpen} />
