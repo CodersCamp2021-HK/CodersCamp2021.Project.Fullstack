@@ -19,7 +19,7 @@
  */
 export enum RestaurantTagEnum {
   FastFood = 'fast food',
-  Weganska = 'wegańska',
+  Wegaska = 'wegańska',
   Wegetariaska = 'wegetariańska',
   Kawiarnia = 'kawiarnia',
   Zdrowa = 'zdrowa',
