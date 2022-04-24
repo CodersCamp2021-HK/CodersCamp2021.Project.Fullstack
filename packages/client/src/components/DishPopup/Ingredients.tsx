@@ -5,19 +5,17 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import _ from 'lodash';
 import * as React from 'react';
 
 type IngredientsProps = {
   ingredients: Omit<DishDto, 'id'>;
 };
 const Ingredients = ({ ingredients }: IngredientsProps) => {
-  const [state, setState] = React.useState([Boolean]);
+  const [isIncluded, setIsIncluded] = React.useState(_.fill(Array(ingredients.ingredients?.length), true));
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
+  const handleToggle = (idx: number) => {
+    setIsIncluded((prev) => prev.map((elem, i) => (i === idx ? !elem : elem)));
   };
 
   return (
@@ -27,22 +25,31 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
         <FormControl sx={{ mr: 5 }} component='fieldset' variant='standard'>
           {(ingredients.ingredients ?? []).length > 0 ? (
             <FormGroup>
-              {ingredients.ingredients?.map((tag) =>
-                tag.canBeExcluded ? (
+              {ingredients.ingredients?.map(
+                (tag, idx) => (
+                  // tag.canBeExcluded ? (
                   <FormControlLabel
-                    control={<Checkbox checked={tag.canBeExcluded} onChange={handleChange} name={tag.name} />}
+                    control={
+                      <Checkbox
+                        checked={isIncluded[idx]}
+                        onChange={() => handleToggle(idx)}
+                        name={tag.name}
+                        disabled={!tag.canBeExcluded}
+                      />
+                    }
                     label={tag.name}
                     key={tag.name}
-                  />
-                ) : (
-                  <FormControlLabel
-                    control={<Checkbox checked={tag.canBeExcluded} onChange={handleChange} name={tag.name} />}
-                    label={tag.name}
-                    key={tag.name}
-                    disabled
-                    checked
                   />
                 ),
+                // ) : (
+                //   <FormControlLabel
+                //     control={<Checkbox name={tag.name} />}
+                //     label={tag.name}
+                //     key={tag.name}
+                //     disabled
+                //     checked
+                //   />
+                // ),
               )}
             </FormGroup>
           ) : (
