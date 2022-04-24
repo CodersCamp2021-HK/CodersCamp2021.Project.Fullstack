@@ -1,39 +1,96 @@
 import { Box, Button, Typography } from '@mui/material';
+import { SetStateAction } from 'react';
 
 import cardImg from '../../assets/default.png';
 import { routes } from '../../routes';
 import { DatePicker } from './DatePicker';
-import { SideCartItem } from './SideCartItem';
+import { SuborderSummary } from './SuborderSummary';
 
-const DATA = [
+// @TODO: useShoppingCart();
+const date = new Date();
+const day1 = new Date(date);
+day1.setDate(date.getDate() + 3);
+const day2 = new Date(date);
+day2.setDate(date.getDate() + 4);
+
+const cart = [
   {
-    name: 'Bowl japoński',
-    photo: cardImg,
-    price: 32,
-    calories: { perPortion: 550, per100g: 0 },
-    fats: { perPortion: 250, per100g: 0 },
-    proteins: { perPortion: 20, per100g: 0 },
-    carbohydrates: { perPortion: 20, per100g: 0 },
+    deliveryDate: day1,
+    dishes: [
+      {
+        dish: {
+          name: 'Bowl japoński',
+          photo: cardImg,
+          price: 32,
+          calories: { perPortion: 150, per100g: 0 },
+          fats: { perPortion: 250, per100g: 0 },
+          proteins: { perPortion: 20, per100g: 0 },
+          carbohydrates: { perPortion: 20, per100g: 0 },
+        },
+        excludedIngredients: ['Sezam', 'Ser'],
+      },
+      {
+        dish: {
+          name: 'Spaghetti',
+          photo: cardImg,
+          price: 32,
+          calories: { perPortion: 550, per100g: 0 },
+          fats: { perPortion: 250, per100g: 0 },
+          proteins: { perPortion: 20, per100g: 0 },
+          carbohydrates: { perPortion: 20, per100g: 0 },
+        },
+        excludedIngredients: ['Sezam', 'Ser'],
+      },
+    ],
   },
   {
-    name: 'Bowl chiński',
-    photo: cardImg,
-    price: 32,
-    calories: { perPortion: 550, per100g: 0 },
-    fats: { perPortion: 250, per100g: 0 },
-    proteins: { perPortion: 20, per100g: 0 },
-    carbohydrates: { perPortion: 20, per100g: 0 },
+    deliveryDate: day2,
+    dishes: [
+      {
+        dish: {
+          name: 'Pizza hawajska',
+          photo: cardImg,
+          price: 32,
+          calories: { perPortion: 550, per100g: 0 },
+          fats: { perPortion: 250, per100g: 0 },
+          proteins: { perPortion: 20, per100g: 0 },
+          carbohydrates: { perPortion: 20, per100g: 0 },
+        },
+        excludedIngredients: ['Sezam', 'Ser'],
+      },
+      {
+        dish: {
+          name: 'Bowl japoński',
+          photo: cardImg,
+          price: 32,
+          calories: { perPortion: 550, per100g: 0 },
+          fats: { perPortion: 250, per100g: 0 },
+          proteins: { perPortion: 20, per100g: 0 },
+          carbohydrates: { perPortion: 20, per100g: 0 },
+        },
+      },
+      {
+        dish: {
+          name: 'Zupa pomidorowa',
+          photo: cardImg,
+          price: 32,
+          calories: { perPortion: 550, per100g: 0 },
+          fats: { perPortion: 250, per100g: 0 },
+          proteins: { perPortion: 20, per100g: 0 },
+          carbohydrates: { perPortion: 20, per100g: 0 },
+        },
+      },
+    ],
   },
 ];
 
-const CartSummary = () => {
-  const sumDishNutritionValues = (dishes, value) => {
-    let sum = 0;
-    dishes.forEach((dish) => {
-      sum += dish[value].perPortion;
-    });
-    return sum;
-  };
+interface CartSummaryProps {
+  day: string;
+  onDayChange: (e: SetStateAction<string>) => void;
+}
+
+const CartSummary = ({ day, onDayChange }: CartSummaryProps) => {
+  const selectedDayOrder = cart.find((subOrder) => subOrder.deliveryDate.toLocaleDateString('pl-PL') === day)?.dishes;
 
   return (
     <Box
@@ -46,44 +103,14 @@ const CartSummary = () => {
       p={4}
       pb={6}
     >
-      <DatePicker />
-      {DATA.map((dish) => {
-        return <SideCartItem key='' dish={dish} />;
-      })}
-      <Box
-        borderTop='solid 1px'
-        borderBottom='solid 1px'
-        borderColor='secondary.main'
-        textAlign='center'
-        pt={1}
-        pb={1}
-        mt={4}
-        mb={1}
-      >
-        PODSUMOWANIE:
-      </Box>
-      <Box display='flex' justifyContent='space-between' mb={4}>
-        <Box mr={1}>
-          <Box display='flex'>
-            <Typography mr={1}>Kalorie:</Typography>
-            <Typography color='secondary.main'>{sumDishNutritionValues(DATA, 'calories')} kcal</Typography>
-          </Box>
-          <Box display='flex'>
-            <Typography mr={1}>Tłuszcze:</Typography>
-            <Typography color='secondary.main'>{sumDishNutritionValues(DATA, 'fats')} g</Typography>
-          </Box>
-        </Box>
-        <Box>
-          <Box display='flex'>
-            <Typography mr={1}>Węglowodany:</Typography>
-            <Typography color='secondary.main'>{sumDishNutritionValues(DATA, 'carbohydrates')} g</Typography>
-          </Box>
-          <Box display='flex'>
-            <Typography mr={1}>Białka:</Typography>
-            <Typography color='secondary.main'>{sumDishNutritionValues(DATA, 'proteins')} g</Typography>
-          </Box>
-        </Box>
-      </Box>
+      <DatePicker day={day} onDayChange={onDayChange} />
+      {selectedDayOrder ? (
+        <SuborderSummary suborderDishes={selectedDayOrder} />
+      ) : (
+        <Typography textAlign='center' pt={2} pb={4}>
+          Twoje zamówienie na ten dzień jest puste!
+        </Typography>
+      )}
       <Box textAlign='center'>
         <Button href={routes.shoppingCart} color='secondary' variant='contained' size='large'>
           Przejdź do zamówienia
