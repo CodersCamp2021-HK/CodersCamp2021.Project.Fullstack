@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * JeszCoChcesz API 🍲🍝🍜
- * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
+ * App example
+ * The app API description
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -18,7 +18,7 @@
  * @enum {string}
  */
 export enum DishTagsEnum {
-  Weganska = 'wegańska',
+  Wegaska = 'wegańska',
   Wegetariaska = 'wegetariańska',
   GlutenFree = 'gluten free',
   Ostre = 'ostre',

@@ -1,9 +1,8 @@
-import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { AppNavBar, Filters, MediaCardsGrid } from '../components';
-import { BasicSelect } from '../components/Filter';
+import { BasicSelect } from '../components/Filters';
 
 const Main = () => {
   const sortObj = {
