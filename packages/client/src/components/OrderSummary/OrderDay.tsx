@@ -1,6 +1,6 @@
 import { styled, Table, TableBody, TableCell, TableRow } from '@mui/material';
 
-import { SubOrder, SubOrderDish } from '../../context';
+import { SubOrder, SubOrderDish } from '../../contexts';
 import { OrderDateHeader } from './OrderDateHeader';
 import { OrderDayFooter } from './OrderDayFooter';
 import { OrderDish } from './OrderDish';
