@@ -1,14 +1,14 @@
-import { PartnerLoginPage } from './PartnerLoginPage';
-import { PartnerRegisterPage } from './PartnerRegisterPage';
-import { UserLoginPage } from './UserLoginPage';
-import { UserRegisterPage } from './UserRegisterPage';
+import { PartnerLogin as PartnerLoginComponent } from './PartnerLogin/PartnerLogin';
+import { PartnerRegister as PartnerRegisterComponent } from './PartnerRegister/PartnerRegister';
+import { UserLogin as UserLoginComponent } from './UserLogin/UserLogin';
+import { UserRegister as UserRegisterComponent } from './UserRegister/UserRegister';
 
 export default {
   title: 'Pages/Register and Login Pages',
-  Page: { PartnerRegisterPage, PartnerLoginPage, UserRegisterPage, UserLoginPage },
+  Page: { PartnerRegisterComponent, PartnerLoginComponent, UserRegisterComponent, UserLoginComponent },
 };
 
-export const PartnerRegister = PartnerRegisterPage.bind({});
-export const PartnerLogin = PartnerLoginPage.bind({});
-export const UserRegister = UserRegisterPage.bind({});
-export const UserLogin = UserLoginPage.bind({});
+export const PartnerRegister = PartnerRegisterComponent.bind({});
+export const PartnerLogin = PartnerLoginComponent.bind({});
+export const UserRegister = UserRegisterComponent.bind({});
+export const UserLogin = UserLoginComponent.bind({});

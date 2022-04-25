@@ -1,9 +1,9 @@
 import { Box, useTheme } from '@mui/material';
 
-import restaurant from '../assets/restaurant.jpg';
-import { AppNavBar, PartnerRegisterForm } from '../components';
+import dish from '../../assets/dish.jpg';
+import { AppNavBar, UserLoginForm } from '../../components';
 
-const PartnerRegisterPage = () => {
+const UserLogin = () => {
   const theme = useTheme();
 
   return (
@@ -13,17 +13,17 @@ const PartnerRegisterPage = () => {
         sx={{
           minHeight: 'calc(100vh - 6rem)',
           backgroundColor: theme.palette.background.default,
-          backgroundImage: `url(${restaurant})`,
+          backgroundImage: `url(${dish})`,
           backgroundSize: `cover`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <PartnerRegisterForm />
+        <UserLoginForm />
       </Box>
     </>
   );
 };
 
-export { PartnerRegisterPage };
+export { UserLogin };
