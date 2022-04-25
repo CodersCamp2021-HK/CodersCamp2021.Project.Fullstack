@@ -15,24 +15,20 @@ import { ChangeEvent, useEffect, useState } from 'react';
 type CheckboxProps = {
   listLabel: string;
   filtersName: string;
-  filters: ObjType;
+  filters: Record<string, string>;
   selectedCheckboxes: { name: string | null; value: string | null }[];
 };
 
 type CheckboxInputProps = {
   value: string;
-  filters: ObjType;
+  filters: Record<string, string>;
   filtersName: string;
   selectedCheckboxes: { name: string | null; value: string | null }[];
 };
 
-type ObjType = {
-  [key: string]: string;
-};
-
 type SelectProps = {
   label: string;
-  selectObj: ObjType;
+  selectObj: Record<string, string>;
 };
 
 const BasicSelect = ({ label, selectObj }: SelectProps) => {
@@ -121,7 +117,6 @@ const Filters = () => {
 
   const clearCheckboxes = () => {
     setChecked([]);
-    return checked;
   };
 
   return (
