@@ -43,7 +43,12 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
         <Box sx={style}>
           <Grid container spacing={2}>
             <Grid item xs={4} lg={4}>
-              <img src={dish.photo || cardImg} alt='Dish' height='320' style={{ width: '90%', borderRadius: '10%', objectFit: 'cover' }} />
+              <img
+                src={dish.photo || cardImg}
+                alt='Dish'
+                height='320'
+                style={{ width: '90%', borderRadius: '10%', objectFit: 'cover' }}
+              />
             </Grid>
             <Grid item xs={8} lg={8}>
               <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
