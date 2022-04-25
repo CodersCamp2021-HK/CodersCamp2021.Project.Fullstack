@@ -39,12 +39,12 @@ const LEFT_PAGES = [
 const RIGHT_PAGES = [
   {
     name: 'Logowanie',
-    pathname: routes.login,
+    pathname: routes.userLogin,
     color: (theme: Theme) => theme.palette.primary.main,
   },
   {
     name: 'Rejestracja',
-    pathname: routes.register,
+    pathname: routes.userRegister,
     color: (theme: Theme) => theme.palette.secondary.dark,
   },
 ] as const;
