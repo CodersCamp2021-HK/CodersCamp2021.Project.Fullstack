@@ -1,6 +1,8 @@
-import { Box, Button, Checkbox, FormControlLabel, Link, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, Link, TextField, Typography, useTheme } from '@mui/material';
 
-const UserLoginForm = () => {
+import { routes } from '../../config/routes';
+
+const UserRegisterForm = () => {
   const theme = useTheme();
 
   return (
@@ -29,21 +31,21 @@ const UserLoginForm = () => {
           color={theme.palette.secondary.contrastText}
           variant='h2'
         >
-          Witamy ponownie!
+          Stwórz konto
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '70%' }}>
           <TextField sx={{ marginBottom: '2rem' }} variant='outlined' label='Email' />
           <TextField sx={{ marginBottom: '2rem' }} variant='outlined' type='password' label='Hasło' />
-          <FormControlLabel sx={{ marginBottom: '2rem' }} control={<Checkbox />} label='Zapamiętaj mnie' />
+          <TextField sx={{ marginBottom: '5rem' }} variant='outlined' type='password' label='Powtórz hasło' />
         </Box>
-        <Button variant='contained' size='large' color='primary' sx={{ borderRadius: '2rem' }}>
-          Zaloguj się
+        <Button variant='contained' size='large' color='primary' sx={{ borderRadius: '2rem' }} href={routes.main}>
+          Zarejestruj się
         </Button>
-        <Box sx={{ marginTop: '7rem', display: 'flex' }}>
+        <Box sx={{ marginTop: '4rem', display: 'flex' }}>
           <Typography color={theme.palette.secondary.contrastText} variant='body1'>
-            Nie masz konta?
-            <Link sx={{ marginLeft: '10px' }} href='/'>
-              Zarejestruj się
+            Masz już konto?
+            <Link sx={{ marginLeft: '10px' }} href={routes.userLogin}>
+              Zaloguj się
             </Link>
             .
           </Typography>
@@ -53,4 +55,4 @@ const UserLoginForm = () => {
   );
 };
 
-export { UserLoginForm };
+export { UserRegisterForm };

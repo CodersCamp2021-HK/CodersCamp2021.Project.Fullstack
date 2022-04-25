@@ -1,5 +1,7 @@
 import { Box, Button, Checkbox, FormControlLabel, Link, TextField, Typography, useTheme } from '@mui/material';
 
+import { routes } from '../../config/routes';
+
 const PartnerLoginForm = () => {
   const theme = useTheme();
 
@@ -36,13 +38,13 @@ const PartnerLoginForm = () => {
           <TextField sx={{ marginBottom: '2rem' }} variant='outlined' type='password' label='Hasło' />
           <FormControlLabel sx={{ marginBottom: '2rem' }} control={<Checkbox />} label='Zapamiętaj mnie' />
         </Box>
-        <Button variant='contained' size='large' color='primary' sx={{ borderRadius: '2rem' }}>
+        <Button variant='contained' size='large' color='primary' sx={{ borderRadius: '2rem' }} href={routes.main}>
           Zaloguj się
         </Button>
         <Box sx={{ marginTop: '7rem', display: 'flex' }}>
           <Typography color={theme.palette.secondary.contrastText} variant='body1'>
             Chcesz być naszym partnerem?
-            <Link sx={{ marginLeft: '10px' }} href='/'>
+            <Link sx={{ marginLeft: '10px' }} href={routes.partnerRegister}>
               Dołącz do nas
             </Link>
             !

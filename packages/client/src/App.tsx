@@ -4,7 +4,16 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppNavBar } from './components';
 import { routes } from './config';
 import { ShoppingCartProvider, ThemeContextProvider } from './contexts';
-import { Home, Main, PartnerLogin, ShoppingCart, UnderConstruction, UserLogin, UserRegister } from './pages';
+import {
+  Home,
+  Main,
+  PartnerLogin,
+  PartnerRegister,
+  ShoppingCart,
+  UnderConstruction,
+  UserLogin,
+  UserRegister,
+} from './pages';
 
 const App = () => {
   return (
@@ -20,7 +29,7 @@ const App = () => {
             <Route path={routes.userLogin} element={<UserLogin />} />
             <Route path={routes.partnerLogin} element={<PartnerLogin />} />
             <Route path={routes.userRegister} element={<UserRegister />} />
-            <Route path={routes.partnerLogin} element={<PartnerLogin />} />
+            <Route path={routes.partnerRegister} element={<PartnerRegister />} />
             <Route path='*' element={<UnderConstruction />} />
           </Routes>
         </BrowserRouter>
