@@ -1,93 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { SetStateAction } from 'react';
 
-import cardImg from '../../assets/placeholder.png';
 import { routes } from '../../config/routes';
+import { useShoppingCart } from '../../contexts';
 import { DatePicker } from './DatePicker';
 import { SuborderSummary } from './SuborderSummary';
-
-// @TODO: useShoppingCart();
-const date = new Date();
-const day1 = new Date(date);
-day1.setDate(date.getDate() + 3);
-const day2 = new Date(date);
-day2.setDate(date.getDate() + 4);
-
-const cart = [
-  {
-    deliveryDate: day1,
-    dishes: [
-      {
-        dish: {
-          name: 'Bowl japoński',
-          photo: cardImg,
-          price: 3200,
-          calories: { perPortion: 150, per100g: 0 },
-          fats: { perPortion: 250, per100g: 0 },
-          proteins: { perPortion: 20, per100g: 0 },
-          carbohydrates: { perPortion: 20, per100g: 0 },
-        },
-        count: 2,
-        excludedIngredients: ['Sezam', 'Ser'],
-      },
-      {
-        dish: {
-          name: 'Spaghetti',
-          photo: cardImg,
-          price: 3200,
-          calories: { perPortion: 550, per100g: 0 },
-          fats: { perPortion: 250, per100g: 0 },
-          proteins: { perPortion: 20, per100g: 0 },
-          carbohydrates: { perPortion: 20, per100g: 0 },
-        },
-        count: 1,
-        excludedIngredients: ['Sezam', 'Ser'],
-      },
-    ],
-  },
-  {
-    deliveryDate: day2,
-    dishes: [
-      {
-        dish: {
-          name: 'Pizza hawajska',
-          photo: cardImg,
-          price: 3200,
-          calories: { perPortion: 550, per100g: 0 },
-          fats: { perPortion: 250, per100g: 0 },
-          proteins: { perPortion: 20, per100g: 0 },
-          carbohydrates: { perPortion: 20, per100g: 0 },
-        },
-        count: 1,
-        excludedIngredients: ['Sezam', 'Ser'],
-      },
-      {
-        dish: {
-          name: 'Bowl japoński',
-          photo: cardImg,
-          price: 3200,
-          calories: { perPortion: 550, per100g: 0 },
-          fats: { perPortion: 250, per100g: 0 },
-          proteins: { perPortion: 20, per100g: 0 },
-          carbohydrates: { perPortion: 20, per100g: 0 },
-        },
-        count: 1,
-      },
-      {
-        dish: {
-          name: 'Zupa pomidorowa',
-          photo: cardImg,
-          price: 3200,
-          calories: { perPortion: 550, per100g: 0 },
-          fats: { perPortion: 250, per100g: 0 },
-          proteins: { perPortion: 20, per100g: 0 },
-          carbohydrates: { perPortion: 20, per100g: 0 },
-        },
-        count: 3,
-      },
-    ],
-  },
-];
 
 interface CartSummaryProps {
   day: string;
@@ -95,6 +12,7 @@ interface CartSummaryProps {
 }
 
 const CartSummary = ({ day, onDayChange }: CartSummaryProps) => {
+  const { cart } = useShoppingCart();
   const selectedDayOrder = cart.find((subOrder) => subOrder.deliveryDate.toLocaleDateString('pl-PL') === day)?.dishes;
 
   return (
