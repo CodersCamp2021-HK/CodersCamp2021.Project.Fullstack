@@ -37,3 +37,4 @@ export * from './UpdateUserDto';
 export * from './UploadedImageDto';
 export * from './UserDto';
 export * from './ValidationErrorDto';
+export * from './MealTypeEnum';
