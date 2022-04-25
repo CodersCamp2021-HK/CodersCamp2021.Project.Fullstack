@@ -2,9 +2,7 @@ import { DishDto } from '@fullstack/sdk/src';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import _ from 'lodash';
 import * as React from 'react';
 
