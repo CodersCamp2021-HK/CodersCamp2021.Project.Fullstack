@@ -1,10 +1,10 @@
-import '../src/index.css'
+import '../src/config/index.css';
 
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import { theme } from '../src/theme'
+import { defaultTheme } from '../src/config';
 import { MemoryRouter } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
+import { createTheme, CssBaseline } from '@mui/material';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -14,7 +14,9 @@ export const parameters = {
       date: /Date$/,
     },
   },
-}
+};
+
+const theme = createTheme(defaultTheme);
 
 // https://mui.com/material-ui/guides/migration-v4/#storybook-emotion-with-v5
 const withThemeProvider = (Story, context) => {

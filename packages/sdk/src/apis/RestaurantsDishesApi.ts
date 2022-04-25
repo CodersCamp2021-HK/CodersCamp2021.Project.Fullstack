@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -17,24 +17,22 @@ import {
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
-  DishDto,
-  DishDtoFromJSON,
-  DishDtoToJSON,
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
+  OperationalCityEnum,
+  OperationalCityEnumFromJSON,
+  OperationalCityEnumToJSON,
   ValidationErrorDto,
   ValidationErrorDtoFromJSON,
   ValidationErrorDtoToJSON,
 } from '../models';
 
-export interface RestaurantsDishesApiFindByIdRequest {
-  restaurantId: string;
-  id: string;
-}
-
 export interface RestaurantsDishesApiListRequest {
   restaurantId: string;
+  city?: OperationalCityEnum;
+  mealType?: Array<string>;
+  tags?: Array<string>;
   page?: number;
   limit?: number;
 }
@@ -43,57 +41,6 @@ export interface RestaurantsDishesApiListRequest {
  *
  */
 export class RestaurantsDishesApi extends runtime.BaseAPI {
-  /**
-   * Retrieve a dish by id.
-   */
-  async findByIdRaw(
-    requestParameters: RestaurantsDishesApiFindByIdRequest,
-    initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<DishDto>> {
-    if (requestParameters.restaurantId === null || requestParameters.restaurantId === undefined) {
-      throw new runtime.RequiredError(
-        'restaurantId',
-        'Required parameter requestParameters.restaurantId was null or undefined when calling findById.',
-      );
-    }
-
-    if (requestParameters.id === null || requestParameters.id === undefined) {
-      throw new runtime.RequiredError(
-        'id',
-        'Required parameter requestParameters.id was null or undefined when calling findById.',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    const response = await this.request(
-      {
-        path: `/api/restaurants/{restaurantId}/dishes/{id}`
-          .replace(`{${'restaurantId'}}`, encodeURIComponent(String(requestParameters.restaurantId)))
-          .replace(`{${'id'}}`, encodeURIComponent(String(requestParameters.id))),
-        method: 'GET',
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response, (jsonValue) => DishDtoFromJSON(jsonValue));
-  }
-
-  /**
-   * Retrieve a dish by id.
-   */
-  async findById(
-    requestParameters: RestaurantsDishesApiFindByIdRequest,
-    initOverrides?: RequestInit,
-  ): Promise<DishDto> {
-    const response = await this.findByIdRaw(requestParameters, initOverrides);
-    return await response.value();
-  }
-
   /**
    * Retrieve a list of dishes.
    */
@@ -109,6 +56,18 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
     }
 
     const queryParameters: any = {};
+
+    if (requestParameters.city !== undefined) {
+      queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.mealType) {
+      queryParameters['mealType'] = requestParameters.mealType;
+    }
+
+    if (requestParameters.tags) {
+      queryParameters['tags'] = requestParameters.tags;
+    }
 
     if (requestParameters.page !== undefined) {
       queryParameters['page'] = requestParameters.page;

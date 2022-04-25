@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -13,13 +13,18 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import { AddressDto, AddressDtoFromJSON, AddressDtoFromJSONTyped, AddressDtoToJSON } from './AddressDto';
 import {
   CuisineTypeEnum,
   CuisineTypeEnumFromJSON,
   CuisineTypeEnumFromJSONTyped,
   CuisineTypeEnumToJSON,
 } from './CuisineTypeEnum';
+import {
+  OperationalCityEnum,
+  OperationalCityEnumFromJSON,
+  OperationalCityEnumFromJSONTyped,
+  OperationalCityEnumToJSON,
+} from './OperationalCityEnum';
 import {
   RestaurantTagEnum,
   RestaurantTagEnumFromJSON,
@@ -59,16 +64,10 @@ export interface UpdatePartnerProfileDto {
   tags: Array<RestaurantTagEnum>;
   /**
    *
-   * @type {Array<AddressDto>}
+   * @type {Array<OperationalCityEnum>}
    * @memberof UpdatePartnerProfileDto
    */
-  addressId: Array<AddressDto>;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdatePartnerProfileDto
-   */
-  logo?: string;
+  operationalCities: Array<OperationalCityEnum>;
   /**
    *
    * @type {string}
@@ -96,8 +95,7 @@ export function UpdatePartnerProfileDtoFromJSONTyped(json: any, ignoreDiscrimina
     description: !exists(json, 'description') ? undefined : json['description'],
     cuisineType: (json['cuisineType'] as Array<any>).map(CuisineTypeEnumFromJSON),
     tags: (json['tags'] as Array<any>).map(RestaurantTagEnumFromJSON),
-    addressId: (json['addressId'] as Array<any>).map(AddressDtoFromJSON),
-    logo: !exists(json, 'logo') ? undefined : json['logo'],
+    operationalCities: (json['operationalCities'] as Array<any>).map(OperationalCityEnumFromJSON),
     bankAccountNumber: !exists(json, 'bankAccountNumber') ? undefined : json['bankAccountNumber'],
     phoneNumber: !exists(json, 'phoneNumber') ? undefined : json['phoneNumber'],
   };
@@ -115,8 +113,7 @@ export function UpdatePartnerProfileDtoToJSON(value?: UpdatePartnerProfileDto | 
     description: value.description,
     cuisineType: (value.cuisineType as Array<any>).map(CuisineTypeEnumToJSON),
     tags: (value.tags as Array<any>).map(RestaurantTagEnumToJSON),
-    addressId: (value.addressId as Array<any>).map(AddressDtoToJSON),
-    logo: value.logo,
+    operationalCities: (value.operationalCities as Array<any>).map(OperationalCityEnumToJSON),
     bankAccountNumber: value.bankAccountNumber,
     phoneNumber: value.phoneNumber,
   };

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App example
- * The app API description
+ * JeszCoChcesz API 🍲🍝🍜
+ * JeszCoChcesz is an online food delivery system connecting restaurants with health-conscious users.
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -13,18 +13,7 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-  FavouriteDishDto,
-  FavouriteDishDtoFromJSON,
-  FavouriteDishDtoFromJSONTyped,
-  FavouriteDishDtoToJSON,
-} from './FavouriteDishDto';
-import {
-  FavouriteRestaurantDto,
-  FavouriteRestaurantDtoFromJSON,
-  FavouriteRestaurantDtoFromJSONTyped,
-  FavouriteRestaurantDtoToJSON,
-} from './FavouriteRestaurantDto';
+import { CardDto, CardDtoFromJSON, CardDtoFromJSONTyped, CardDtoToJSON } from './CardDto';
 
 /**
  *
@@ -58,34 +47,10 @@ export interface UserDto {
   phoneNumber?: string;
   /**
    *
-   * @type {Array<string>}
+   * @type {CardDto}
    * @memberof UserDto
    */
-  addressId?: Array<string>;
-  /**
-   *
-   * @type {Array<FavouriteRestaurantDto>}
-   * @memberof UserDto
-   */
-  favouriteRestaurants: Array<FavouriteRestaurantDto>;
-  /**
-   *
-   * @type {Array<FavouriteDishDto>}
-   * @memberof UserDto
-   */
-  favouriteDishes: Array<FavouriteDishDto>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof UserDto
-   */
-  orders: Array<string>;
-  /**
-   *
-   * @type {boolean}
-   * @memberof UserDto
-   */
-  profileCompleted: boolean;
+  card?: CardDto;
 }
 
 export function UserDtoFromJSON(json: any): UserDto {
@@ -101,11 +66,7 @@ export function UserDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): U
     name: !exists(json, 'name') ? undefined : json['name'],
     surname: !exists(json, 'surname') ? undefined : json['surname'],
     phoneNumber: !exists(json, 'phoneNumber') ? undefined : json['phoneNumber'],
-    addressId: !exists(json, 'addressId') ? undefined : json['addressId'],
-    favouriteRestaurants: (json['favouriteRestaurants'] as Array<any>).map(FavouriteRestaurantDtoFromJSON),
-    favouriteDishes: (json['favouriteDishes'] as Array<any>).map(FavouriteDishDtoFromJSON),
-    orders: json['orders'],
-    profileCompleted: json['profileCompleted'],
+    card: !exists(json, 'card') ? undefined : CardDtoFromJSON(json['card']),
   };
 }
 
@@ -121,10 +82,6 @@ export function UserDtoToJSON(value?: UserDto | null): any {
     name: value.name,
     surname: value.surname,
     phoneNumber: value.phoneNumber,
-    addressId: value.addressId,
-    favouriteRestaurants: (value.favouriteRestaurants as Array<any>).map(FavouriteRestaurantDtoToJSON),
-    favouriteDishes: (value.favouriteDishes as Array<any>).map(FavouriteDishDtoToJSON),
-    orders: value.orders,
-    profileCompleted: value.profileCompleted,
+    card: CardDtoToJSON(value.card),
   };
 }
