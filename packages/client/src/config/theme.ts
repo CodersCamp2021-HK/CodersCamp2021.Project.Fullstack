@@ -81,6 +81,10 @@ const defaultTheme = {
     h5: {
       fontWeight: 600,
     },
+    caption: {
+      fontWeight: 400,
+      fontSize: 12,
+    },
   },
   components: {
     ...commonComponents,
