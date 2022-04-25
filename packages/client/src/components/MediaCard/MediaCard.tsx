@@ -23,7 +23,7 @@ const MediaCard = ({ dish }: CardProps) => {
 
   return (
     <Card sx={{ maxWidth: 340 }}>
-      <CardMedia component='img' height='320' image={photo || cardImg} alt='name' onClick={handleOpen} />
+      <CardMedia component='img' height='320' image={photo || cardImg} alt='name' />
       <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
         <Typography
@@ -50,7 +50,7 @@ const MediaCard = ({ dish }: CardProps) => {
           <Typography mr={1} variant='h5' color='primary.main'>
             {(price / 100).toFixed(2)} zł
           </Typography>
-          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />}>
+          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />} onClick={handleOpen}>
             Dodaj do koszyka
           </Button>
         </CardActions>
