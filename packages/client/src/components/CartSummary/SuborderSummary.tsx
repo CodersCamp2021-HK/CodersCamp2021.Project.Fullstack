@@ -7,12 +7,22 @@ interface SuborderSummaryProps {
   suborderDishes: SubOrderDish[];
 }
 
+const calculatePrice = (suborderDishes: SubOrderDish[]) => {
+  let priceTotal = 0;
+
+  suborderDishes.forEach((obj) => {
+    const count = obj.count || 1;
+    priceTotal += obj.dish.price * count;
+  });
+  return priceTotal;
+};
+
 const sumDishNutritionValues = (
-  suborder: SubOrderDish[],
+  suborderDishes: SubOrderDish[],
   value: 'calories' | 'proteins' | 'fats' | 'carbohydrates',
 ) => {
   let sum = 0;
-  suborder.forEach((obj) => {
+  suborderDishes.forEach((obj) => {
     sum += obj.dish[value].perPortion;
   });
   return sum;
@@ -22,7 +32,7 @@ const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
   return (
     <>
       {suborderDishes.map((elem: SubOrderDish) => {
-        return <SideCartItem key={Math.random()} dish={elem.dish} />;
+        return <SideCartItem key={Math.random()} dish={elem.dish} count={elem.count} price={elem.dish.price} />;
       })}
       <Box
         borderTop='solid 1px'
@@ -36,7 +46,7 @@ const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
       >
         PODSUMOWANIE DNIA
       </Box>
-      <Box display='flex' justifyContent='space-between' mb={4}>
+      <Box display='flex' justifyContent='space-between' mb={2}>
         <Box mr={1}>
           <Box display='flex'>
             <Typography mr={1}>Kalorie:</Typography>
@@ -57,6 +67,10 @@ const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
             <Typography color='secondary.main'>{sumDishNutritionValues(suborderDishes, 'proteins')} g</Typography>
           </Box>
         </Box>
+      </Box>
+      <Box display='flex' justifyContent='space-between' alignItems='end' my={4}>
+        <Typography>Razem</Typography>
+        <Typography variant='h5'>{(calculatePrice(suborderDishes) / 100).toFixed(2)} zł</Typography>
       </Box>
     </>
   );

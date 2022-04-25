@@ -23,7 +23,7 @@ const DatePicker = ({ day, onDayChange }: DatePickerProps) => {
   };
 
   return (
-    <Box bgcolor='background.default' borderRadius='10px' p={2} mb={2}>
+    <Box bgcolor='background.default' borderRadius='10px' p={2} mb={4}>
       <FormControl fullWidth>
         <InputLabel>Wybierz dzień</InputLabel>
         <Select value={day} label='Wybierz dzień' onChange={handleChange}>
