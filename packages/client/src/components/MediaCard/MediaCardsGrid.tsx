@@ -97,7 +97,7 @@ const MediaCardsGrid = () => {
           per100g: 10,
           perPortion: 40,
         },
-        restaurant: 'Restauracja 2',
+        restaurant: '6200218668fc82e7bdf15088',
       },
       {
         id: '6200218668fc82e7bdf15088',

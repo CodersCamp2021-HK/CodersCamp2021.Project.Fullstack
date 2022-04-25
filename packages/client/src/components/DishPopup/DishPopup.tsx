@@ -71,7 +71,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
-                {dish.price / 100}zł
+                {parseFloat((dish.price / 100).toString()).toFixed(2)}zł
               </Typography>
               <Button
                 variant='contained'
