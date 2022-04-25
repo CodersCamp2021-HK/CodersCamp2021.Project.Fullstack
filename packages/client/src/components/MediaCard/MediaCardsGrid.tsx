@@ -1,5 +1,4 @@
-import { DishDto, DishesApi } from '@fullstack/sdk';
-import { AllergensEnum, DishTagsEnum } from '@fullstack/sdk/src';
+import { AllergensEnum, DishDto, DishesApi, DishTagsEnum } from '@fullstack/sdk';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 
