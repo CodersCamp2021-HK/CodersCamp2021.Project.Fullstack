@@ -103,7 +103,7 @@ const CartSummary = ({ day, onDayChange }: CartSummaryProps) => {
       color='common.white'
       minWidth='26rem'
       width='26rem'
-      borderRadius='10px'
+      borderRadius='25px'
       mt={6}
       p={4}
       pb={6}

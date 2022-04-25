@@ -1,7 +1,7 @@
 import { CartSummary as CartSummaryComponent } from './CartSummary';
 
 export default {
-  title: 'CartSummary',
+  title: 'Components/CartSummary',
   component: CartSummaryComponent,
 };
 

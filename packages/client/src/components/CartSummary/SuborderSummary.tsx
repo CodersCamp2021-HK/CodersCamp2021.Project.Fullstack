@@ -48,21 +48,21 @@ const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
       </Box>
       <Box display='flex' justifyContent='space-between' mb={2}>
         <Box mr={1}>
-          <Box display='flex'>
+          <Box display='flex' mt={1} mb={1}>
             <Typography mr={1}>Kalorie:</Typography>
             <Typography color='secondary.main'>{sumDishNutritionValues(suborderDishes, 'calories')} kcal</Typography>
           </Box>
-          <Box display='flex'>
+          <Box display='flex' mt={1} mb={1}>
             <Typography mr={1}>Tłuszcze:</Typography>
             <Typography color='secondary.main'>{sumDishNutritionValues(suborderDishes, 'fats')} g</Typography>
           </Box>
         </Box>
         <Box>
-          <Box display='flex'>
+          <Box display='flex' mt={1} mb={1}>
             <Typography mr={1}>Węglowodany:</Typography>
             <Typography color='secondary.main'>{sumDishNutritionValues(suborderDishes, 'carbohydrates')} g</Typography>
           </Box>
-          <Box display='flex'>
+          <Box display='flex' mt={1} mb={1}>
             <Typography mr={1}>Białka:</Typography>
             <Typography color='secondary.main'>{sumDishNutritionValues(suborderDishes, 'proteins')} g</Typography>
           </Box>
