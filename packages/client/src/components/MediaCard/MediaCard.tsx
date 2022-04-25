@@ -6,18 +6,25 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 
 import cardImg from '../../assets/placeholder.png';
+import { DishPopup } from '../DishPopup/DishPopup';
 
 type CardProps = {
-  dish: Omit<DishDto, 'id' | 'restaurant' | 'portionWeight'>;
+  dish: Omit<DishDto, 'id'>;
 };
 
 const MediaCard = ({ dish }: CardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <Card sx={{ maxWidth: 360, borderRadius: '50px' }}>
-      <CardMedia component='img' height='320' image={photo || cardImg} alt='' />
+    <Card sx={{ maxWidth: 340 }}>
+      <CardMedia component='img' height='320' image={photo || cardImg} alt='name' />
+      <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
         <Typography
           gutterBottom
@@ -43,7 +50,7 @@ const MediaCard = ({ dish }: CardProps) => {
           <Typography mr={1} variant='h5' color='primary.main'>
             {(price / 100).toFixed(2)} zł
           </Typography>
-          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />}>
+          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />} onClick={handleOpen}>
             Dodaj do koszyka
           </Button>
         </CardActions>
