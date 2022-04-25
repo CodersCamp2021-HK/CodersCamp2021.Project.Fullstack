@@ -1,5 +1,6 @@
 import { DishDto } from '@fullstack/sdk';
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -48,19 +49,27 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                 style={{ width: '90%', height: '100%', borderRadius: '10%' }}
               />
             </Grid>
-            <Grid item xs={8} lg={8} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
-              <Typography variant='h4' sx={{ p: 2 }}>
-                {dish.name}
-              </Typography>
-              <Typography sx={{ pb: 2 }}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                Restauracja: <Link href='#'>{dish.restaurant}</Link>
-              </Typography>
-              <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
-                {dish.description}
-              </Typography>
-              <TagsAllergens allergens={dish.allergens} tags={dish.tags} />
+            <Grid item xs={8} lg={8}>
+              <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
+                <Button>
+                  <CloseIcon color='secondary' onClick={onClose} fontSize='large' />
+                </Button>
+              </Box>
+              <Box justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
+                <Typography variant='h4' sx={{ p: 2 }}>
+                  {dish.name}
+                </Typography>
+                <Typography sx={{ pb: 2 }}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                  Restauracja: <Link href='#'>{dish.restaurant}</Link>
+                </Typography>
+                <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
+                  {dish.description}
+                </Typography>
+                <TagsAllergens allergens={dish.allergens} tags={dish.tags} />
+              </Box>
             </Grid>
+
             <Grid item xs={4} lg={4} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Portion dish={dish} />
             </Grid>

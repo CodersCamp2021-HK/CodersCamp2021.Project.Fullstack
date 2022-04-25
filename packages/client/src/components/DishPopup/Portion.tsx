@@ -31,17 +31,17 @@ const Portion = ({ dish }: PortionProps) => (
     <Typography variant='h6'>W porcji {dish.portionWeight}g</Typography>
     <Box sx={{ flexDirection: 'column' }}>
       <Item />
-      <Item>
-        <Typography sx={style}>KALORIE: {dish.calories.perPortion}</Typography>
+      <Item sx={style}>
+        <Typography variant='caption'>KALORIE: {dish.calories.perPortion}</Typography>
       </Item>
-      <Item>
-        <Typography sx={style}>TŁUSZCZE: {dish.fats.perPortion}</Typography>
+      <Item sx={style}>
+        <Typography variant='caption'>TŁUSZCZE: {dish.fats.perPortion}</Typography>
       </Item>
-      <Item>
-        <Typography sx={style}>BIAŁKA: {dish.proteins.perPortion}</Typography>
+      <Item sx={style}>
+        <Typography variant='caption'>BIAŁKA: {dish.proteins.perPortion}</Typography>
       </Item>
-      <Item>
-        <Typography sx={style}>WĘGLOWODANY: {dish.carbohydrates.perPortion}</Typography>
+      <Item sx={style}>
+        <Typography variant='caption'>WĘGLOWODANY: {dish.carbohydrates.perPortion}</Typography>
       </Item>
     </Box>
   </>

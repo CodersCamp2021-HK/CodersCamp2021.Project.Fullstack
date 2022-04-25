@@ -20,10 +20,8 @@ const Item = (props: BoxProps) => {
 };
 
 const style = {
-  variant: 'caption',
-  borderRadius: '16px',
+  borderRadius: '50px',
   color: 'white',
-  bgcolor: 'primary.main',
   padding: 1,
 };
 const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
@@ -31,11 +29,13 @@ const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
     {(tags ?? []).length > 0 ? (
       <>
         <Item>
-          <Typography variant='h6'>Alergeny: </Typography>
+          <Typography variant='caption'>Tagi: </Typography>
         </Item>
         {tags?.map((tag) => (
-          <Item sx={{ pl: 1, pr: 1 }} key={tag}>
-            <Typography sx={style}>{tag}</Typography>
+          <Item sx={{ pl: 0.5 }} key={tag}>
+            <Typography bgcolor='primary.main' variant='caption' sx={style}>
+              {tag.toUpperCase()}
+            </Typography>
           </Item>
         ))}
       </>
@@ -48,11 +48,15 @@ const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
     {(allergens ?? []).length > 0 ? (
       <>
         <Item>
-          <Typography variant='h6'>Alergeny: </Typography>
+          <Typography variant='caption' sx={{ pl: 1 }}>
+            Alergeny:{' '}
+          </Typography>
         </Item>
         {allergens?.map((allergen) => (
-          <Item sx={{ pl: 1, pr: 1 }} key={allergen}>
-            <Typography sx={style}>{allergen}</Typography>
+          <Item sx={{ pl: 0.5 }} key={allergen}>
+            <Typography bgcolor='rgba(27, 94, 32, 50%)' variant='caption' sx={style}>
+              {allergen.toUpperCase()}
+            </Typography>
           </Item>
         ))}
       </>
