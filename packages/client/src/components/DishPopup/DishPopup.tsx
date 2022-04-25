@@ -43,11 +43,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
         <Box sx={style}>
           <Grid container spacing={2}>
             <Grid item xs={4} lg={4}>
-              <img
-                src={dish.photo || cardImg}
-                alt='Dish'
-                style={{ width: '90%', height: '100%', borderRadius: '10%' }}
-              />
+              <img src={dish.photo || cardImg} alt='Dish' height='320' style={{ width: '90%', borderRadius: '10%' }} />
             </Grid>
             <Grid item xs={8} lg={8}>
               <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
@@ -60,8 +56,8 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                   {dish.name}
                 </Typography>
                 <Typography sx={{ pb: 2 }}>
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   {/* TODO: pokazanie nazwy restauracji po id */}
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   Restauracja: <Link href='#'>Pyszna Restauracja</Link>
                 </Typography>
                 <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
