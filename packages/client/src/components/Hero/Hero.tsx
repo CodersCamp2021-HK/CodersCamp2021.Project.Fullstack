@@ -2,6 +2,7 @@ import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import { Box, Button, IconButton, InputAdornment, Stack, styled, TextField, Typography } from '@mui/material';
 
 import hero from '../../assets/hero.jpg';
+import { routes } from '../../config/routes';
 
 const HERO_BACKGROUND = `linear-gradient(118.2deg, rgba(27, 94, 32, 0.5) 38.72%, rgba(0, 0, 0, 0.12) 88.45%), url(${hero}) center center / cover`;
 
@@ -50,7 +51,13 @@ const Hero = () => (
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <Button sx={{ height: 'auto' }} variant='contained' color='secondary' disableElevation>
+                <Button
+                  href={routes.main}
+                  sx={{ height: 'auto' }}
+                  variant='contained'
+                  color='secondary'
+                  disableElevation
+                >
                   Wyszukaj
                 </Button>
               </InputAdornment>
