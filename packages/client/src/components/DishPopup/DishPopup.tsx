@@ -79,9 +79,11 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
             <Grid item xs={3} lg={3}>
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <DaysList />
-              <Typography variant='h5' color='primary.main'>
-                {parseFloat((dish.price / 100).toString()).toFixed(2)}zł
-              </Typography>
+              <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
+                <Typography variant='h5' color='primary.main'>
+                  {parseFloat((dish.price / 100).toString()).toFixed(2)}zł
+                </Typography>
+              </Box>
               <Button
                 variant='contained'
                 color='secondary'
@@ -90,6 +92,8 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                   mt: '2rem',
                 }}
                 startIcon={<AddIcon />}
+                // TODO: dodać dodawanie do koszyka
+                onClick={onClose}
               >
                 Dodaj do koszyka
               </Button>
