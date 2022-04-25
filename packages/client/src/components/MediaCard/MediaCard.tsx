@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { DishPopup } from './DishPopup';
+import { DishPopup } from '../DishPopup/DishPopup';
 
 type CardProps = {
   dish: Omit<DishDto, 'id'>;
@@ -23,7 +23,7 @@ const MediaCard = ({ dish }: CardProps) => {
 
   return (
     <Card sx={{ maxWidth: 340 }}>
-      <CardMedia component='img' height='320' image={photo} alt='' onClick={handleOpen} />
+      <CardMedia component='img' height='320' image={photo || cardImg} alt='' onClick={handleOpen} />
       <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
         <Typography
