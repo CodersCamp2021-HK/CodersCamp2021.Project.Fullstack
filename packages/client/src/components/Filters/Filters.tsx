@@ -16,14 +16,14 @@ type CheckboxProps = {
   listLabel: string;
   filtersName: string;
   filters: ObjType;
-  parentCallback: { name: string | null; value: string | null }[];
+  selectedCheckboxes: { name: string | null; value: string | null }[];
 };
 
 type CheckboxInputProps = {
   value: string;
   filters: ObjType;
   filtersName: string;
-  parentCallback: { name: string | null; value: string | null }[];
+  selectedCheckboxes: { name: string | null; value: string | null }[];
 };
 
 type ObjType = {
@@ -58,17 +58,17 @@ const BasicSelect = ({ label, selectObj }: SelectProps) => {
   );
 };
 
-const CheckboxInput = ({ value, filters, filtersName, parentCallback }: CheckboxInputProps) => {
+const CheckboxInput = ({ value, filters, filtersName, selectedCheckboxes }: CheckboxInputProps) => {
   const [checked, setChecked] = useState(false);
   function handleChecked() {
     setChecked(!checked);
   }
 
   useEffect(() => {
-    if (parentCallback?.length === 0) {
+    if (selectedCheckboxes?.length === 0) {
       setChecked(false);
     }
-  }, [parentCallback]);
+  }, [selectedCheckboxes]);
 
   return (
     <FormControlLabel
@@ -78,7 +78,7 @@ const CheckboxInput = ({ value, filters, filtersName, parentCallback }: Checkbox
   );
 };
 
-const CheckboxList = ({ listLabel, filters, filtersName, parentCallback }: CheckboxProps) => {
+const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: CheckboxProps) => {
   return (
     <Box>
       <FormControl margin='normal' component='fieldset' variant='standard'>
@@ -87,7 +87,7 @@ const CheckboxList = ({ listLabel, filters, filtersName, parentCallback }: Check
           {Object.keys(filters).map((key: string) => {
             return (
               <CheckboxInput
-                parentCallback={parentCallback}
+                selectedCheckboxes={selectedCheckboxes}
                 key={key}
                 value={key}
                 filters={filters}
@@ -127,8 +127,13 @@ const Filters = () => {
   return (
     <>
       <Stack onClick={() => handleChecked}>
-        <CheckboxList parentCallback={checked} filtersName='mealType' listLabel='Rodzaj dania' filters={MealTypeEnum} />
-        <CheckboxList parentCallback={checked} filtersName='tags' listLabel='Tagi' filters={DishTagsEnum} />
+        <CheckboxList
+          selectedCheckboxes={checked}
+          filtersName='mealType'
+          listLabel='Rodzaj dania'
+          filters={MealTypeEnum}
+        />
+        <CheckboxList selectedCheckboxes={checked} filtersName='tags' listLabel='Tagi' filters={DishTagsEnum} />
       </Stack>
       <Box>
         <Button onClick={clearCheckboxes} fullWidth={false} variant='contained' size='small' startIcon={<ClearIcon />}>
