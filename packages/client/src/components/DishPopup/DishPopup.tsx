@@ -61,7 +61,8 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                 </Typography>
                 <Typography sx={{ pb: 2 }}>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  Restauracja: <Link href='#'>{dish.restaurant}</Link>
+                  {/* TODO: pokazanie nazwy restauracji po id */}
+                  Restauracja: <Link href='#'>Pyszna Restauracja</Link>
                 </Typography>
                 <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                   {dish.description}
