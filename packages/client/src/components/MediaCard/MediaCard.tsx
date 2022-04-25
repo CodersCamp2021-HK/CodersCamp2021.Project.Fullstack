@@ -23,7 +23,7 @@ const MediaCard = ({ dish }: CardProps) => {
 
   return (
     <Card sx={{ maxWidth: 340 }}>
-      <CardMedia component='img' height='320' image={photo || cardImg} alt='' onClick={handleOpen} />
+      <CardMedia component='img' height='320' image={photo || cardImg} alt='name' onClick={handleOpen} />
       <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
         <Typography

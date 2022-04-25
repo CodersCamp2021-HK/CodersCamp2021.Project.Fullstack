@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
+import cardImg from '../../assets/placeholder.png';
 import { DaysList } from './DaysList';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
@@ -41,7 +42,11 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
         <Box sx={style}>
           <Grid container spacing={2}>
             <Grid item xs={4} lg={4}>
-              <img src={dish.photo} alt='Dish' style={{ width: '90%', height: '100%', borderRadius: '10%' }} />
+              <img
+                src={dish.photo || cardImg}
+                alt='Dish'
+                style={{ width: '90%', height: '100%', borderRadius: '10%' }}
+              />
             </Grid>
             <Grid item xs={8} lg={8} justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Typography variant='h4' sx={{ p: 2 }}>
@@ -66,7 +71,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <DaysList />
               <Typography variant='h5' color='primary.main'>
-                {dish.price}zł
+                {dish.price / 100}zł
               </Typography>
               <Button
                 variant='contained'
