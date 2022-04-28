@@ -7,13 +7,13 @@ import { DatePicker } from './DatePicker';
 import { SuborderSummary } from './SuborderSummary';
 
 interface CartSummaryProps {
-  day: string;
-  onDayChange: (e: SetStateAction<string>) => void;
+  day: Date | null;
+  onDayChange: (e: SetStateAction<Date | null>) => void;
 }
 
 const CartSummary = ({ day, onDayChange }: CartSummaryProps) => {
   const { cart } = useShoppingCart();
-  const selectedDayOrder = cart.find((subOrder) => subOrder.deliveryDate.toLocaleDateString('pl-PL') === day)?.dishes;
+  const selectedDayOrder = cart.find(({ deliveryDate }) => deliveryDate === day)?.dishes;
 
   return (
     <Box
