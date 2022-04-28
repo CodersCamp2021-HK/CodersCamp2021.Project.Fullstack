@@ -1,8 +1,8 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import _ from 'lodash';
+import { range } from 'lodash';
 import { SetStateAction } from 'react';
 
-const availableDates = _.range(3, 10).map((offset) => {
+const availableDates = range(3, 10).map((offset) => {
   const date = new Date();
   date.setHours(0, 0, 0, 0);
   date.setDate(date.getDate() + offset);
