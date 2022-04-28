@@ -147,9 +147,14 @@ const EXAMPLE_DISHES = [
     restaurant: '6200218668fc82e7bdf15088',
   },
 ];
+
 const dishesApi = new DishesApi(apiConfiguration);
 
-const MediaCardsGrid = () => {
+interface MediaCardGridProps {
+  orderingEnabled: boolean;
+}
+
+const MediaCardsGrid = ({ orderingEnabled }: MediaCardGridProps) => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
 
   useEffect(() => {
@@ -168,7 +173,7 @@ const MediaCardsGrid = () => {
   const cardsGrid = dishes.map((dish) => {
     return (
       <Grid item key={dish.id}>
-        <MediaCard dish={dish} />
+        <MediaCard dish={dish} orderingEnabled={orderingEnabled} />
       </Grid>
     );
   });

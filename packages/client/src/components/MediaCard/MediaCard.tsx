@@ -11,11 +11,12 @@ import React from 'react';
 import cardImg from '../../assets/placeholder.png';
 import { DishPopup } from '../DishPopup/DishPopup';
 
-type CardProps = {
+type MediaCardProps = {
   dish: Omit<DishDto, 'id'>;
+  orderingEnabled: boolean;
 };
 
-const MediaCard = ({ dish }: CardProps) => {
+const MediaCard = ({ dish, orderingEnabled }: MediaCardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -50,7 +51,14 @@ const MediaCard = ({ dish }: CardProps) => {
           <Typography mr={1} variant='h5' color='primary.main'>
             {(price / 100).toFixed(2)} zł
           </Typography>
-          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />} onClick={handleOpen}>
+          <Button
+            color='secondary'
+            variant='contained'
+            size='large'
+            startIcon={<AddIcon />}
+            disabled={!orderingEnabled}
+            onClick={handleOpen}
+          >
             Dodaj do koszyka
           </Button>
         </CardActions>
