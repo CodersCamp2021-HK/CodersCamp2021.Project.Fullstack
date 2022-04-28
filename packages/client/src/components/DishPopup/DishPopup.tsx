@@ -86,7 +86,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <CountSelect count={count} setCount={setCount} />
               <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
                 <Typography variant='h5' color='primary.main'>
-                  {parseFloat((dish.price / 100).toString()).toFixed(2)}zł
+                  {parseFloat(((count * dish.price) / 100).toString()).toFixed(2)}zł
                 </Typography>
               </Box>
               <Button
