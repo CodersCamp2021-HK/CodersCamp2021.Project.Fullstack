@@ -7,9 +7,10 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { DaysList } from './DaysList';
+import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
@@ -32,6 +33,8 @@ const style = {
 };
 
 const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
+  const [count, setCount] = useState(1);
+
   return (
     <div>
       <Modal
@@ -80,7 +83,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
             </Grid>
             <Grid item xs={3} lg={3}>
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
-              <DaysList />
+              <CountSelect count={count} setCount={setCount} />
               <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
                 <Typography variant='h5' color='primary.main'>
                   {parseFloat((dish.price / 100).toString()).toFixed(2)}zł
