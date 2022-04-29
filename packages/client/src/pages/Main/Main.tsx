@@ -37,7 +37,7 @@ const Main = () => {
             <Filters />
           </Stack>
         </Stack>
-        <MediaCardsGrid orderingEnabled={day !== null} />
+        <MediaCardsGrid day={day} />
         <CartSummary day={day} onDayChange={setDay} />
       </Stack>
     </Container>

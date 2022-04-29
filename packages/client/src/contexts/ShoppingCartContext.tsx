@@ -9,18 +9,22 @@ interface SubOrder {
 
 const ShoppingCartContext = createContext<{
   cart: SubOrder[];
-  addDayToCart: (suborder: SubOrder) => void;
+  addToCart: (dish: DishDto, count: number, deliveryDate: Date) => void;
 }>({
   cart: [],
-  addDayToCart: () => {},
+  addToCart: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: React.ReactNode }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cart, setCart] = useState<SubOrder[]>([]);
 
-  const addDayToCart = useCallback((suborder: SubOrder) => setCart((existingDays) => [...existingDays, suborder]), []);
+  const addToCart = useCallback((dish: DishDto, count: number, deliveryDate: Date) => {
+    // eslint-disable-next-line no-console
+    console.log({ dish, count, deliveryDate });
+  }, []);
 
-  const value = useMemo(() => ({ cart, addDayToCart }), [cart, addDayToCart]);
+  const value = useMemo(() => ({ cart, addToCart }), [cart, addToCart]);
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
 };

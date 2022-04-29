@@ -8,10 +8,10 @@ import { MediaCard } from './MediaCard';
 const dishesApi = new DishesApi(apiConfiguration);
 
 interface MediaCardGridProps {
-  orderingEnabled: boolean;
+  day: Date | null;
 }
 
-const MediaCardsGrid = ({ orderingEnabled }: MediaCardGridProps) => {
+const MediaCardsGrid = ({ day }: MediaCardGridProps) => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const MediaCardsGrid = ({ orderingEnabled }: MediaCardGridProps) => {
   const cardsGrid = dishes.map((dish) => {
     return (
       <Grid item key={dish.id}>
-        <MediaCard dish={dish} orderingEnabled={orderingEnabled} />
+        <MediaCard dish={dish} deliveryDate={day} />
       </Grid>
     );
   });

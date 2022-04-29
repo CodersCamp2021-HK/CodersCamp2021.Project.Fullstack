@@ -12,11 +12,11 @@ import cardImg from '../../assets/placeholder.png';
 import { DishPopup } from '../DishPopup/DishPopup';
 
 type MediaCardProps = {
-  dish: Omit<DishDto, 'id'>;
-  orderingEnabled: boolean;
+  dish: DishDto;
+  deliveryDate: Date | null;
 };
 
-const MediaCard = ({ dish, orderingEnabled }: MediaCardProps) => {
+const MediaCard = ({ dish, deliveryDate }: MediaCardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -25,7 +25,7 @@ const MediaCard = ({ dish, orderingEnabled }: MediaCardProps) => {
   return (
     <Card sx={{ width: 370 }}>
       <CardMedia component='img' height='320' image={photo || cardImg} alt='name' />
-      <DishPopup open={open} onClose={handleClose} dish={dish} />
+      <DishPopup open={open} onClose={handleClose} dish={dish} deliveryDate={deliveryDate as Date} />
       <CardContent>
         <Typography
           gutterBottom
@@ -56,7 +56,7 @@ const MediaCard = ({ dish, orderingEnabled }: MediaCardProps) => {
             variant='contained'
             size='large'
             startIcon={<AddIcon />}
-            disabled={!orderingEnabled}
+            disabled={deliveryDate === null}
             onClick={handleOpen}
           >
             Dodaj do koszyka

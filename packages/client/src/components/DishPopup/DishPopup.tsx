@@ -10,16 +10,19 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
+import { useShoppingCart } from '../../contexts';
 import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
 
 interface DishPopupHandlers {
-  dish: Omit<DishDto, 'id'>;
+  dish: DishDto;
+  deliveryDate: Date;
   open: boolean;
   onClose: () => void;
 }
+
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -32,8 +35,14 @@ const style = {
   p: 4,
 };
 
-const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
+const DishPopup = ({ dish, deliveryDate, open, onClose }: DishPopupHandlers) => {
   const [count, setCount] = useState(1);
+  const { addToCart } = useShoppingCart();
+
+  const handleOrderClick = () => {
+    addToCart(dish, count, deliveryDate);
+    onClose();
+  };
 
   return (
     <div>
@@ -97,8 +106,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                   mt: '2rem',
                 }}
                 startIcon={<AddIcon />}
-                // TODO: dodać dodawanie do koszyka
-                onClick={onClose}
+                onClick={handleOrderClick}
               >
                 Dodaj do koszyka
               </Button>
