@@ -18,7 +18,6 @@ import { TagsAllergens } from './TagsAllergens';
 
 interface DishPopupHandlers {
   dish: DishDto;
-  deliveryDate: Date;
   open: boolean;
   onClose: () => void;
 }
@@ -35,12 +34,12 @@ const style = {
   p: 4,
 };
 
-const DishPopup = ({ dish, deliveryDate, open, onClose }: DishPopupHandlers) => {
+const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
   const [count, setCount] = useState(1);
   const { addToCart } = useShoppingCart();
 
   const handleOrderClick = () => {
-    addToCart(dish, count, deliveryDate);
+    addToCart(dish, count);
     onClose();
   };
 

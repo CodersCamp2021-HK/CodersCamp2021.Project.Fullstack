@@ -7,11 +7,7 @@ import { MediaCard } from './MediaCard';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
-interface MediaCardGridProps {
-  day: Date | null;
-}
-
-const MediaCardsGrid = ({ day }: MediaCardGridProps) => {
+const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
 
   useEffect(() => {
@@ -30,7 +26,7 @@ const MediaCardsGrid = ({ day }: MediaCardGridProps) => {
   const cardsGrid = dishes.map((dish) => {
     return (
       <Grid item key={dish.id}>
-        <MediaCard dish={dish} deliveryDate={day} />
+        <MediaCard dish={dish} />
       </Grid>
     );
   });

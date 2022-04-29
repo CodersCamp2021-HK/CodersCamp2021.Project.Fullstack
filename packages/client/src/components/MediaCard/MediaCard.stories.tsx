@@ -12,7 +12,7 @@ export default {
   },
 };
 
-const Template: Story<DishDto> = (args) => <MediaCardComponent dish={args} deliveryDate={new Date()} />;
+const Template: Story<DishDto> = (args) => <MediaCardComponent dish={args} />;
 
 export const MediaCard = Template.bind({});
 MediaCard.args = {

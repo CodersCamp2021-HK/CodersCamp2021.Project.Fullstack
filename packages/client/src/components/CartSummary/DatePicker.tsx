@@ -1,6 +1,7 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { range } from 'lodash';
-import { SetStateAction } from 'react';
+
+import { useShoppingCart } from '../../contexts';
 
 const availableDates = range(3, 10).map((offset) => {
   const date = new Date();
@@ -12,24 +13,27 @@ const availableDates = range(3, 10).map((offset) => {
   };
 });
 
-interface DatePickerProps {
-  day: Date | null;
-  onDayChange: (e: SetStateAction<Date | null>) => void;
-}
+const DatePicker = () => {
+  const { selectedDate, setSelectedDate } = useShoppingCart();
 
-const DatePicker = ({ day, onDayChange }: DatePickerProps) => (
-  <Box bgcolor='background.default' borderRadius='10px' p={2} mb={4}>
-    <FormControl fullWidth>
-      <InputLabel>Wybierz dzień</InputLabel>
-      <Select value={day?.toJSON() ?? ''} label='Wybierz dzień' onChange={(e) => onDayChange(new Date(e.target.value))}>
-        {availableDates.map((elem) => (
-          <MenuItem key={elem.date.toJSON()} value={elem.date.toJSON()}>
-            {elem.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  </Box>
-);
+  return (
+    <Box bgcolor='background.default' borderRadius='10px' p={2} mb={4}>
+      <FormControl fullWidth>
+        <InputLabel>Wybierz dzień</InputLabel>
+        <Select
+          value={selectedDate?.toJSON() ?? ''}
+          label='Wybierz dzień'
+          onChange={(e) => setSelectedDate(new Date(e.target.value))}
+        >
+          {availableDates.map((elem) => (
+            <MenuItem key={elem.date.toJSON()} value={elem.date.toJSON()}>
+              {elem.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
+  );
+};
 
 export { DatePicker };
