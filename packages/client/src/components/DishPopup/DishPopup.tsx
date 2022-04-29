@@ -39,7 +39,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
   const { addToCart } = useShoppingCart();
 
   const handleOrderClick = () => {
-    addToCart(dish, count);
+    addToCart({ dish, count, excludedIngredients: [] });
     onClose();
   };
 
