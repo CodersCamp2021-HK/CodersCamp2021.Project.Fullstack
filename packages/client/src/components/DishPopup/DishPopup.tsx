@@ -15,6 +15,7 @@ import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
+import { useIngredientState } from './useIngredientState';
 
 interface DishPopupHandlers {
   dish: DishDto;
@@ -36,10 +37,15 @@ const style = {
 
 const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
   const [count, setCount] = useState(1);
+  const [ingredientState, toggleIngredient] = useIngredientState(dish);
   const { addToCart } = useShoppingCart();
 
+  const excludedIngredients = ingredientState
+    .filter(({ isIncluded }) => !isIncluded)
+    .map(({ ingredient }) => ingredient.name);
+
   const handleOrderClick = () => {
-    addToCart({ dish, count, excludedIngredients: [] });
+    addToCart({ dish, count, excludedIngredients });
     onClose();
   };
 
@@ -87,7 +93,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
               <Portion dish={dish} />
             </Grid>
             <Grid item xs={5} lg={5}>
-              <Ingredients ingredients={dish} />
+              <Ingredients ingredients={ingredientState} onIngredientToggle={toggleIngredient} />
             </Grid>
             <Grid item xs={3} lg={3}>
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
