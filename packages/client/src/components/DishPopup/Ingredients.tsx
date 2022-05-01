@@ -1,26 +1,20 @@
-import { DishDto } from '@fullstack/sdk/src';
+import { IngredientDto } from '@fullstack/sdk/src';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import _ from 'lodash';
-import * as React from 'react';
 
 type IngredientsProps = {
-  ingredients: Omit<DishDto, 'id'>;
+  ingredients: { ingredient: IngredientDto; isIncluded: boolean }[];
+  onIngredientToggle: (idx: number) => void;
 };
-const Ingredients = ({ ingredients }: IngredientsProps) => {
-  const [isIncluded, setIsIncluded] = React.useState(_.fill(Array(ingredients.ingredients?.length), true));
 
-  const handleToggle = (idx: number) => {
-    setIsIncluded((prev) => prev.map((elem, i) => (i === idx ? !elem : elem)));
-  };
-
+const Ingredients = ({ ingredients, onIngredientToggle }: IngredientsProps) => {
   return (
     <>
       <Typography variant='h6'>Składniki</Typography>
       <Box>
-        {(ingredients.ingredients ?? []).length > 0 ? (
+        {ingredients.length > 0 ? (
           <Box
             sx={{
               flexDirection: 'column',
@@ -30,12 +24,12 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
               height: '15rem',
             }}
           >
-            {ingredients.ingredients?.map((ingredient, idx) => (
+            {ingredients.map(({ ingredient, isIncluded }, idx) => (
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={isIncluded[idx]}
-                    onChange={() => handleToggle(idx)}
+                    checked={isIncluded}
+                    onChange={() => onIngredientToggle(idx)}
                     name={ingredient.name}
                     disabled={!ingredient.canBeExcluded}
                   />

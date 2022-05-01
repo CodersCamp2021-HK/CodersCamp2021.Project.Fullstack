@@ -9,14 +9,18 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import cardImg from '../../assets/placeholder.png';
+import { useShoppingCart } from '../../contexts';
 import { DishPopup } from '../DishPopup/DishPopup';
 
-type CardProps = {
-  dish: Omit<DishDto, 'id'>;
+type MediaCardProps = {
+  dish: DishDto;
 };
 
-const MediaCard = ({ dish }: CardProps) => {
+const MediaCard = ({ dish }: MediaCardProps) => {
   const { name, description, photo, fats, proteins, carbohydrates, calories, price } = dish;
+
+  const { selectedDate } = useShoppingCart();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,7 +54,14 @@ const MediaCard = ({ dish }: CardProps) => {
           <Typography mr={1} variant='h5' color='primary.main'>
             {(price / 100).toFixed(2)} zł
           </Typography>
-          <Button color='secondary' variant='contained' size='large' startIcon={<AddIcon />} onClick={handleOpen}>
+          <Button
+            color='secondary'
+            variant='contained'
+            size='large'
+            startIcon={<AddIcon />}
+            disabled={selectedDate === null}
+            onClick={handleOpen}
+          >
             Dodaj do koszyka
           </Button>
         </CardActions>
