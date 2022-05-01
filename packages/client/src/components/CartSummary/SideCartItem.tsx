@@ -18,9 +18,7 @@ const SideCartItem = ({ dish, count, price }: DishProps) => {
       <Box
         component='img'
         mr={1}
-        width='5.3125rem'
-        height='5.3125rem'
-        borderRadius='50%'
+        sx={{ width: '5.3125rem', height: '5.3125rem', borderRadius: '50%', objectFit: 'cover' }}
         src={photo ?? placeholderPhoto}
         alt={name}
       />
