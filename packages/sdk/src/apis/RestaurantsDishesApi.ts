@@ -14,18 +14,12 @@
 
 import * as runtime from '../runtime';
 import {
-  CuisineTypeEnum,
-  CuisineTypeEnumFromJSON,
-  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
-  OperationalCityEnum,
-  OperationalCityEnumFromJSON,
-  OperationalCityEnumToJSON,
   ValidationErrorDto,
   ValidationErrorDtoFromJSON,
   ValidationErrorDtoToJSON,
@@ -33,8 +27,8 @@ import {
 
 export interface RestaurantsDishesApiListRequest {
   restaurantId: string;
-  city?: OperationalCityEnum;
-  cuisineType?: Array<CuisineTypeEnum>;
+  city?: string;
+  cuisineType?: Array<string>;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;

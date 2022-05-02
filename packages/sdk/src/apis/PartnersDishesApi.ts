@@ -17,9 +17,6 @@ import {
   CreateDishDto,
   CreateDishDtoFromJSON,
   CreateDishDtoToJSON,
-  CuisineTypeEnum,
-  CuisineTypeEnumFromJSON,
-  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
@@ -29,9 +26,6 @@ import {
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
-  OperationalCityEnum,
-  OperationalCityEnumFromJSON,
-  OperationalCityEnumToJSON,
   UpdateDishDto,
   UpdateDishDtoFromJSON,
   UpdateDishDtoToJSON,
@@ -49,8 +43,8 @@ export interface PartnersDishesApiDeleteOneRequest {
 }
 
 export interface PartnersDishesApiListRequest {
-  city?: OperationalCityEnum;
-  cuisineType?: Array<CuisineTypeEnum>;
+  city?: string;
+  cuisineType?: Array<string>;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;

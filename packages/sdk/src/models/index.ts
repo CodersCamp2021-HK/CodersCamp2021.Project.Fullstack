@@ -19,6 +19,7 @@ export * from './FavouriteRestaurantDto';
 export * from './FavouriteRestaurantListDto';
 export * from './IngredientDto';
 export * from './LoginDto';
+export * from './MealTypeEnum';
 export * from './NutritionalValueDto';
 export * from './OperationalCityEnum';
 export * from './OrderDishDto';
