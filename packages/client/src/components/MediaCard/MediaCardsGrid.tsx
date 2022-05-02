@@ -1,8 +1,9 @@
 import { AllergensEnum, DishDto, DishesApi, DishTagsEnum } from '@fullstack/sdk';
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
+import { FiltersContextCurrent } from '../../contexts/FiltersContext';
 import { MediaCard } from './MediaCard';
 
 const EXAMPLE_DISHES = [
@@ -150,6 +151,8 @@ const EXAMPLE_DISHES = [
 const dishesApi = new DishesApi(apiConfiguration);
 
 const MediaCardsGrid = () => {
+  const filtersParam = useContext(FiltersContextCurrent);
+  console.log(filtersParam);
   const [dishes, setDishes] = useState<DishDto[]>([]);
 
   useEffect(() => {

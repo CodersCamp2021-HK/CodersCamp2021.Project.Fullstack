@@ -10,7 +10,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import _ from 'lodash';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
+
+import { FiltersContextCurrent } from '../../contexts/FiltersContext';
 
 type CheckboxProps = {
   listLabel: string;
@@ -99,6 +101,7 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
 
 const Filters = () => {
   const [checked, setChecked] = useState<{ name: string | null; value: string | null }[]>([]);
+  const filtersParam = useContext(FiltersContextCurrent);
 
   const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
     let updatedList = [...checked];
@@ -113,6 +116,7 @@ const Filters = () => {
       }
     }
     setChecked(updatedList);
+    filtersParam.createFiltersArray(updatedList);
   };
 
   const clearCheckboxes = () => {
@@ -121,7 +125,7 @@ const Filters = () => {
 
   return (
     <>
-      <Stack onClick={() => handleChecked}>
+      <Stack onClick={(e) => handleChecked(e)} spacing={2}>
         <CheckboxList
           selectedCheckboxes={checked}
           filtersName='mealType'

@@ -4,6 +4,7 @@ import { SetStateAction, useState } from 'react';
 
 import { BasicSelect, Filters, MediaCardsGrid } from '../../components';
 import { CartSummary } from '../../components/CartSummary';
+import { FiltersContext } from '../../contexts/FiltersContext';
 
 const Main = () => {
   const [day, setDay] = useState('');
@@ -18,31 +19,31 @@ const Main = () => {
 
   return (
     <Container maxWidth={false}>
-      <Stack sx={{ flex: 1 }} direction='row'>
-        <Stack
-          spacing={2}
-          sx={{
-            maxWidth: 280,
-            width: '100%',
-            position: 'sticky',
-            top: '0',
-            height: '100vh',
-            overflowY: 'scroll',
-            justifyContent: 'flex-start',
-            pr: 1,
-            pb: 6,
-            mt: 6,
-            mr: 4,
-          }}
-        >
-          <BasicSelect label='Sortuj' selectObj={sortObj} />
-          <Stack spacing={2}>
+      <FiltersContext>
+        <Stack sx={{ flex: 1 }} direction='row'>
+          <Stack
+            spacing={2}
+            sx={{
+              maxWidth: 280,
+              width: '100%',
+              position: 'sticky',
+              top: '0',
+              height: '100vh',
+              overflowY: 'scroll',
+              justifyContent: 'flex-start',
+              pr: 1,
+              pb: 6,
+              mt: 6,
+              mr: 4,
+            }}
+          >
+            <BasicSelect label='Sortuj' selectObj={sortObj} />
             <Filters />
           </Stack>
+          <MediaCardsGrid />
+          <CartSummary day={day} onDayChange={handleChange} />
         </Stack>
-        <MediaCardsGrid />
-        <CartSummary day={day} onDayChange={handleChange} />
-      </Stack>
+      </FiltersContext>
     </Container>
   );
 };
