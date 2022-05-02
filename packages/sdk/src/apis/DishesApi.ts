@@ -14,6 +14,9 @@
 
 import * as runtime from '../runtime';
 import {
+  CuisineTypeEnum,
+  CuisineTypeEnumFromJSON,
+  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
@@ -37,6 +40,7 @@ export interface DishesApiFindDishByIdRequest {
 
 export interface DishesApiListAllDishesRequest {
   city?: OperationalCityEnum;
+  cuisineType?: Array<CuisineTypeEnum>;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;
@@ -97,6 +101,10 @@ export class DishesApi extends runtime.BaseAPI {
 
     if (requestParameters.city !== undefined) {
       queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.cuisineType) {
+      queryParameters['cuisineType'] = requestParameters.cuisineType;
     }
 
     if (requestParameters.mealType) {

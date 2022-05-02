@@ -17,6 +17,9 @@ import {
   CreateDishDto,
   CreateDishDtoFromJSON,
   CreateDishDtoToJSON,
+  CuisineTypeEnum,
+  CuisineTypeEnumFromJSON,
+  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
@@ -47,6 +50,7 @@ export interface PartnersDishesApiDeleteOneRequest {
 
 export interface PartnersDishesApiListRequest {
   city?: OperationalCityEnum;
+  cuisineType?: Array<CuisineTypeEnum>;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;
@@ -153,6 +157,10 @@ export class PartnersDishesApi extends runtime.BaseAPI {
 
     if (requestParameters.city !== undefined) {
       queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.cuisineType) {
+      queryParameters['cuisineType'] = requestParameters.cuisineType;
     }
 
     if (requestParameters.mealType) {

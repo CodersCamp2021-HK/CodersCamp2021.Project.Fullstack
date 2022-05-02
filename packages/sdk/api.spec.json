@@ -471,6 +471,12 @@
             "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
           },
           {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/CuisineTypeEnum" } }
+          },
+          {
             "name": "mealType",
             "required": false,
             "in": "query",
@@ -523,6 +529,12 @@
             "required": false,
             "in": "query",
             "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+          },
+          {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/CuisineTypeEnum" } }
           },
           {
             "name": "mealType",
@@ -695,6 +707,12 @@
             "required": false,
             "in": "query",
             "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+          },
+          {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/CuisineTypeEnum" } }
           },
           {
             "name": "mealType",
