@@ -12,7 +12,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 
-import { useFiltersContext, SingleFilterType } from '../../contexts/FiltersContext';
+import { SingleFilterType, useFiltersContext } from '../../contexts/FiltersContext';
 
 type CheckboxProps = {
   listLabel: string;
@@ -32,7 +32,6 @@ type SelectProps = {
   label: string;
   selectObj: Record<string, string>;
 };
-
 
 const BasicSelect = ({ label, selectObj }: SelectProps) => {
   const [sort, setSort] = useState('');
@@ -104,8 +103,8 @@ const Filters = () => {
   const [checked, setChecked] = useState<SingleFilterType[]>([]);
   const { addFilters } = useFiltersContext();
 
-  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    let updatedList: SingleFilterType[]  = [...checked];
+  const handleChecked = (e: React.ChangeEvent<HTMLInputElement> & React.MouseEvent<HTMLDivElement>): void => {
+    let updatedList: SingleFilterType[] = [...checked];
 
     if (e.target?.getAttribute('type') === 'checkbox') {
       if (e.target?.checked) {
