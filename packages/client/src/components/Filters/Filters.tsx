@@ -99,19 +99,23 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
   );
 };
 
+function isInputCheckbox(value: any): value is HTMLInputElement {
+	return value !== null && value.type && value.type === 'checkbox';
+  }
+
 const Filters = () => {
   const [checked, setChecked] = useState<SingleFilterType[]>([]);
   const { addFilters } = useFiltersContext();
 
-  const handleChecked = (e: React.ChangeEvent<HTMLInputElement> & React.MouseEvent<HTMLDivElement>): void => {
-    let updatedList: SingleFilterType[] = [...checked];
+  const handleChecked: React.FormEventHandler<HTMLDivElement> = (e) => {
+    let updatedList = [...checked];
 
-    if (e.target?.getAttribute('type') === 'checkbox') {
+    if (isInputCheckbox(e.target)) {
       if (e.target?.checked) {
         updatedList = [...checked, { name: e.target.getAttribute('name'), value: e.target?.value }];
       } else {
         updatedList = updatedList.filter(
-          (item) => !_.isEqual(item, { name: e.target?.getAttribute('name'), value: e.target?.value }),
+          (item) => !_.isEqual(item, { name: (e.target as HTMLInputElement).getAttribute('name'), value: (e.target as HTMLInputElement).value }),
         );
       }
     }
@@ -126,7 +130,7 @@ const Filters = () => {
 
   return (
     <>
-      <Stack onClick={(e) => handleChecked(e)} spacing={2}>
+      <Stack onChange={(e) => handleChecked(e)} spacing={2}>
         <CheckboxList
           selectedCheckboxes={checked}
           filtersName='mealType'
