@@ -100,8 +100,8 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
 };
 
 function isInputCheckbox(value: any): value is HTMLInputElement {
-	return value !== null && value.type && value.type === 'checkbox';
-  }
+  return value !== null && value.type && value.type === 'checkbox';
+}
 
 const Filters = () => {
   const [checked, setChecked] = useState<SingleFilterType[]>([]);
@@ -115,7 +115,11 @@ const Filters = () => {
         updatedList = [...checked, { name: e.target.getAttribute('name'), value: e.target?.value }];
       } else {
         updatedList = updatedList.filter(
-          (item) => !_.isEqual(item, { name: (e.target as HTMLInputElement).getAttribute('name'), value: (e.target as HTMLInputElement).value }),
+          (item) =>
+            !_.isEqual(item, {
+              name: (e.target as HTMLInputElement).getAttribute('name'),
+              value: (e.target as HTMLInputElement).value,
+            }),
         );
       }
     }

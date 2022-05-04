@@ -5,7 +5,10 @@ type SingleFilterType = {
   value: string | null;
 };
 
-const FiltersContextCurrent = createContext<{ filters: SingleFilterType[]; addFilters: (args: SingleFilterType[]) => void }>({
+const FiltersContextCurrent = createContext<{
+  filters: SingleFilterType[];
+  addFilters: (args: SingleFilterType[]) => void;
+}>({
   filters: [],
   addFilters: () => {},
 });
