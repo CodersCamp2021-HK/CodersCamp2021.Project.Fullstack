@@ -26,7 +26,7 @@ const OrderDataCompletion = () => {
               </Typography>
               <FormControl sx={{ minWidth: 300 }}>
                 <InputLabel id='demo-simple-select-label'>Godzina dostawy</InputLabel>
-                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='medium'>
+                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small'>
                   <MenuItem value={1}>4:00 - 6:00</MenuItem>
                   <MenuItem value={2}>6:00 - 8:00</MenuItem>
                   <MenuItem value={3}>8:00 - 10:00</MenuItem>
