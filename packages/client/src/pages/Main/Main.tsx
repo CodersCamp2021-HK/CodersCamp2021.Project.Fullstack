@@ -1,22 +1,15 @@
 import { Stack } from '@mui/material';
 import Container from '@mui/material/Container';
-import { SetStateAction, useState } from 'react';
 
 import { BasicSelect, Filters, MediaCardsGrid } from '../../components';
 import { CartSummary } from '../../components/CartSummary';
 import { FiltersContext } from '../../contexts/FiltersContext';
 
+const sortObj = {
+  priceAsc: 'wg. ceny rosnąco',
+  kcalAsc: 'wg. kaloryczności rosnąco',
+};
 const Main = () => {
-  const [day, setDay] = useState('');
-  const handleChange = (e: SetStateAction<string>) => {
-    setDay(e);
-  };
-
-  const sortObj = {
-    priceAsc: 'wg. ceny rosnąco',
-    kcalAsc: 'wg. kaloryczności rosnąco',
-  };
-
   return (
     <Container maxWidth={false}>
       <FiltersContext>
@@ -41,7 +34,7 @@ const Main = () => {
             <Filters />
           </Stack>
           <MediaCardsGrid />
-          <CartSummary day={day} onDayChange={handleChange} />
+          <CartSummary />
         </Stack>
       </FiltersContext>
     </Container>
