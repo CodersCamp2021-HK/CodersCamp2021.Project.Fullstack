@@ -19,11 +19,7 @@ const OrderDaysDisplay = ({ cart }: OrderDaysDisplayProps) => (
 
 const allDishes = (cart: SubOrder[]) => cart.flatMap((suborder) => suborder.dishes);
 
-interface OrderSummaryProps {
-  nextStep: () => void;
-}
-
-const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
+const OrderSummary = () => {
   const { cart } = useShoppingCart();
 
   const price = sumDishProperty(allDishes(cart), 'price');
@@ -34,7 +30,7 @@ const OrderSummary = ({ nextStep }: OrderSummaryProps) => {
         <OrderDaysDisplay cart={cart} />
       </Grid>
       <Grid item xs={12} xl={3} order={{ xs: -1, xl: 1 }}>
-        <OrderPriceDisplay price={price} nextStep={nextStep} />
+        <OrderPriceDisplay price={price} />
       </Grid>
     </Grid>
   );

@@ -10,6 +10,7 @@ import {
   PartnerLogin,
   PartnerRegister,
   ShoppingCart,
+  ShoppingCartData,
   UnderConstruction,
   UserLogin,
   UserRegister,
@@ -26,6 +27,7 @@ const App = () => {
             <Route path={routes.home} element={<Home />} />
             <Route path={routes.main} element={<Main />} />
             <Route path={routes.shoppingCart} element={<ShoppingCart />} />
+            <Route path={routes.shoppingCartData} element={<ShoppingCartData />} />
             <Route path={routes.userLogin} element={<UserLogin />} />
             <Route path={routes.partnerLogin} element={<PartnerLogin />} />
             <Route path={routes.userRegister} element={<UserRegister />} />
