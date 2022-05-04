@@ -1,39 +1,35 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { SetStateAction } from 'react';
+import { range } from 'lodash';
 
-const date = new Date();
-const availableDates: { date: string; weekday: string }[] = [];
+import { useShoppingCart } from '../../contexts';
 
-for (let i = 3; i < 10; i++) {
-  const nextDay = new Date(date);
-  nextDay.setDate(date.getDate() + i);
-  availableDates.push({
-    date: nextDay.toLocaleDateString('pl-PL'),
-    weekday: nextDay.toLocaleString('pl-PL', { weekday: 'long' }),
-  });
-}
-interface DatePickerProps {
-  day: string;
-  onDayChange: (e: SetStateAction<string>) => void;
-}
-
-const DatePicker = ({ day, onDayChange }: DatePickerProps) => {
-  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
-    onDayChange(e.target.value);
+const availableDates = range(3, 10).map((offset) => {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  date.setDate(date.getDate() + offset);
+  return {
+    date,
+    label: `${date.toLocaleDateString('pl-PL')} (${date.toLocaleString('pl-PL', { weekday: 'long' })})`,
   };
+});
+
+const DatePicker = () => {
+  const { selectedDate, setSelectedDate } = useShoppingCart();
 
   return (
     <Box bgcolor='background.default' borderRadius='10px' p={2} mb={4}>
       <FormControl fullWidth>
         <InputLabel>Wybierz dzień</InputLabel>
-        <Select value={day} label='Wybierz dzień' onChange={handleChange}>
-          {availableDates.map((elem) => {
-            return (
-              <MenuItem key={elem.date} value={elem.date}>
-                {elem.date} ({elem.weekday})
-              </MenuItem>
-            );
-          })}
+        <Select
+          value={selectedDate?.toJSON() ?? ''}
+          label='Wybierz dzień'
+          onChange={(e) => setSelectedDate(new Date(e.target.value))}
+        >
+          {availableDates.map((elem) => (
+            <MenuItem key={elem.date.toJSON()} value={elem.date.toJSON()}>
+              {elem.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

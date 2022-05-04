@@ -26,40 +26,36 @@ const style = {
 };
 const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
   <Box sx={{ flexDirection: 'row', display: 'flex', flexWrap: 'wrap' }}>
+    <Item>
+      <Typography variant='caption'>Tagi:</Typography>
+    </Item>
     {(tags ?? []).length > 0 ? (
-      <>
-        <Item>
-          <Typography variant='caption'>Tagi: </Typography>
+      tags?.map((tag) => (
+        <Item sx={{ pl: 0.5 }} key={tag}>
+          <Typography bgcolor='primary.main' variant='caption' sx={style}>
+            {tag.toUpperCase()}
+          </Typography>
         </Item>
-        {tags?.map((tag) => (
-          <Item sx={{ pl: 0.5 }} key={tag}>
-            <Typography bgcolor='primary.main' variant='caption' sx={style}>
-              {tag.toUpperCase()}
-            </Typography>
-          </Item>
-        ))}
-      </>
+      ))
     ) : (
       <Typography variant='h6' sx={{ pl: 1, pr: 1 }}>
         Brak
       </Typography>
     )}
 
+    <Item>
+      <Typography variant='caption' sx={{ pl: 1 }}>
+        Alergeny:
+      </Typography>
+    </Item>
     {(allergens ?? []).length > 0 ? (
-      <>
-        <Item>
-          <Typography variant='caption' sx={{ pl: 1 }}>
-            Alergeny:{' '}
+      allergens?.map((allergen) => (
+        <Item sx={{ pl: 0.5 }} key={allergen}>
+          <Typography bgcolor='rgba(27, 94, 32, 50%)' variant='caption' sx={style}>
+            {allergen.toUpperCase()}
           </Typography>
         </Item>
-        {allergens?.map((allergen) => (
-          <Item sx={{ pl: 0.5 }} key={allergen}>
-            <Typography bgcolor='rgba(27, 94, 32, 50%)' variant='caption' sx={style}>
-              {allergen.toUpperCase()}
-            </Typography>
-          </Item>
-        ))}
-      </>
+      ))
     ) : (
       <Typography variant='h6' sx={{ pl: 1, pr: 1 }}>
         Brak
