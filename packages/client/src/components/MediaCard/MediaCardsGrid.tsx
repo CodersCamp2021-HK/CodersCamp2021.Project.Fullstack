@@ -14,15 +14,16 @@ const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
   const { filters } = useFiltersContext();
 
-  function enumMap(objProperty: [], enumName: Record<string, string>) {
-    return objProperty?.map((item) => enumName[item]);
+  function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
+    return objProperty?.map((item) => (item ? enumName[item] : ''));
   }
 
   useEffect(() => {
     let hasChanged = true;
 
-    const filtersGrouped = _.mapValues(_.groupBy(filters, 'name'), (flist: SingleFilterType[]) =>
-      flist.map((filter) => filter.value),
+    const filtersGrouped: { [x: string]: (string | null)[] } = _.mapValues(
+      _.groupBy(filters, 'name'),
+      (flist: SingleFilterType[]) => flist.map((filter) => filter.value),
     );
     const params = {
       ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
