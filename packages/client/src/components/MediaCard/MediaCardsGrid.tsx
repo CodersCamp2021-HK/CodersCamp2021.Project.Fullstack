@@ -5,8 +5,8 @@ import { _ } from 'lodash';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
-import { useFiltersContext } from '../../contexts/FiltersContext';
 import { MediaCard } from './MediaCard';
+import { useFiltersContext, SingleFilterType } from '../../contexts/FiltersContext';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
@@ -25,7 +25,7 @@ const MediaCardsGrid = () => {
 	console.log(typeof MealTypeEnum);
     let hasChanged = true;
 
-    const filtersGrouped = _.mapValues(_.groupBy(filters, 'name'), (flist: { name: string | null, value: string | null }[]) => flist.map((filter) => filter.value));
+    const filtersGrouped = _.mapValues(_.groupBy(filters, 'name'), (flist: SingleFilterType[]) => flist.map((filter) => filter.value));
     const params = {
       ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
       ...(filtersGrouped?.tags && { tags: enumMap(filtersGrouped.tags, DishTagsEnum) }),
