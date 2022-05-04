@@ -5,15 +5,15 @@ type SingleFilterType = {
   value: string | null;
 };
 
-const FiltersContextCurrent = createContext<{ filters: SingleFilterType[]; addFilters: (args: []) => void }>({
+const FiltersContextCurrent = createContext<{ filters: SingleFilterType[]; addFilters: (args: SingleFilterType[]) => void }>({
   filters: [],
   addFilters: () => {},
 });
 
 const FiltersContext = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState<SingleFilterType[]>([]);
 
-  const addFilters = useCallback((args: []) => setFilters(args), []);
+  const addFilters = useCallback((args: SingleFilterType[]) => setFilters(args), []);
 
   const value = useMemo(() => ({ filters, addFilters }), [filters, addFilters]);
 
