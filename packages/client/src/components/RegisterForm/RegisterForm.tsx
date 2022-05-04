@@ -27,7 +27,7 @@ const RegisterForm = ({ userRole }: RegisterFormProps) => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = useState('');
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmailError(false);
     setNIPError(false);
@@ -38,7 +38,7 @@ const RegisterForm = ({ userRole }: RegisterFormProps) => {
       setEmailError(true);
       setEmailErrorMessage('Wpisz poprawny adres email.');
     }
-    if (NIP === '' || !NIP.match(NIP_CONST.REGEX)) {
+    if (!NIP.match(NIP_CONST.REGEX)) {
       setNIPError(true);
       setNIPErrorMessage('Wpisz poprawny NIP.');
     }
