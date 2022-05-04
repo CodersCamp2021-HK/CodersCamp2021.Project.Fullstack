@@ -1,22 +1,20 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-const FiltersContextCurrent = createContext({
-  createFiltersArray: () => {},
+const FiltersContextCurrent = createContext<{ filters: []; addFilters: (args: []) => void }>({
+  filters: [],
+  addFilters: () => {},
 });
 
 const FiltersContext = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState([]);
 
-  const filtersContextValue = useMemo(
-    () => ({
-      createFiltersArray: (args: []) => {
-        setFilters(args);
-      },
-    }),
-    [],
-  );
+  const addFilters = useCallback((args: []) => setFilters(args), []);
 
-  return <FiltersContextCurrent.Provider value={filtersContextValue}>{children}</FiltersContextCurrent.Provider>;
+  const value = useMemo(() => ({ filters, addFilters }), [filters, addFilters]);
+
+  return <FiltersContextCurrent.Provider value={value}>{children}</FiltersContextCurrent.Provider>;
 };
 
-export { FiltersContext, FiltersContextCurrent };
+const useFiltersContext = () => useContext(FiltersContextCurrent);
+
+export { FiltersContext, useFiltersContext };

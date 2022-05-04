@@ -10,9 +10,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import _ from 'lodash';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-import { FiltersContextCurrent } from '../../contexts/FiltersContext';
+import { useFiltersContext } from '../../contexts/FiltersContext';
 
 type CheckboxProps = {
   listLabel: string;
@@ -101,7 +101,7 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
 
 const Filters = () => {
   const [checked, setChecked] = useState<{ name: string | null; value: string | null }[]>([]);
-  const filtersParam = useContext(FiltersContextCurrent);
+  const { addFilters } = useFiltersContext();
 
   const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
     let updatedList = [...checked];
@@ -116,12 +116,15 @@ const Filters = () => {
       }
     }
     setChecked(updatedList);
-    filtersParam.createFiltersArray(updatedList);
   };
 
   const clearCheckboxes = () => {
     setChecked([]);
   };
+
+  useEffect(() => {
+    addFilters(checked);
+  }, [checked, addFilters]);
 
   return (
     <>
@@ -135,7 +138,13 @@ const Filters = () => {
         <CheckboxList selectedCheckboxes={checked} filtersName='tags' listLabel='Tagi' filters={DishTagsEnum} />
       </Stack>
       <Box>
-        <Button onClick={clearCheckboxes} fullWidth={false} variant='contained' size='small' startIcon={<ClearIcon />}>
+        <Button
+          onClick={() => clearCheckboxes()}
+          fullWidth={false}
+          variant='contained'
+          size='small'
+          startIcon={<ClearIcon />}
+        >
           wyczyść
         </Button>
       </Box>
