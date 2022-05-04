@@ -1,7 +1,7 @@
 import { DishDto, DishesApi, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
 // import { Stack } from '@mui/material';
 import { CircularProgress, Grid, Typography } from '@mui/material';
-import { _ } from 'lodash';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
