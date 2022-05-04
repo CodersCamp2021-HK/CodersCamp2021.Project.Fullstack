@@ -24,7 +24,7 @@ const OrderDataCompletion = () => {
               <Typography variant='h5' color='primary.main' marginBottom={3}>
                 Godzina dostawy
               </Typography>
-              <FormControl sx={{ minWidth: 300 }}>
+              <FormControl sx={{ width: '60%' }}>
                 <InputLabel id='demo-simple-select-label'>Godzina dostawy</InputLabel>
                 <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small'>
                   <MenuItem value={1}>4:00 - 6:00</MenuItem>
@@ -53,10 +53,10 @@ const OrderDataCompletion = () => {
               <Typography variant='h5' color='primary.main' marginBottom={3}>
                 Informacje podstawowe
               </Typography>
-              <TextField sx={{ mr: 0.5, mb: 0.5 }} size='small' id='name' label='Imię' />
-              <TextField id='surname' size='small' label='Nazwisko' />
-              <TextField sx={{ mr: 0.5, mb: 0.5 }} size='small' id='email' label='Adres email' />
-              <TextField id='phone-number' size='small' label='Numer telefonu' />
+              <TextField sx={{ pr: 0.5, mb: 0.5 }} size='small' id='name' label='Imię' />
+              <TextField id='surname' size='small' sx={{ pr: 0.5, mb: 0.5 }} label='Nazwisko' />
+              <TextField sx={{ pr: 0.5, mb: 0.5 }} size='small' id='email' label='Adres email' />
+              <TextField id='phone-number' size='small' label='Numer telefonu' sx={{ pr: 0.5, mb: 0.5 }} />
             </Box>
           </Grid>
           <Grid item xs={6} xl={6}>
@@ -74,7 +74,7 @@ const OrderDataCompletion = () => {
               <TextField sx={{ width: '60%', pr: 0.5, mb: 1 }} size='small' id='city' label='Miasto' />
             </Box>
           </Grid>
-          <Grid container xs={12} xl={12} justifyContent='center' alignItems='center'>
+          <Grid container justifyContent='center' alignItems='center'>
             <Button variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
               PRZEJDŹ DO PŁATNOŚCI
             </Button>
