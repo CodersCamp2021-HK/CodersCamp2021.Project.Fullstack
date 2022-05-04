@@ -1,6 +1,11 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-const FiltersContextCurrent = createContext<{ filters: []; addFilters: (args: []) => void }>({
+type SingleFilterType = {
+	name: string | null;
+	value: string | null;
+}
+
+const FiltersContextCurrent = createContext<{ filters: SingleFilterType[]; addFilters: (args: []) => void }>({
   filters: [],
   addFilters: () => {},
 });
@@ -17,4 +22,5 @@ const FiltersContext = ({ children }: { children: JSX.Element[] | JSX.Element })
 
 const useFiltersContext = () => useContext(FiltersContextCurrent);
 
-export { FiltersContext, useFiltersContext };
+export { FiltersContext, useFiltersContext};
+export type { SingleFilterType }

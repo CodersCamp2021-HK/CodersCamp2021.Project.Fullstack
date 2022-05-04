@@ -1,6 +1,6 @@
 import { DishDto, DishesApi, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
 // import { Stack } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import { CircularProgress, Grid, Typography} from '@mui/material';
 import { _ } from 'lodash';
 import { useEffect, useState } from 'react';
 
@@ -10,33 +10,36 @@ import { MediaCard } from './MediaCard';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
-// const NoCards = () => {
-//   return <Stack>Niestety wyszukiwanie nie spełnia warunków</Stack>;
-// };
-
 const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
   const { filters } = useFiltersContext();
 
-  function enumMap(objProperty: [], enumName: MealTypeEnum | DishTagsEnum) {
+  function enumMap(objProperty: [], enumName: {}) {
     return objProperty?.map((item) => enumName[item]);
   }
 
+
+
   useEffect(() => {
-    const filtersGrouped = _.mapValues(_.groupBy(filters, 'name'), (flist) => flist.map((filter) => filter.value));
+
+	console.log(typeof MealTypeEnum);
+    let hasChanged = true;
+
+    const filtersGrouped = _.mapValues(_.groupBy(filters, 'name'), (flist: { name: string | null, value: string | null }[]) => flist.map((filter) => filter.value));
     const params = {
       ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
       ...(filtersGrouped?.tags && { tags: enumMap(filtersGrouped.tags, DishTagsEnum) }),
     };
+
     const fetchData = async () => {
-      try {
-        const dishResponse = await dishesApi.listAllDishes(params);
+      const dishResponse = await dishesApi.listAllDishes(params);
+      if (hasChanged) {
         setDishes(dishResponse.data);
-      } catch (error) {
-        setDishes([]);
       }
     };
-    fetchData();
+
+    fetchData().catch(console.error);
+    return () => (hasChanged = false);
   }, [filters]);
 
   const cardsGrid = dishes.map((dish) => {
@@ -44,11 +47,26 @@ const MediaCardsGrid = () => {
       <Grid item key={dish.id}>
         <MediaCard dish={dish} />
       </Grid>
+	  
     );
   });
 
-  // console.log(dishes.length);
-
+  if (cardsGrid.length === 0 && filters.length === 0) {
+    return (
+      <Grid container spacing={2} pt={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Grid>
+    );
+  }
+  if (cardsGrid.length === 0 && filters.length > 0) {
+    return (
+      <Grid container spacing={2} pt={6}>
+        <Typography variant='h5' pt={5}>
+          wyszukiwanie nie spełnia warunków
+        </Typography>
+      </Grid>
+    );
+  }
   return (
     <Grid container spacing={2} pt={6}>
       {cardsGrid}

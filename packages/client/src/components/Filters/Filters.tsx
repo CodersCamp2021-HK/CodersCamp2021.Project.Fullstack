@@ -12,26 +12,27 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import _ from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { useFiltersContext } from '../../contexts/FiltersContext';
+import { useFiltersContext, SingleFilterType } from '../../contexts/FiltersContext';
 
 type CheckboxProps = {
   listLabel: string;
   filtersName: string;
   filters: Record<string, string>;
-  selectedCheckboxes: { name: string | null; value: string | null }[];
+  selectedCheckboxes: SingleFilterType[];
 };
 
 type CheckboxInputProps = {
   value: string;
   filters: Record<string, string>;
   filtersName: string;
-  selectedCheckboxes: { name: string | null; value: string | null }[];
+  selectedCheckboxes: SingleFilterType[];
 };
 
 type SelectProps = {
   label: string;
   selectObj: Record<string, string>;
 };
+
 
 const BasicSelect = ({ label, selectObj }: SelectProps) => {
   const [sort, setSort] = useState('');
@@ -100,11 +101,11 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
 };
 
 const Filters = () => {
-  const [checked, setChecked] = useState<{ name: string | null; value: string | null }[]>([]);
+  const [checked, setChecked] = useState<SingleFilterType[]>([]);
   const { addFilters } = useFiltersContext();
 
-  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
-    let updatedList = [...checked];
+  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    let updatedList: SingleFilterType[]  = [...checked];
 
     if (e.target?.getAttribute('type') === 'checkbox') {
       if (e.target?.checked) {
@@ -122,9 +123,7 @@ const Filters = () => {
     setChecked([]);
   };
 
-  useEffect(() => {
-    addFilters(checked);
-  }, [checked, addFilters]);
+  useEffect(() => addFilters(checked), [checked, addFilters]);
 
   return (
     <>
