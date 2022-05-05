@@ -7,18 +7,18 @@ type SingleFilterType = {
 
 const FiltersContextCurrent = createContext<{
   filters: SingleFilterType[];
-  addFilters: (args: SingleFilterType[]) => void;
+  overrideFilters: (args: SingleFilterType[]) => void;
 }>({
   filters: [],
-  addFilters: () => {},
+  overrideFilters: () => {},
 });
 
 const FiltersContext = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
   const [filters, setFilters] = useState<SingleFilterType[]>([]);
 
-  const addFilters = useCallback((args: SingleFilterType[]) => setFilters(args), []);
+  const overrideFilters = useCallback((args: SingleFilterType[]) => setFilters(args), []);
 
-  const value = useMemo(() => ({ filters, addFilters }), [filters, addFilters]);
+  const value = useMemo(() => ({ filters, overrideFilters }), [filters, overrideFilters]);
 
   return <FiltersContextCurrent.Provider value={value}>{children}</FiltersContextCurrent.Provider>;
 };

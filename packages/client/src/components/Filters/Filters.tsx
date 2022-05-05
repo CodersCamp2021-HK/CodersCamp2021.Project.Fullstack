@@ -100,37 +100,30 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
 };
 
 function isInputCheckbox(value: any): value is HTMLInputElement {
-  return value !== null && value.type && value.type === 'checkbox';
+  return value?.type === 'checkbox';
 }
 
 const Filters = () => {
   const [checked, setChecked] = useState<SingleFilterType[]>([]);
-  const { addFilters } = useFiltersContext();
+  const { overrideFilters } = useFiltersContext();
 
-  const handleChecked: React.FormEventHandler<HTMLDivElement> = (e) => {
-    let updatedList = [...checked];
-
-    if (isInputCheckbox(e.target)) {
-      if (e.target?.checked) {
-        updatedList = [...checked, { name: e.target.getAttribute('name'), value: e.target?.value }];
-      } else {
-        updatedList = updatedList.filter(
-          (item) =>
-            !_.isEqual(item, {
-              name: (e.target as HTMLInputElement).getAttribute('name'),
-              value: (e.target as HTMLInputElement).value,
-            }),
-        );
-      }
+  const handleChecked: React.FormEventHandler<HTMLDivElement> = ({ target }) => {
+    if (isInputCheckbox(target)) {
+      const targetEntry = { name: target.getAttribute('name'), value: target.value };
+      setChecked((prev) => {
+        if (target.checked) {
+          return [...prev, targetEntry];
+        }
+        return prev.filter((item) => !_.isEqual(item, targetEntry));
+      });
     }
-    setChecked(updatedList);
   };
 
   const clearCheckboxes = () => {
     setChecked([]);
   };
 
-  useEffect(() => addFilters(checked), [checked, addFilters]);
+  useEffect(() => overrideFilters(checked), [checked, overrideFilters]);
 
   return (
     <>

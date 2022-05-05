@@ -1,5 +1,4 @@
 import { DishDto, DishesApi, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
-// import { Stack } from '@mui/material';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
@@ -10,17 +9,15 @@ import { MediaCard } from './MediaCard';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
+function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
+  return objProperty.map((item) => (item ? enumName[item] : ''));
+}
+
 const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
   const { filters } = useFiltersContext();
 
-  function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
-    return objProperty?.map((item) => (item ? enumName[item] : ''));
-  }
-
   useEffect(() => {
-    let hasChanged = true;
-
     const filtersGrouped: { [x: string]: (string | null)[] } = _.mapValues(
       _.groupBy(filters, 'name'),
       (flist: SingleFilterType[]) => flist.map((filter) => filter.value),
@@ -32,15 +29,10 @@ const MediaCardsGrid = () => {
 
     const fetchData = async () => {
       const dishResponse = await dishesApi.listAllDishes(params);
-      if (hasChanged) {
-        setDishes(dishResponse.data);
-      }
+      setDishes(dishResponse.data);
     };
-
+    // eslint-disable-next-line no-console
     fetchData().catch(console.error);
-    return () => {
-      hasChanged = false;
-    };
   }, [filters]);
 
   const cardsGrid = dishes.map((dish) => {
