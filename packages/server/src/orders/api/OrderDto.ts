@@ -9,11 +9,11 @@ class OrderDishDto {
   @ApiObjectIdProperty()
   readonly dishId: string;
 
-  @ApiPropertyOptional({ minimum: ORDER_CONSTANTS.COUNT.MIN })
-  readonly count?: number;
+  @ApiProperty({ minimum: ORDER_CONSTANTS.COUNT.MIN, default: ORDER_CONSTANTS.COUNT.MIN })
+  readonly count: number;
 
-  @ApiPropertyOptional({ example: [] })
-  readonly excludedIngredients?: string[];
+  @ApiProperty({ example: [], default: [] })
+  readonly excludedIngredients: string[];
 }
 
 class SubOrderDto {

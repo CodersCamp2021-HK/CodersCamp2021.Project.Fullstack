@@ -32,11 +32,11 @@ class OrderDish {
   readonly dishId: Dish;
 
   @Expose()
-  @Prop({ default: ORDER_CONSTANTS.COUNT.MIN, min: ORDER_CONSTANTS.COUNT.MIN })
+  @Prop({ default: ORDER_CONSTANTS.COUNT.MIN, min: ORDER_CONSTANTS.COUNT.MIN, required: true })
   readonly count: number;
 
   @Expose()
-  @Prop()
+  @Prop({ required: true })
   readonly excludedIngredients: string[];
 }
 
@@ -59,7 +59,7 @@ class SubOrder {
 
   @Expose()
   @Type(() => OrderDish)
-  @Prop({ type: [OrderDishSchema] })
+  @Prop({ type: [OrderDishSchema], required: true })
   readonly dishes: OrderDish[];
 }
 
@@ -89,7 +89,7 @@ class Order {
 
   @Expose()
   @Type(() => SubOrder)
-  @Prop({ type: [SubOrderSchema] })
+  @Prop({ type: [SubOrderSchema], required: true })
   readonly subOrders: SubOrder[];
 
   @Expose()

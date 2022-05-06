@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 import { ImageType } from '../../../image/shared';
@@ -54,8 +54,7 @@ class DishDto {
   readonly mealType: MealType[];
 
   @Expose()
-  @ApiProperty({
-    required: false,
+  @ApiPropertyOptional({
     example: 'Opis dania',
   })
   readonly description: string;
