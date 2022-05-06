@@ -26,7 +26,7 @@ const MediaCard = ({ dish }: MediaCardProps) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Card sx={{ width: 370 }}>
+    <Card sx={{ width: 370, borderRadius: '50px' }}>
       <CardMedia component='img' height='320' image={photo || cardImg} alt='name' />
       <DishPopup open={open} onClose={handleClose} dish={dish} />
       <CardContent>
