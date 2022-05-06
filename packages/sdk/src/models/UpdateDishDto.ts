@@ -16,6 +16,7 @@ import { exists, mapValues } from '../runtime';
 import { AllergensEnum, AllergensEnumFromJSON, AllergensEnumFromJSONTyped, AllergensEnumToJSON } from './AllergensEnum';
 import { DishTagsEnum, DishTagsEnumFromJSON, DishTagsEnumFromJSONTyped, DishTagsEnumToJSON } from './DishTagsEnum';
 import { IngredientDto, IngredientDtoFromJSON, IngredientDtoFromJSONTyped, IngredientDtoToJSON } from './IngredientDto';
+import { MealTypeEnum, MealTypeEnumFromJSON, MealTypeEnumFromJSONTyped, MealTypeEnumToJSON } from './MealTypeEnum';
 import {
   NutritionalValueDto,
   NutritionalValueDtoFromJSON,
@@ -37,10 +38,10 @@ export interface UpdateDishDto {
   name: string;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<MealTypeEnum>}
    * @memberof UpdateDishDto
    */
-  mealType?: Array<string>;
+  mealType?: Array<MealTypeEnum>;
   /**
    *
    * @type {string}
@@ -113,7 +114,7 @@ export function UpdateDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
   }
   return {
     name: json['name'],
-    mealType: !exists(json, 'mealType') ? undefined : json['mealType'],
+    mealType: !exists(json, 'mealType') ? undefined : (json['mealType'] as Array<any>).map(MealTypeEnumFromJSON),
     description: !exists(json, 'description') ? undefined : json['description'],
     price: json['price'],
     tags: !exists(json, 'tags') ? undefined : (json['tags'] as Array<any>).map(DishTagsEnumFromJSON),
@@ -138,7 +139,7 @@ export function UpdateDishDtoToJSON(value?: UpdateDishDto | null): any {
   }
   return {
     name: value.name,
-    mealType: value.mealType,
+    mealType: value.mealType === undefined ? undefined : (value.mealType as Array<any>).map(MealTypeEnumToJSON),
     description: value.description,
     price: value.price,
     tags: value.tags === undefined ? undefined : (value.tags as Array<any>).map(DishTagsEnumToJSON),

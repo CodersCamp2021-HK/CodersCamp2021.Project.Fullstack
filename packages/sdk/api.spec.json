@@ -361,19 +361,19 @@
             "name": "city",
             "required": false,
             "in": "query",
-            "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+            "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
           },
           {
             "name": "cuisineType",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/CuisineTypeEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QCuisineTypeEnum" } }
           },
           {
             "name": "tags",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/RestaurantTagEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QRestaurantTagEnum" } }
           },
           {
             "name": "page",
@@ -468,19 +468,19 @@
             "name": "city",
             "required": false,
             "in": "query",
-            "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+            "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
           },
           {
             "name": "mealType",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/MealTypeEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QMealTypeEnum" } }
           },
           {
             "name": "tags",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/DishTagEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QDishTagsEnum" } }
           },
           {
             "name": "page",
@@ -522,19 +522,19 @@
             "name": "city",
             "required": false,
             "in": "query",
-            "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+            "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
           },
           {
             "name": "mealType",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/MealTypeEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QMealTypeEnum" } }
           },
           {
             "name": "tags",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/DishTagEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QDishTagsEnum" } }
           },
           {
             "name": "page",
@@ -694,19 +694,19 @@
             "name": "city",
             "required": false,
             "in": "query",
-            "schema": { "$ref": "#/components/schemas/OperationalCityEnum" }
+            "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
           },
           {
             "name": "mealType",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/MealTypeEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QMealTypeEnum" } }
           },
           {
             "name": "tags",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/DishTagEnum" } }
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QDishTagsEnum" } }
           },
           {
             "name": "page",
@@ -1372,6 +1372,9 @@
         },
         "required": ["id", "name", "description", "cuisineType", "tags", "addressId", "operationalCities"]
       },
+      "QOperationalCityEnum": { "type": "string" },
+      "QCuisineTypeEnum": { "type": "string" },
+      "QRestaurantTagEnum": { "type": "string" },
       "RestaurantListDto": {
         "type": "object",
         "properties": {
@@ -1448,8 +1451,9 @@
         },
         "required": ["cuisineType", "tags", "operationalCities"]
       },
-      "MealTypeEnum": { "type": "string" },
-      "DishTagEnum": { "type": "string" },
+      "QMealTypeEnum": { "type": "string" },
+      "QDishTagsEnum": { "type": "string" },
+      "MealTypeEnum": { "type": "string", "enum": ["śniadanie", "lunch", "obiad", "kolacja"] },
       "DishTagsEnum": {
         "type": "string",
         "enum": ["wegańska", "wegetariańska", "gluten free", "ostre", "bardzo ostre"]
@@ -1617,7 +1621,8 @@
             "example": "2022-10-12"
           },
           "securityCode": { "type": "string", "minLength": 3, "maxLength": 4, "example": "722" }
-        }
+        },
+        "required": ["number", "expirationDate", "securityCode"]
       },
       "UserDto": {
         "type": "object",
@@ -1688,10 +1693,10 @@
         "type": "object",
         "properties": {
           "dishId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
-          "count": { "type": "number", "minimum": 1 },
-          "excludedIngredients": { "example": [], "type": "array", "items": { "type": "string" } }
+          "count": { "type": "number", "minimum": 1, "default": 1 },
+          "excludedIngredients": { "example": [], "default": [], "type": "array", "items": { "type": "string" } }
         },
-        "required": ["dishId"]
+        "required": ["dishId", "count", "excludedIngredients"]
       },
       "SubOrderDto": {
         "type": "object",

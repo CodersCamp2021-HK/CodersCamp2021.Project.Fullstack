@@ -26,9 +26,6 @@ import {
   DishListDto,
   DishListDtoFromJSON,
   DishListDtoToJSON,
-  OperationalCityEnum,
-  OperationalCityEnumFromJSON,
-  OperationalCityEnumToJSON,
   UpdateDishDto,
   UpdateDishDtoFromJSON,
   UpdateDishDtoToJSON,
@@ -46,7 +43,7 @@ export interface PartnersDishesApiDeleteOneRequest {
 }
 
 export interface PartnersDishesApiListRequest {
-  city?: OperationalCityEnum;
+  city?: string;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;
