@@ -48,7 +48,6 @@ const RegisterAndLogin = ({ formType }: RegisterAndLoginParams) => {
     <Box
       sx={{
         minHeight: 'calc(100vh - 6rem)',
-        backgroundColor: theme.palette.background.default,
         backgroundImage:
           formType === 'UserLogin' || formType === 'UserRegister' ? `url(${dish})` : `url(${restaurant})`,
         backgroundSize: `cover`,
@@ -61,7 +60,7 @@ const RegisterAndLogin = ({ formType }: RegisterAndLoginParams) => {
         sx={{
           width: '45rem',
           margin: '1rem',
-          background: theme.palette.common.white,
+          background: theme.palette.background.default,
           boxShadow: '20',
           display: 'flex',
           justifyContent: 'center',
