@@ -20,7 +20,7 @@ interface OrderDishProps {
 }
 
 const OrderDish = ({ orderDish }: OrderDishProps) => {
-  const { dish, excludedIngredients = [], count = 1 } = orderDish;
+  const { dish, excludedIngredients, count } = orderDish;
   return (
     <TableRow sx={{ height: '1px' }}>
       <TableCell sx={{ py: 5 }}>
@@ -46,7 +46,7 @@ const OrderDish = ({ orderDish }: OrderDishProps) => {
       </TableCell>
       <TableCell>
         <ul style={{ listStyle: 'none', padding: 0 }}>
-          {excludedIngredients?.map((ingredient) => (
+          {excludedIngredients.map((ingredient) => (
             <li key={ingredient}>{ingredient}</li>
           ))}
         </ul>

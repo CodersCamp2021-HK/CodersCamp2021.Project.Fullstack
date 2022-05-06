@@ -1512,12 +1512,19 @@
           "tags": {
             "type": "array",
             "example": ["ostre", "gluten free"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "ingredients": {
+            "example": [],
+            "default": [],
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IngredientDto" }
+          },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
@@ -1531,6 +1538,9 @@
           "id",
           "name",
           "price",
+          "tags",
+          "ingredients",
+          "allergens",
           "portionWeight",
           "calories",
           "fats",
@@ -1561,12 +1571,19 @@
           "tags": {
             "type": "array",
             "example": ["ostre", "gluten free"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "ingredients": {
+            "example": [],
+            "default": [],
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IngredientDto" }
+          },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
@@ -1575,7 +1592,18 @@
           "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
-        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
+        "required": [
+          "name",
+          "price",
+          "tags",
+          "ingredients",
+          "allergens",
+          "portionWeight",
+          "calories",
+          "fats",
+          "proteins",
+          "carbohydrates"
+        ]
       },
       "UpdateDishDto": {
         "type": "object",
@@ -1591,12 +1619,19 @@
           "tags": {
             "type": "array",
             "example": ["ostre", "gluten free"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/DishTagsEnum" }
           },
-          "ingredients": { "type": "array", "items": { "$ref": "#/components/schemas/IngredientDto" } },
+          "ingredients": {
+            "example": [],
+            "default": [],
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IngredientDto" }
+          },
           "allergens": {
             "type": "array",
             "example": ["orzechy"],
+            "default": [],
             "items": { "$ref": "#/components/schemas/AllergensEnum" }
           },
           "portionWeight": { "type": "number", "minimum": 0 },
@@ -1605,7 +1640,18 @@
           "proteins": { "$ref": "#/components/schemas/NutritionalValueDto" },
           "carbohydrates": { "$ref": "#/components/schemas/NutritionalValueDto" }
         },
-        "required": ["name", "price", "portionWeight", "calories", "fats", "proteins", "carbohydrates"]
+        "required": [
+          "name",
+          "price",
+          "tags",
+          "ingredients",
+          "allergens",
+          "portionWeight",
+          "calories",
+          "fats",
+          "proteins",
+          "carbohydrates"
+        ]
       },
       "CardDto": {
         "type": "object",

@@ -65,29 +65,30 @@ class DishDto {
 
   @Expose()
   @ApiProperty({
-    required: false,
     enum: DishTags,
     enumName: 'DishTagsEnum',
     isArray: true,
     example: ['ostre', 'gluten free'],
+    default: [],
   })
   readonly tags: DishTags[];
 
   @Expose()
   @Type(() => IngredientDto)
   @ApiProperty({
-    required: false,
     type: [IngredientDto],
+    example: [],
+    default: [],
   })
   readonly ingredients: IngredientDto[];
 
   @Expose()
   @ApiProperty({
-    required: false,
     enum: Allergens,
     enumName: 'AllergensEnum',
     isArray: true,
     example: ['orzechy'],
+    default: [],
   })
   readonly allergens: Allergens[];
 
