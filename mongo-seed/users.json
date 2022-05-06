@@ -1,85 +1,43 @@
 [{
   "_id": {
-    "$oid": "624c4f33c18edb7b60c662e3"
+    "$oid": "626699242261bca70cfeeadf"
   },
   "orders": [],
   "favouriteDishes": [],
   "favouriteRestaurants": [],
   "addressId": [
     {
-      "$oid": "624c5021c18edb7b60c66315"
+      "$oid": "626699462261bca70cfeeae3"
     }
   ],
   "__v": 0,
   "card": {
-    "number": "4478425115901021",
+    "number": "4562574783836030",
     "expirationDate": "2022-10-12",
     "securityCode": "722"
   },
   "name": "Jan",
-  "phoneNumber": "155175185",
+  "phoneNumber": "800500300",
   "surname": "Kowalski"
 },{
   "_id": {
-    "$oid": "624c4f3bc18edb7b60c662e8"
+    "$oid": "626699622261bca70cfeeaea"
   },
   "orders": [],
   "favouriteDishes": [],
   "favouriteRestaurants": [],
   "addressId": [
     {
-      "$oid": "624c5088c18edb7b60c6631d"
+      "$oid": "6266997c2261bca70cfeeaee"
     }
   ],
   "__v": 0,
   "card": {
-    "number": "4162157947007039",
-    "expirationDate": "2025-01-12",
-    "securityCode": "934"
+    "number": "4562574783836031",
+    "expirationDate": "2022-10-12",
+    "securityCode": "732"
   },
-  "name": "Dawid",
-  "phoneNumber": "250078333",
-  "surname": "Mroczek"
-},{
-  "_id": {
-    "$oid": "624c4f40c18edb7b60c662ed"
-  },
-  "orders": [],
-  "favouriteDishes": [],
-  "favouriteRestaurants": [],
-  "addressId": [
-    {
-      "$oid": "624c50fac18edb7b60c66324"
-    }
-  ],
-  "__v": 0,
-  "card": {
-    "number": "5140051185499517",
-    "expirationDate": "2023-05-11",
-    "securityCode": "044"
-  },
-  "name": "Maria",
-  "phoneNumber": "534950596",
+  "name": "Maja",
+  "phoneNumber": "823500300",
   "surname": "Nowak"
-},{
-  "_id": {
-    "$oid": "624c4f46c18edb7b60c662f2"
-  },
-  "orders": [],
-  "favouriteDishes": [],
-  "favouriteRestaurants": [],
-  "addressId": [
-    {
-      "$oid": "624c517dc18edb7b60c6632a"
-    }
-  ],
-  "__v": 0,
-  "card": {
-    "number": "4343098149095137",
-    "expirationDate": "2023-09-12",
-    "securityCode": "610"
-  },
-  "name": "Nadia",
-  "phoneNumber": "539848810",
-  "surname": "Chojnowska"
 }]
