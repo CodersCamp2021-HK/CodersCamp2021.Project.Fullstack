@@ -45,6 +45,7 @@ docker cp .\mongo-seed\users.json coderscamp2021projectfullstack-mongodb-1:/tmp/
 ```
 
 <br/>
+
 ```bash
 docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri "mongodb://root:root@localhost:27017/dev?authSource=admin" -c addresses --jsonArray --file /tmp/addresses.json;
 docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c auth --jsonArray --file /tmp/auth.json;
