@@ -1,31 +1,41 @@
-import './App.css';
-
-import { Configuration } from '@fullstack/sdk';
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Home } from './pages';
-import { theme } from './theme';
+import { AppNavBar } from './components';
+import { routes } from './config';
+import { ShoppingCartProvider, ThemeContextProvider } from './contexts';
+import {
+  Home,
+  Main,
+  PartnerLogin,
+  PartnerRegister,
+  ShoppingCart,
+  UnderConstruction,
+  UserLogin,
+  UserRegister,
+} from './pages';
 
-const PROD_API_BASE_PATH = 'https://coderscamp2021-hk-fullstack.herokuapp.com';
-const DEV_API_BASE_PATH = 'http://localhost:4000';
-
-const mode = `import.meta.env.MODE` as string;
-const isProduction = mode === `"production"`;
-
-// TODO: Use the API
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const configuration = new Configuration({
-  basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
-});
-
-const App = () => (
-  <>
-    <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <Home />
-    </ThemeProvider>
-  </>
-);
+const App = () => {
+  return (
+    <ShoppingCartProvider>
+      <ThemeContextProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <AppNavBar />
+          <Routes>
+            <Route path={routes.home} element={<Home />} />
+            <Route path={routes.main} element={<Main />} />
+            <Route path={routes.shoppingCart} element={<ShoppingCart />} />
+            <Route path={routes.userLogin} element={<UserLogin />} />
+            <Route path={routes.partnerLogin} element={<PartnerLogin />} />
+            <Route path={routes.userRegister} element={<UserRegister />} />
+            <Route path={routes.partnerRegister} element={<PartnerRegister />} />
+            <Route path='*' element={<UnderConstruction />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeContextProvider>
+    </ShoppingCartProvider>
+  );
+};
 
 export { App };
