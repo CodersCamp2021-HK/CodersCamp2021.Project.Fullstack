@@ -128,11 +128,11 @@ function orderDto(overrides?: Partial<Order>, dishId = new ObjectId().toString()
   const addressId = new ObjectId().toString();
   return {
     addressId,
+    hourStart: 9,
+    hourEnd: 12,
     subOrders: [
       {
         deliveryDate: new Date(),
-        hourStart: 9,
-        hourEnd: 12,
         dishes: [
           {
             dishId,

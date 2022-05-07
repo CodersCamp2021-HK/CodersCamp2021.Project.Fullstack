@@ -20,12 +20,6 @@ class SubOrderDto {
   @ApiProperty()
   readonly deliveryDate: Date;
 
-  @ApiProperty({ example: 8, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
-  readonly hourStart: number;
-
-  @ApiProperty({ example: 11, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
-  readonly hourEnd: number;
-
   @Type(() => OrderDishDto)
   @ApiProperty({ type: [OrderDishDto] })
   readonly dishes: OrderDishDto[];
@@ -42,6 +36,12 @@ class OrderDto {
   @Type(() => String)
   @ApiObjectIdProperty()
   readonly userId: string;
+
+  @ApiProperty({ example: 8, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
+  readonly hourStart: number;
+
+  @ApiProperty({ example: 11, minimum: ORDER_CONSTANTS.HOUR.MIN, maximum: ORDER_CONSTANTS.HOUR.MAX })
+  readonly hourEnd: number;
 
   @ApiProperty()
   readonly date: Date;
