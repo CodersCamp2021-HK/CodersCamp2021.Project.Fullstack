@@ -50,14 +50,6 @@ class SubOrder {
   readonly deliveryDate: Date;
 
   @Expose()
-  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
-  readonly hourStart: number;
-
-  @Expose()
-  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
-  readonly hourEnd: number;
-
-  @Expose()
   @Type(() => OrderDish)
   @Prop({ type: [OrderDishSchema] })
   readonly dishes: OrderDish[];
@@ -82,6 +74,14 @@ class Order {
   @ExposeId()
   @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
   readonly userId: User;
+
+  @Expose()
+  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
+  readonly hourStart: number;
+
+  @Expose()
+  @Prop({ required: true, min: ORDER_CONSTANTS.HOUR.MIN, max: ORDER_CONSTANTS.HOUR.MAX })
+  readonly hourEnd: number;
 
   @Expose()
   @Prop({ required: true })
