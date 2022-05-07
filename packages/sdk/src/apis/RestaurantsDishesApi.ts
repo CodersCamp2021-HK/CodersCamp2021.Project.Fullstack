@@ -28,6 +28,7 @@ import {
 export interface RestaurantsDishesApiListRequest {
   restaurantId: string;
   city?: string;
+  cuisineType?: Array<string>;
   mealType?: Array<string>;
   tags?: Array<string>;
   page?: number;
@@ -56,6 +57,10 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
 
     if (requestParameters.city !== undefined) {
       queryParameters['city'] = requestParameters.city;
+    }
+
+    if (requestParameters.cuisineType) {
+      queryParameters['cuisineType'] = requestParameters.cuisineType;
     }
 
     if (requestParameters.mealType) {

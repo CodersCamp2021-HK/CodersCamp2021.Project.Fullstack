@@ -471,6 +471,12 @@
             "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
           },
           {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QCuisineTypeEnum" } }
+          },
+          {
             "name": "mealType",
             "required": false,
             "in": "query",
@@ -523,6 +529,12 @@
             "required": false,
             "in": "query",
             "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
+          },
+          {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QCuisineTypeEnum" } }
           },
           {
             "name": "mealType",
@@ -695,6 +707,12 @@
             "required": false,
             "in": "query",
             "schema": { "$ref": "#/components/schemas/QOperationalCityEnum" }
+          },
+          {
+            "name": "cuisineType",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "$ref": "#/components/schemas/QCuisineTypeEnum" } }
           },
           {
             "name": "mealType",
@@ -1748,20 +1766,20 @@
         "type": "object",
         "properties": {
           "deliveryDate": { "format": "date-time", "type": "string" },
-          "hourStart": { "type": "number", "example": 8, "minimum": 0, "maximum": 23 },
-          "hourEnd": { "type": "number", "example": 11, "minimum": 0, "maximum": 23 },
           "dishes": { "type": "array", "items": { "$ref": "#/components/schemas/OrderDishDto" } }
         },
-        "required": ["deliveryDate", "hourStart", "hourEnd", "dishes"]
+        "required": ["deliveryDate", "dishes"]
       },
       "CreateOrderDto": {
         "type": "object",
         "properties": {
           "addressId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "hourStart": { "type": "number", "example": 8, "minimum": 0, "maximum": 23 },
+          "hourEnd": { "type": "number", "example": 11, "minimum": 0, "maximum": 23 },
           "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
           "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
         },
-        "required": ["addressId", "subOrders"]
+        "required": ["addressId", "hourStart", "hourEnd", "subOrders"]
       },
       "OrderDto": {
         "type": "object",
@@ -1769,11 +1787,13 @@
           "id": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "addressId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
           "userId": { "type": "string", "pattern": "^[0-9a-fA-F]{24}$", "example": "6200218668fc82e7bdf15088" },
+          "hourStart": { "type": "number", "example": 8, "minimum": 0, "maximum": 23 },
+          "hourEnd": { "type": "number", "example": 11, "minimum": 0, "maximum": 23 },
           "date": { "format": "date-time", "type": "string" },
           "subOrders": { "type": "array", "items": { "$ref": "#/components/schemas/SubOrderDto" } },
           "comment": { "type": "string", "maxLength": 300, "example": "Additional requests for the restaurant." }
         },
-        "required": ["id", "addressId", "userId", "date", "subOrders"]
+        "required": ["id", "addressId", "userId", "hourStart", "hourEnd", "date", "subOrders"]
       },
       "StreamableFile": { "type": "object", "properties": {} },
       "UploadedImageDto": {

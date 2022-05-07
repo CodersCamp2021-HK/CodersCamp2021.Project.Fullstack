@@ -5,10 +5,12 @@ import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { Handler, Paginated, PaginationQuery } from '../../../shared';
+import { CuisineTypes } from '../../database';
 import { Dish, DishDocument, DishTags, MealType } from '../database';
 
 export interface DishFilters {
   readonly city?: string;
+  readonly cuisineType?: CuisineTypes[];
   readonly mealType?: MealType[];
   readonly tags?: DishTags[];
 }
@@ -64,7 +66,8 @@ class ListDishesHandler implements Handler<ListDishesRequest, Paginated<Dish> | 
           {
             'restaurant._id': filters.restaurantId ? new ObjectId(filters.restaurantId) : null,
             'restaurant.operationalCities': filters.city,
-            mealType: filters.mealType ? { $all: filters.mealType } : null,
+            'restaurant.cuisineType': filters.cuisineType ? { $in: filters.cuisineType } : null,
+            mealType: filters.mealType ? { $in: filters.mealType } : null,
             tags: filters.tags ? { $all: filters.tags } : null,
             updated: false,
           },
