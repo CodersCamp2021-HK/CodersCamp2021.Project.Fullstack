@@ -29,6 +29,18 @@ export interface CreateOrderDto {
   addressId: string;
   /**
    *
+   * @type {number}
+   * @memberof CreateOrderDto
+   */
+  hourStart: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CreateOrderDto
+   */
+  hourEnd: number;
+  /**
+   *
    * @type {Array<SubOrderDto>}
    * @memberof CreateOrderDto
    */
@@ -51,6 +63,8 @@ export function CreateOrderDtoFromJSONTyped(json: any, ignoreDiscriminator: bool
   }
   return {
     addressId: json['addressId'],
+    hourStart: json['hourStart'],
+    hourEnd: json['hourEnd'],
     subOrders: (json['subOrders'] as Array<any>).map(SubOrderDtoFromJSON),
     comment: !exists(json, 'comment') ? undefined : json['comment'],
   };
@@ -65,6 +79,8 @@ export function CreateOrderDtoToJSON(value?: CreateOrderDto | null): any {
   }
   return {
     addressId: value.addressId,
+    hourStart: value.hourStart,
+    hourEnd: value.hourEnd,
     subOrders: (value.subOrders as Array<any>).map(SubOrderDtoToJSON),
     comment: value.comment,
   };

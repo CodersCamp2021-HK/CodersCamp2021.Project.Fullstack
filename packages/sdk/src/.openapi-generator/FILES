@@ -32,6 +32,7 @@ models/FavouriteRestaurantDto.ts
 models/FavouriteRestaurantListDto.ts
 models/IngredientDto.ts
 models/LoginDto.ts
+models/MealTypeEnum.ts
 models/NutritionalValueDto.ts
 models/OperationalCityEnum.ts
 models/OrderDishDto.ts
