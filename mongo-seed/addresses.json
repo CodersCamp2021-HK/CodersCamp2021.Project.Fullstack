@@ -1,0 +1,71 @@
+[{
+  "_id": {
+    "$oid": "62668e2e2261bca70cfee9d4"
+  },
+  "owner": {
+    "$oid": "62668e072261bca70cfee9d0"
+  },
+  "postcode": "50-200",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "1",
+  "streetNumber": "1A",
+  "street": "Wysoka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6266944a2261bca70cfeea41"
+  },
+  "owner": {
+    "$oid": "6266941d2261bca70cfeea3d"
+  },
+  "postcode": "00-333",
+  "city": "Warszawa",
+  "floor": "0",
+  "apartmentNumber": "12",
+  "streetNumber": "55",
+  "street": "Piękna",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "626697662261bca70cfeea90"
+  },
+  "owner": {
+    "$oid": "6266973a2261bca70cfeea8c"
+  },
+  "postcode": "50-000",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "1",
+  "streetNumber": "4",
+  "street": "Długa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "626699462261bca70cfeeae3"
+  },
+  "owner": {
+    "$oid": "626699242261bca70cfeeadf"
+  },
+  "postcode": "50-000",
+  "city": "Wrocław",
+  "floor": "1",
+  "apartmentNumber": "1",
+  "streetNumber": "1A",
+  "street": "Wysoka",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6266997c2261bca70cfeeaee"
+  },
+  "owner": {
+    "$oid": "626699622261bca70cfeeaea"
+  },
+  "postcode": "00-400",
+  "city": "Warszawa",
+  "floor": "1",
+  "apartmentNumber": "1",
+  "streetNumber": "33",
+  "street": "Niska",
+  "__v": 0
+}]

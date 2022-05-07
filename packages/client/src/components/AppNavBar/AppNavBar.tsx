@@ -18,6 +18,7 @@ import {
 import { useContext, useState } from 'react';
 
 import logo from '../../assets/logo.svg';
+import logoDark from '../../assets/logo_dark.svg';
 import { routes } from '../../config';
 import { ThemeContext } from '../../contexts';
 
@@ -98,7 +99,11 @@ const AppNavBar = () => {
           </Menu>
         </Box>
         <Link href={routes.home} sx={{ mx: 'auto' }}>
-          <img src={logo} alt='JeszCoChcesz' style={{ display: 'block', height: '6rem', paddingBlock: '1rem' }} />
+          <img
+            src={theme.palette.mode === 'dark' ? logoDark : logo}
+            alt='JeszCoChcesz'
+            style={{ display: 'block', height: '6rem', paddingBlock: '1rem' }}
+          />
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
