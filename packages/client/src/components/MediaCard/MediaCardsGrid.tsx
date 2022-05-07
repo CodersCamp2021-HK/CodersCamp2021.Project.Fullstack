@@ -1,27 +1,39 @@
-import { DishDto, DishesApi } from '@fullstack/sdk';
-import Grid from '@mui/material/Grid';
+import { DishDto, DishesApi, DishTagsEnum, MealTypeEnum } from '@fullstack/sdk';
+import { CircularProgress, Grid, Typography } from '@mui/material';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
+import { SingleFilterType, useFiltersContext } from '../../contexts/FiltersContext';
 import { MediaCard } from './MediaCard';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
+function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
+  return objProperty.map((item) => (item ? enumName[item] : ''));
+}
+
 const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
+  const { filters } = useFiltersContext();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const dishReponse = await dishesApi.listAllDishes();
-        setDishes(dishReponse.data);
-      } catch (error) {
-        setDishes([]);
-      }
-    }
+    const filtersGrouped: { [x: string]: (string | null)[] } = _.mapValues(
+      _.groupBy(filters, 'name'),
+      (flist: SingleFilterType[]) => flist.map((filter) => filter.value),
+    );
+    const params = {
+      ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
+      ...(filtersGrouped?.tags && { tags: enumMap(filtersGrouped.tags, DishTagsEnum) }),
+    };
 
-    fetchData();
-  }, []);
+    const fetchData = async () => {
+      const dishResponse = await dishesApi.listAllDishes(params);
+      setDishes(dishResponse.data);
+    };
+    // eslint-disable-next-line no-console
+    fetchData().catch(console.error);
+  }, [filters]);
 
   const cardsGrid = dishes.map((dish) => {
     return (
@@ -31,6 +43,27 @@ const MediaCardsGrid = () => {
     );
   });
 
+  if (cardsGrid.length === 0 && filters.length === 0) {
+    return (
+      <Grid
+        container
+        spacing={2}
+        pt={6}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
+        <CircularProgress />
+      </Grid>
+    );
+  }
+  if (cardsGrid.length === 0 && filters.length > 0) {
+    return (
+      <Grid container spacing={2} pt={6}>
+        <Typography variant='h5' pt={5}>
+          wyszukiwanie nie spełnia warunków
+        </Typography>
+      </Grid>
+    );
+  }
   return (
     <Grid container spacing={2} pt={6}>
       {cardsGrid}
