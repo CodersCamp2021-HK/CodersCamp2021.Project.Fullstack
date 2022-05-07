@@ -1,12 +1,18 @@
 import { DishDto, DishesApi } from '@fullstack/sdk';
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { apiConfiguration } from '../../config';
 import { MediaCard } from './MediaCard';
 
 const dishesApi = new DishesApi(apiConfiguration);
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 const MediaCardsGrid = () => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
 
