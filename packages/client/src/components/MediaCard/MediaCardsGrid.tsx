@@ -12,8 +12,10 @@ const dishesApi = new DishesApi(apiConfiguration);
 function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
   return objProperty.map((item) => (item ? enumName[item] : ''));
 }
-
-const MediaCardsGrid = ({ cityQuery }: Record<string, string>) => {
+type CityQueryParam = {
+  cityQuery: string | null;
+};
+const MediaCardsGrid = ({ cityQuery }: CityQueryParam) => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
   const { filters } = useFiltersContext();
 
@@ -26,7 +28,7 @@ const MediaCardsGrid = ({ cityQuery }: Record<string, string>) => {
     const params = {
       ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
       ...(filtersGrouped?.tags && { tags: enumMap(filtersGrouped.tags, DishTagsEnum) }),
-      ...(cityQuery && { city: cityQuery }),
+      ...(cityQuery ? { city: cityQuery } : ''),
     };
 
     const fetchData = async () => {
@@ -45,7 +47,7 @@ const MediaCardsGrid = ({ cityQuery }: Record<string, string>) => {
     );
   });
 
-  if (cardsGrid.length === 0 && filters.length === 0 && cityQuery.length === 0) {
+  if (cardsGrid.length === 0 && filters.length === 0 && cityQuery?.length === 0) {
     return (
       <Grid
         container
@@ -66,7 +68,7 @@ const MediaCardsGrid = ({ cityQuery }: Record<string, string>) => {
       </Grid>
     );
   }
-  if (cityQuery === '') {
+  if (cityQuery === '' || cityQuery === null) {
     return (
       <Grid container spacing={2} pt={6}>
         <Typography variant='h5' pt={5}>
