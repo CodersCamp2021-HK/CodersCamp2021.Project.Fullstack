@@ -1,11 +1,12 @@
 import { Button, Stack, Typography } from '@mui/material';
 
+import { routes } from '../../config';
+
 interface OrderPriceDisplayProps {
   price: number;
-  nextStep: () => void;
 }
 
-const OrderPriceDisplay = ({ price, nextStep }: OrderPriceDisplayProps) => (
+const OrderPriceDisplay = ({ price }: OrderPriceDisplayProps) => (
   <Stack p={4} bgcolor='background.paper' gap={4}>
     <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent='space-between' alignItems='center'>
       <Typography variant='h4' sx={{ typography: { xs: 'h5', xl: 'h4' } }}>
@@ -21,7 +22,7 @@ const OrderPriceDisplay = ({ price, nextStep }: OrderPriceDisplayProps) => (
       size='large'
       disableElevation
       sx={{ borderRadius: 8, px: 8, alignSelf: 'flex-end' }}
-      onClick={nextStep}
+      href={routes.shoppingCartData}
     >
       Dalej
     </Button>
