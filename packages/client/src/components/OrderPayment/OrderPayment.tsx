@@ -12,7 +12,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { max } from 'lodash';
 
 const OrderPayment = () => {
   return (
@@ -37,13 +36,14 @@ const OrderPayment = () => {
               <Typography variant='body1'>600 700 800</Typography>
             </Box>
           </Grid>
-          <Grid item xs={6} xl={6}>
+          <Divider orientation='vertical' flexItem sx={{ borderRightWidth: 4, mt: 4 }} variant='fullWidth' />
+          <Grid item xs={5} xl={5}>
             <Box>
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Uwagi do zamówienia
               </Typography>
               <TextField id='outlined-multiline-static' multiline rows={4} sx={{ mb: 4, width: '70%' }} />
-              <Divider orientation='vertical' flexItem />
+
               <Grid container direction='row' alignItems='center'>
                 <Typography variant='h5' color='primary.main' sx={{ mr: 1 }}>
                   Metoda płatności
@@ -60,7 +60,7 @@ const OrderPayment = () => {
           </Grid>
 
           <Grid container justifyContent='center' alignItems='center'>
-            <Button variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
+            <Button variant='contained' color='secondary' sx={{ m: 8, width: '20%' }}>
               ZAPŁAĆ I ZAMÓW
             </Button>
           </Grid>
