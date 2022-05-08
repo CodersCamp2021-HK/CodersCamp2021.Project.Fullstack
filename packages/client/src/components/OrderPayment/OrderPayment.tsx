@@ -1,18 +1,18 @@
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
   Button,
   Container,
+  Divider,
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
   Typography,
 } from '@mui/material';
+import { max } from 'lodash';
 
 const OrderPayment = () => {
   return (
@@ -20,60 +20,45 @@ const OrderPayment = () => {
       <Box sx={{ bgcolor: '#FAFAFA' }}>
         <Grid item container spacing={5}>
           <Grid item xs={6} xl={6}>
-            <Box marginLeft={5}>
-              <Typography variant='h5' color='primary.main' marginBottom={3}>
-                Godzina dostawy
+            <Box marginLeft={8}>
+              <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
+                Podsumowanie
               </Typography>
-              <FormControl sx={{ width: '60%' }}>
-                <InputLabel id='demo-simple-select-label'>Godzina dostawy</InputLabel>
-                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small' value=''>
-                  <MenuItem value={1}>4:00 - 6:00</MenuItem>
-                  <MenuItem value={2}>6:00 - 8:00</MenuItem>
-                  <MenuItem value={3}>8:00 - 10:00</MenuItem>
-                </Select>
-              </FormControl>
+              <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
+                Dane do wysyłki
+              </Typography>
+              <Typography variant='body1'>Jan Kowalski</Typography>
+              <Typography variant='body1'>Warszawska 15/5</Typography>
+              <Typography variant='body1'>01-100 Wrocław</Typography>
+              <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
+                Dane kontakowe
+              </Typography>
+              <Typography variant='body1'>jankowalski@gmail.com</Typography>
+              <Typography variant='body1'>600 700 800</Typography>
             </Box>
           </Grid>
           <Grid item xs={6} xl={6}>
             <Box>
-              <Typography variant='h5' color='primary.main' marginBottom={3}>
-                Adres dostawy
+              <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
+                Uwagi do zamówienia
               </Typography>
+              <TextField id='outlined-multiline-static' multiline rows={4} sx={{ mb: 4, width: '70%' }} />
+              <Divider orientation='vertical' flexItem />
+              <Grid container direction='row' alignItems='center'>
+                <Typography variant='h5' color='primary.main' sx={{ mr: 1 }}>
+                  Metoda płatności
+                </Typography>
+                <AddCircleIcon color='primary' />
+              </Grid>
               <FormControl>
                 <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-                  <FormControlLabel value='1' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                  <FormControlLabel value='2' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                  <FormControlLabel value='3' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
+                  <FormControlLabel value='1' control={<Radio />} label='Zapłać kartą (***030)' />
+                  <FormControlLabel value='2' control={<Radio />} label='Zapłać kartą (***123)' />
                 </RadioGroup>
               </FormControl>
             </Box>
           </Grid>
-          <Grid item xs={6} xl={6}>
-            <Box marginLeft={5}>
-              <Typography variant='h5' color='primary.main' marginBottom={3}>
-                Informacje podstawowe
-              </Typography>
-              <TextField sx={{ pr: 0.5, mb: 1 }} id='name' size='small' label='Imię' />
-              <TextField sx={{ pr: 0.5, mb: 1 }} id='surname' size='small' label='Nazwisko' />
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='email' size='small' label='Adres email' />
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='phone-number' size='small' label='Numer telefonu' />
-            </Box>
-          </Grid>
-          <Grid item xs={6} xl={6}>
-            <Box>
-              <TextField sx={{ width: '90%', pr: 0.5, mb: 1 }} size='small' id='street' label='Ulica' />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='street-number' label='Numer domu' />
-              <TextField
-                sx={{ width: '30%', pr: 0.5, mb: 1 }}
-                size='small'
-                id='apartment-number'
-                label='Numer mieszkania'
-              />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='floor' label='Piętro' />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='post-code' label='Kod pocztowy' />
-              <TextField sx={{ width: '60%', pr: 0.5, mb: 1 }} size='small' id='city' label='Miasto' />
-            </Box>
-          </Grid>
+
           <Grid container justifyContent='center' alignItems='center'>
             <Button variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
               ZAPŁAĆ I ZAMÓW
