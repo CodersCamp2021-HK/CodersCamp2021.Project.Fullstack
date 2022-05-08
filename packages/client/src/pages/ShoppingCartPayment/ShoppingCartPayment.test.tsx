@@ -8,6 +8,6 @@ describe('<ShoppingCart />', () => {
     render(<ShoppingCartPayment />);
 
     // Then
-    expect(await screen.findByText('Adres dostawy')).toBeInTheDocument();
+    expect(await screen.findByText('Uwagi do zamówienia')).toBeInTheDocument();
   });
 });
