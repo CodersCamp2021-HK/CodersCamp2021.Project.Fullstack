@@ -29,18 +29,6 @@ export interface SubOrderDto {
   deliveryDate: Date;
   /**
    *
-   * @type {number}
-   * @memberof SubOrderDto
-   */
-  hourStart: number;
-  /**
-   *
-   * @type {number}
-   * @memberof SubOrderDto
-   */
-  hourEnd: number;
-  /**
-   *
    * @type {Array<OrderDishDto>}
    * @memberof SubOrderDto
    */
@@ -57,8 +45,6 @@ export function SubOrderDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean
   }
   return {
     deliveryDate: new Date(json['deliveryDate']),
-    hourStart: json['hourStart'],
-    hourEnd: json['hourEnd'],
     dishes: (json['dishes'] as Array<any>).map(OrderDishDtoFromJSON),
   };
 }
@@ -72,8 +58,6 @@ export function SubOrderDtoToJSON(value?: SubOrderDto | null): any {
   }
   return {
     deliveryDate: value.deliveryDate.toISOString(),
-    hourStart: value.hourStart,
-    hourEnd: value.hourEnd,
     dishes: (value.dishes as Array<any>).map(OrderDishDtoToJSON),
   };
 }

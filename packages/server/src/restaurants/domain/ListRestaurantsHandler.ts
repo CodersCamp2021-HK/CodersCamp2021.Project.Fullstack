@@ -22,7 +22,7 @@ class ListRestaurantsHandler implements Handler<ListRestaurantsRequest, Paginate
     const queryFilter = _.omitBy(
       {
         isCompleted: true,
-        cuisineType: req.cuisineType ? { $all: req.cuisineType } : null,
+        cuisineType: req.cuisineType ? { $in: req.cuisineType } : null,
         tags: req.tags ? { $all: req.tags } : null,
         operationalCities: req.city,
       },

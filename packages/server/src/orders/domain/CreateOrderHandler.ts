@@ -13,10 +13,10 @@ import { Order, OrderDocument } from '../database';
 interface CreateOrderRequest {
   addressId: string;
   userId: string;
+  hourStart: number;
+  hourEnd: number;
   subOrders: {
     deliveryDate: Date;
-    hourStart: number;
-    hourEnd: number;
     dishes: {
       dishId: string;
       count?: number;

@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "626699242261bca70cfeeadf"
+  },
+  "orders": [],
+  "favouriteDishes": [],
+  "favouriteRestaurants": [],
+  "addressId": [
+    {
+      "$oid": "626699462261bca70cfeeae3"
+    }
+  ],
+  "__v": 0,
+  "card": {
+    "number": "4562574783836030",
+    "expirationDate": "2022-10-12",
+    "securityCode": "722"
+  },
+  "name": "Jan",
+  "phoneNumber": "800500300",
+  "surname": "Kowalski"
+},{
+  "_id": {
+    "$oid": "626699622261bca70cfeeaea"
+  },
+  "orders": [],
+  "favouriteDishes": [],
+  "favouriteRestaurants": [],
+  "addressId": [
+    {
+      "$oid": "6266997c2261bca70cfeeaee"
+    }
+  ],
+  "__v": 0,
+  "card": {
+    "number": "4562574783836031",
+    "expirationDate": "2022-10-12",
+    "securityCode": "732"
+  },
+  "name": "Maja",
+  "phoneNumber": "823500300",
+  "surname": "Nowak"
+}]
