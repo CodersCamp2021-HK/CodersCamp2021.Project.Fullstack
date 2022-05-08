@@ -26,7 +26,7 @@ const OrderDataCompletion = () => {
               </Typography>
               <FormControl sx={{ width: '60%' }}>
                 <InputLabel id='demo-simple-select-label'>Godzina dostawy</InputLabel>
-                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small'>
+                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small' value=''>
                   <MenuItem value={1}>4:00 - 6:00</MenuItem>
                   <MenuItem value={2}>6:00 - 8:00</MenuItem>
                   <MenuItem value={3}>8:00 - 10:00</MenuItem>
@@ -41,7 +41,7 @@ const OrderDataCompletion = () => {
               </Typography>
               <FormControl>
                 <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-                  <FormControlLabel value='2' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
+                  <FormControlLabel value='1' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
                   <FormControlLabel value='2' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
                   <FormControlLabel value='3' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
                 </RadioGroup>
@@ -53,10 +53,10 @@ const OrderDataCompletion = () => {
               <Typography variant='h5' color='primary.main' marginBottom={3}>
                 Informacje podstawowe
               </Typography>
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} size='small' id='name' label='Imię' />
-              <TextField id='surname' size='small' sx={{ pr: 0.5, mb: 0.5 }} label='Nazwisko' />
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} size='small' id='email' label='Adres email' />
-              <TextField id='phone-number' size='small' label='Numer telefonu' sx={{ pr: 0.5, mb: 0.5 }} />
+              <TextField sx={{ pr: 0.5, mb: 1 }} id='name' size='small' label='Imię' />
+              <TextField sx={{ pr: 0.5, mb: 1 }} id='surname' size='small' label='Nazwisko' />
+              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='email' size='small' label='Adres email' />
+              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='phone-number' size='small' label='Numer telefonu' />
             </Box>
           </Grid>
           <Grid item xs={6} xl={6}>

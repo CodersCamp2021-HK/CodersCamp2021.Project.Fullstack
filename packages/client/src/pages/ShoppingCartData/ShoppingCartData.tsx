@@ -1,6 +1,5 @@
 import { Box, Stack, Step, StepLabel, Stepper } from '@mui/material';
 
-import { OrderSummary } from '../../components';
 import { OrderDataCompletion } from '../../components/OrderDataCompletion';
 
 const STEPS = ['Podsumowanie', 'Uzupełnij dane', 'Zapłać i zamów'] as const;
