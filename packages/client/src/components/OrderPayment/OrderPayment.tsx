@@ -19,7 +19,7 @@ const OrderPayment = () => {
       <Box sx={{ bgcolor: '#FAFAFA' }}>
         <Grid item container spacing={5}>
           <Grid item xs={6} xl={6}>
-            <Box marginLeft={8}>
+            <Box justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
@@ -38,11 +38,11 @@ const OrderPayment = () => {
           </Grid>
           <Divider orientation='vertical' flexItem sx={{ borderRightWidth: 4, mt: 4 }} variant='fullWidth' />
           <Grid item xs={5} xl={5}>
-            <Box>
+            <Box sx={{ ml: 4 }}>
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Uwagi do zamówienia
               </Typography>
-              <TextField id='outlined-multiline-static' multiline rows={4} sx={{ mb: 4, width: '70%' }} />
+              <TextField id='outlined-multiline-static' multiline rows={4} sx={{ mb: 4, width: '80%' }} />
 
               <Grid container direction='row' alignItems='center'>
                 <Typography variant='h5' color='primary.main' sx={{ mr: 1 }}>
