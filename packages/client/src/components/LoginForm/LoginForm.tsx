@@ -1,12 +1,19 @@
+import { AuthApi, LoginDto, Role } from '@fullstack/sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { useState } from 'react';
 
-const LoginForm = () => {
+import { apiConfiguration } from '../../config';
+
+interface Error {
+  status: number;
+}
+
+const LoginForm = ({ userRole }: { userRole: Role }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -14,11 +21,7 @@ const LoginForm = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setEmailError(false);
-    setPasswordError(false);
-
+  const validateForm = (status: number) => {
     if (!email.match(EMAIL_CONST.REGEX)) {
       setEmailError(true);
       setEmailErrorMessage('Wpisz poprawny adres email');
@@ -27,6 +30,29 @@ const LoginForm = () => {
       setPasswordError(true);
       setPasswordErrorMessage('Wpisz hasło.');
     }
+    if (status === 401) {
+      setEmailError(true);
+      setPasswordError(true);
+      setEmailErrorMessage('');
+      setPasswordErrorMessage('Błędne dane logowania.');
+    }
+  };
+
+  const loginUser = async (loginData: LoginDto) => {
+    try {
+      await new AuthApi(apiConfiguration).login({ loginDto: loginData });
+    } catch (e) {
+      const error = e as Error;
+      validateForm(error.status);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setEmailError(false);
+    setPasswordError(false);
+
+    loginUser({ email, role: userRole, password, rememberMe });
   };
 
   return (

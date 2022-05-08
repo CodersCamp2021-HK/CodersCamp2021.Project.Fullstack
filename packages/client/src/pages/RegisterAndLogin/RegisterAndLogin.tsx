@@ -1,3 +1,4 @@
+import { Role } from '@fullstack/sdk';
 import { Box, useTheme } from '@mui/material';
 
 import dish from '../../assets/dish.jpg';
@@ -8,7 +9,7 @@ import { routes } from '../../config';
 const userLogin = () => (
   <>
     <WelcomeMessage message='Witamy ponownie!' />
-    <LoginForm />
+    <LoginForm userRole={Role.User} />
     <Question question='Nie masz konta?' link={routes.userRegister} linkText='Zarejestruj się' />
   </>
 );
@@ -16,7 +17,7 @@ const userLogin = () => (
 const partnerLogin = () => (
   <>
     <WelcomeMessage message='Witamy ponownie!' />
-    <LoginForm />
+    <LoginForm userRole={Role.Partner} />
     <Question question='Chcesz do nas dołączyć?' link={routes.partnerRegister} linkText='Zarejestruj się' />
   </>
 );
@@ -24,7 +25,7 @@ const partnerLogin = () => (
 const userRegister = () => (
   <>
     <WelcomeMessage message='Stwórz konto' />
-    <RegisterForm userRole='User' />
+    <RegisterForm userRole={Role.User} />
     <Question question='Masz już konto?' link={routes.userLogin} linkText='Zaloguj się' />
   </>
 );
@@ -32,7 +33,7 @@ const userRegister = () => (
 const partnerRegister = () => (
   <>
     <WelcomeMessage message='Dołącz do naszych partnerów' />
-    <RegisterForm userRole='Partner' />
+    <RegisterForm userRole={Role.Partner} />
     <Question question='Jesteś już w naszym programie?' link={routes.partnerLogin} linkText='Zaloguj się' />
   </>
 );
