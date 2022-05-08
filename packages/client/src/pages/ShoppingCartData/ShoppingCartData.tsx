@@ -1,6 +1,7 @@
-import { Box, Stack, Step, StepLabel, Stepper } from '@mui/material';
+import { Box, Stack, Step, StepButton, StepLabel, Stepper } from '@mui/material';
 
 import { OrderDataCompletion } from '../../components/OrderDataCompletion';
+import { routes } from '../../config';
 
 const STEPS = ['Podsumowanie', 'Uzupełnij dane', 'Zapłać i zamów'] as const;
 
@@ -12,7 +13,11 @@ const ShoppingCartData = () => {
           {STEPS.map((label) => {
             return (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                {label === 'Podsumowanie' ? (
+                  <StepButton href={routes.shoppingCart}>{label}</StepButton>
+                ) : (
+                  <StepLabel>{label}</StepLabel>
+                )}
               </Step>
             );
           })}
