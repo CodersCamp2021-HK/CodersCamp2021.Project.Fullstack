@@ -14,9 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { routes } from '../../config';
-
-const OrderDataCompletion = () => {
+const OrderPayment = () => {
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -77,13 +75,8 @@ const OrderDataCompletion = () => {
             </Box>
           </Grid>
           <Grid container justifyContent='center' alignItems='center'>
-            <Button
-              variant='contained'
-              color='secondary'
-              sx={{ m: 10, width: '20%' }}
-              href={routes.shoppingCartPayment}
-            >
-              PRZEJDŹ DO PŁATNOŚCI
+            <Button variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
+              ZAPŁAĆ I ZAMÓW
             </Button>
           </Grid>
         </Grid>
@@ -92,4 +85,4 @@ const OrderDataCompletion = () => {
   );
 };
 
-export { OrderDataCompletion };
+export { OrderPayment };
