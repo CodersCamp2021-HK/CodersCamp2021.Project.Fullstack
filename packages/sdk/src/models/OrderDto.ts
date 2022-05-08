@@ -41,6 +41,18 @@ export interface OrderDto {
   userId: string;
   /**
    *
+   * @type {number}
+   * @memberof OrderDto
+   */
+  hourStart: number;
+  /**
+   *
+   * @type {number}
+   * @memberof OrderDto
+   */
+  hourEnd: number;
+  /**
+   *
    * @type {Date}
    * @memberof OrderDto
    */
@@ -71,6 +83,8 @@ export function OrderDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     id: json['id'],
     addressId: json['addressId'],
     userId: json['userId'],
+    hourStart: json['hourStart'],
+    hourEnd: json['hourEnd'],
     date: new Date(json['date']),
     subOrders: (json['subOrders'] as Array<any>).map(SubOrderDtoFromJSON),
     comment: !exists(json, 'comment') ? undefined : json['comment'],
@@ -88,6 +102,8 @@ export function OrderDtoToJSON(value?: OrderDto | null): any {
     id: value.id,
     addressId: value.addressId,
     userId: value.userId,
+    hourStart: value.hourStart,
+    hourEnd: value.hourEnd,
     date: value.date.toISOString(),
     subOrders: (value.subOrders as Array<any>).map(SubOrderDtoToJSON),
     comment: value.comment,

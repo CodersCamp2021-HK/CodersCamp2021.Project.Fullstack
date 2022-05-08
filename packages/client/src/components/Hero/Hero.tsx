@@ -37,7 +37,8 @@ const SearchField = styled(TextField)(({ theme }) => ({
 
 const Hero = () => {
   const [searchValue, setSearchValue] = useState('');
-  console.log(Object.values(OperationalCityEnum).find((val) => val === searchValue) !== undefined);
+  const cityValues = Object.values(OperationalCityEnum);
+
   return (
     <Box
       sx={{
@@ -66,7 +67,7 @@ const Hero = () => {
             disablePortal
             disableClearable
             id='combo-box-demo'
-            options={Object.values(OperationalCityEnum)}
+            options={cityValues}
             sx={{ width: 360 }}
             value={searchValue}
             onChange={(event, newValue) => {
@@ -82,7 +83,7 @@ const Hero = () => {
                     <InputAdornment position='end'>
                       <Button
                         href={
-                          Object.values(OperationalCityEnum).find((val) => val === searchValue) !== undefined
+                          cityValues.find((val) => val === searchValue) !== undefined
                             ? `${routes.main}?city=${encodeURIComponent(String(searchValue))}`
                             : ''
                         }

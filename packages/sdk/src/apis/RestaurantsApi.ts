@@ -14,24 +14,15 @@
 
 import * as runtime from '../runtime';
 import {
-  CuisineTypeEnum,
-  CuisineTypeEnumFromJSON,
-  CuisineTypeEnumToJSON,
   DefaultResponseDto,
   DefaultResponseDtoFromJSON,
   DefaultResponseDtoToJSON,
-  OperationalCityEnum,
-  OperationalCityEnumFromJSON,
-  OperationalCityEnumToJSON,
   RestaurantDto,
   RestaurantDtoFromJSON,
   RestaurantDtoToJSON,
   RestaurantListDto,
   RestaurantListDtoFromJSON,
   RestaurantListDtoToJSON,
-  RestaurantTagEnum,
-  RestaurantTagEnumFromJSON,
-  RestaurantTagEnumToJSON,
   ValidationErrorDto,
   ValidationErrorDtoFromJSON,
   ValidationErrorDtoToJSON,
@@ -42,9 +33,9 @@ export interface RestaurantsApiFindByIdRequest {
 }
 
 export interface RestaurantsApiListRequest {
-  city?: OperationalCityEnum;
-  cuisineType?: Array<CuisineTypeEnum>;
-  tags?: Array<RestaurantTagEnum>;
+  city?: string;
+  cuisineType?: Array<string>;
+  tags?: Array<string>;
   page?: number;
   limit?: number;
 }
