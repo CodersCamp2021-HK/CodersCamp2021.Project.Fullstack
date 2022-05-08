@@ -5,7 +5,7 @@ import Remove from '@mui/icons-material/Remove';
 import { Box, Chip, IconButton, Stack, TableCell, TableRow, Typography } from '@mui/material';
 
 import defaultPhoto from '../../assets/placeholder.png';
-import { SubOrderDish } from '../../contexts';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
 
 const NUMBER_TYPOGRAPHY = {
   variant: 'h5',
@@ -16,11 +16,17 @@ const NUMBER_TYPOGRAPHY = {
 } as const;
 
 interface OrderDishProps {
+  date: Date;
   orderDish: SubOrderDish;
 }
 
-const OrderDish = ({ orderDish }: OrderDishProps) => {
+const OrderDish = ({ date, orderDish }: OrderDishProps) => {
   const { dish, excludedIngredients = [], count = 1 } = orderDish;
+
+  const { modifyDishCount } = useShoppingCart();
+  const decreaseDishCount = () => modifyDishCount(date, orderDish, (c) => c - 1);
+  const increaseDishCount = () => modifyDishCount(date, orderDish, (c) => c + 1);
+
   return (
     <TableRow sx={{ height: '1px' }}>
       <TableCell sx={{ py: 5 }}>
@@ -56,19 +62,19 @@ const OrderDish = ({ orderDish }: OrderDishProps) => {
       </TableCell>
       <TableCell align='center'>
         <Stack direction='row' justifyContent='center' alignItems='center'>
-          <IconButton>
+          <IconButton onClick={decreaseDishCount} disabled={count <= 1}>
             <Remove />
           </IconButton>
-          <Typography {...NUMBER_TYPOGRAPHY} px={1}>
+          <Typography {...NUMBER_TYPOGRAPHY} px={1} minWidth='3ch'>
             {count}
           </Typography>
-          <IconButton>
+          <IconButton onClick={increaseDishCount}>
             <Add />
           </IconButton>
         </Stack>
       </TableCell>
       <TableCell align='center'>
-        <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark'>
+        <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark' minWidth='9ch'>
           {((dish.price * count) / 100).toFixed(2)} zł
         </Typography>
       </TableCell>

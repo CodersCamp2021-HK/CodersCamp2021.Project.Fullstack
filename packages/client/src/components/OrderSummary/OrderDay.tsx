@@ -47,7 +47,7 @@ const OrderDay = ({ suborder }: OrderDayProps) => {
       <TableBody>
         <OrderColumnNames />
         {suborder.dishes.map((orderDish) => (
-          <OrderDish key={orderDishKey(orderDish)} orderDish={orderDish} />
+          <OrderDish key={orderDishKey(orderDish)} orderDish={orderDish} date={suborder.deliveryDate} />
         ))}
       </TableBody>
       <OrderDayFooter dishes={suborder.dishes} />

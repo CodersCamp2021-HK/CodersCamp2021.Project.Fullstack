@@ -14,11 +14,13 @@ const ShoppingCartContext = createContext<{
   addToCart: (suborderDish: SubOrderDish) => void;
   selectedDate: Date | null;
   setSelectedDate: (date: Date | null) => void;
+  modifyDishCount: (date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => void;
 }>({
   cart: [],
   addToCart: () => {},
   selectedDate: null,
   setSelectedDate: () => {},
+  modifyDishCount: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
@@ -54,9 +56,28 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     [selectedDate],
   );
 
+  const modifyDishCount = useCallback((date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => {
+    setCart(
+      produce((draft) => {
+        const targetDish = draft
+          .find(({ deliveryDate }) => deliveryDate === date)
+          ?.dishes?.find(
+            ({ dish, excludedIngredients }) =>
+              dish.id === suborderDish.dish.id && isEqual(excludedIngredients, suborderDish.excludedIngredients),
+          );
+
+        if (!targetDish) {
+          return;
+        }
+
+        targetDish.count = modifier(targetDish.count ?? 1);
+      }),
+    );
+  }, []);
+
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate }),
-    [cart, addToCart, selectedDate, setSelectedDate],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
