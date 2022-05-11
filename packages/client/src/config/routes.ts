@@ -9,6 +9,7 @@ const routes = {
   userRegister: '/user/register',
   shoppingCart: '/shopping-cart/order-summary',
   shoppingCartData: '/shopping-cart/data-completion',
+  shoppingCartPayment: '/shopping-cart/payment',
   order: '/order',
   main: '/main',
 } as const;
