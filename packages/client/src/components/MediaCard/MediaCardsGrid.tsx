@@ -12,8 +12,10 @@ const dishesApi = new DishesApi(apiConfiguration);
 function enumMap(objProperty: (string | null)[], enumName: Record<string, string>) {
   return objProperty.map((item) => (item ? enumName[item] : ''));
 }
-
-const MediaCardsGrid = () => {
+type CityQueryParam = {
+  cityQuery: string | null;
+};
+const MediaCardsGrid = ({ cityQuery }: CityQueryParam) => {
   const [dishes, setDishes] = useState<DishDto[]>([]);
   const { filters } = useFiltersContext();
 
@@ -22,9 +24,11 @@ const MediaCardsGrid = () => {
       _.groupBy(filters, 'name'),
       (flist: SingleFilterType[]) => flist.map((filter) => filter.value),
     );
+
     const params = {
       ...(filtersGrouped?.mealType && { mealType: enumMap(filtersGrouped.mealType, MealTypeEnum) }),
       ...(filtersGrouped?.tags && { tags: enumMap(filtersGrouped.tags, DishTagsEnum) }),
+      ...(cityQuery ? { city: cityQuery } : ''),
     };
 
     const fetchData = async () => {
@@ -33,7 +37,7 @@ const MediaCardsGrid = () => {
     };
     // eslint-disable-next-line no-console
     fetchData().catch(console.error);
-  }, [filters]);
+  }, [filters, cityQuery]);
 
   const cardsGrid = dishes.map((dish) => {
     return (
@@ -43,7 +47,7 @@ const MediaCardsGrid = () => {
     );
   });
 
-  if (cardsGrid.length === 0 && filters.length === 0) {
+  if (cardsGrid.length === 0 && filters.length === 0 && cityQuery?.length === 0) {
     return (
       <Grid
         container
@@ -55,11 +59,20 @@ const MediaCardsGrid = () => {
       </Grid>
     );
   }
-  if (cardsGrid.length === 0 && filters.length > 0) {
+  if (cardsGrid.length === 0 && (filters.length > 0 || cityQuery)) {
     return (
       <Grid container spacing={2} pt={6}>
         <Typography variant='h5' pt={5}>
-          wyszukiwanie nie spełnia warunków
+          Wyszukiwanie nie spełnia warunków
+        </Typography>
+      </Grid>
+    );
+  }
+  if (cityQuery === '' || cityQuery === null) {
+    return (
+      <Grid container spacing={2} pt={6}>
+        <Typography variant='h5' pt={5}>
+          Przepraszamy, nie ma opcji zamawiania z wielu miast
         </Typography>
       </Grid>
     );
