@@ -53,10 +53,6 @@ const RegisterForm = ({ userRole }: { userRole: Role }) => {
         'Wpisz poprawne hasło. Hasło musi zawierać minimum osiem znaków, w tym minimum jedną literę i jedną cyfrę.',
       );
     }
-    if (repeatPassword === '' || repeatPassword !== password) {
-      setRepeatPasswordError(true);
-      setRepeatPasswordErrorMessage('Podane hasła nie pasują do siebie.');
-    }
     if (status === 409) {
       setEmailError(true);
       setEmailErrorMessage('Użytkownik o podanym adresie istnieje.');
@@ -64,11 +60,16 @@ const RegisterForm = ({ userRole }: { userRole: Role }) => {
   };
 
   const registerUser = async (registerData: RegisterAsUserDto) => {
-    try {
-      await new AuthApi(apiConfiguration).registerAsUser({ registerAsUserDto: registerData });
-    } catch (e) {
-      const error = e as Error;
-      validateForm(error.status);
+    if (repeatPassword === password) {
+      try {
+        await new AuthApi(apiConfiguration).registerAsUser({ registerAsUserDto: registerData });
+      } catch (e) {
+        const error = e as Error;
+        validateForm(error.status);
+      }
+    } else {
+      setRepeatPasswordError(true);
+      setRepeatPasswordErrorMessage('Podane hasła nie pasują do siebie.');
     }
   };
 
