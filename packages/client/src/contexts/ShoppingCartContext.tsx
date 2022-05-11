@@ -16,21 +16,16 @@ const areDishesEqual = (suborderDish1: SubOrderDish, suborderDish2: SubOrderDish
   suborderDish1.dish.id === suborderDish2.dish.id &&
   isEqual(suborderDish1.excludedIngredients, suborderDish2.excludedIngredients);
 
-const ShoppingCartContext = createContext<{
-  cart: SubOrder[];
-  addToCart: (suborderDish: SubOrderDish) => void;
-  selectedDate: Date | null;
-  setSelectedDate: (date: Date | null) => void;
-  modifyDishCount: (date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => void;
-  removeDish: (date: Date, suborderDish: SubOrderDish) => void;
-}>({
-  cart: [],
-  addToCart: () => {},
-  selectedDate: null,
-  setSelectedDate: () => {},
-  modifyDishCount: () => {},
-  removeDish: () => {},
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const ShoppingCartContext = createContext({
+  cart: [] as SubOrder[],
+  addToCart: (suborderDish: SubOrderDish) => {},
+  selectedDate: null as Date | null,
+  setSelectedDate: (date: Date | null) => {},
+  modifyDishCount: (date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => {},
+  removeFromCart: (date: Date, suborderDish: SubOrderDish) => {},
 });
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
@@ -75,7 +70,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     );
   }, []);
 
-  const removeDish = useCallback((date: Date, suborderDish: SubOrderDish) => {
+  const removeFromCart = useCallback((date: Date, suborderDish: SubOrderDish) => {
     setCart(
       produce((draft) => {
         const dayDishes = draft.find(({ deliveryDate }) => deliveryDate === date)?.dishes;
@@ -97,8 +92,8 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeDish }),
-    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeDish],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;

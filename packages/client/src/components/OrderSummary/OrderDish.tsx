@@ -25,7 +25,7 @@ interface OrderDishProps {
 const OrderDish = ({ date, orderDish }: OrderDishProps) => {
   const { dish, excludedIngredients = [], count = 1 } = orderDish;
 
-  const { modifyDishCount, removeDish } = useShoppingCart();
+  const { modifyDishCount, removeFromCart } = useShoppingCart();
   const decreaseDishCount = () => modifyDishCount(date, orderDish, (c) => c - 1);
   const increaseDishCount = () => modifyDishCount(date, orderDish, (c) => c + 1);
 
@@ -93,7 +93,7 @@ const OrderDish = ({ date, orderDish }: OrderDishProps) => {
         </TableCell>
         <TableCell>
           <Stack alignItems='center'>
-            <IconButton onClick={() => removeDish(date, orderDish)}>
+            <IconButton onClick={() => removeFromCart(date, orderDish)}>
               <DeleteOutline />
             </IconButton>
             <IconButton onClick={() => setEditPopupOpen(true)}>

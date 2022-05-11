@@ -13,7 +13,7 @@ interface DishProps {
 
 const SideCartItem = ({ suborderDish }: DishProps) => {
   const { name, photo, fats, proteins, carbohydrates, calories, price } = suborderDish.dish;
-  const { removeDish, selectedDate } = useShoppingCart();
+  const { removeFromCart, selectedDate } = useShoppingCart();
 
   const [editPopupOpen, setEditPopupOpen] = useState(false);
   const currentState = {
@@ -61,7 +61,7 @@ const SideCartItem = ({ suborderDish }: DishProps) => {
             {((price / 100) * (suborderDish.count || 1)).toFixed(2)}
           </Typography>
           <Box color='#fff' display='flex' flexDirection='column'>
-            <IconButton onClick={() => removeDish(selectedDate as Date, suborderDish)}>
+            <IconButton onClick={() => removeFromCart(selectedDate as Date, suborderDish)}>
               <DeleteOutline color='secondary' />
             </IconButton>
             <IconButton onClick={() => setEditPopupOpen(true)}>
