@@ -1,4 +1,4 @@
-import { Role } from '@fullstack/sdk';
+import { AuthApi, Role } from '@fullstack/sdk';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,7 +22,7 @@ import { useContext, useState } from 'react';
 
 import logo from '../../assets/logo.svg';
 import logoDark from '../../assets/logo_dark.svg';
-import { routes } from '../../config';
+import { apiConfiguration, routes } from '../../config';
 import { AuthContext, ThemeContext } from '../../contexts';
 
 const LEFT_PAGES = [
@@ -98,12 +98,20 @@ const menuItems = (
 };
 
 const AppNavBar = () => {
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
 
   const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null);
   const [profileMenuAnchorElem, setProfileMenuAnchorElem] = useState<null | HTMLElement>(null);
+
+  const handleLogout = async () => {
+    try {
+      await new AuthApi(apiConfiguration).logout();
+      setAuth({ isLoggedIn: false, userRole: undefined });
+      setMenuAnchorElem(null);
+    } catch {}
+  };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMenuAnchorElem(event.currentTarget);
@@ -175,7 +183,9 @@ const AppNavBar = () => {
               {[
                 auth.userRole === Role.User ? menuItems(USER_PAGES) : menuItems(PARTNER_PAGES),
                 <Divider key='divider' />,
-                <MenuItem key='logout'>Wyloguj się</MenuItem>,
+                <MenuItem key='logout' onClick={handleLogout}>
+                  Wyloguj się
+                </MenuItem>,
               ]}
             </Menu>
           </Box>
