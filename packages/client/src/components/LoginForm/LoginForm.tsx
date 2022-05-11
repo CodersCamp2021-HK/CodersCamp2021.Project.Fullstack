@@ -2,15 +2,17 @@ import { AuthApi, LoginDto, Role } from '@fullstack/sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
+import { AuthContext } from '../../contexts';
 
 interface Error {
   status: number;
 }
 
 const LoginForm = ({ userRole }: { userRole: Role }) => {
+  const { setAuth } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -41,6 +43,7 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
   const loginUser = async (loginData: LoginDto) => {
     try {
       await new AuthApi(apiConfiguration).login({ loginDto: loginData });
+      setAuth({ isLoggedIn: true, userRole });
     } catch (e) {
       const error = e as Error;
       validateForm(error.status);
