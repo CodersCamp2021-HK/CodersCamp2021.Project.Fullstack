@@ -110,6 +110,7 @@ const AppNavBar = () => {
       await new AuthApi(apiConfiguration).logout();
       setAuth({ isLoggedIn: false, userRole: undefined });
       setMenuAnchorElem(null);
+      // eslint-disable-next-line no-empty
     } catch {}
   };
 
