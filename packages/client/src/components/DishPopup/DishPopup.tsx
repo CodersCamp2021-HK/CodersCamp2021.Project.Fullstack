@@ -1,9 +1,9 @@
 import { DishDto } from '@fullstack/sdk';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -17,9 +17,14 @@ import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
 import { useIngredientState } from './useIngredientState';
 
-interface DishPopupHandlers {
+interface DishPopupProps {
   dish: DishDto;
   open: boolean;
+  previousState?: {
+    date: Date;
+    count: number;
+    excludedIngredients: string[];
+  };
   onClose: () => void;
 }
 
@@ -35,16 +40,23 @@ const style = {
   p: 4,
 };
 
-const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
-  const [count, setCount] = useState(1);
-  const [ingredientState, toggleIngredient] = useIngredientState(dish);
-  const { addToCart } = useShoppingCart();
+const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
+  const [count, setCount] = useState(previousState?.count ?? 1);
+  const [ingredientState, toggleIngredient] = useIngredientState(dish, previousState?.excludedIngredients);
+  const { addToCart, removeDish } = useShoppingCart();
 
   const excludedIngredients = ingredientState
     .filter(({ isIncluded }) => !isIncluded)
     .map(({ ingredient }) => ingredient.name);
 
   const handleOrderClick = () => {
+    if (previousState) {
+      removeDish(previousState.date, {
+        dish,
+        excludedIngredients: previousState.excludedIngredients,
+        count: previousState.count,
+      });
+    }
     addToCart({ dish, count, excludedIngredients });
     onClose();
   };
@@ -113,7 +125,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                 startIcon={<AddIcon />}
                 onClick={handleOrderClick}
               >
-                Dodaj do koszyka
+                {previousState ? 'Zapisz' : 'Dodaj do koszyka'}
               </Button>
             </Grid>
           </Grid>
@@ -121,6 +133,10 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
       </Modal>
     </div>
   );
+};
+
+DishPopup.defaultProps = {
+  previousState: undefined,
 };
 
 export { DishPopup };
