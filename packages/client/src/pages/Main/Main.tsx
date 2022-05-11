@@ -59,7 +59,7 @@ const Main = () => {
             <BasicSelect label='Sortuj' selectObj={sortObj} />
             <Filters />
           </Stack>
-          <MediaCardsGrid cityQuery={query.get('city') ? query.get('city') : ''} />
+          <MediaCardsGrid cityQuery={query.get('city') ?? ''} />
           <CartSummary />
         </Stack>
       </FiltersContext>
