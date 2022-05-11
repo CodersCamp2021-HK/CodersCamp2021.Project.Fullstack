@@ -9,18 +9,27 @@ interface SubOrder {
   dishes: SubOrderDish[];
 }
 
+const orderDishKey = (orderDish: SubOrderDish) =>
+  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
+
+const areDishesEqual = (suborderDish1: SubOrderDish, suborderDish2: SubOrderDish) =>
+  suborderDish1.dish.id === suborderDish2.dish.id &&
+  isEqual(suborderDish1.excludedIngredients, suborderDish2.excludedIngredients);
+
 const ShoppingCartContext = createContext<{
   cart: SubOrder[];
   addToCart: (suborderDish: SubOrderDish) => void;
   selectedDate: Date | null;
   setSelectedDate: (date: Date | null) => void;
   modifyDishCount: (date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => void;
+  removeDish: (date: Date, suborderDish: SubOrderDish) => void;
 }>({
   cart: [],
   addToCart: () => {},
   selectedDate: null,
   setSelectedDate: () => {},
   modifyDishCount: () => {},
+  removeDish: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
@@ -40,11 +49,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
             return;
           }
 
-          const duplicateDish = suborder.dishes.find(
-            ({ dish, excludedIngredients }) =>
-              dish.id === suborderDish.dish.id && isEqual(excludedIngredients, suborderDish.excludedIngredients),
-          );
-
+          const duplicateDish = suborder.dishes.find((foundDish) => areDishesEqual(foundDish, suborderDish));
           if (duplicateDish) {
             duplicateDish.count = (duplicateDish.count ?? 1) + (suborderDish.count ?? 1);
             return;
@@ -61,23 +66,39 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
       produce((draft) => {
         const targetDish = draft
           .find(({ deliveryDate }) => deliveryDate === date)
-          ?.dishes?.find(
-            ({ dish, excludedIngredients }) =>
-              dish.id === suborderDish.dish.id && isEqual(excludedIngredients, suborderDish.excludedIngredients),
-          );
+          ?.dishes?.find((foundDish) => areDishesEqual(foundDish, suborderDish));
 
-        if (!targetDish) {
-          return;
-        }
+        if (!targetDish) return;
 
         targetDish.count = modifier(targetDish.count ?? 1);
       }),
     );
   }, []);
 
+  const removeDish = useCallback((date: Date, suborderDish: SubOrderDish) => {
+    setCart(
+      produce((draft) => {
+        const dayDishes = draft.find(({ deliveryDate }) => deliveryDate === date)?.dishes;
+        if (!dayDishes) return;
+
+        const targetIndex = dayDishes.findIndex((foundDish) => areDishesEqual(foundDish, suborderDish));
+        if (targetIndex === -1) return;
+
+        dayDishes.splice(targetIndex, 1);
+
+        if (dayDishes.length === 0) {
+          draft.splice(
+            draft.findIndex(({ deliveryDate }) => deliveryDate === date),
+            1,
+          );
+        }
+      }),
+    );
+  }, []);
+
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount }),
-    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeDish }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeDish],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
@@ -85,5 +106,5 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
 
 const useShoppingCart = () => useContext(ShoppingCartContext);
 
-export { ShoppingCartProvider, useShoppingCart };
+export { orderDishKey, ShoppingCartProvider, useShoppingCart };
 export type { SubOrder, SubOrderDish };

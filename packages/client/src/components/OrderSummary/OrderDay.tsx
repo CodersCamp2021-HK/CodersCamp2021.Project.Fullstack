@@ -1,6 +1,6 @@
 import { styled, Table, TableBody, TableCell, TableRow } from '@mui/material';
 
-import { SubOrder, SubOrderDish } from '../../contexts';
+import { orderDishKey, SubOrder } from '../../contexts';
 import { OrderDateHeader } from './OrderDateHeader';
 import { OrderDayFooter } from './OrderDayFooter';
 import { OrderDish } from './OrderDish';
@@ -32,9 +32,6 @@ const OrderColumnNames = () => (
     <TableCell />
   </TableRow>
 );
-
-const orderDishKey = (orderDish: SubOrderDish) =>
-  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
 
 interface OrderDayProps {
   suborder: SubOrder;

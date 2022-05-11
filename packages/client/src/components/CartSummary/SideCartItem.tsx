@@ -1,18 +1,19 @@
-import { DishDto } from '@fullstack/sdk/src';
 import Create from '@mui/icons-material/Create';
 import DeleteOutline from '@mui/icons-material/DeleteOutline';
 import { Box, IconButton, Typography } from '@mui/material';
 
 import placeholderPhoto from '../../assets/placeholder.png';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
 
 interface DishProps {
-  dish: Omit<DishDto, 'id' | 'restaurant' | 'description' | 'portionWeight'>;
-  count: number | undefined;
-  price: number;
+  suborderDish: SubOrderDish;
 }
 
-const SideCartItem = ({ dish, count, price }: DishProps) => {
-  const { name, photo, fats, proteins, carbohydrates, calories } = dish;
+const SideCartItem = ({ suborderDish }: DishProps) => {
+  const { name, photo, fats, proteins, carbohydrates, calories, price } = suborderDish.dish;
+
+  const { removeDish, selectedDate } = useShoppingCart();
+
   return (
     <Box mb={2} display='flex' alignItems='center'>
       <Box
@@ -24,7 +25,7 @@ const SideCartItem = ({ dish, count, price }: DishProps) => {
       />
       <Box>
         <Typography variant='body2'>
-          {name} ({count || 1} szt.)
+          {name} ({suborderDish.count || 1} szt.)
         </Typography>
         <Typography variant='body2' color='secondary.main'>
           Kalorie: {calories.perPortion}
@@ -41,10 +42,10 @@ const SideCartItem = ({ dish, count, price }: DishProps) => {
       </Box>
       <Box color='#fff' display='flex' justifyContent='center' alignItems='center' marginLeft='auto'>
         <Typography variant='body2' mr={1}>
-          {((price / 100) * (count || 1)).toFixed(2)}
+          {((price / 100) * (suborderDish.count || 1)).toFixed(2)}
         </Typography>
         <Box color='#fff' display='flex' flexDirection='column'>
-          <IconButton>
+          <IconButton onClick={() => removeDish(selectedDate as Date, suborderDish)}>
             <DeleteOutline color='secondary' />
           </IconButton>
           <IconButton>
