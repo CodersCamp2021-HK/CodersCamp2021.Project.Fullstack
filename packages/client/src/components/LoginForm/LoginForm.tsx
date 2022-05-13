@@ -12,9 +12,15 @@ interface Error {
   status: number;
 }
 
+type LocationProps = {
+  state: {
+    from: Location;
+  };
+};
+
 const LoginForm = ({ userRole }: { userRole: Role }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation() as unknown as LocationProps;
   const { setAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
