@@ -34,7 +34,7 @@ const OrderColumnNames = () => (
 );
 
 const orderDishKey = (orderDish: SubOrderDish) =>
-  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
+  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients)}"`;
 
 interface OrderDayProps {
   suborder: SubOrder;
