@@ -8,14 +8,16 @@ import {
 } from '@fullstack/server/src/auth/shared/Constants';
 import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { apiConfiguration } from '../../config';
+import { apiConfiguration, routes } from '../../config';
 
 interface Error {
   status: number;
 }
 
 const RegisterForm = ({ userRole }: { userRole: Role }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [NIP, setNIP] = useState('');
@@ -63,6 +65,7 @@ const RegisterForm = ({ userRole }: { userRole: Role }) => {
     if (repeatPassword === password) {
       try {
         await new AuthApi(apiConfiguration).registerAsUser({ registerAsUserDto: registerData });
+        navigate(routes.registrationSuccess);
       } catch (e) {
         const error = e as Error;
         validateForm(error.status);

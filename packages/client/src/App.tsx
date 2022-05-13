@@ -8,6 +8,7 @@ import {
   Home,
   Main,
   RegisterAndLogin,
+  RegistrationSuccess,
   ShoppingCart,
   ShoppingCartData,
   ShoppingCartPayment,
@@ -32,6 +33,7 @@ const App = () => {
               <Route path={routes.partnerLogin} element={<RegisterAndLogin formType='PartnerLogin' />} />
               <Route path={routes.userRegister} element={<RegisterAndLogin formType='UserRegister' />} />
               <Route path={routes.partnerRegister} element={<RegisterAndLogin formType='PartnerRegister' />} />
+              <Route path={routes.registrationSuccess} element={<RegistrationSuccess />} />
               <Route path='*' element={<UnderConstruction />} />
             </Routes>
           </BrowserRouter>

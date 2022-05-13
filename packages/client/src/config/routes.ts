@@ -12,6 +12,7 @@ const routes = {
   shoppingCartPayment: '/shopping-cart/payment',
   order: '/order',
   main: '/main',
+  registrationSuccess: '/registration-success',
 } as const;
 
 export { routes };
