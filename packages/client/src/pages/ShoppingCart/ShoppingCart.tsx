@@ -18,8 +18,7 @@ const ShoppingCart = () => {
           })}
         </Stepper>
       </Box>
-      {/* TODO: Navigation to next step */}
-      <OrderSummary nextStep={() => {}} />
+      <OrderSummary />
     </Stack>
   );
 };

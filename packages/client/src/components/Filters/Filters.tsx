@@ -10,20 +10,22 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import _ from 'lodash';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { SingleFilterType, useFiltersContext } from '../../contexts/FiltersContext';
 
 type CheckboxProps = {
   listLabel: string;
   filtersName: string;
   filters: Record<string, string>;
-  selectedCheckboxes: { name: string | null; value: string | null }[];
+  selectedCheckboxes: SingleFilterType[];
 };
 
 type CheckboxInputProps = {
   value: string;
   filters: Record<string, string>;
   filtersName: string;
-  selectedCheckboxes: { name: string | null; value: string | null }[];
+  selectedCheckboxes: SingleFilterType[];
 };
 
 type SelectProps = {
@@ -97,31 +99,35 @@ const CheckboxList = ({ listLabel, filters, filtersName, selectedCheckboxes }: C
   );
 };
 
+function isInputCheckbox(value: any): value is HTMLInputElement {
+  return value?.type === 'checkbox';
+}
+
 const Filters = () => {
-  const [checked, setChecked] = useState<{ name: string | null; value: string | null }[]>([]);
+  const [checked, setChecked] = useState<SingleFilterType[]>([]);
+  const { overrideFilters } = useFiltersContext();
 
-  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
-    let updatedList = [...checked];
-
-    if (e.target?.getAttribute('type') === 'checkbox') {
-      if (e.target?.checked) {
-        updatedList = [...checked, { name: e.target.getAttribute('name'), value: e.target?.value }];
-      } else {
-        updatedList = updatedList.filter(
-          (item) => !_.isEqual(item, { name: e.target?.getAttribute('name'), value: e.target?.value }),
-        );
-      }
+  const handleChecked: React.FormEventHandler<HTMLDivElement> = ({ target }) => {
+    if (isInputCheckbox(target)) {
+      const targetEntry = { name: target.getAttribute('name'), value: target.value };
+      setChecked((prev) => {
+        if (target.checked) {
+          return [...prev, targetEntry];
+        }
+        return prev.filter((item) => !_.isEqual(item, targetEntry));
+      });
     }
-    setChecked(updatedList);
   };
 
   const clearCheckboxes = () => {
     setChecked([]);
   };
 
+  useEffect(() => overrideFilters(checked), [checked, overrideFilters]);
+
   return (
     <>
-      <Stack onClick={() => handleChecked}>
+      <Stack onChange={(e) => handleChecked(e)} spacing={2}>
         <CheckboxList
           selectedCheckboxes={checked}
           filtersName='mealType'
@@ -131,7 +137,13 @@ const Filters = () => {
         <CheckboxList selectedCheckboxes={checked} filtersName='tags' listLabel='Tagi' filters={DishTagsEnum} />
       </Stack>
       <Box>
-        <Button onClick={clearCheckboxes} fullWidth={false} variant='contained' size='small' startIcon={<ClearIcon />}>
+        <Button
+          onClick={() => clearCheckboxes()}
+          fullWidth={false}
+          variant='contained'
+          size='small'
+          startIcon={<ClearIcon />}
+        >
           wyczyść
         </Button>
       </Box>
