@@ -7,7 +7,7 @@ import placeholderPhoto from '../../assets/placeholder.png';
 
 interface DishProps {
   dish: Omit<DishDto, 'id' | 'restaurant' | 'description' | 'portionWeight'>;
-  count: number | undefined;
+  count: number;
   price: number;
 }
 
@@ -41,7 +41,7 @@ const SideCartItem = ({ dish, count, price }: DishProps) => {
       </Box>
       <Box color='#fff' display='flex' justifyContent='center' alignItems='center' marginLeft='auto'>
         <Typography variant='body2' mr={1}>
-          {((price / 100) * (count || 1)).toFixed(2)}
+          {((price / 100) * count).toFixed(2)}
         </Typography>
         <Box color='#fff' display='flex' flexDirection='column'>
           <IconButton>
