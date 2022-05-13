@@ -3,6 +3,7 @@ import { AuthApi, LoginDto, Role } from '@fullstack/sdk';
 import { EMAIL as EMAIL_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { apiConfiguration } from '../../config';
 import { AuthContext } from '../../contexts';
@@ -12,7 +13,10 @@ interface Error {
 }
 
 const LoginForm = ({ userRole }: { userRole: Role }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { setAuth } = useContext(AuthContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -23,6 +27,8 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
+  const from = location.state?.from?.pathname || '/';
+
   const validateForm = (status: number) => {
     if (!email.match(EMAIL_CONST.REGEX)) {
       setEmailError(true);
@@ -32,7 +38,7 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
       setPasswordError(true);
       setPasswordErrorMessage('Wpisz hasło.');
     }
-    if (status === 401) {
+    if (status === 400) {
       setEmailError(true);
       setPasswordError(true);
       setEmailErrorMessage('');
@@ -44,6 +50,7 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
     try {
       await new AuthApi(apiConfiguration).login({ loginDto: loginData });
       setAuth({ isLoggedIn: true, userRole });
+      navigate(from, { replace: true });
     } catch (e) {
       const error = e as Error;
       validateForm(error.status);

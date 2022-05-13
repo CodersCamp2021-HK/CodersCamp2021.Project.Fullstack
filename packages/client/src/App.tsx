@@ -1,9 +1,10 @@
 import { CssBaseline } from '@mui/material';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppNavBar } from './components';
 import { routes } from './config';
-import { AuthProvider, ShoppingCartProvider, ThemeContextProvider } from './contexts';
+import { AuthContext, AuthProvider, ShoppingCartProvider, ThemeContextProvider } from './contexts';
 import {
   Home,
   Main,
@@ -14,6 +15,17 @@ import {
   ShoppingCartPayment,
   UnderConstruction,
 } from './pages';
+
+const RequireAuth = ({ children }: { children: JSX.Element }) => {
+  const { auth } = useContext(AuthContext);
+  const location = useLocation();
+
+  if (!auth.isLoggedIn) {
+    return <Navigate to='/user/login' state={{ from: location }} replace />;
+  }
+
+  return children;
+};
 
 const App = () => {
   return (
@@ -27,8 +39,22 @@ const App = () => {
               <Route path={routes.home} element={<Home />} />
               <Route path={routes.main} element={<Main />} />
               <Route path={routes.shoppingCart} element={<ShoppingCart />} />
-              <Route path={routes.shoppingCartData} element={<ShoppingCartData />} />
-              <Route path={routes.shoppingCartPayment} element={<ShoppingCartPayment />} />
+              <Route
+                path={routes.shoppingCartData}
+                element={
+                  <RequireAuth>
+                    <ShoppingCartData />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path={routes.shoppingCartPayment}
+                element={
+                  <RequireAuth>
+                    <ShoppingCartPayment />
+                  </RequireAuth>
+                }
+              />
               <Route path={routes.userLogin} element={<RegisterAndLogin formType='UserLogin' />} />
               <Route path={routes.partnerLogin} element={<RegisterAndLogin formType='PartnerLogin' />} />
               <Route path={routes.userRegister} element={<RegisterAndLogin formType='UserRegister' />} />
