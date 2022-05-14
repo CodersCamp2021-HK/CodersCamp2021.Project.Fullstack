@@ -82,7 +82,7 @@ class Dish {
   name: string;
 
   @Expose()
-  @Prop()
+  @Prop({ required: true })
   mealType: MealType[];
 
   @Expose()
@@ -105,7 +105,7 @@ class Dish {
   photo: DBImage;
 
   @Expose()
-  @Prop()
+  @Prop({ required: true })
   tags: DishTags[];
 
   @Expose()
@@ -123,7 +123,7 @@ class Dish {
   ingredients: Ingredient[];
 
   @Expose()
-  @Prop()
+  @Prop({ required: true })
   allergens: Allergens[];
 
   @Expose()

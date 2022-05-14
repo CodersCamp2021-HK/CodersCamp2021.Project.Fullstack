@@ -2,7 +2,7 @@ import { DishDto } from '@fullstack/sdk';
 import _ from 'lodash';
 import { useState } from 'react';
 
-function useIngredientState({ ingredients = [] }: DishDto) {
+function useIngredientState({ ingredients }: DishDto) {
   const [ingredientIncluded, setIngredientIncluded] = useState(_.fill(Array(ingredients.length), true));
 
   const ingredientState = _.zipWith(ingredients, ingredientIncluded, (ingredient, isIncluded) => ({

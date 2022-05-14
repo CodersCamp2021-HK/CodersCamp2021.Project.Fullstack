@@ -6,19 +6,19 @@ import { ApiObjectIdProperty } from '../../shared';
 import { USER_CONSTANTS } from './../database';
 
 class CardDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     pattern: USER_CONSTANTS.CARD.NUMBER.REGEX.source,
     example: '4562574783836030',
   })
   readonly number: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     pattern: USER_CONSTANTS.CARD.EXPIRATION_DATE,
     example: '2022-10-12',
   })
   readonly expirationDate: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     minLength: USER_CONSTANTS.CARD.CVC.MIN_LENGTH,
     maxLength: USER_CONSTANTS.CARD.CVC.MAX_LENGTH,
     example: '722',
@@ -54,10 +54,7 @@ class UserDto {
 
   @Expose()
   @Type(() => CardDto)
-  @ApiProperty({
-    required: false,
-    type: CardDto,
-  })
+  @ApiPropertyOptional({ type: CardDto })
   readonly card: CardDto;
 }
 

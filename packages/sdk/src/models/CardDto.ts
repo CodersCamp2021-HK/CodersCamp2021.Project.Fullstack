@@ -24,19 +24,19 @@ export interface CardDto {
    * @type {string}
    * @memberof CardDto
    */
-  number?: string;
+  number: string;
   /**
    *
    * @type {string}
    * @memberof CardDto
    */
-  expirationDate?: string;
+  expirationDate: string;
   /**
    *
    * @type {string}
    * @memberof CardDto
    */
-  securityCode?: string;
+  securityCode: string;
 }
 
 export function CardDtoFromJSON(json: any): CardDto {
@@ -48,9 +48,9 @@ export function CardDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): C
     return json;
   }
   return {
-    number: !exists(json, 'number') ? undefined : json['number'],
-    expirationDate: !exists(json, 'expirationDate') ? undefined : json['expirationDate'],
-    securityCode: !exists(json, 'securityCode') ? undefined : json['securityCode'],
+    number: json['number'],
+    expirationDate: json['expirationDate'],
+    securityCode: json['securityCode'],
   };
 }
 
