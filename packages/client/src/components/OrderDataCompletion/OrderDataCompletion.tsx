@@ -1,3 +1,4 @@
+import { AddressDto } from '@fullstack/sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST, PHONE_NUMBER as PHONE_NUMBER_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import {
@@ -19,11 +20,51 @@ import { useState } from 'react';
 
 import { routes } from '../../config';
 
+const addresses = [
+  {
+    id: '1',
+    street: 'Słowackiego',
+    streetNumber: '15',
+    apartmentNumber: '1',
+    floor: '1',
+    city: 'Wrocław',
+    postcode: '00-000',
+  },
+
+  {
+    id: '2',
+    street: 'Sienkiewicza',
+    streetNumber: '5',
+    city: 'Wrocław',
+    postcode: '00-000',
+  },
+
+  {
+    id: '3',
+    street: 'Sienkiewicza',
+    streetNumber: '5',
+    city: 'Wrocław',
+    postcode: '00-000',
+  },
+];
+
+const addressToString = (address: AddressDto) => {
+  return `${address.street} ${address.streetNumber} ${address.apartmentNumber ? `/${address.apartmentNumber},` : ','} ${
+    address.floor ? `p. ${address.floor},` : ''
+  } ${address.postcode} ${address.city}`;
+};
+
 const OrderDataCompletion = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [street, setStreet] = useState('');
+  const [streetNumber, setStreetNumber] = useState('');
+  const [apartmentNumber, setApartmentNumber] = useState('');
+  const [floor, setFloor] = useState('');
+  const [postcode, setPostcode] = useState('');
+  const [city, setCity] = useState('');
 
   const [nameError, setNameError] = useState(false);
   const [surnameError, setSurnameError] = useState(false);
@@ -34,6 +75,16 @@ const OrderDataCompletion = () => {
   const [surnameErrorMessage, setSurnameErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
+
+  const getAddress = (e: string) => {
+    const addressObject: AddressDto = JSON.parse(e);
+    setStreet(addressObject.street);
+    setStreetNumber(addressObject.streetNumber);
+    setApartmentNumber(addressObject.apartmentNumber || '');
+    setFloor(addressObject.floor || '');
+    setPostcode(addressObject.postcode);
+    setCity(addressObject.city);
+  };
 
   const validateForm = () => {
     if (name === '') {
@@ -96,10 +147,19 @@ const OrderDataCompletion = () => {
                   Adres dostawy
                 </Typography>
                 <FormControl>
-                  <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-                    <FormControlLabel value='1' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                    <FormControlLabel value='2' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                    <FormControlLabel value='3' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
+                  <RadioGroup
+                    aria-labelledby='demo-radio-buttons-group-label'
+                    name='radio-buttons-group'
+                    onChange={(e) => getAddress(e.target.value)}
+                  >
+                    {addresses.map((e) => (
+                      <FormControlLabel
+                        key={e.id}
+                        value={JSON.stringify(e)}
+                        control={<Radio />}
+                        label={addressToString(e)}
+                      />
+                    ))}
                   </RadioGroup>
                 </FormControl>
               </Box>
@@ -153,29 +213,70 @@ const OrderDataCompletion = () => {
             </Grid>
             <Grid item xs={6} xl={6}>
               <Box>
-                <TextField required sx={{ width: '90%', pr: 0.5, mb: 1 }} size='small' id='street' label='Ulica' />
+                <TextField
+                  required
+                  sx={{ width: '90%', pr: 0.5, mb: 1 }}
+                  size='small'
+                  id='street'
+                  label='Ulica'
+                  value={street}
+                  onChange={(e) => {
+                    setStreet(e.target.value);
+                  }}
+                />
                 <TextField
                   required
                   sx={{ width: '30%', pr: 0.5, mb: 1 }}
                   size='small'
                   id='street-number'
                   label='Numer domu'
+                  value={streetNumber}
+                  onChange={(e) => {
+                    setStreetNumber(e.target.value);
+                  }}
                 />
                 <TextField
                   sx={{ width: '30%', pr: 0.5, mb: 1 }}
                   size='small'
                   id='apartment-number'
                   label='Numer mieszkania'
+                  value={apartmentNumber}
+                  onChange={(e) => {
+                    setApartmentNumber(e.target.value);
+                  }}
                 />
-                <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='floor' label='Piętro' />
+                <TextField
+                  sx={{ width: '30%', pr: 0.5, mb: 1 }}
+                  size='small'
+                  id='floor'
+                  label='Piętro'
+                  value={floor}
+                  onChange={(e) => {
+                    setFloor(e.target.value);
+                  }}
+                />
                 <TextField
                   required
                   sx={{ width: '30%', pr: 0.5, mb: 1 }}
                   size='small'
                   id='post-code'
                   label='Kod pocztowy'
+                  value={postcode}
+                  onChange={(e) => {
+                    setPostcode(e.target.value);
+                  }}
                 />
-                <TextField required sx={{ width: '60%', pr: 0.5, mb: 1 }} size='small' id='city' label='Miasto' />
+                <TextField
+                  required
+                  sx={{ width: '60%', pr: 0.5, mb: 1 }}
+                  size='small'
+                  id='city'
+                  label='Miasto'
+                  value={city}
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
+                />
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
