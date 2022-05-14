@@ -1,3 +1,4 @@
+import { UserssProfileApi } from '@fullstack/sdk/src';
 import {
   Box,
   Button,
@@ -13,10 +14,23 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useEffect, useState } from 'react';
 
-import { routes } from '../../config';
+import { apiConfiguration, routes } from '../../config';
 
 const OrderDataCompletion = () => {
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [street, setStreet] = useState('');
+  const [streetNumber, setStreetNumber] = useState('');
+  const [apartmentNumber, setApartmentNumber] = useState('');
+  const [floor, setFloor] = useState('');
+  const [postCode, setPostCode] = useState('');
+  const [city, setCity] = useState('');
+  const [deliveryHours, setDeliveryHours] = useState('');
+
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -28,7 +42,14 @@ const OrderDataCompletion = () => {
               </Typography>
               <FormControl sx={{ width: '60%' }}>
                 <InputLabel id='demo-simple-select-label'>Godzina dostawy</InputLabel>
-                <Select labelId='demo-simple-select-label' id='demo-simple-select' label='hours' size='small' value=''>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='hours'
+                  size='small'
+                  value={deliveryHours}
+                  onChange={(e) => setDeliveryHours(e.target.value)}
+                >
                   <MenuItem value={1}>4:00 - 6:00</MenuItem>
                   <MenuItem value={2}>6:00 - 8:00</MenuItem>
                   <MenuItem value={3}>8:00 - 10:00</MenuItem>
@@ -55,25 +76,111 @@ const OrderDataCompletion = () => {
               <Typography variant='h5' color='primary.main' marginBottom={3}>
                 Informacje podstawowe
               </Typography>
-              <TextField sx={{ pr: 0.5, mb: 1 }} id='name' size='small' label='Imię' />
-              <TextField sx={{ pr: 0.5, mb: 1 }} id='surname' size='small' label='Nazwisko' />
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='email' size='small' label='Adres email' />
-              <TextField sx={{ pr: 0.5, mb: 0.5 }} id='phone-number' size='small' label='Numer telefonu' />
+              <TextField
+                sx={{ pr: 0.5, mb: 1 }}
+                id='name'
+                size='small'
+                label='Imię'
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+
+              <TextField
+                sx={{ pr: 0.5, mb: 1 }}
+                id='surname'
+                size='small'
+                label='Nazwisko'
+                value={surname}
+                onChange={(e) => {
+                  setSurname(e.target.value);
+                }}
+              />
+              <TextField
+                sx={{ pr: 0.5, mb: 0.5 }}
+                id='email'
+                size='small'
+                label='Adres email'
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <TextField
+                sx={{ pr: 0.5, mb: 0.5 }}
+                id='phone-number'
+                size='small'
+                label='Numer telefonu'
+                value={phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              />
             </Box>
           </Grid>
           <Grid item xs={6} xl={6}>
             <Box>
-              <TextField sx={{ width: '90%', pr: 0.5, mb: 1 }} size='small' id='street' label='Ulica' />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='street-number' label='Numer domu' />
+              <TextField
+                sx={{ width: '90%', pr: 0.5, mb: 1 }}
+                size='small'
+                id='street'
+                label='Ulica'
+                value={street}
+                onChange={(e) => {
+                  setStreet(e.target.value);
+                }}
+              />
+              <TextField
+                sx={{ width: '30%', pr: 0.5, mb: 1 }}
+                size='small'
+                id='street-number'
+                label='Numer domu'
+                value={streetNumber}
+                onChange={(e) => {
+                  setStreetNumber(e.target.value);
+                }}
+              />
               <TextField
                 sx={{ width: '30%', pr: 0.5, mb: 1 }}
                 size='small'
                 id='apartment-number'
                 label='Numer mieszkania'
+                value={apartmentNumber}
+                onChange={(e) => {
+                  setApartmentNumber(e.target.value);
+                }}
               />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='floor' label='Piętro' />
-              <TextField sx={{ width: '30%', pr: 0.5, mb: 1 }} size='small' id='post-code' label='Kod pocztowy' />
-              <TextField sx={{ width: '60%', pr: 0.5, mb: 1 }} size='small' id='city' label='Miasto' />
+              <TextField
+                sx={{ width: '30%', pr: 0.5, mb: 1 }}
+                size='small'
+                id='floor'
+                label='Piętro'
+                value={floor}
+                onChange={(e) => {
+                  setFloor(e.target.value);
+                }}
+              />
+              <TextField
+                sx={{ width: '30%', pr: 0.5, mb: 1 }}
+                size='small'
+                id='post-code'
+                label='Kod pocztowy'
+                value={postCode}
+                onChange={(e) => {
+                  setPostCode(e.target.value);
+                }}
+              />
+              <TextField
+                sx={{ width: '60%', pr: 0.5, mb: 1 }}
+                size='small'
+                id='city'
+                label='Miasto'
+                value={city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                }}
+              />
             </Box>
           </Grid>
           <Grid container justifyContent='center' alignItems='center'>
