@@ -95,8 +95,16 @@ const OrderDataCompletion = () => {
   const [postcodeErrorMessage, setPostcodeErrorMessage] = useState('');
   const [cityErrorMessage, setCityErrorMessage] = useState('');
 
-  const getAddress = (e: string) => {
+  const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
+
+    setStreetError(false);
+    setStreetNumberError(false);
+    setApartmentNumberError(false);
+    setFloorError(false);
+    setPostcodeError(false);
+    setCityError(false);
+
     setStreet(addressObject.street);
     setStreetNumber(addressObject.streetNumber);
     setApartmentNumber(addressObject.apartmentNumber || '');
@@ -203,7 +211,7 @@ const OrderDataCompletion = () => {
                   <RadioGroup
                     aria-labelledby='demo-radio-buttons-group-label'
                     name='radio-buttons-group'
-                    onChange={(e) => getAddress(e.target.value)}
+                    onChange={(e) => fillAddressForm(e.target.value)}
                   >
                     {addresses.map((e) => (
                       <FormControlLabel
