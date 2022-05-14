@@ -20,6 +20,13 @@ import { useState } from 'react';
 
 import { routes } from '../../config';
 
+const userPersonalInfo = {
+  id: '1',
+  name: 'Jan',
+  surname: 'Kowalski',
+  phoneNumber: '800500300',
+};
+
 const addresses = [
   {
     id: '1',
@@ -55,10 +62,10 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
+  const [name, setName] = useState(userPersonalInfo.name || '');
+  const [surname, setSurname] = useState(userPersonalInfo.surname || '');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(userPersonalInfo.phoneNumber || '');
   const [street, setStreet] = useState('');
   const [streetNumber, setStreetNumber] = useState('');
   const [apartmentNumber, setApartmentNumber] = useState('');
@@ -87,11 +94,11 @@ const OrderDataCompletion = () => {
   };
 
   const validateForm = () => {
-    if (name === '') {
+    if (!name.match(/^[A-Za-z]{3,35}+$/)) {
       setNameError(true);
       setNameErrorMessage('Wpisz poprawne imię.');
     }
-    if (surname === '') {
+    if (!surname.match(/^[A-Za-z]{3,35}+$/)) {
       setSurnameError(true);
       setSurnameErrorMessage('Wpisz poprawne nazwisko.');
     }
@@ -175,9 +182,12 @@ const OrderDataCompletion = () => {
                   size='small'
                   label='Imię'
                   required
+                  value={name}
                   error={nameError}
                   helperText={nameError === false ? '' : nameErrorMessage}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
                 <TextField
                   sx={{ pr: 0.5, mb: 1 }}
@@ -185,9 +195,12 @@ const OrderDataCompletion = () => {
                   size='small'
                   label='Nazwisko'
                   required
+                  value={surname}
                   error={surnameError}
                   helperText={surnameError === false ? '' : surnameErrorMessage}
-                  onChange={(e) => setSurname(e.target.value)}
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
                 />
                 <TextField
                   sx={{ pr: 0.5, mb: 0.5 }}
@@ -197,7 +210,9 @@ const OrderDataCompletion = () => {
                   required
                   error={emailError}
                   helperText={emailError === false ? '' : emailErrorMessage}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
                 <TextField
                   sx={{ pr: 0.5, mb: 0.5 }}
@@ -205,9 +220,12 @@ const OrderDataCompletion = () => {
                   size='small'
                   label='Numer telefonu'
                   required
+                  value={phoneNumber}
                   error={phoneNumberError}
                   helperText={phoneNumberError === false ? '' : phoneNumberErrorMessage}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
                 />
               </Box>
             </Grid>
