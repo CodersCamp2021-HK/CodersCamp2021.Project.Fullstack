@@ -1,4 +1,4 @@
-import { CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
+import { AddressDto, CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
 import { StarHalfSharp } from '@mui/icons-material';
 import {
   Box,
@@ -15,6 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { each } from 'immer/dist/internal';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration, routes } from '../../config';
@@ -30,7 +31,16 @@ const OrderDataCompletion = () => {
   const [floor, setFloor] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
-  const [deliveryHours, setDeliveryHours] = useState('');
+  const [hourStart, setHourStart] = useState('');
+  const [hourEnd, setHourEnd] = useState('');
+  const [addresssTable, setAddressTable] = useState([]);
+  const [testTable, setTestTa] = useState([]);
+
+  const addressToString = (address: AddressDto) => {
+    return `${address.street} ${address.streetNumber} ${
+      address.apartmentNumber ? `/${address.apartmentNumber},` : ','
+    } ${address.floor ? `p. ${address.floor},` : ''} ${address.postcode} ${address.city}`;
+  };
 
   const userProfile = async (updateData: UpdateUserDto) => {
     try {
@@ -60,6 +70,21 @@ const OrderDataCompletion = () => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+      setAddressTable(
+        getUserAddress.data.map((e) => ({
+          street: e.street,
+          streetNumber: e.streetNumber,
+          apartmentNumber: e.apartmentNumber,
+          postcode: e.postcode,
+          city: e.city,
+        })),
+      );
+    })();
+  }, []);
+
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -76,12 +101,12 @@ const OrderDataCompletion = () => {
                   id='demo-simple-select'
                   label='hours'
                   size='small'
-                  value={deliveryHours}
-                  onChange={(e) => setDeliveryHours(e.target.value)}
+                  value={hourStart}
+                  onChange={(e) => setHourStart(e.target.value)}
                 >
-                  <MenuItem value={1}>4:00 - 6:00</MenuItem>
-                  <MenuItem value={2}>6:00 - 8:00</MenuItem>
-                  <MenuItem value={3}>8:00 - 10:00</MenuItem>
+                  <MenuItem value={4}>4:00 - 6:00</MenuItem>
+                  <MenuItem value={6}>6:00 - 8:00</MenuItem>
+                  <MenuItem value={8}>8:00 - 10:00</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -93,9 +118,14 @@ const OrderDataCompletion = () => {
               </Typography>
               <FormControl>
                 <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-                  <FormControlLabel value='1' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                  <FormControlLabel value='2' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
-                  <FormControlLabel value='3' control={<Radio />} label='Mickiewicza 20A /1, 00-000 Warszawa' />
+                  {addresssTable.map((e) => (
+                    <FormControlLabel
+                      key={e.id}
+                      value={JSON.stringify(e)}
+                      control={<Radio />}
+                      label={addressToString(e)}
+                    />
+                  ))}
                 </RadioGroup>
               </FormControl>
             </Box>

@@ -23,6 +23,7 @@ const OrderDish = ({ orderDish }: OrderDishProps) => {
   const { dish, excludedIngredients = [], count = 1 } = orderDish;
   return (
     <TableRow sx={{ height: '1px' }}>
+      {console.log(orderDish)}
       <TableCell sx={{ py: 5 }}>
         <Box sx={{ width: '11rem', height: '11rem', borderRadius: 4, overflow: 'hidden', mx: 'auto' }}>
           <img alt={dish.name} src={dish.photo ? dish.photo : defaultPhoto} height='100%' />

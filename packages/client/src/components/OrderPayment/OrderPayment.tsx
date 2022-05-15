@@ -16,8 +16,12 @@ import {
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
+import { SubOrderDish } from '../../contexts';
 
-const OrderPayment = () => {
+interface OrderDishProps {
+  orderDish: SubOrderDish;
+}
+const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -34,6 +38,7 @@ const OrderPayment = () => {
       const getUserAddress = await new UsersAddressesApi(apiConfiguration).findById({
         id: '626699462261bca70cfeeae3',
       });
+      console.log(orderDish);
       setName(getUser.name);
       setSurname(getUser.surname);
       setPhoneNumber(getUser.phoneNumber);
