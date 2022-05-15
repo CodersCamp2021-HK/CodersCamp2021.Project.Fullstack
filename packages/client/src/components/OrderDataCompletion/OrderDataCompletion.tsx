@@ -19,8 +19,6 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-import { routes } from '../../config';
-
 const userPersonalInfo = {
   id: '1',
   name: 'Jan',
@@ -57,59 +55,52 @@ const addresses = [
 ];
 
 const addressToString = (address: AddressDto) => {
-  return `${address.street} ${address.streetNumber} ${address.apartmentNumber ? `/${address.apartmentNumber},` : ','} ${
+  return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ','} ${
     address.floor ? `p. ${address.floor},` : ''
   } ${address.postcode} ${address.city}`;
 };
 
 const OrderDataCompletion = () => {
   const [name, setName] = useState(userPersonalInfo.name || '');
+  const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
+
   const [surname, setSurname] = useState(userPersonalInfo.surname || '');
+  const surnameErrorMessage = surname.match(/^[A-ZĄĆĘŁŃÓŚŹŻ-]{3,35}$/i) ? '' : 'Wpisz poprawne nazwisko.';
+
   const [email, setEmail] = useState('');
+  const emailErrorMessage = email.match(EMAIL_CONST.REGEX) ? '' : 'Wpisz poprawny adres email.';
+
   const [phoneNumber, setPhoneNumber] = useState(userPersonalInfo.phoneNumber || '');
+  const phoneNumberErrorMessage = phoneNumber.match(PHONE_NUMBER_CONST.REGEX) ? '' : 'Wpisz poprawny numer telefonu.';
+
   const [street, setStreet] = useState('');
+  const streetErrorMessage = street.match(/^[A-ZĄĆĘŁŃÓŚŹŻ0-9.,\- ]{3,35}$/i) ? '' : 'Wpisz poprawną nazwę ulicy.';
+
   const [streetNumber, setStreetNumber] = useState('');
+  const streetNumberErrorMessage = streetNumber.match(/^\d{1,3}[A-ZĄĆĘŁŃÓŚŹŻ]?$/i) ? '' : 'Wpisz poprawny numer ulicy.';
+
   const [apartmentNumber, setApartmentNumber] = useState('');
+  const apartmentNumberErrorMessage = apartmentNumber.match(/^\d{0,3}$/) ? '' : 'Wpisz poprawny numer mieszkania.';
+
   const [floor, setFloor] = useState('');
+  const floorErrorMessage = floor.match(/^\d{0,2}$/) ? '' : 'Wpisz poprawne piętro.';
+
   const [postcode, setPostcode] = useState('');
+  const postcodeErrorMessage = postcode.match(/^\d{2}-\d{3}$/) ? '' : 'Wpisz poprawny kod pocztowy.';
+
   const [city, setCity] = useState('');
+  const cityErrorMessage = city.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{2,35}$/i) ? '' : 'Wpisz poprawne miasto.';
+
   const [deliveryHours, setDeliveryHours] = useState('');
+  const deliveryHoursErrorMessage = deliveryHours !== '' ? '' : 'Wybierz godzinę dostawy';
+
   const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
-
-  const [nameError, setNameError] = useState(false);
-  const [surnameError, setSurnameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [phoneNumberError, setPhoneNumberError] = useState(false);
-  const [streetError, setStreetError] = useState(false);
-  const [streetNumberError, setStreetNumberError] = useState(false);
-  const [apartmentNumberError, setApartmentNumberError] = useState(false);
-  const [floorError, setFloorError] = useState(false);
-  const [postcodeError, setPostcodeError] = useState(false);
-  const [cityError, setCityError] = useState(false);
-  const [deliveryHoursError, setDeliveryHoursError] = useState(false);
-
-  const [nameErrorMessage, setNameErrorMessage] = useState('');
-  const [surnameErrorMessage, setSurnameErrorMessage] = useState('');
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
-  const [streetErrorMessage, setStreetErrorMessage] = useState('');
-  const [streetNumberErrorMessage, setStreetNumberErrorMessage] = useState('');
-  const [apartmentNumberErrorMessage, setApartmentNumberErrorMessage] = useState('');
-  const [floorErrorMessage, setFloorErrorMessage] = useState('');
-  const [postcodeErrorMessage, setPostcodeErrorMessage] = useState('');
-  const [cityErrorMessage, setCityErrorMessage] = useState('');
-  const [deliveryHoursErrorMessage, setDeliveryHoursErrorMessage] = useState('');
+  const [didSubmit, setDidSubmit] = useState(false);
 
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
     setClearAddressRadioButton(false);
-    setStreetError(false);
-    setStreetNumberError(false);
-    setApartmentNumberError(false);
-    setFloorError(false);
-    setPostcodeError(false);
-    setCityError(false);
 
     setStreet(addressObject.street);
     setStreetNumber(addressObject.streetNumber);
@@ -119,76 +110,9 @@ const OrderDataCompletion = () => {
     setCity(addressObject.city);
   };
 
-  const validateDeliveryHours = () => {
-    if (deliveryHours === '') {
-      setDeliveryHoursError(true);
-      setDeliveryHoursErrorMessage('Wybierz godzinę dostawy');
-    }
-  };
-
-  const validatePersonalInfoForm = () => {
-    if (!name.match(/^[a-zA-ZĄĆĘŁŃÓŚŹŻąćęłńóśźż]{3,35}$/)) {
-      setNameError(true);
-      setNameErrorMessage('Wpisz poprawne imię.');
-    }
-    if (!surname.match(/^[a-zA-ZĄĆĘŁŃÓŚŹŻąćęłńóśźż]{3,35}$/)) {
-      setSurnameError(true);
-      setSurnameErrorMessage('Wpisz poprawne nazwisko.');
-    }
-    if (!email.match(EMAIL_CONST.REGEX)) {
-      setEmailError(true);
-      setEmailErrorMessage('Wpisz poprawny adres email.');
-    }
-    if (!phoneNumber.match(PHONE_NUMBER_CONST.REGEX)) {
-      setPhoneNumberError(true);
-      setPhoneNumberErrorMessage('Wpisz poprawny numer telefonu.');
-    }
-  };
-
-  const validateAddressForm = () => {
-    if (!street.match(/^[a-zA-ZĄĆĘŁŃÓŚŹŻąćęłńóśźż0-9.,\- ]{3,35}$/)) {
-      setStreetError(true);
-      setStreetErrorMessage('Wpisz poprawną nazwę ulicy.');
-    }
-    if (!streetNumber.match(/^\d{1,3}[a-zA-ZĄĆĘŁŃÓŚŹŻąćęłńóśźż]?$/)) {
-      setStreetNumberError(true);
-      setStreetNumberErrorMessage('Wpisz poprawny numer ulicy.');
-    }
-    if (apartmentNumber && !apartmentNumber.match(/^\d{1,3}$/)) {
-      setApartmentNumberError(true);
-      setApartmentNumberErrorMessage('Wpisz poprawny numer mieszkania.');
-    }
-    if (floor && !floor.match(/^\d{0,2}$/)) {
-      setFloorError(true);
-      setFloorErrorMessage('Wpisz poprawne piętro.');
-    }
-    if (!postcode.match(/^\d{2}-\d{3}$/)) {
-      setPostcodeError(true);
-      setPostcodeErrorMessage('Wpisz poprawny kod pocztowy.');
-    }
-    if (!city.match(/^[a-zA-ZĄĆĘŁŃÓŚŹŻąćęłńóśźż]{2,35}$/)) {
-      setCityError(true);
-      setCityErrorMessage('Wpisz poprawne miasto.');
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setNameError(false);
-    setSurnameError(false);
-    setEmailError(false);
-    setPhoneNumberError(false);
-    setStreetError(false);
-    setStreetNumberError(false);
-    setApartmentNumberError(false);
-    setFloorError(false);
-    setPostcodeError(false);
-    setCityError(false);
-    setDeliveryHoursError(false);
-
-    validateDeliveryHours();
-    validatePersonalInfoForm();
-    validateAddressForm();
+    setDidSubmit(true);
   };
 
   return (
@@ -209,17 +133,16 @@ const OrderDataCompletion = () => {
                     label='hours'
                     size='small'
                     value={deliveryHours}
-                    error={deliveryHoursError}
+                    error={didSubmit && deliveryHoursErrorMessage !== ''}
                     onChange={(e) => {
                       setDeliveryHours(e.target.value);
-                      setDeliveryHoursError(false);
                     }}
                   >
                     <MenuItem value={1}>4:00 - 6:00</MenuItem>
                     <MenuItem value={2}>6:00 - 8:00</MenuItem>
                     <MenuItem value={3}>8:00 - 10:00</MenuItem>
                   </Select>
-                  {deliveryHoursError && <FormHelperText error>{deliveryHoursErrorMessage}</FormHelperText>}
+                  {didSubmit && <FormHelperText error>{deliveryHoursErrorMessage}</FormHelperText>}
                 </FormControl>
               </Box>
             </Grid>
@@ -259,8 +182,8 @@ const OrderDataCompletion = () => {
                   label='Imię'
                   required
                   value={name}
-                  error={nameError}
-                  helperText={nameError === false ? '' : nameErrorMessage}
+                  error={didSubmit && nameErrorMessage !== ''}
+                  helperText={nameErrorMessage}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -272,8 +195,8 @@ const OrderDataCompletion = () => {
                   label='Nazwisko'
                   required
                   value={surname}
-                  error={surnameError}
-                  helperText={surnameError === false ? '' : surnameErrorMessage}
+                  error={didSubmit && surnameErrorMessage !== ''}
+                  helperText={surnameErrorMessage}
                   onChange={(e) => {
                     setSurname(e.target.value);
                   }}
@@ -284,8 +207,8 @@ const OrderDataCompletion = () => {
                   size='small'
                   label='Adres email'
                   required
-                  error={emailError}
-                  helperText={emailError === false ? '' : emailErrorMessage}
+                  error={didSubmit && emailErrorMessage !== ''}
+                  helperText={emailErrorMessage}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -297,8 +220,8 @@ const OrderDataCompletion = () => {
                   label='Numer telefonu'
                   required
                   value={phoneNumber}
-                  error={phoneNumberError}
-                  helperText={phoneNumberError === false ? '' : phoneNumberErrorMessage}
+                  error={didSubmit && phoneNumberErrorMessage !== ''}
+                  helperText={phoneNumberErrorMessage}
                   onChange={(e) => {
                     setPhoneNumber(e.target.value);
                   }}
@@ -314,8 +237,8 @@ const OrderDataCompletion = () => {
                   id='street'
                   label='Ulica'
                   value={street}
-                  error={streetError}
-                  helperText={streetError === false ? '' : streetErrorMessage}
+                  error={didSubmit && streetErrorMessage !== ''}
+                  helperText={streetErrorMessage}
                   onChange={(e) => {
                     setStreet(e.target.value);
                     setClearAddressRadioButton(true);
@@ -328,8 +251,8 @@ const OrderDataCompletion = () => {
                   id='street-number'
                   label='Numer domu'
                   value={streetNumber}
-                  error={streetNumberError}
-                  helperText={streetNumberError === false ? '' : streetNumberErrorMessage}
+                  error={didSubmit && streetNumberErrorMessage !== ''}
+                  helperText={streetNumberErrorMessage}
                   onChange={(e) => {
                     setStreetNumber(e.target.value);
                     setClearAddressRadioButton(true);
@@ -341,8 +264,8 @@ const OrderDataCompletion = () => {
                   id='apartment-number'
                   label='Numer mieszkania'
                   value={apartmentNumber}
-                  error={apartmentNumberError}
-                  helperText={apartmentNumberError === false ? '' : apartmentNumberErrorMessage}
+                  error={didSubmit && apartmentNumberErrorMessage !== ''}
+                  helperText={apartmentNumberErrorMessage}
                   onChange={(e) => {
                     setApartmentNumber(e.target.value);
                     setClearAddressRadioButton(true);
@@ -354,8 +277,8 @@ const OrderDataCompletion = () => {
                   id='floor'
                   label='Piętro'
                   value={floor}
-                  error={floorError}
-                  helperText={floorError === false ? '' : floorErrorMessage}
+                  error={didSubmit && floorErrorMessage !== ''}
+                  helperText={floorErrorMessage}
                   onChange={(e) => {
                     setFloor(e.target.value);
                     setClearAddressRadioButton(true);
@@ -368,8 +291,8 @@ const OrderDataCompletion = () => {
                   id='post-code'
                   label='Kod pocztowy'
                   value={postcode}
-                  error={postcodeError}
-                  helperText={postcodeError === false ? '' : postcodeErrorMessage}
+                  error={didSubmit && postcodeErrorMessage !== ''}
+                  helperText={postcodeErrorMessage}
                   onChange={(e) => {
                     setPostcode(e.target.value);
                     setClearAddressRadioButton(true);
@@ -382,8 +305,8 @@ const OrderDataCompletion = () => {
                   id='city'
                   label='Miasto'
                   value={city}
-                  error={cityError}
-                  helperText={cityError === false ? '' : cityErrorMessage}
+                  error={didSubmit && cityErrorMessage !== ''}
+                  helperText={cityErrorMessage}
                   onChange={(e) => {
                     setCity(e.target.value);
                     setClearAddressRadioButton(true);
