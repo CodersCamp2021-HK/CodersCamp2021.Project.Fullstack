@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { useShoppingCart } from '../../contexts';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
 import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
@@ -21,9 +21,8 @@ interface DishPopupProps {
   dish: DishDto;
   open: boolean;
   previousState?: {
+    suborderDish: SubOrderDish;
     date: Date;
-    count: number;
-    excludedIngredients: string[];
   };
   onClose: () => void;
 }
@@ -41,27 +40,20 @@ const style = {
 };
 
 const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
-  const [count, setCount] = useState(previousState?.count ?? 1);
-  const [ingredientState, toggleIngredient] = useIngredientState(dish, previousState?.excludedIngredients);
+  const [count, setCount] = useState(previousState?.suborderDish.count ?? 1);
+  const [ingredientState, toggleIngredient] = useIngredientState(dish, previousState?.suborderDish.excludedIngredients);
   const { addToCart, editInCart } = useShoppingCart();
 
   const excludedIngredients = ingredientState
     .filter(({ isIncluded }) => !isIncluded)
     .map(({ ingredient }) => ingredient.name);
 
+  const updatedState = { dish, count, excludedIngredients };
   const handleOrderClick = () => {
     if (previousState) {
-      editInCart(
-        {
-          dish,
-          excludedIngredients: previousState.excludedIngredients,
-          count: previousState.count,
-        },
-        { dish, count, excludedIngredients },
-        previousState.date,
-      );
+      editInCart(previousState.suborderDish, updatedState, previousState.date);
     } else {
-      addToCart({ dish, count, excludedIngredients });
+      addToCart(updatedState);
     }
 
     onClose();

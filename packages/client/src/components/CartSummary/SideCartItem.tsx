@@ -18,8 +18,7 @@ const SideCartItem = ({ suborderDish }: DishProps) => {
   const [editPopupOpen, setEditPopupOpen] = useState(false);
   const currentState = {
     date: selectedDate as Date,
-    count: suborderDish.count ?? 1,
-    excludedIngredients: suborderDish.excludedIngredients ?? [],
+    suborderDish,
   };
 
   return (
