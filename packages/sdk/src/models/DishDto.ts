@@ -71,19 +71,19 @@ export interface DishDto {
    * @type {Array<DishTagsEnum>}
    * @memberof DishDto
    */
-  tags?: Array<DishTagsEnum>;
+  tags: Array<DishTagsEnum>;
   /**
    *
    * @type {Array<IngredientDto>}
    * @memberof DishDto
    */
-  ingredients?: Array<IngredientDto>;
+  ingredients: Array<IngredientDto>;
   /**
    *
    * @type {Array<AllergensEnum>}
    * @memberof DishDto
    */
-  allergens?: Array<AllergensEnum>;
+  allergens: Array<AllergensEnum>;
   /**
    *
    * @type {number}
@@ -137,11 +137,9 @@ export function DishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): D
     mealType: !exists(json, 'mealType') ? undefined : (json['mealType'] as Array<any>).map(MealTypeEnumFromJSON),
     description: !exists(json, 'description') ? undefined : json['description'],
     price: json['price'],
-    tags: !exists(json, 'tags') ? undefined : (json['tags'] as Array<any>).map(DishTagsEnumFromJSON),
-    ingredients: !exists(json, 'ingredients')
-      ? undefined
-      : (json['ingredients'] as Array<any>).map(IngredientDtoFromJSON),
-    allergens: !exists(json, 'allergens') ? undefined : (json['allergens'] as Array<any>).map(AllergensEnumFromJSON),
+    tags: (json['tags'] as Array<any>).map(DishTagsEnumFromJSON),
+    ingredients: (json['ingredients'] as Array<any>).map(IngredientDtoFromJSON),
+    allergens: (json['allergens'] as Array<any>).map(AllergensEnumFromJSON),
     portionWeight: json['portionWeight'],
     calories: NutritionalValueDtoFromJSON(json['calories']),
     fats: NutritionalValueDtoFromJSON(json['fats']),
@@ -165,10 +163,9 @@ export function DishDtoToJSON(value?: DishDto | null): any {
     mealType: value.mealType === undefined ? undefined : (value.mealType as Array<any>).map(MealTypeEnumToJSON),
     description: value.description,
     price: value.price,
-    tags: value.tags === undefined ? undefined : (value.tags as Array<any>).map(DishTagsEnumToJSON),
-    ingredients:
-      value.ingredients === undefined ? undefined : (value.ingredients as Array<any>).map(IngredientDtoToJSON),
-    allergens: value.allergens === undefined ? undefined : (value.allergens as Array<any>).map(AllergensEnumToJSON),
+    tags: (value.tags as Array<any>).map(DishTagsEnumToJSON),
+    ingredients: (value.ingredients as Array<any>).map(IngredientDtoToJSON),
+    allergens: (value.allergens as Array<any>).map(AllergensEnumToJSON),
     portionWeight: value.portionWeight,
     calories: NutritionalValueDtoToJSON(value.calories),
     fats: NutritionalValueDtoToJSON(value.fats),

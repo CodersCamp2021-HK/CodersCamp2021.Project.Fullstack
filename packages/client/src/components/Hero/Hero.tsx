@@ -1,5 +1,17 @@
+import { OperationalCityEnum } from '@fullstack/sdk';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
-import { Box, Button, IconButton, InputAdornment, Stack, styled, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
 
 import hero from '../../assets/hero.jpg';
 import { routes } from '../../config/routes';
@@ -23,59 +35,84 @@ const SearchField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const Hero = () => (
-  <Box
-    sx={{
-      minHeight: 'calc(100vh - 6rem)',
-      background: HERO_BACKGROUND,
-    }}
-  >
-    <Stack
-      sx={{ p: { xs: 4, sm: 8 }, minHeight: 'inherit', maxWidth: '90rem', mx: 'auto' }}
-      justifyContent='center'
-      spacing={4}
+const Hero = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const cityValues = Object.values(OperationalCityEnum);
+
+  return (
+    <Box
+      sx={{
+        minHeight: 'calc(100vh - 6rem)',
+        background: HERO_BACKGROUND,
+      }}
     >
-      <Typography variant='h5' color='secondary'>
-        Nie musisz dalej szukać
-      </Typography>
-      <Typography
-        variant='h2'
-        color='common.white'
-        sx={{ typography: { xs: 'h4', sm: 'h2', xl: 'h1' }, maxWidth: '45rem' }}
+      <Stack
+        sx={{ p: { xs: 4, sm: 8 }, minHeight: 'inherit', maxWidth: '90rem', mx: 'auto' }}
+        justifyContent='center'
+        spacing={4}
       >
-        Wybieraj dania z&nbsp;najlepszych restauracji
-      </Typography>
-      <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} justifyContent='space-between' alignItems='flex-start'>
-        <SearchField
-          placeholder='Wpisz miasto'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <Button
-                  href={routes.main}
-                  sx={{ height: 'auto' }}
-                  variant='contained'
-                  color='secondary'
-                  disableElevation
-                >
-                  Wyszukaj
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Stack>
-      <Stack alignItems='center' sx={{ position: 'absolute', right: 0, bottom: 0, p: { xs: 4, sm: 8 } }}>
-        <Typography color='secondary' textAlign='center'>
-          Zobacz jak <br />
-          złożyć zamówienie
+        <Typography variant='h5' color='secondary'>
+          Nie musisz dalej szukać
         </Typography>
-        <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
-          <ArrowDownward fontSize='large' />
-        </IconButton>
+        <Typography
+          variant='h2'
+          color='common.white'
+          sx={{ typography: { xs: 'h4', sm: 'h2', xl: 'h1' }, maxWidth: '45rem' }}
+        >
+          Wybieraj dania z&nbsp;najlepszych restauracji
+        </Typography>
+        <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} justifyContent='space-between' alignItems='flex-start'>
+          <Autocomplete
+            freeSolo
+            disablePortal
+            disableClearable
+            id='combo-box-demo'
+            options={cityValues}
+            sx={{ width: 360 }}
+            value={searchValue}
+            onChange={(event, newValue) => {
+              setSearchValue(newValue);
+            }}
+            renderInput={(params) => (
+              <SearchField
+                {...params}
+                placeholder='Wpisz miasto'
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Button
+                        href={
+                          cityValues.find((val) => val === searchValue) !== undefined
+                            ? `${routes.main}?city=${encodeURIComponent(String(searchValue))}`
+                            : ''
+                        }
+                        sx={{ height: 'auto' }}
+                        variant='contained'
+                        color='secondary'
+                        disableElevation
+                      >
+                        Wyszukaj
+                      </Button>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
+          />
+        </Stack>
+        <Stack alignItems='center' sx={{ position: 'absolute', right: 0, bottom: 0, p: { xs: 4, sm: 8 } }}>
+          <Typography color='secondary' textAlign='center'>
+            Zobacz jak <br />
+            złożyć zamówienie
+          </Typography>
+          <IconButton title='Zobacz więcej' href='#steps' LinkComponent='a' color='secondary' size='small'>
+            <ArrowDownward fontSize='large' />
+          </IconButton>
+        </Stack>
       </Stack>
-    </Stack>
-  </Box>
-);
+    </Box>
+  );
+};
 
 export { Hero };

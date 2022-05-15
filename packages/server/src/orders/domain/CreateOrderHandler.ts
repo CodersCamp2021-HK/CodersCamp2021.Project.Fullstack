@@ -19,8 +19,8 @@ interface CreateOrderRequest {
     deliveryDate: Date;
     dishes: {
       dishId: string;
-      count?: number;
-      excludedIngredients?: string[];
+      count: number;
+      excludedIngredients: string[];
     }[];
   }[];
   comment?: string;
