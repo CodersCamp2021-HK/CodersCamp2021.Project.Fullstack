@@ -20,7 +20,7 @@ async function appFactory(options: NestApplicationOptions = {}) {
   const apiSpec = createSwaggerDocument(app);
   const setup = _.flow(
     setupSecurity,
-    // setupCompression,
+    setupCompression,
     _.curryRight(setupSwagger)(apiSpec),
     _.curryRight(setupOpenApiValidator)(apiSpec),
   );
