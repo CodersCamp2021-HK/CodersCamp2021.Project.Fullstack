@@ -61,7 +61,7 @@ const SideCartItem = ({ suborderDish }: DishProps) => {
             {((price / 100) * (suborderDish.count || 1)).toFixed(2)}
           </Typography>
           <Box color='#fff' display='flex' flexDirection='column'>
-            <IconButton onClick={() => removeFromCart(selectedDate as Date, suborderDish)}>
+            <IconButton onClick={() => removeFromCart(suborderDish, selectedDate as Date)}>
               <DeleteOutline color='secondary' />
             </IconButton>
             <IconButton onClick={() => setEditPopupOpen(true)}>

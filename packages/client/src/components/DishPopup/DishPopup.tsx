@@ -43,7 +43,7 @@ const style = {
 const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
   const [count, setCount] = useState(previousState?.count ?? 1);
   const [ingredientState, toggleIngredient] = useIngredientState(dish, previousState?.excludedIngredients);
-  const { addToCart, removeFromCart } = useShoppingCart();
+  const { addToCart, editInCart } = useShoppingCart();
 
   const excludedIngredients = ingredientState
     .filter(({ isIncluded }) => !isIncluded)
@@ -51,13 +51,19 @@ const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
 
   const handleOrderClick = () => {
     if (previousState) {
-      removeFromCart(previousState.date, {
-        dish,
-        excludedIngredients: previousState.excludedIngredients,
-        count: previousState.count,
-      });
+      editInCart(
+        {
+          dish,
+          excludedIngredients: previousState.excludedIngredients,
+          count: previousState.count,
+        },
+        { dish, count, excludedIngredients },
+        previousState.date,
+      );
+    } else {
+      addToCart({ dish, count, excludedIngredients });
     }
-    addToCart({ dish, count, excludedIngredients });
+
     onClose();
   };
 

@@ -19,11 +19,12 @@ const areDishesEqual = (suborderDish1: SubOrderDish, suborderDish2: SubOrderDish
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const ShoppingCartContext = createContext({
   cart: [] as SubOrder[],
-  addToCart: (suborderDish: SubOrderDish) => {},
+  addToCart: (suborderDish: SubOrderDish, date?: Date | null) => {},
   selectedDate: null as Date | null,
   setSelectedDate: (date: Date | null) => {},
-  modifyDishCount: (date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => {},
-  removeFromCart: (date: Date, suborderDish: SubOrderDish) => {},
+  modifyDishCount: (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => {},
+  removeFromCart: (suborderDish: SubOrderDish, date: Date) => {},
+  editInCart: (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => {},
 });
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
@@ -32,15 +33,15 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const addToCart = useCallback(
-    (suborderDish: SubOrderDish) =>
+    (suborderDish: SubOrderDish, date: Date | null = selectedDate) =>
       setCart(
         produce((draft) => {
-          if (selectedDate === null) return;
+          if (date === null) return;
 
-          const suborder = draft.find(({ deliveryDate }) => deliveryDate === selectedDate);
+          const suborder = draft.find(({ deliveryDate }) => deliveryDate === date);
 
           if (!suborder) {
-            draft.push({ deliveryDate: selectedDate, dishes: [suborderDish] });
+            draft.push({ deliveryDate: date, dishes: [suborderDish] });
             return;
           }
 
@@ -56,7 +57,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     [selectedDate],
   );
 
-  const modifyDishCount = useCallback((date: Date, suborderDish: SubOrderDish, modifier: (prev: number) => number) => {
+  const modifyDishCount = useCallback((suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => {
     setCart(
       produce((draft) => {
         const targetDish = draft
@@ -70,7 +71,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     );
   }, []);
 
-  const removeFromCart = useCallback((date: Date, suborderDish: SubOrderDish) => {
+  const removeFromCart = useCallback((suborderDish: SubOrderDish, date: Date) => {
     setCart(
       produce((draft) => {
         const dayDishes = draft.find(({ deliveryDate }) => deliveryDate === date)?.dishes;
@@ -91,9 +92,21 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     );
   }, []);
 
+  const editInCart = useCallback((oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => {
+    setCart(
+      produce((draft) => {
+        const dayDishes = draft.find(({ deliveryDate }) => deliveryDate === date)?.dishes;
+        if (!dayDishes) return;
+        const targetIndex = dayDishes.findIndex((foundDish) => areDishesEqual(foundDish, oldSuborderDish));
+        if (targetIndex === -1) return;
+        dayDishes[targetIndex] = newSuborderDish;
+      }),
+    );
+  }, []);
+
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart }),
-    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;

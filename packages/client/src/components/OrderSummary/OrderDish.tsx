@@ -26,8 +26,8 @@ const OrderDish = ({ date, orderDish }: OrderDishProps) => {
   const { dish, excludedIngredients = [], count = 1 } = orderDish;
 
   const { modifyDishCount, removeFromCart } = useShoppingCart();
-  const decreaseDishCount = () => modifyDishCount(date, orderDish, (c) => c - 1);
-  const increaseDishCount = () => modifyDishCount(date, orderDish, (c) => c + 1);
+  const decreaseDishCount = () => modifyDishCount(orderDish, date, (c) => c - 1);
+  const increaseDishCount = () => modifyDishCount(orderDish, date, (c) => c + 1);
 
   const [editPopupOpen, setEditPopupOpen] = useState(false);
   const currentState = { date, count, excludedIngredients };
@@ -93,7 +93,7 @@ const OrderDish = ({ date, orderDish }: OrderDishProps) => {
         </TableCell>
         <TableCell>
           <Stack alignItems='center'>
-            <IconButton onClick={() => removeFromCart(date, orderDish)}>
+            <IconButton onClick={() => removeFromCart(orderDish, date)}>
               <DeleteOutline />
             </IconButton>
             <IconButton onClick={() => setEditPopupOpen(true)}>
