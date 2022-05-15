@@ -57,7 +57,7 @@ const OrderDish = ({ date, orderDish }: OrderDishProps) => {
       </TableCell>
       <TableCell>
         <ul style={{ listStyle: 'none', padding: 0 }}>
-          {excludedIngredients?.map((ingredient) => (
+          {excludedIngredients.map((ingredient) => (
             <li key={ingredient}>{ingredient}</li>
           ))}
         </ul>

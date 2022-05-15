@@ -30,13 +30,13 @@ export interface OrderDishDto {
    * @type {number}
    * @memberof OrderDishDto
    */
-  count?: number;
+  count: number;
   /**
    *
    * @type {Array<string>}
    * @memberof OrderDishDto
    */
-  excludedIngredients?: Array<string>;
+  excludedIngredients: Array<string>;
 }
 
 export function OrderDishDtoFromJSON(json: any): OrderDishDto {
@@ -49,8 +49,8 @@ export function OrderDishDtoFromJSONTyped(json: any, ignoreDiscriminator: boolea
   }
   return {
     dishId: json['dishId'],
-    count: !exists(json, 'count') ? undefined : json['count'],
-    excludedIngredients: !exists(json, 'excludedIngredients') ? undefined : json['excludedIngredients'],
+    count: json['count'],
+    excludedIngredients: json['excludedIngredients'],
   };
 }
 

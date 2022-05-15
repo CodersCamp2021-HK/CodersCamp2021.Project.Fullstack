@@ -2,8 +2,8 @@ import { AllergensEnum, DishTagsEnum } from '@fullstack/sdk/src';
 import { Box, BoxProps, Typography } from '@mui/material';
 
 type TagsAllergensProps = {
-  allergens: AllergensEnum[] | undefined;
-  tags: DishTagsEnum[] | undefined;
+  allergens: AllergensEnum[];
+  tags: DishTagsEnum[];
 };
 const Item = (props: BoxProps) => {
   const { sx, ...other } = props;
@@ -29,8 +29,8 @@ const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
     <Item>
       <Typography variant='caption'>Tagi:</Typography>
     </Item>
-    {(tags ?? []).length > 0 ? (
-      tags?.map((tag) => (
+    {tags.length > 0 ? (
+      tags.map((tag) => (
         <Item sx={{ pl: 0.5 }} key={tag}>
           <Typography bgcolor='primary.main' variant='caption' sx={style}>
             {tag.toUpperCase()}
@@ -48,8 +48,8 @@ const TagsAllergens = ({ allergens = [], tags = [] }: TagsAllergensProps) => (
         Alergeny:
       </Typography>
     </Item>
-    {(allergens ?? []).length > 0 ? (
-      allergens?.map((allergen) => (
+    {allergens.length > 0 ? (
+      allergens.map((allergen) => (
         <Item sx={{ pl: 0.5 }} key={allergen}>
           <Typography bgcolor='rgba(27, 94, 32, 50%)' variant='caption' sx={style}>
             {allergen.toUpperCase()}

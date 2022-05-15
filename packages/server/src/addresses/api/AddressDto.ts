@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
 import { ApiObjectIdProperty } from '../../shared';
@@ -23,17 +23,15 @@ class AddressDto {
   readonly streetNumber: string;
 
   @Expose()
-  @ApiProperty({
+  @ApiPropertyOptional({
     pattern: ADDRESS_CONSTANTS.APARTMENT_NUMBER.REGEX.source,
-    required: false,
     example: '1',
   })
   readonly apartmentNumber: string;
 
   @Expose()
-  @ApiProperty({
+  @ApiPropertyOptional({
     pattern: ADDRESS_CONSTANTS.FLOOR.REGEX.source,
-    required: false,
     example: '1',
   })
   readonly floor: string;

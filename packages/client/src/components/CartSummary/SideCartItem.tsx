@@ -40,7 +40,7 @@ const SideCartItem = ({ suborderDish }: DishProps) => {
         />
         <Box>
           <Typography variant='body2'>
-            {name} ({suborderDish.count || 1} szt.)
+            {name} ({suborderDish.count} szt.)
           </Typography>
           <Typography variant='body2' color='secondary.main'>
             Kalorie: {calories.perPortion}
@@ -57,7 +57,7 @@ const SideCartItem = ({ suborderDish }: DishProps) => {
         </Box>
         <Box color='#fff' display='flex' justifyContent='center' alignItems='center' marginLeft='auto'>
           <Typography variant='body2' mr={1}>
-            {((price / 100) * (suborderDish.count || 1)).toFixed(2)}
+            {((price / 100) * suborderDish.count).toFixed(2)}
           </Typography>
           <Box color='#fff' display='flex' flexDirection='column'>
             <IconButton onClick={() => removeFromCart(suborderDish, selectedDate as Date)}>

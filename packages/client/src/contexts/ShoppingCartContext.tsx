@@ -45,7 +45,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
 
           const [, duplicateDish] = getTargetDish(dayDishes, suborderDish);
           if (duplicateDish) {
-            duplicateDish.count = (duplicateDish.count ?? 1) + (suborderDish.count ?? 1);
+            duplicateDish.count += suborderDish.count;
           } else {
             dayDishes.push(suborderDish);
           }

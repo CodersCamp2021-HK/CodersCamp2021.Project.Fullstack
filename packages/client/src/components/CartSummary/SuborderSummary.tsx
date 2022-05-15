@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import _ from 'lodash';
 
 import { orderDishKey, SubOrderDish } from '../../contexts';
 import { SideCartItem } from './SideCartItem';
@@ -7,26 +8,13 @@ interface SuborderSummaryProps {
   suborderDishes: SubOrderDish[];
 }
 
-const calculatePrice = (suborderDishes: SubOrderDish[]) => {
-  let priceTotal = 0;
-
-  suborderDishes.forEach((obj) => {
-    const count = obj.count || 1;
-    priceTotal += obj.dish.price * count;
-  });
-  return priceTotal;
-};
+const calculatePrice = (suborderDishes: SubOrderDish[]) =>
+  _.sum(suborderDishes.map((obj) => obj.dish.price * obj.count));
 
 const sumDishNutritionValues = (
   suborderDishes: SubOrderDish[],
   value: 'calories' | 'proteins' | 'fats' | 'carbohydrates',
-) => {
-  let sum = 0;
-  suborderDishes.forEach((obj) => {
-    sum += obj.dish[value].perPortion;
-  });
-  return sum;
-};
+) => _.sum(suborderDishes.map((obj) => obj.dish[value].perPortion));
 
 const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
   return (
@@ -39,8 +27,7 @@ const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
         borderBottom='solid 1px'
         borderColor='secondary.main'
         textAlign='center'
-        pt={1}
-        pb={1}
+        py={1}
         mt={4}
         mb={1}
       >
