@@ -55,9 +55,9 @@ const addresses = [
 ];
 
 const addressToString = (address: AddressDto) => {
-  return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ','} ${
-    address.floor ? `p. ${address.floor},` : ''
-  } ${address.postcode} ${address.city}`;
+  return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ''}${
+    address.floor ? `, p. ${address.floor}` : ''
+  }, ${address.postcode} ${address.city}`;
 };
 
 const OrderDataCompletion = () => {
