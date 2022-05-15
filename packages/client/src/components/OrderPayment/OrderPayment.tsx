@@ -19,6 +19,7 @@ import { apiConfiguration } from '../../config';
 
 const OrderPayment = () => {
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [street, setStreet] = useState('');
@@ -34,7 +35,9 @@ const OrderPayment = () => {
         id: '626699462261bca70cfeeae3',
       });
       setName(getUser.name);
+      setSurname(getUser.surname);
       setPhoneNumber(getUser.phoneNumber);
+      setEmail(getUser.email);
       setCity(getUserAddress.city);
       setStreet(getUserAddress.street);
       setStreetNumber(getUserAddress.streetNumber);
@@ -55,13 +58,13 @@ const OrderPayment = () => {
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
-              <Typography variant='body1'>{name}</Typography>
+              <Typography variant='body1'>{`${name} ${surname}`}</Typography>
               <Typography variant='body1'>{`${street} ${streetNumber} /${apartmentNumber}`}</Typography>
               <Typography variant='body1'>{`${postcode} ${city}`}</Typography>
               <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
                 Dane kontakowe
               </Typography>
-              <Typography variant='body1'>jankowalski@gmail.com</Typography>
+              <Typography variant='body1'>{email}</Typography>
               <Typography variant='body1'>{phoneNumber}</Typography>
             </Box>
           </Grid>

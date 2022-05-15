@@ -10,6 +10,7 @@ interface UpdateUserProfileRequest {
   readonly name: string;
   readonly surname: string;
   readonly phoneNumber: string;
+  readonly email: string;
   readonly card: Card;
 }
 
@@ -24,6 +25,7 @@ class UpdateUserProfileHandler implements Handler<UpdateUserProfileRequest, null
         name: req.name,
         surname: req.surname,
         phoneNumber: req.phoneNumber,
+        email: req.email,
         card: req.card,
       },
       { returnDocument: 'after' },
