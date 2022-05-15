@@ -1,4 +1,4 @@
-import { UserssProfileApi } from '@fullstack/sdk/src';
+import { UpdateUserDto, UserssProfileApi } from '@fullstack/sdk/src';
 import {
   Box,
   Button,
@@ -30,6 +30,15 @@ const OrderDataCompletion = () => {
   const [postCode, setPostCode] = useState('');
   const [city, setCity] = useState('');
   const [deliveryHours, setDeliveryHours] = useState('');
+
+  const userProfile = async (updateData: UpdateUserDto) => {
+    try {
+      const sth = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
+      console.log(sth);
+    } catch (e) {
+      alert('error');
+    }
+  };
 
   return (
     <Container fixed>
@@ -188,7 +197,10 @@ const OrderDataCompletion = () => {
               variant='contained'
               color='secondary'
               sx={{ m: 10, width: '20%' }}
-              href={routes.shoppingCartPayment}
+              // href={routes.shoppingCartPayment}
+              onClick={() => {
+                userProfile({ name, surname, phoneNumber });
+              }}
             >
               PRZEJDŹ DO PŁATNOŚCI
             </Button>
