@@ -108,6 +108,7 @@ const AppNavBar = () => {
       await auth.api.logout();
       auth.setUserRole(null);
       setProfileMenuAnchorElem(null);
+      window.localStorage.removeItem('userRole');
       // eslint-disable-next-line no-empty
     } catch {}
   };

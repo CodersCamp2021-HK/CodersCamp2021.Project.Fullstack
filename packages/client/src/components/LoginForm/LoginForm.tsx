@@ -55,6 +55,7 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
     try {
       await auth.api.login({ loginDto: loginData });
       auth.setUserRole(userRole);
+      window.localStorage.setItem('userRole', userRole);
       navigate(from, { replace: true });
     } catch (e) {
       const error = e as Error;

@@ -10,8 +10,19 @@ const AuthContext = createContext({
   api: new AuthApi(apiConfiguration),
 });
 
+const localStorageRole = () => {
+  switch (window.localStorage.getItem('userRole')) {
+    case 'User':
+      return Role.User;
+    case 'Partner':
+      return Role.Partner;
+    default:
+      return null;
+  }
+};
+
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [userRole, setUserRole] = useState<Role | null>(null);
+  const [userRole, setUserRole] = useState<Role | null>(localStorageRole);
   const value = useMemo(
     () => ({ userRole, setUserRole, isLoggedIn: userRole !== null, api: new AuthApi(apiConfiguration) }),
     [userRole, setUserRole],
