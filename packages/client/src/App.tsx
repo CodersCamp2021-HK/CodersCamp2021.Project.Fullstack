@@ -1,10 +1,9 @@
 import { CssBaseline } from '@mui/material';
-import { useContext } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppNavBar } from './components';
 import { routes } from './config';
-import { AuthContext, AuthProvider, ShoppingCartProvider, ThemeContextProvider } from './contexts';
+import { AuthProvider, ShoppingCartProvider, ThemeContextProvider, useAuth } from './contexts';
 import {
   Home,
   Main,
@@ -17,7 +16,7 @@ import {
 } from './pages';
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const { auth } = useContext(AuthContext);
+  const auth = useAuth();
   const location = useLocation();
 
   if (!auth.isLoggedIn) {

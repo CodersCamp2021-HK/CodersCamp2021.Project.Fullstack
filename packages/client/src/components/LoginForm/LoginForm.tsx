@@ -1,12 +1,11 @@
-import { AuthApi, LoginDto, Role } from '@fullstack/sdk';
+import { LoginDto, Role } from '@fullstack/sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { useContext, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Location, useLocation, useNavigate } from 'react-router-dom';
 
-import { apiConfiguration } from '../../config';
-import { AuthContext } from '../../contexts';
+import { useAuth } from '../../contexts';
 
 interface Error {
   status: number;
@@ -20,8 +19,8 @@ type LocationProps = {
 
 const LoginForm = ({ userRole }: { userRole: Role }) => {
   const navigate = useNavigate();
-  const location = useLocation() as unknown as LocationProps;
-  const { setAuth } = useContext(AuthContext);
+  const location = useLocation() as Location & LocationProps;
+  const auth = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +43,7 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
       setPasswordError(true);
       setPasswordErrorMessage('Wpisz hasło.');
     }
-    if (status === 400) {
+    if (status === 400 || status === 401) {
       setEmailError(true);
       setPasswordError(true);
       setEmailErrorMessage('');
@@ -54,8 +53,8 @@ const LoginForm = ({ userRole }: { userRole: Role }) => {
 
   const loginUser = async (loginData: LoginDto) => {
     try {
-      await new AuthApi(apiConfiguration).login({ loginDto: loginData });
-      setAuth({ isLoggedIn: true, userRole });
+      await auth.api.login({ loginDto: loginData });
+      auth.setUserRole(userRole);
       navigate(from, { replace: true });
     } catch (e) {
       const error = e as Error;

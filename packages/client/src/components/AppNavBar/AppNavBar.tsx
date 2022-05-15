@@ -1,4 +1,4 @@
-import { AuthApi, Role } from '@fullstack/sdk';
+import { Role } from '@fullstack/sdk';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,8 +22,8 @@ import { useContext, useState } from 'react';
 
 import logo from '../../assets/logo.svg';
 import logoDark from '../../assets/logo_dark.svg';
-import { apiConfiguration, routes } from '../../config';
-import { AuthContext, ThemeContext } from '../../contexts';
+import { routes } from '../../config';
+import { ThemeContext, useAuth } from '../../contexts';
 
 const LEFT_PAGES = [
   {
@@ -87,9 +87,7 @@ const pageToButton = (page: typeof PAGES[number]) => (
   </Button>
 );
 
-const menuItems = (
-  pages: typeof PAGES | typeof LEFT_PAGES | typeof RIGHT_PAGES | typeof USER_PAGES | typeof PARTNER_PAGES,
-) => {
+const menuItems = (pages: readonly { name: string; pathname: string }[]) => {
   return pages.map((page) => (
     <MenuItem key={page.pathname} component={Link} href={page.pathname}>
       {page.name}
@@ -98,7 +96,7 @@ const menuItems = (
 };
 
 const AppNavBar = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const auth = useAuth();
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
 
@@ -107,8 +105,8 @@ const AppNavBar = () => {
 
   const handleLogout = async () => {
     try {
-      await new AuthApi(apiConfiguration).logout();
-      setAuth({ isLoggedIn: false, userRole: undefined });
+      await auth.api.logout();
+      auth.setUserRole(null);
       setProfileMenuAnchorElem(null);
       // eslint-disable-next-line no-empty
     } catch {}
