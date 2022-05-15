@@ -74,6 +74,7 @@ const OrderDataCompletion = () => {
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
   const [deliveryHours, setDeliveryHours] = useState('');
+  const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
 
   const [nameError, setNameError] = useState(false);
   const [surnameError, setSurnameError] = useState(false);
@@ -102,6 +103,7 @@ const OrderDataCompletion = () => {
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
+    setClearAddressRadioButton(false);
     setStreetError(false);
     setStreetNumberError(false);
     setApartmentNumberError(false);
@@ -210,6 +212,7 @@ const OrderDataCompletion = () => {
                     error={deliveryHoursError}
                     onChange={(e) => {
                       setDeliveryHours(e.target.value);
+                      setDeliveryHoursError(false);
                     }}
                   >
                     <MenuItem value={1}>4:00 - 6:00</MenuItem>
@@ -237,6 +240,7 @@ const OrderDataCompletion = () => {
                         value={JSON.stringify(e)}
                         control={<Radio />}
                         label={addressToString(e)}
+                        checked={clearAddressRadioButton ? false : undefined}
                       />
                     ))}
                   </RadioGroup>
@@ -314,6 +318,7 @@ const OrderDataCompletion = () => {
                   helperText={streetError === false ? '' : streetErrorMessage}
                   onChange={(e) => {
                     setStreet(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
                 <TextField
@@ -327,6 +332,7 @@ const OrderDataCompletion = () => {
                   helperText={streetNumberError === false ? '' : streetNumberErrorMessage}
                   onChange={(e) => {
                     setStreetNumber(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
                 <TextField
@@ -339,6 +345,7 @@ const OrderDataCompletion = () => {
                   helperText={apartmentNumberError === false ? '' : apartmentNumberErrorMessage}
                   onChange={(e) => {
                     setApartmentNumber(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
                 <TextField
@@ -351,6 +358,7 @@ const OrderDataCompletion = () => {
                   helperText={floorError === false ? '' : floorErrorMessage}
                   onChange={(e) => {
                     setFloor(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
                 <TextField
@@ -364,6 +372,7 @@ const OrderDataCompletion = () => {
                   helperText={postcodeError === false ? '' : postcodeErrorMessage}
                   onChange={(e) => {
                     setPostcode(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
                 <TextField
@@ -377,6 +386,7 @@ const OrderDataCompletion = () => {
                   helperText={cityError === false ? '' : cityErrorMessage}
                   onChange={(e) => {
                     setCity(e.target.value);
+                    setClearAddressRadioButton(true);
                   }}
                 />
               </Box>
