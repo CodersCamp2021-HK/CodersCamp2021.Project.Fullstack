@@ -40,8 +40,11 @@ const style = {
 };
 
 const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
-  const [count, setCount] = useState(previousState?.suborderDish.count ?? 1);
-  const [ingredientState, toggleIngredient] = useIngredientState(dish, previousState?.suborderDish.excludedIngredients);
+  const [count, setCount] = useState(previousState?.suborderDish?.count ?? 1);
+  const [ingredientState, toggleIngredient] = useIngredientState(
+    dish,
+    previousState?.suborderDish?.excludedIngredients,
+  );
   const { addToCart, editInCart } = useShoppingCart();
 
   const excludedIngredients = ingredientState
