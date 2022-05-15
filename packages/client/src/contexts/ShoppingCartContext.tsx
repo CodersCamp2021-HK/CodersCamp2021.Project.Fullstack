@@ -16,17 +16,15 @@ const areDishesEqual = (suborderDish1: SubOrderDish, suborderDish2: SubOrderDish
   suborderDish1.dish.id === suborderDish2.dish.id &&
   isEqual(suborderDish1.excludedIngredients, suborderDish2.excludedIngredients);
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 const ShoppingCartContext = createContext({
   cart: [] as SubOrder[],
-  addToCart: (suborderDish: SubOrderDish, date?: Date | null) => {},
+  addToCart: (() => {}) as (suborderDish: SubOrderDish, date?: Date | null) => void,
   selectedDate: null as Date | null,
-  setSelectedDate: (date: Date | null) => {},
-  modifyDishCount: (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => {},
-  removeFromCart: (suborderDish: SubOrderDish, date: Date) => {},
-  editInCart: (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => {},
+  setSelectedDate: (() => {}) as (date: Date | null) => void,
+  modifyDishCount: (() => {}) as (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => void,
+  removeFromCart: (() => {}) as (suborderDish: SubOrderDish, date: Date) => void,
+  editInCart: (() => {}) as (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => void,
 });
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
