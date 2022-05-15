@@ -7,6 +7,7 @@ import {
   Container,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -72,6 +73,7 @@ const OrderDataCompletion = () => {
   const [floor, setFloor] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
+  const [deliveryHours, setDeliveryHours] = useState('');
 
   const [nameError, setNameError] = useState(false);
   const [surnameError, setSurnameError] = useState(false);
@@ -83,6 +85,7 @@ const OrderDataCompletion = () => {
   const [floorError, setFloorError] = useState(false);
   const [postcodeError, setPostcodeError] = useState(false);
   const [cityError, setCityError] = useState(false);
+  const [deliveryHoursError, setDeliveryHoursError] = useState(false);
 
   const [nameErrorMessage, setNameErrorMessage] = useState('');
   const [surnameErrorMessage, setSurnameErrorMessage] = useState('');
@@ -94,6 +97,7 @@ const OrderDataCompletion = () => {
   const [floorErrorMessage, setFloorErrorMessage] = useState('');
   const [postcodeErrorMessage, setPostcodeErrorMessage] = useState('');
   const [cityErrorMessage, setCityErrorMessage] = useState('');
+  const [deliveryHoursErrorMessage, setDeliveryHoursErrorMessage] = useState('');
 
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
@@ -111,6 +115,13 @@ const OrderDataCompletion = () => {
     setFloor(addressObject.floor || '');
     setPostcode(addressObject.postcode);
     setCity(addressObject.city);
+  };
+
+  const validateDeliveryHours = () => {
+    if (deliveryHours === '') {
+      setDeliveryHoursError(true);
+      setDeliveryHoursErrorMessage('Wybierz godzinę dostawy');
+    }
   };
 
   const validatePersonalInfoForm = () => {
@@ -171,7 +182,9 @@ const OrderDataCompletion = () => {
     setFloorError(false);
     setPostcodeError(false);
     setCityError(false);
+    setDeliveryHoursError(false);
 
+    validateDeliveryHours();
     validatePersonalInfoForm();
     validateAddressForm();
   };
@@ -193,12 +206,17 @@ const OrderDataCompletion = () => {
                     id='demo-simple-select'
                     label='hours'
                     size='small'
-                    value=''
+                    value={deliveryHours}
+                    error={deliveryHoursError}
+                    onChange={(e) => {
+                      setDeliveryHours(e.target.value);
+                    }}
                   >
                     <MenuItem value={1}>4:00 - 6:00</MenuItem>
                     <MenuItem value={2}>6:00 - 8:00</MenuItem>
                     <MenuItem value={3}>8:00 - 10:00</MenuItem>
                   </Select>
+                  {deliveryHoursError && <FormHelperText error>{deliveryHoursErrorMessage}</FormHelperText>}
                 </FormControl>
               </Box>
             </Grid>
