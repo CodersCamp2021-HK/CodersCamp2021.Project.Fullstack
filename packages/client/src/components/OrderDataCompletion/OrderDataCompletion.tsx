@@ -1,4 +1,5 @@
-import { UpdateUserDto, UserssProfileApi } from '@fullstack/sdk/src';
+import { CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
+import { StarHalfSharp } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -27,16 +28,35 @@ const OrderDataCompletion = () => {
   const [streetNumber, setStreetNumber] = useState('');
   const [apartmentNumber, setApartmentNumber] = useState('');
   const [floor, setFloor] = useState('');
-  const [postCode, setPostCode] = useState('');
+  const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
   const [deliveryHours, setDeliveryHours] = useState('');
 
   const userProfile = async (updateData: UpdateUserDto) => {
     try {
-      const sth = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
+      const sth1 = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
+      console.log(sth1);
+    } catch (e) {
+      alert('error');
+    }
+  };
+
+  const userAddress = async (updateData: CreateAddressDto) => {
+    try {
+      const sth = await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
       console.log(sth);
     } catch (e) {
       alert('error');
+    }
+  };
+
+  const userGetAddress = async () => {
+    try {
+      const sth = await new UsersAddressesApi(apiConfiguration).list();
+      return sth;
+    } catch (e) {
+      alert('error');
+      return 1;
     }
   };
 
@@ -175,9 +195,9 @@ const OrderDataCompletion = () => {
                 size='small'
                 id='post-code'
                 label='Kod pocztowy'
-                value={postCode}
+                value={postcode}
                 onChange={(e) => {
-                  setPostCode(e.target.value);
+                  setPostcode(e.target.value);
                 }}
               />
               <TextField
@@ -197,10 +217,11 @@ const OrderDataCompletion = () => {
               variant='contained'
               color='secondary'
               sx={{ m: 10, width: '20%' }}
-              // href={routes.shoppingCartPayment}
-              onClick={() => {
-                userProfile({ name, surname, phoneNumber });
-              }}
+              href={routes.shoppingCartPayment}
+              // onClick={() => {
+              //   userProfile({ name, surname, phoneNumber });
+              //   userAddress({ street, streetNumber, apartmentNumber, floor, city, postcode });
+              // }}
             >
               PRZEJDŹ DO PŁATNOŚCI
             </Button>

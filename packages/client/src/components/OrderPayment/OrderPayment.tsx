@@ -1,3 +1,4 @@
+import { UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
@@ -12,8 +13,36 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useEffect, useState } from 'react';
+
+import { apiConfiguration } from '../../config';
 
 const OrderPayment = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [street, setStreet] = useState('');
+  const [streetNumber, setStreetNumber] = useState('');
+  const [apartmentNumber, setApartmentNumber] = useState('');
+  const [postcode, setPostcode] = useState('');
+  const [city, setCity] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const getUser = await new UserssProfileApi(apiConfiguration).findById();
+      const getUserAddress = await new UsersAddressesApi(apiConfiguration).findById({
+        id: '626699462261bca70cfeeae3',
+      });
+      setName(getUser.name);
+      setPhoneNumber(getUser.phoneNumber);
+      setCity(getUserAddress.city);
+      setStreet(getUserAddress.street);
+      setStreetNumber(getUserAddress.streetNumber);
+      setApartmentNumber(getUserAddress.apartmentNumber);
+      setPostcode(getUserAddress.postcode);
+    })();
+  }, []);
+
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -26,14 +55,14 @@ const OrderPayment = () => {
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
-              <Typography variant='body1'>Jan Kowalski</Typography>
-              <Typography variant='body1'>Warszawska 15/5</Typography>
-              <Typography variant='body1'>01-100 Wrocław</Typography>
+              <Typography variant='body1'>{name}</Typography>
+              <Typography variant='body1'>{`${street} ${streetNumber} /${apartmentNumber}`}</Typography>
+              <Typography variant='body1'>{`${postcode} ${city}`}</Typography>
               <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
                 Dane kontakowe
               </Typography>
               <Typography variant='body1'>jankowalski@gmail.com</Typography>
-              <Typography variant='body1'>600 700 800</Typography>
+              <Typography variant='body1'>{phoneNumber}</Typography>
             </Box>
           </Grid>
           <Divider orientation='vertical' flexItem sx={{ borderRightWidth: 4, mt: 4 }} variant='fullWidth' />
