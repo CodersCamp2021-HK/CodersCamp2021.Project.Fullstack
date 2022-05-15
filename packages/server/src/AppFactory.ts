@@ -4,7 +4,6 @@ import _ from 'lodash';
 
 import { AppModule } from './AppModule';
 import { createSwaggerDocument, env, setupOpenApiValidator, setupSecurity, setupSwagger } from './config';
-
 async function appFactory(options: NestApplicationOptions = {}) {
   const app = await NestFactory.create(AppModule, {
     logger: env.NODE_ENV !== 'production' ? ['verbose', 'debug', 'log', 'warn', 'error'] : ['log', 'warn', 'error'],
