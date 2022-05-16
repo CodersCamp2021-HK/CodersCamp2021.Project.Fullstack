@@ -100,6 +100,8 @@ const OrderDataCompletion = () => {
   const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
 
+  const [stateChanged, setStateChanged] = useState(() => false);
+
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
@@ -121,6 +123,15 @@ const OrderDataCompletion = () => {
   const handleSelectDeliveryHours = (e) => {
     e.preventDefault();
     setDeliveryHours(e.target.value);
+  };
+
+  const userProfile = async (updateData: UpdateUserDto) => {
+    try {
+      const sth1 = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
+      console.log(sth1);
+    } catch (e) {
+      alert('error');
+    }
   };
 
   return (
@@ -192,6 +203,7 @@ const OrderDataCompletion = () => {
                   helperText={nameErrorMessage}
                   onChange={(e) => {
                     setName(e.target.value);
+                    setStateChanged(true);
                   }}
                 />
                 <TextField
@@ -326,8 +338,12 @@ const OrderDataCompletion = () => {
                 variant='contained'
                 color='secondary'
                 sx={{ m: 10, width: '20%' }}
-                onClick={(e) => {
+                onClick={() => {
                   console.log(deliveryHours);
+                  console.log(`state:${stateChanged}`);
+                  if (stateChanged) {
+                    userProfile({ name, surname, phoneNumber });
+                  }
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
