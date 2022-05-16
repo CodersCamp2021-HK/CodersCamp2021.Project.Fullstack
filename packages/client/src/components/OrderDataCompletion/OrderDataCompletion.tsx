@@ -118,6 +118,11 @@ const OrderDataCompletion = () => {
     setDidSubmit(true);
   };
 
+  const handleSelectDeliveryHours = (e) => {
+    e.preventDefault();
+    setDeliveryHours(e.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
@@ -135,15 +140,13 @@ const OrderDataCompletion = () => {
                     id='demo-simple-select'
                     label='hours'
                     size='small'
-                    value={deliveryHours}
+                    value=''
                     error={didSubmit && deliveryHoursErrorMessage !== ''}
-                    onChange={(e) => {
-                      setDeliveryHours(e.target.value);
-                    }}
+                    onChange={handleSelectDeliveryHours}
                   >
-                    <MenuItem value={1}>4:00 - 6:00</MenuItem>
-                    <MenuItem value={2}>6:00 - 8:00</MenuItem>
-                    <MenuItem value={3}>8:00 - 10:00</MenuItem>
+                    <MenuItem value={4}>4:00 - 6:00</MenuItem>
+                    <MenuItem value={6}>6:00 - 8:00</MenuItem>
+                    <MenuItem value={8}>8:00 - 10:00</MenuItem>
                   </Select>
                   {didSubmit && <FormHelperText error>{deliveryHoursErrorMessage}</FormHelperText>}
                 </FormControl>
@@ -318,7 +321,15 @@ const OrderDataCompletion = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button type='submit' variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
+              <Button
+                type='submit'
+                variant='contained'
+                color='secondary'
+                sx={{ m: 10, width: '20%' }}
+                onClick={(e) => {
+                  console.log(deliveryHours);
+                }}
+              >
                 PRZEJDŹ DO PŁATNOŚCI
               </Button>
             </Grid>
