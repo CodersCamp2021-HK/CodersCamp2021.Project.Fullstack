@@ -19,8 +19,14 @@ import { each } from 'immer/dist/internal';
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration, routes } from '../../config';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
 
+interface OrderDishProps {
+  orderDish: SubOrderDish;
+}
 const OrderDataCompletion = () => {
+  const { cart, setUserData } = useShoppingCart();
+
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -35,6 +41,10 @@ const OrderDataCompletion = () => {
   const [hourEnd, setHourEnd] = useState('');
   const [addresssTable, setAddressTable] = useState([]);
   const [testTable, setTestTa] = useState([]);
+
+  useEffect(() => {
+    setUserData({ name, surname, phoneNumber });
+  }, [name, surname, phoneNumber, setUserData]);
 
   const addressToString = (address: AddressDto) => {
     return `${address.street} ${address.streetNumber} ${

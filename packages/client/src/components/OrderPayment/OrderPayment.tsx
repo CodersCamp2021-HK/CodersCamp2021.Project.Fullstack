@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
-import { SubOrderDish } from '../../contexts';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
 
 interface OrderDishProps {
   orderDish: SubOrderDish;
@@ -31,6 +31,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
+  const { userData } = useShoppingCart();
 
   useEffect(() => {
     (async () => {
@@ -60,10 +61,11 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
+              {console.log(userData)}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
-              <Typography variant='body1'>{`${name} ${surname}`}</Typography>
+              <Typography variant='body1'>{`${userData?.name} ${userData?.surname}`}</Typography>
               <Typography variant='body1'>{`${street} ${streetNumber} /${apartmentNumber}`}</Typography>
               <Typography variant='body1'>{`${postcode} ${city}`}</Typography>
               <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
