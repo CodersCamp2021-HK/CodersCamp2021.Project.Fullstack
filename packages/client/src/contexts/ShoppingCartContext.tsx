@@ -50,7 +50,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
           );
 
           if (duplicateDish) {
-            duplicateDish.count = (duplicateDish.count ?? 1) + (suborderDish.count ?? 1);
+            duplicateDish.count += suborderDish.count;
             return;
           }
 

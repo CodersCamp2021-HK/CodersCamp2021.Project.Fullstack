@@ -20,13 +20,18 @@ interface OrderDishProps {
 }
 
 const OrderDish = ({ orderDish }: OrderDishProps) => {
-  const { dish, excludedIngredients = [], count = 1 } = orderDish;
+  const { dish, excludedIngredients, count } = orderDish;
   return (
     <TableRow sx={{ height: '1px' }}>
       {console.log(orderDish)}
       <TableCell sx={{ py: 5 }}>
         <Box sx={{ width: '11rem', height: '11rem', borderRadius: 4, overflow: 'hidden', mx: 'auto' }}>
-          <img alt={dish.name} src={dish.photo ? dish.photo : defaultPhoto} height='100%' />
+          <img
+            style={{ objectFit: 'cover', objectPosition: 'center', width: '100%' }}
+            alt={dish.name}
+            src={dish.photo ? dish.photo : defaultPhoto}
+            height='100%'
+          />
         </Box>
       </TableCell>
       <TableCell sx={{ height: '100%', py: 5 }}>
@@ -47,7 +52,7 @@ const OrderDish = ({ orderDish }: OrderDishProps) => {
       </TableCell>
       <TableCell>
         <ul style={{ listStyle: 'none', padding: 0 }}>
-          {excludedIngredients?.map((ingredient) => (
+          {excludedIngredients.map((ingredient) => (
             <li key={ingredient}>{ingredient}</li>
           ))}
         </ul>
