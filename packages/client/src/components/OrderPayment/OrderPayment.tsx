@@ -50,7 +50,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {/* {console.log(addressId, address)} */}
+              {console.log(userData)}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
@@ -93,6 +93,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               color='secondary'
               sx={{ m: 8, width: '20%' }}
               onClick={() => {
+                console.log(cart);
                 const deliveryHourEnd = deliveryHourStart + 2;
                 userOrder({
                   addressId,

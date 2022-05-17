@@ -103,8 +103,8 @@ const OrderDataCompletion = () => {
   }, []);
 
   useEffect(() => {
-    setUserData({ name, surname, phoneNumber });
-  }, [name, surname, phoneNumber, setUserData]);
+    setUserData({ name, surname, phoneNumber, email });
+  }, [name, surname, phoneNumber, email, setUserData]);
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
