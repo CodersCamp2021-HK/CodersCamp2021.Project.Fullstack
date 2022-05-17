@@ -12,6 +12,7 @@ const routes = {
   shoppingCartPayment: '/shopping-cart/payment',
   order: '/order',
   main: '/main',
+  restaurantProfile: (id: string) => `/restaurants/${id}`,
 } as const;
 
 export { routes };
