@@ -199,7 +199,7 @@ const AppNavBar = () => {
           placement='bottom-end'
         >
           <Button variant='contained' color='secondary' sx={{ borderRadius: '50%', ml: 2, p: 2 }}>
-            <Badge badgeContent={cart.length} color='primary' variant='dot' invisible={cart.length === 0}>
+            <Badge badgeContent={cart.length} color='primary' invisible={cart.length === 0}>
               <IconButton color='primary' disabled={cart.length === 0} href={routes.shoppingCart} title='Koszyk'>
                 <ShoppingBasketIcon />
               </IconButton>
