@@ -36,6 +36,7 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
+  const { setAddressId } = useShoppingCart();
   const [name, setName] = useState<any>('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
@@ -205,6 +206,7 @@ const OrderDataCompletion = () => {
                       fillAddressForm(e.target.value);
                       // get id of address
                       console.log(JSON.parse(e.target.value).id);
+                      setAddressId(JSON.parse(e.target.value).id);
                     }}
                   >
                     {address.map((e) => (
@@ -370,11 +372,11 @@ const OrderDataCompletion = () => {
                 variant='contained'
                 color='secondary'
                 sx={{ m: 10, width: '20%' }}
+                href={routes.shoppingCartPayment}
                 onClick={() => {
-                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
-
-                  if (stateChangedAddress)
-                    createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
+                  // if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
+                  // if (stateChangedAddress)
+                  //   createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
