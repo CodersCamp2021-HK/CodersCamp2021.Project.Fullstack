@@ -29,7 +29,13 @@ const CartSummary = () => {
         </Typography>
       )}
       <Box textAlign='center'>
-        <Button href={routes.shoppingCart} color='secondary' variant='contained' size='large'>
+        <Button
+          href={cart.length !== 0 ? routes.shoppingCart : ''}
+          color='secondary'
+          variant='contained'
+          size='large'
+          disabled={cart.length === 0}
+        >
           Przejdź do zamówienia
         </Button>
       </Box>
