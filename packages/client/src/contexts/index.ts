@@ -1,3 +1,4 @@
+export * from './AuthContext';
 export * from './FiltersContext';
 export * from './RestaurantCacheContext';
 export * from './ShoppingCartContext';

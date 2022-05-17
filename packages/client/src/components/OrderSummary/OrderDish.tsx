@@ -3,9 +3,11 @@ import Create from '@mui/icons-material/Create';
 import DeleteOutline from '@mui/icons-material/DeleteOutline';
 import Remove from '@mui/icons-material/Remove';
 import { Box, Chip, IconButton, Stack, TableCell, TableRow, Typography } from '@mui/material';
+import { useState } from 'react';
 
 import defaultPhoto from '../../assets/placeholder.png';
-import { SubOrderDish } from '../../contexts';
+import { SubOrderDish, useShoppingCart } from '../../contexts';
+import { DishPopup } from '../DishPopup';
 
 const NUMBER_TYPOGRAPHY = {
   variant: 'h5',
@@ -16,11 +18,20 @@ const NUMBER_TYPOGRAPHY = {
 } as const;
 
 interface OrderDishProps {
+  date: Date;
   orderDish: SubOrderDish;
 }
 
-const OrderDish = ({ orderDish }: OrderDishProps) => {
-  const { dish, excludedIngredients, count } = orderDish;
+const OrderDish = ({ date, orderDish }: OrderDishProps) => {
+  const { dish, excludedIngredients = [], count = 1 } = orderDish;
+
+  const { modifyDishCount, removeFromCart } = useShoppingCart();
+  const decreaseDishCount = () => modifyDishCount(orderDish, date, (c) => c - 1);
+  const increaseDishCount = () => modifyDishCount(orderDish, date, (c) => c + 1);
+
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
+  const currentState = { date, suborderDish: { dish, count, excludedIngredients } };
+
   return (
     <TableRow sx={{ height: '1px' }}>
       <TableCell sx={{ py: 5 }}>
@@ -61,31 +72,38 @@ const OrderDish = ({ orderDish }: OrderDishProps) => {
       </TableCell>
       <TableCell align='center'>
         <Stack direction='row' justifyContent='center' alignItems='center'>
-          <IconButton>
+          <IconButton onClick={decreaseDishCount} disabled={count <= 1}>
             <Remove />
           </IconButton>
-          <Typography {...NUMBER_TYPOGRAPHY} px={1}>
+          <Typography {...NUMBER_TYPOGRAPHY} px={1} minWidth='3ch'>
             {count}
           </Typography>
-          <IconButton>
+          <IconButton onClick={increaseDishCount}>
             <Add />
           </IconButton>
         </Stack>
       </TableCell>
       <TableCell align='center'>
-        <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark'>
+        <Typography {...NUMBER_TYPOGRAPHY} color='secondary.dark' minWidth='9ch'>
           {((dish.price * count) / 100).toFixed(2)} zł
         </Typography>
       </TableCell>
       <TableCell>
         <Stack alignItems='center'>
-          <IconButton>
+          <IconButton onClick={() => removeFromCart(orderDish, date)}>
             <DeleteOutline />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => setEditPopupOpen(true)}>
             <Create />
           </IconButton>
         </Stack>
+        <DishPopup
+          key={JSON.stringify(currentState)}
+          previousState={currentState}
+          open={editPopupOpen}
+          onClose={() => setEditPopupOpen(false)}
+          dish={dish}
+        />
       </TableCell>
     </TableRow>
   );
