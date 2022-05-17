@@ -64,16 +64,16 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const [name, setName] = useState(userPersonalInfo.name || '');
+  const [name, setName] = useState<any>('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
-  const [surname, setSurname] = useState(userPersonalInfo.surname || '');
+  const [surname, setSurname] = useState<any>('');
   const surnameErrorMessage = surname.match(/^[A-ZĄĆĘŁŃÓŚŹŻ-]{3,35}$/i) ? '' : 'Wpisz poprawne nazwisko.';
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<any>('');
   const emailErrorMessage = email.match(EMAIL_CONST.REGEX) ? '' : 'Wpisz poprawny adres email.';
 
-  const [phoneNumber, setPhoneNumber] = useState(userPersonalInfo.phoneNumber || '');
+  const [phoneNumber, setPhoneNumber] = useState<any>('');
   const phoneNumberErrorMessage = phoneNumber.match(PHONE_NUMBER_CONST.REGEX) ? '' : 'Wpisz poprawny numer telefonu.';
 
   const [street, setStreet] = useState('');
@@ -100,7 +100,17 @@ const OrderDataCompletion = () => {
   const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
 
-  const [stateChanged, setStateChanged] = useState(() => false);
+  const [stateChangedUser, setStateChangedUser] = useState(() => false);
+  const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
+
+  useEffect(() => {
+    (async () => {
+      const getUserData = await new UserssProfileApi(apiConfiguration).findById();
+      setName(getUserData.name);
+      setSurname(getUserData.surname);
+      setPhoneNumber(getUserData.phoneNumber);
+    })();
+  }, []);
 
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
@@ -129,6 +139,15 @@ const OrderDataCompletion = () => {
     try {
       const sth1 = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
       console.log(sth1);
+    } catch (e) {
+      alert('error');
+    }
+  };
+
+  const createUserAddress = async (updateData: CreateAddressDto) => {
+    try {
+      const sth = await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
+      console.log(sth);
     } catch (e) {
       alert('error');
     }
@@ -203,7 +222,7 @@ const OrderDataCompletion = () => {
                   helperText={nameErrorMessage}
                   onChange={(e) => {
                     setName(e.target.value);
-                    setStateChanged(true);
+                    setStateChangedUserUser(true);
                   }}
                 />
                 <TextField
@@ -314,6 +333,7 @@ const OrderDataCompletion = () => {
                   onChange={(e) => {
                     setPostcode(e.target.value);
                     setClearAddressRadioButton(true);
+                    setStateChangedAddress(true);
                   }}
                 />
                 <TextField
@@ -340,10 +360,11 @@ const OrderDataCompletion = () => {
                 sx={{ m: 10, width: '20%' }}
                 onClick={() => {
                   console.log(deliveryHours);
-                  console.log(`state:${stateChanged}`);
-                  if (stateChanged) {
-                    userProfile({ name, surname, phoneNumber });
-                  }
+                  console.log(`state:${stateChangedUser}`);
+                  if (stateChangedUser) userProfile({ name, surname, phoneNumber });
+
+                  if (stateChangedAddress)
+                    createUserAddress({ street, streetNumber, apartmentNumber, floor, city, postcode });
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
