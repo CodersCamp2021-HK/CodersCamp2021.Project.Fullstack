@@ -19,6 +19,8 @@ const ShoppingCartContext = createContext<{
   setUserData: (data: UserData | null) => void;
   addressId: string;
   setAddressId: (id: string) => void;
+  deliveryHourStart: string;
+  setDeliveryHourStart: (id: string) => void;
 }>({
   cart: [],
   addToCart: () => {},
@@ -28,6 +30,8 @@ const ShoppingCartContext = createContext<{
   setUserData: () => {},
   addressId: '',
   setAddressId: () => {},
+  deliveryHourStart: '',
+  setDeliveryHourStart: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
@@ -35,6 +39,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [addressId, setAddressId] = useState<string>('');
+  const [deliveryHourStart, setDeliveryHourStart] = useState<string>('');
 
   const addToCart = useCallback(
     (suborderDish: SubOrderDish) =>
@@ -66,8 +71,30 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, userData, setUserData, addressId, setAddressId }),
-    [cart, addToCart, selectedDate, setSelectedDate, userData, setUserData, addressId, setAddressId],
+    () => ({
+      cart,
+      addToCart,
+      selectedDate,
+      setSelectedDate,
+      userData,
+      setUserData,
+      addressId,
+      setAddressId,
+      deliveryHourStart,
+      setDeliveryHourStart,
+    }),
+    [
+      cart,
+      addToCart,
+      selectedDate,
+      setSelectedDate,
+      userData,
+      setUserData,
+      addressId,
+      setAddressId,
+      deliveryHourStart,
+      setDeliveryHourStart,
+    ],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;

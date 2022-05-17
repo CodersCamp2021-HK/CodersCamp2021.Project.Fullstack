@@ -31,7 +31,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
-  const { addressId } = useShoppingCart();
+  const { addressId, deliveryHourStart } = useShoppingCart();
 
   useEffect(() => {
     (async () => {
@@ -61,7 +61,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {console.log(addressId)}
+              {console.log(addressId, deliveryHourStart)}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>

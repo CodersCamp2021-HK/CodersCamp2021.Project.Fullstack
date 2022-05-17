@@ -36,7 +36,7 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const { setAddressId } = useShoppingCart();
+  const { setAddressId, setDeliveryHourStart } = useShoppingCart();
   const [name, setName] = useState<any>('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
@@ -131,6 +131,7 @@ const OrderDataCompletion = () => {
   const handleSelectDeliveryHours = (e) => {
     e.preventDefault();
     setDeliveryHours(e.target.value);
+    setDeliveryHourStart(e.target.value);
   };
 
   const updateUserProfile = async (updateData: UpdateUserDto) => {
@@ -181,7 +182,7 @@ const OrderDataCompletion = () => {
                     id='demo-simple-select'
                     label='hours'
                     size='small'
-                    value=''
+                    value={deliveryHours}
                     error={didSubmit && deliveryHoursErrorMessage !== ''}
                     onChange={handleSelectDeliveryHours}
                   >
