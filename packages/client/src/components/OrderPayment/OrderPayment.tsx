@@ -22,35 +22,16 @@ interface OrderDishProps {
   orderDish: SubOrderDish;
 }
 const OrderPayment = ({ orderDish }: OrderDishProps) => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [street, setStreet] = useState('');
-  const [streetNumber, setStreetNumber] = useState('');
-  const [apartmentNumber, setApartmentNumber] = useState('');
-  const [postcode, setPostcode] = useState('');
-  const [city, setCity] = useState('');
-  const { addressId, deliveryHourStart, userData, address, cart } = useShoppingCart();
+  const { addressId, deliveryHourStart, userData, address, cart, setAddressId } = useShoppingCart();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const getUser = await new UserssProfileApi(apiConfiguration).findById();
-  //     const getUserAddress = await new UsersAddressesApi(apiConfiguration).findById({
-  //       id: '626699462261bca70cfeeae3',
-  //     });
-  //     console.log(orderDish);
-  //     setName(getUser.name);
-  //     setSurname(getUser.surname);
-  //     setPhoneNumber(getUser.phoneNumber);
-  //     setEmail(getUser.email);
-  //     setCity(getUserAddress.city);
-  //     setStreet(getUserAddress.street);
-  //     setStreetNumber(getUserAddress.streetNumber);
-  //     setApartmentNumber(getUserAddress.apartmentNumber);
-  //     setPostcode(getUserAddress.postcode);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      if (addressId === '') {
+        const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+        setAddressId(getUserAddress.data.at(-1).id);
+      }
+    })();
+  }, []);
 
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
@@ -69,7 +50,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {console.log(addressId, address)}
+              {/* {console.log(addressId, address)} */}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
@@ -117,7 +98,18 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
                   addressId,
                   hourStart: deliveryHourStart,
                   hourEnd: deliveryHourEnd,
-                  subOrders: [{ deliveryDate: cart[0].deliveryDate, dishes: [cart[0].dishes[0].dish] }],
+                  subOrders: [
+                    {
+                      deliveryDate: cart[0].deliveryDate,
+                      dishes: [
+                        {
+                          dishId: cart[0].dishes[0].dish.id,
+                          count: cart[0].dishes[0].count,
+                          excludedIngredients: cart[0].dishes[0].excludedIngredients,
+                        },
+                      ],
+                    },
+                  ],
                 });
               }}
             >

@@ -379,9 +379,9 @@ const OrderDataCompletion = () => {
                 sx={{ m: 10, width: '20%' }}
                 href={routes.shoppingCartPayment}
                 onClick={() => {
-                  // if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
-                  // if (stateChangedAddress)
-                  //   createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
+                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
+                  if (stateChangedAddress)
+                    createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
