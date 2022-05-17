@@ -31,26 +31,26 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
-  const { addressId, deliveryHourStart } = useShoppingCart();
+  const { addressId, deliveryHourStart, userData, address } = useShoppingCart();
 
-  useEffect(() => {
-    (async () => {
-      const getUser = await new UserssProfileApi(apiConfiguration).findById();
-      const getUserAddress = await new UsersAddressesApi(apiConfiguration).findById({
-        id: '626699462261bca70cfeeae3',
-      });
-      console.log(orderDish);
-      setName(getUser.name);
-      setSurname(getUser.surname);
-      setPhoneNumber(getUser.phoneNumber);
-      setEmail(getUser.email);
-      setCity(getUserAddress.city);
-      setStreet(getUserAddress.street);
-      setStreetNumber(getUserAddress.streetNumber);
-      setApartmentNumber(getUserAddress.apartmentNumber);
-      setPostcode(getUserAddress.postcode);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const getUser = await new UserssProfileApi(apiConfiguration).findById();
+  //     const getUserAddress = await new UsersAddressesApi(apiConfiguration).findById({
+  //       id: '626699462261bca70cfeeae3',
+  //     });
+  //     console.log(orderDish);
+  //     setName(getUser.name);
+  //     setSurname(getUser.surname);
+  //     setPhoneNumber(getUser.phoneNumber);
+  //     setEmail(getUser.email);
+  //     setCity(getUserAddress.city);
+  //     setStreet(getUserAddress.street);
+  //     setStreetNumber(getUserAddress.streetNumber);
+  //     setApartmentNumber(getUserAddress.apartmentNumber);
+  //     setPostcode(getUserAddress.postcode);
+  //   })();
+  // }, []);
 
   return (
     <Container fixed>
@@ -61,18 +61,18 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {console.log(addressId, deliveryHourStart)}
+              {console.log(addressId, address)}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
-              {/* <Typography variant='body1'>{`${userData?.name} ${userData?.surname}`}</Typography>
-              <Typography variant='body1'>{`${street} ${streetNumber} /${apartmentNumber}`}</Typography>
-              <Typography variant='body1'>{`${postcode} ${city}`}</Typography> */}
+              <Typography variant='body1'>{`${userData?.name} ${userData?.surname}`}</Typography>
+              <Typography variant='body1'>{`${address?.street} ${address?.streetNumber} /${address?.apartmentNumber}`}</Typography>
+              <Typography variant='body1'>{`${address?.postcode} ${address?.city}`}</Typography>
               <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
                 Dane kontakowe
               </Typography>
               <Typography variant='body1'>{email}</Typography>
-              <Typography variant='body1'>{phoneNumber}</Typography>
+              <Typography variant='body1'>{userData?.phoneNumber}</Typography>
             </Box>
           </Grid>
           <Divider orientation='vertical' flexItem sx={{ borderRightWidth: 4, mt: 4 }} variant='fullWidth' />

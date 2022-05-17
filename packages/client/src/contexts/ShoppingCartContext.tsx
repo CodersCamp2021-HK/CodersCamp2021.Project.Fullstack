@@ -1,10 +1,11 @@
-import { DishDto, OrderDishDto, UserDto } from '@fullstack/sdk';
+import { AddressDto, DishDto, OrderDishDto, UserDto } from '@fullstack/sdk';
 import produce from 'immer';
 import { isEqual } from 'lodash';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 type SubOrderDish = Omit<OrderDishDto, 'dishId'> & { dish: DishDto };
 type UserData = Omit<UserDto, 'id' | 'card'>;
+type Address = Omit<AddressDto, 'id' | 'floor'>;
 interface SubOrder {
   deliveryDate: Date;
   dishes: SubOrderDish[];
@@ -17,6 +18,8 @@ const ShoppingCartContext = createContext<{
   setSelectedDate: (date: Date | null) => void;
   userData: UserData | null;
   setUserData: (data: UserData | null) => void;
+  address: Address | null;
+  setAddress: (address: Address | null) => void;
   addressId: string;
   setAddressId: (id: string) => void;
   deliveryHourStart: string;
@@ -28,6 +31,8 @@ const ShoppingCartContext = createContext<{
   setSelectedDate: () => {},
   userData: {},
   setUserData: () => {},
+  address: { street: '', streetNumber: '', city: '', postcode: '', apartmentNumber: '' },
+  setAddress: () => {},
   addressId: '',
   setAddressId: () => {},
   deliveryHourStart: '',
@@ -38,6 +43,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [address, setAddress] = useState<Address | null>(null);
   const [addressId, setAddressId] = useState<string>('');
   const [deliveryHourStart, setDeliveryHourStart] = useState<string>('');
 
@@ -78,6 +84,8 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
       setSelectedDate,
       userData,
       setUserData,
+      address,
+      setAddress,
       addressId,
       setAddressId,
       deliveryHourStart,
@@ -90,6 +98,8 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
       setSelectedDate,
       userData,
       setUserData,
+      address,
+      setAddress,
       addressId,
       setAddressId,
       deliveryHourStart,

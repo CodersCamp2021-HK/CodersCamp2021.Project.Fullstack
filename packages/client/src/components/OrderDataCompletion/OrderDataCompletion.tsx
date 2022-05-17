@@ -36,7 +36,7 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const { setAddressId, setDeliveryHourStart } = useShoppingCart();
+  const { setAddressId, setDeliveryHourStart, setUserData, setAddress } = useShoppingCart();
   const [name, setName] = useState<any>('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
@@ -102,6 +102,9 @@ const OrderDataCompletion = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    setUserData({ name, surname, phoneNumber });
+  }, [name, surname, phoneNumber, setUserData]);
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
@@ -155,6 +158,7 @@ const OrderDataCompletion = () => {
   // check if user put new address
   useEffect(() => {
     const newAddressTable = [street, streetNumber, apartmentNumber, floor, postcode, city];
+    setAddress({ street, postcode, streetNumber, apartmentNumber, city });
     if (JSON.stringify(oldStateAddress) === JSON.stringify(newAddressTable)) setStateChangedAddress(false);
     else setStateChangedAddress(true);
   }, [street, postcode, streetNumber, floor, apartmentNumber, city, oldStateAddress, stateChangedAddress]);
