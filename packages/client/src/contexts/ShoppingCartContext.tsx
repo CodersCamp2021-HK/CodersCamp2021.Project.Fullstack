@@ -22,8 +22,8 @@ const ShoppingCartContext = createContext<{
   setAddress: (address: Address | null) => void;
   addressId: string;
   setAddressId: (id: string) => void;
-  deliveryHourStart: string;
-  setDeliveryHourStart: (id: string) => void;
+  deliveryHourStart: number;
+  setDeliveryHourStart: (hourStart: number) => void;
 }>({
   cart: [],
   addToCart: () => {},
@@ -35,7 +35,7 @@ const ShoppingCartContext = createContext<{
   setAddress: () => {},
   addressId: '',
   setAddressId: () => {},
-  deliveryHourStart: '',
+  deliveryHourStart: 0,
   setDeliveryHourStart: () => {},
 });
 
@@ -45,7 +45,7 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [address, setAddress] = useState<Address | null>(null);
   const [addressId, setAddressId] = useState<string>('');
-  const [deliveryHourStart, setDeliveryHourStart] = useState<string>('');
+  const [deliveryHourStart, setDeliveryHourStart] = useState<number>(0);
 
   const addToCart = useCallback(
     (suborderDish: SubOrderDish) =>

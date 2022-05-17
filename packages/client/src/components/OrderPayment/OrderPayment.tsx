@@ -1,4 +1,4 @@
-import { UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
+import { CreateOrderDto, OrdersApi, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
@@ -31,7 +31,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const [postcode, setPostcode] = useState('');
   const [city, setCity] = useState('');
-  const { addressId, deliveryHourStart, userData, address } = useShoppingCart();
+  const { addressId, deliveryHourStart, userData, address, cart } = useShoppingCart();
 
   // useEffect(() => {
   //   (async () => {
@@ -52,6 +52,14 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
   //   })();
   // }, []);
 
+  const userOrder = async (updateData: CreateOrderDto) => {
+    try {
+      const sth1 = await new OrdersApi(apiConfiguration).create({ createOrderDto: updateData });
+      console.log(sth1);
+    } catch (e) {
+      alert('error');
+    }
+  };
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -99,7 +107,20 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
           </Grid>
 
           <Grid container justifyContent='center' alignItems='center'>
-            <Button variant='contained' color='secondary' sx={{ m: 8, width: '20%' }}>
+            <Button
+              variant='contained'
+              color='secondary'
+              sx={{ m: 8, width: '20%' }}
+              onClick={() => {
+                const deliveryHourEnd = deliveryHourStart + 2;
+                userOrder({
+                  addressId,
+                  hourStart: deliveryHourStart,
+                  hourEnd: deliveryHourEnd,
+                  subOrders: [{ deliveryDate: cart[0].deliveryDate, dishes: [cart[0].dishes[0].dish] }],
+                });
+              }}
+            >
               ZAPŁAĆ I ZAMÓW
             </Button>
           </Grid>
