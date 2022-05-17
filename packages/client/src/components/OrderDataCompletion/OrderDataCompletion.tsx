@@ -29,34 +29,6 @@ import { useEffect, useState } from 'react';
 import { apiConfiguration, routes } from '../../config';
 import { useShoppingCart } from '../../contexts';
 
-const addresses = [
-  {
-    id: '1',
-    street: 'Słowackiego',
-    streetNumber: '15',
-    apartmentNumber: '1',
-    floor: '1',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-
-  {
-    id: '2',
-    street: 'Sienkiewicza',
-    streetNumber: '5',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-
-  {
-    id: '3',
-    street: 'Sienkiewicza',
-    streetNumber: '5',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-];
-
 const addressToString = (address: AddressDto) => {
   return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ''}${
     address.floor ? `, p. ${address.floor}` : ''
@@ -85,7 +57,7 @@ const OrderDataCompletion = () => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const apartmentNumberErrorMessage = apartmentNumber.match(/^\d{0,3}$/) ? '' : 'Wpisz poprawny numer mieszkania.';
 
-  const [floor, setFloor] = useState('');
+  const [floor, setFloor] = useState<any>('');
   const floorErrorMessage = floor.match(/^\d{0,2}$/) ? '' : 'Wpisz poprawne piętro.';
 
   const [postcode, setPostcode] = useState('');
@@ -103,6 +75,7 @@ const OrderDataCompletion = () => {
   const [stateChangedUser, setStateChangedUser] = useState(() => false);
   const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
   const [oldState, setOldState] = useState<any>([]);
+  const [oldStateAddress, setOldStateAddress] = useState<any>([]);
 
   const [address, setAddressTable] = useState<any>([]);
 
@@ -114,8 +87,10 @@ const OrderDataCompletion = () => {
       setPhoneNumber(getUserData.phoneNumber);
       setOldState([getUserData.name, getUserData.surname, getUserData.phoneNumber]);
       const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+      console.log(getUserAddress.data.at(-1));
       setAddressTable(
         getUserAddress.data.map((e) => ({
+          id: e.id,
           street: e.street,
           streetNumber: e.streetNumber,
           apartmentNumber: e.apartmentNumber,
@@ -137,6 +112,14 @@ const OrderDataCompletion = () => {
     setFloor(addressObject.floor || '');
     setPostcode(addressObject.postcode);
     setCity(addressObject.city);
+    setOldStateAddress([
+      addressObject.street,
+      addressObject.streetNumber,
+      addressObject.apartmentNumber,
+      addressObject.floor || '',
+      addressObject.postcode,
+      addressObject.city,
+    ]);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -167,6 +150,14 @@ const OrderDataCompletion = () => {
     }
   };
 
+  // check if user put new address
+  useEffect(() => {
+    const newAddressTable = [street, streetNumber, apartmentNumber, floor, postcode, city];
+    if (JSON.stringify(oldStateAddress) === JSON.stringify(newAddressTable)) setStateChangedAddress(false);
+    else setStateChangedAddress(true);
+  }, [street, postcode, streetNumber, floor, apartmentNumber, city, oldStateAddress, stateChangedAddress]);
+
+  // check if user put new profile data
   useEffect(() => {
     const newDataTable = [name, surname, phoneNumber];
     if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
@@ -212,6 +203,7 @@ const OrderDataCompletion = () => {
                     name='radio-buttons-group'
                     onChange={(e) => {
                       fillAddressForm(e.target.value);
+                      // get id of address
                       console.log(JSON.parse(e.target.value).id);
                     }}
                   >
@@ -354,7 +346,6 @@ const OrderDataCompletion = () => {
                   onChange={(e) => {
                     setPostcode(e.target.value);
                     setClearAddressRadioButton(true);
-                    setStateChangedAddress(true);
                   }}
                 />
                 <TextField
@@ -382,8 +373,8 @@ const OrderDataCompletion = () => {
                 onClick={() => {
                   if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
 
-                  // if (stateChangedAddress)
-                  //   createUserAddress({ street, streetNumber, apartmentNumber, floor, city, postcode });
+                  if (stateChangedAddress)
+                    createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
