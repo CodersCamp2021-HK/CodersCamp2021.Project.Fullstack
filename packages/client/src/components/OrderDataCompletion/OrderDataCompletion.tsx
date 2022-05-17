@@ -1,4 +1,11 @@
-import { AddressDto, CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
+import {
+  AddressDto,
+  CreateAddressDto,
+  UpdateUserDto,
+  UserDto,
+  UsersAddressesApi,
+  UserssProfileApi,
+} from '@fullstack/sdk/src';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST, PHONE_NUMBER as PHONE_NUMBER_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import {
@@ -21,13 +28,6 @@ import { useEffect, useState } from 'react';
 
 import { apiConfiguration, routes } from '../../config';
 import { useShoppingCart } from '../../contexts';
-
-const userPersonalInfo = {
-  id: '1',
-  name: 'Jan',
-  surname: 'Kowalski',
-  phoneNumber: '800500300',
-};
 
 const addresses = [
   {
@@ -102,6 +102,7 @@ const OrderDataCompletion = () => {
 
   const [stateChangedUser, setStateChangedUser] = useState(() => false);
   const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
+  const [oldState, setOldState] = useState<any>([]);
 
   useEffect(() => {
     (async () => {
@@ -109,6 +110,7 @@ const OrderDataCompletion = () => {
       setName(getUserData.name);
       setSurname(getUserData.surname);
       setPhoneNumber(getUserData.phoneNumber);
+      setOldState([getUserData.name, getUserData.surname, getUserData.phoneNumber]);
     })();
   }, []);
 
@@ -135,7 +137,7 @@ const OrderDataCompletion = () => {
     setDeliveryHours(e.target.value);
   };
 
-  const userProfile = async (updateData: UpdateUserDto) => {
+  const updateUserProfile = async (updateData: UpdateUserDto) => {
     try {
       const sth1 = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
       console.log(sth1);
@@ -153,6 +155,13 @@ const OrderDataCompletion = () => {
     }
   };
 
+  useEffect(() => {
+    const newDataTable = [name, surname, phoneNumber];
+    if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
+    else setStateChangedUser(true);
+  }, [name, surname, phoneNumber, email, oldState]);
+
+  const checkIfNewValues = () => {};
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
@@ -222,7 +231,6 @@ const OrderDataCompletion = () => {
                   helperText={nameErrorMessage}
                   onChange={(e) => {
                     setName(e.target.value);
-                    setStateChangedUserUser(true);
                   }}
                 />
                 <TextField
@@ -359,12 +367,10 @@ const OrderDataCompletion = () => {
                 color='secondary'
                 sx={{ m: 10, width: '20%' }}
                 onClick={() => {
-                  console.log(deliveryHours);
-                  console.log(`state:${stateChangedUser}`);
-                  if (stateChangedUser) userProfile({ name, surname, phoneNumber });
+                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
 
-                  if (stateChangedAddress)
-                    createUserAddress({ street, streetNumber, apartmentNumber, floor, city, postcode });
+                  // if (stateChangedAddress)
+                  //   createUserAddress({ street, streetNumber, apartmentNumber, floor, city, postcode });
                 }}
               >
                 PRZEJDŹ DO PŁATNOŚCI
