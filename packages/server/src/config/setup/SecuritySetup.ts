@@ -8,7 +8,7 @@ function setupSecurity(app: INestApplication) {
   app.use(cookieParser());
 
   if (env.NODE_ENV === 'development') {
-    app.enableCors({ origin: 'http://localhost:3000' });
+    app.enableCors({ origin: 'http://localhost:3000', credentials: true });
   }
 
   if (env.NODE_ENV === 'production') {

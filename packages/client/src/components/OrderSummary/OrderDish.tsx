@@ -36,7 +36,12 @@ const OrderDish = ({ date, orderDish }: OrderDishProps) => {
     <TableRow sx={{ height: '1px' }}>
       <TableCell sx={{ py: 5 }}>
         <Box sx={{ width: '11rem', height: '11rem', borderRadius: 4, overflow: 'hidden', mx: 'auto' }}>
-          <img alt={dish.name} src={dish.photo ? dish.photo : defaultPhoto} height='100%' />
+          <img
+            style={{ objectFit: 'cover', objectPosition: 'center', width: '100%' }}
+            alt={dish.name}
+            src={dish.photo ? dish.photo : defaultPhoto}
+            height='100%'
+          />
         </Box>
       </TableCell>
       <TableCell sx={{ height: '100%', py: 5 }}>
