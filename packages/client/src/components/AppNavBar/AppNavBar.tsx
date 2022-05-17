@@ -145,7 +145,7 @@ const AppNavBar = () => {
             open={Boolean(menuAnchorElem)}
             onClose={handleMenuClosed}
           >
-            {auth.isLoggedIn ? menuItems(LEFT_PAGES) : menuItems(PAGES)}
+            {menuItems(auth.isLoggedIn ? LEFT_PAGES : PAGES)}
           </Menu>
         </Box>
         <Link href={routes.home} sx={{ mx: 'auto' }}>
