@@ -1,12 +1,15 @@
+import { Role } from '@fullstack/sdk';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import {
   AppBar,
   Badge,
   Box,
   Button,
+  Divider,
   IconButton,
   Link,
   Menu,
@@ -22,7 +25,7 @@ import { useContext, useState } from 'react';
 import logo from '../../assets/logo.svg';
 import logoDark from '../../assets/logo_dark.svg';
 import { routes } from '../../config';
-import { ThemeContext, useShoppingCart } from '../../contexts';
+import { ThemeContext, useAuth, useShoppingCart } from '../../contexts';
 
 const LEFT_PAGES = [
   {
@@ -52,7 +55,29 @@ const RIGHT_PAGES = [
   },
 ] as const;
 
-const PAGES = [...LEFT_PAGES, ...RIGHT_PAGES] as const;
+const USER_PAGES = [
+  {
+    name: 'Mój profil',
+    pathname: '/profile',
+  },
+  {
+    name: 'Moje zamówienia',
+    pathname: '/orders',
+  },
+] as const;
+
+const PARTNER_PAGES = [
+  {
+    name: 'Mój profil',
+    pathname: '/profile',
+  },
+  {
+    name: 'Moje produkty',
+    pathname: '/products',
+  },
+] as const;
+
+const PAGES = [...LEFT_PAGES, ...RIGHT_PAGES];
 
 const pageToButton = (page: typeof PAGES[number]) => (
   <Button
@@ -63,12 +88,33 @@ const pageToButton = (page: typeof PAGES[number]) => (
     {page.name}
   </Button>
 );
+
+const menuItems = (pages: readonly { name: string; pathname: string }[]) => {
+  return pages.map((page) => (
+    <MenuItem key={page.pathname} component={Link} href={page.pathname}>
+      {page.name}
+    </MenuItem>
+  ));
+};
+
 const AppNavBar = () => {
+  const auth = useAuth();
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
   const { cart } = useShoppingCart();
 
   const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null);
+  const [profileMenuAnchorElem, setProfileMenuAnchorElem] = useState<null | HTMLElement>(null);
+
+  const handleLogout = async () => {
+    try {
+      await auth.api.logout();
+      auth.setUserRole(null);
+      setProfileMenuAnchorElem(null);
+      window.localStorage.removeItem('userRole');
+      // eslint-disable-next-line no-empty
+    } catch {}
+  };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMenuAnchorElem(event.currentTarget);
@@ -78,7 +124,14 @@ const AppNavBar = () => {
     setMenuAnchorElem(null);
   };
 
-  console.log(cart.length);
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setProfileMenuAnchorElem(event.currentTarget);
+  };
+
+  const handleProfileMenuClosed = () => {
+    setProfileMenuAnchorElem(null);
+  };
+
   return (
     <AppBar position='static'>
       <Toolbar sx={{ width: 'min(100%, 92rem)', mx: 'auto' }}>
@@ -95,11 +148,7 @@ const AppNavBar = () => {
             open={Boolean(menuAnchorElem)}
             onClose={handleMenuClosed}
           >
-            {PAGES.map((page) => (
-              <MenuItem key={page.pathname} component={Link} href={page.pathname}>
-                {page.name}
-              </MenuItem>
-            ))}
+            {menuItems(auth.isLoggedIn ? LEFT_PAGES : PAGES)}
           </Menu>
         </Box>
         <Link href={routes.home} sx={{ mx: 'auto' }}>
@@ -110,7 +159,7 @@ const AppNavBar = () => {
           />
         </Link>
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
-        <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>
+        {!auth.isLoggedIn && <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>}
         <Tooltip title={`tryb ${theme.palette.mode === 'dark' ? 'jasny' : 'ciemny'}`} placement='top'>
           <IconButton
             sx={{ ml: 1, color: theme.palette.primary.main }}
@@ -120,6 +169,31 @@ const AppNavBar = () => {
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Tooltip>
+        {auth.isLoggedIn && (
+          <Box sx={{ display: 'block' }}>
+            <IconButton onClick={handleProfileMenuOpen} sx={{ p: 2 }} title='Profil'>
+              <PersonIcon sx={{ fontSize: '3.5rem' }} color='secondary' />
+            </IconButton>
+            <Menu
+              anchorEl={profileMenuAnchorElem}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={Boolean(profileMenuAnchorElem)}
+              onClose={handleProfileMenuClosed}
+            >
+              {[
+                auth.userRole === Role.User ? menuItems(USER_PAGES) : menuItems(PARTNER_PAGES),
+                <Divider key='divider' />,
+                <MenuItem key='logout' onClick={handleLogout}>
+                  Wyloguj się
+                </MenuItem>,
+              ]}
+            </Menu>
+          </Box>
+        )}
+
         <Tooltip
           title={cart.length === 0 ? <Typography fontSize='1.5rem'>Twój koszyk jest pusty</Typography> : ''}
           placement='bottom-end'

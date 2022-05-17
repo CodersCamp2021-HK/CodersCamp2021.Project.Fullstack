@@ -8,6 +8,7 @@ const isProduction = mode === `"production"`;
 
 const apiConfiguration = new Configuration({
   basePath: isProduction ? PROD_API_BASE_PATH : DEV_API_BASE_PATH,
+  credentials: 'include',
 });
 
 export { apiConfiguration };
