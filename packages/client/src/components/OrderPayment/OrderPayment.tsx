@@ -23,6 +23,7 @@ interface OrderDishProps {
 }
 const OrderPayment = ({ orderDish }: OrderDishProps) => {
   const { addressId, deliveryHourStart, userData, address, cart, setAddressId } = useShoppingCart();
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -70,7 +71,15 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Uwagi do zamówienia
               </Typography>
-              <TextField id='outlined-multiline-static' multiline rows={4} sx={{ mb: 4, width: '80%' }} />
+              <TextField
+                id='outlined-multiline-static'
+                multiline
+                rows={4}
+                sx={{ mb: 4, width: '80%' }}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
 
               <Grid container direction='row' alignItems='center'>
                 <Typography variant='h5' color='primary.main' sx={{ mr: 1 }}>
@@ -93,7 +102,6 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               color='secondary'
               sx={{ m: 8, width: '20%' }}
               onClick={() => {
-                console.log(cart);
                 const deliveryHourEnd = deliveryHourStart + 2;
                 userOrder({
                   addressId,
@@ -111,6 +119,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
                       ],
                     },
                   ],
+                  comment,
                 });
               }}
             >

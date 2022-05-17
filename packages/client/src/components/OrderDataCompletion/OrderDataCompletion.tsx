@@ -86,6 +86,7 @@ const OrderDataCompletion = () => {
       setName(getUserData.name);
       setSurname(getUserData.surname);
       setPhoneNumber(getUserData.phoneNumber);
+      setEmail(getUserData.email);
       setOldState([getUserData.name, getUserData.surname, getUserData.phoneNumber]);
       const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
       console.log(getUserAddress.data.at(-1));
@@ -263,6 +264,7 @@ const OrderDataCompletion = () => {
                   id='email'
                   size='small'
                   label='Adres email'
+                  value={email}
                   required
                   error={didSubmit && emailErrorMessage !== ''}
                   helperText={emailErrorMessage}
