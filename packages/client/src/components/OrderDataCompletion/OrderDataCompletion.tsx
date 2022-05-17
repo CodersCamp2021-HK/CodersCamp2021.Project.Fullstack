@@ -104,6 +104,8 @@ const OrderDataCompletion = () => {
   const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
   const [oldState, setOldState] = useState<any>([]);
 
+  const [address, setAddressTable] = useState<any>([]);
+
   useEffect(() => {
     (async () => {
       const getUserData = await new UserssProfileApi(apiConfiguration).findById();
@@ -111,6 +113,16 @@ const OrderDataCompletion = () => {
       setSurname(getUserData.surname);
       setPhoneNumber(getUserData.phoneNumber);
       setOldState([getUserData.name, getUserData.surname, getUserData.phoneNumber]);
+      const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+      setAddressTable(
+        getUserAddress.data.map((e) => ({
+          street: e.street,
+          streetNumber: e.streetNumber,
+          apartmentNumber: e.apartmentNumber,
+          postcode: e.postcode,
+          city: e.city,
+        })),
+      );
     })();
   }, []);
 
@@ -160,8 +172,6 @@ const OrderDataCompletion = () => {
     if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
     else setStateChangedUser(true);
   }, [name, surname, phoneNumber, email, oldState]);
-
-  const checkIfNewValues = () => {};
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
@@ -200,9 +210,12 @@ const OrderDataCompletion = () => {
                   <RadioGroup
                     aria-labelledby='demo-radio-buttons-group-label'
                     name='radio-buttons-group'
-                    onChange={(e) => fillAddressForm(e.target.value)}
+                    onChange={(e) => {
+                      fillAddressForm(e.target.value);
+                      console.log(JSON.parse(e.target.value).id);
+                    }}
                   >
-                    {addresses.map((e) => (
+                    {address.map((e) => (
                       <FormControlLabel
                         key={e.id}
                         value={JSON.stringify(e)}
