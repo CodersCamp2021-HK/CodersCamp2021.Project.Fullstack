@@ -57,7 +57,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async createRaw(
     requestParameters: UsersAddressesApiCreateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<AddressDto>> {
     if (requestParameters.createAddressDto === null || requestParameters.createAddressDto === undefined) {
       throw new runtime.RequiredError(
@@ -89,7 +89,10 @@ export class UsersAddressesApi extends runtime.BaseAPI {
   /**
    * Create a new address.
    */
-  async create(requestParameters: UsersAddressesApiCreateRequest, initOverrides?: RequestInit): Promise<AddressDto> {
+  async create(
+    requestParameters: UsersAddressesApiCreateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<AddressDto> {
     const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -99,7 +102,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async findByIdRaw(
     requestParameters: UsersAddressesApiFindByIdRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<AddressDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -130,7 +133,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async findById(
     requestParameters: UsersAddressesApiFindByIdRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<AddressDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
@@ -141,7 +144,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: UsersAddressesApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<AddressListDto>> {
     const queryParameters: any = {};
 
@@ -173,7 +176,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async list(
     requestParameters: UsersAddressesApiListRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<AddressListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
@@ -184,7 +187,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async removeAddressRaw(
     requestParameters: UsersAddressesApiRemoveAddressRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -215,7 +218,7 @@ export class UsersAddressesApi extends runtime.BaseAPI {
    */
   async removeAddress(
     requestParameters: UsersAddressesApiRemoveAddressRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<void> {
     await this.removeAddressRaw(requestParameters, initOverrides);
   }

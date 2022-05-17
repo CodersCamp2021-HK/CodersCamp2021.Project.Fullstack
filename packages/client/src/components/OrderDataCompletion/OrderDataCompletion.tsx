@@ -165,7 +165,7 @@ const OrderDataCompletion = () => {
 
   // check if user put new profile data
   useEffect(() => {
-    const newDataTable = [name, surname, phoneNumber];
+    const newDataTable = [name, surname, phoneNumber, email];
     if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
     else setStateChangedUser(true);
   }, [name, surname, phoneNumber, email, oldState]);
@@ -379,7 +379,7 @@ const OrderDataCompletion = () => {
                 sx={{ m: 10, width: '20%' }}
                 href={routes.shoppingCartPayment}
                 onClick={() => {
-                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber });
+                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber, email });
                   if (stateChangedAddress)
                     createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
                 }}

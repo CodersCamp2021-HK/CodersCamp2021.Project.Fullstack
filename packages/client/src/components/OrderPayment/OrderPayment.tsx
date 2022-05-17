@@ -60,7 +60,7 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
                 Dane kontakowe
               </Typography>
-              <Typography variant='body1'>{email}</Typography>
+              <Typography variant='body1'>{userData?.email}</Typography>
               <Typography variant='body1'>{userData?.phoneNumber}</Typography>
             </Box>
           </Grid>

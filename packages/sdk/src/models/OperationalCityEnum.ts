@@ -15,28 +15,28 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum OperationalCityEnum {
-  Biaystok = 'Białystok',
-  Bydgoszcz = 'Bydgoszcz',
-  Gdask = 'Gdańsk',
-  GorzwWielkopolski = 'Gorzów Wielkopolski',
-  Katowice = 'Katowice',
-  Kielce = 'Kielce',
-  Krakw = 'Kraków',
-  Lublin = 'Lublin',
-  D = 'Łódź',
-  Olsztyn = 'Olsztyn',
-  Opole = 'Opole',
-  Pozna = 'Poznań',
-  Rzeszw = 'Rzeszów',
-  Szczecin = 'Szczecin',
-  Toru = 'Toruń',
-  Warszawa = 'Warszawa',
-  Wrocaw = 'Wrocław',
-  ZielonaGra = 'Zielona Góra',
-}
+export const OperationalCityEnum = {
+  Biaystok: 'Białystok',
+  Bydgoszcz: 'Bydgoszcz',
+  Gdask: 'Gdańsk',
+  GorzwWielkopolski: 'Gorzów Wielkopolski',
+  Katowice: 'Katowice',
+  Kielce: 'Kielce',
+  Krakw: 'Kraków',
+  Lublin: 'Lublin',
+  D: 'Łódź',
+  Olsztyn: 'Olsztyn',
+  Opole: 'Opole',
+  Pozna: 'Poznań',
+  Rzeszw: 'Rzeszów',
+  Szczecin: 'Szczecin',
+  Toru: 'Toruń',
+  Warszawa: 'Warszawa',
+  Wrocaw: 'Wrocław',
+  ZielonaGra: 'Zielona Góra',
+} as const;
+export type OperationalCityEnum = typeof OperationalCityEnum[keyof typeof OperationalCityEnum];
 
 export function OperationalCityEnumFromJSON(json: any): OperationalCityEnum {
   return OperationalCityEnumFromJSONTyped(json, false);

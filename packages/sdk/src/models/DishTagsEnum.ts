@@ -15,15 +15,15 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum DishTagsEnum {
-  Wegaska = 'wegańska',
-  Wegetariaska = 'wegetariańska',
-  GlutenFree = 'gluten free',
-  Ostre = 'ostre',
-  BardzoOstre = 'bardzo ostre',
-}
+export const DishTagsEnum = {
+  Wegaska: 'wegańska',
+  Wegetariaska: 'wegetariańska',
+  GlutenFree: 'gluten free',
+  Ostre: 'ostre',
+  BardzoOstre: 'bardzo ostre',
+} as const;
+export type DishTagsEnum = typeof DishTagsEnum[keyof typeof DishTagsEnum];
 
 export function DishTagsEnumFromJSON(json: any): DishTagsEnum {
   return DishTagsEnumFromJSONTyped(json, false);
