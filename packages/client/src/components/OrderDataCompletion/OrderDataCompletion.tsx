@@ -1,11 +1,4 @@
-import {
-  AddressDto,
-  CreateAddressDto,
-  UpdateUserDto,
-  UserDto,
-  UsersAddressesApi,
-  UserssProfileApi,
-} from '@fullstack/sdk/src';
+import { AddressDto, CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST, PHONE_NUMBER as PHONE_NUMBER_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import {
@@ -21,6 +14,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
@@ -37,17 +31,17 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const { setAddressId, setDeliveryHourStart, setUserData, setAddress } = useShoppingCart();
-  const [name, setName] = useState<any>('');
+  const { setAddressId, setDeliveryHourStart, setUserData, setAddress, deliveryHourStart } = useShoppingCart();
+  const [name, setName] = useState('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
-  const [surname, setSurname] = useState<any>('');
+  const [surname, setSurname] = useState('');
   const surnameErrorMessage = surname.match(/^[A-ZĄĆĘŁŃÓŚŹŻ-]{3,35}$/i) ? '' : 'Wpisz poprawne nazwisko.';
 
-  const [email, setEmail] = useState<any>('');
+  const [email, setEmail] = useState('');
   const emailErrorMessage = email.match(EMAIL_CONST.REGEX) ? '' : 'Wpisz poprawny adres email.';
 
-  const [phoneNumber, setPhoneNumber] = useState<any>('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const phoneNumberErrorMessage = phoneNumber.match(PHONE_NUMBER_CONST.REGEX) ? '' : 'Wpisz poprawny numer telefonu.';
 
   const [street, setStreet] = useState('');
@@ -59,7 +53,7 @@ const OrderDataCompletion = () => {
   const [apartmentNumber, setApartmentNumber] = useState('');
   const apartmentNumberErrorMessage = apartmentNumber.match(/^\d{0,3}$/) ? '' : 'Wpisz poprawny numer mieszkania.';
 
-  const [floor, setFloor] = useState<any>('');
+  const [floor, setFloor] = useState('');
   const floorErrorMessage = floor.match(/^\d{0,2}$/) ? '' : 'Wpisz poprawne piętro.';
 
   const [postcode, setPostcode] = useState('');
@@ -76,22 +70,21 @@ const OrderDataCompletion = () => {
 
   const [stateChangedUser, setStateChangedUser] = useState(() => false);
   const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
-  const [oldState, setOldState] = useState<any>([]);
-  const [oldStateAddress, setOldStateAddress] = useState<any>([]);
+  const [oldState, setOldState] = useState<string[]>([]);
+  const [oldStateAddress, setOldStateAddress] = useState<string[]>([]);
 
-  const [address, setAddressTable] = useState<any>([]);
+  const [address, setAddressTable] = useState<AddressDto[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       const getUserData = await new UserssProfileApi(apiConfiguration).findById();
-      setName(getUserData.name);
-      setSurname(getUserData.surname);
-      setPhoneNumber(getUserData.phoneNumber);
-      setEmail(getUserData.email);
-      setOldState([getUserData.name, getUserData.surname, getUserData.phoneNumber]);
+      setName(getUserData.name || '');
+      setSurname(getUserData.surname || '');
+      setPhoneNumber(getUserData.phoneNumber || '');
+      setEmail(getUserData.email || '');
+      setOldState([getUserData.name || '', getUserData.surname || '', getUserData.phoneNumber || '']);
       const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
-      console.log(getUserAddress.data.at(-1));
       setAddressTable(
         getUserAddress.data.map((e) => ({
           id: e.id,
@@ -122,14 +115,14 @@ const OrderDataCompletion = () => {
     setOldStateAddress([
       addressObject.street,
       addressObject.streetNumber,
-      addressObject.apartmentNumber,
+      addressObject.apartmentNumber || '',
       addressObject.floor || '',
       addressObject.postcode,
       addressObject.city,
     ]);
   };
 
-  const handleSelectDeliveryHours = (e) => {
+  const handleSelectDeliveryHours = (e: SelectChangeEvent<string>) => {
     e.preventDefault();
     setDeliveryHours(e.target.value);
     setDeliveryHourStart(e.target.value);
@@ -137,19 +130,19 @@ const OrderDataCompletion = () => {
 
   const updateUserProfile = async (updateData: UpdateUserDto) => {
     try {
-      const sth1 = await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
-      console.log(sth1);
+      await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
     } catch (e) {
-      alert('error');
+      // eslint-disable-next-line no-console
+      console.log(e);
     }
   };
 
   const createUserAddress = async (updateData: CreateAddressDto) => {
     try {
-      const sth = await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
-      console.log(sth);
+      await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
     } catch (e) {
-      alert('error');
+      // eslint-disable-next-line no-console
+      console.log(e);
     }
   };
 
@@ -159,6 +152,7 @@ const OrderDataCompletion = () => {
     setAddress({ street, postcode, streetNumber, apartmentNumber, city });
     if (JSON.stringify(oldStateAddress) === JSON.stringify(newAddressTable)) setStateChangedAddress(false);
     else setStateChangedAddress(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [street, postcode, streetNumber, floor, apartmentNumber, city, oldStateAddress, stateChangedAddress]);
 
   // check if user put new profile data
@@ -186,6 +180,7 @@ const OrderDataCompletion = () => {
     if (fieldsToCheck.every((field) => field === '')) {
       if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber, email });
       if (stateChangedAddress) createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
+
       navigate(routes.shoppingCartPayment);
     } else setDidSubmit(true);
   };
@@ -230,12 +225,10 @@ const OrderDataCompletion = () => {
                     name='radio-buttons-group'
                     onChange={(e) => {
                       fillAddressForm(e.target.value);
-                      // get id of address
-                      console.log(JSON.parse(e.target.value).id);
                       setAddressId(JSON.parse(e.target.value).id);
                     }}
                   >
-                    {address.map((e) => (
+                    {address.map((e: AddressDto) => (
                       <FormControlLabel
                         key={e.id}
                         value={JSON.stringify(e)}

@@ -25,9 +25,14 @@ const OrderPayment = () => {
   useEffect(() => {
     (async () => {
       if (addressId === '') {
-        const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        setAddressId(getUserAddress.data.at(-1)!.id);
+        try {
+          const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          setAddressId(getUserAddress.data.at(-1)!.id);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.log(e);
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,10 +112,10 @@ const OrderPayment = () => {
               color='secondary'
               sx={{ m: 8, width: '20%' }}
               onClick={() => {
-                const deliveryHourEnd = deliveryHourStart + 2;
+                const deliveryHourEnd = parseInt(deliveryHourStart, 10) + 2;
                 userOrder({
                   addressId,
-                  hourStart: deliveryHourStart,
+                  hourStart: parseInt(deliveryHourStart, 10),
                   hourEnd: deliveryHourEnd,
                   subOrders: transform(cart),
                   comment,
