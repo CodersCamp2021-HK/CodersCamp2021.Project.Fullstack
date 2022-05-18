@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import _ from 'lodash';
 
-import { SubOrderDish } from '../../contexts';
+import { orderDishKey, SubOrderDish } from '../../contexts';
 import { SideCartItem } from './SideCartItem';
 
 interface SuborderSummaryProps {
@@ -19,9 +19,9 @@ const sumDishNutritionValues = (
 const SuborderSummary = ({ suborderDishes }: SuborderSummaryProps) => {
   return (
     <>
-      {suborderDishes.map((elem: SubOrderDish) => {
-        return <SideCartItem key={Math.random()} dish={elem.dish} count={elem.count} price={elem.dish.price} />;
-      })}
+      {suborderDishes.map((elem: SubOrderDish) => (
+        <SideCartItem key={orderDishKey(elem)} suborderDish={elem} />
+      ))}
       <Box
         borderTop='solid 1px'
         borderBottom='solid 1px'

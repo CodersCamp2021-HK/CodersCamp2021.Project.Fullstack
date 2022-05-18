@@ -1,25 +1,30 @@
 import { DishDto } from '@fullstack/sdk';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { useShoppingCart } from '../../contexts';
+import { routes } from '../../config';
+import { SubOrderDish, useRestaurantData, useShoppingCart } from '../../contexts';
 import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
 import { TagsAllergens } from './TagsAllergens';
 import { useIngredientState } from './useIngredientState';
 
-interface DishPopupHandlers {
+interface DishPopupProps {
   dish: DishDto;
   open: boolean;
+  previousState?: {
+    suborderDish: SubOrderDish;
+    date: Date;
+  };
   onClose: () => void;
 }
 
@@ -35,19 +40,30 @@ const style = {
   p: 4,
 };
 
-const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
-  const [count, setCount] = useState(1);
-  const [ingredientState, toggleIngredient] = useIngredientState(dish);
-  const { addToCart } = useShoppingCart();
+const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
+  const [count, setCount] = useState(previousState?.suborderDish?.count ?? 1);
+  const [ingredientState, toggleIngredient] = useIngredientState(
+    dish,
+    previousState?.suborderDish?.excludedIngredients,
+  );
+  const { addToCart, editInCart } = useShoppingCart();
 
   const excludedIngredients = ingredientState
     .filter(({ isIncluded }) => !isIncluded)
     .map(({ ingredient }) => ingredient.name);
 
+  const updatedState = { dish, count, excludedIngredients };
   const handleOrderClick = () => {
-    addToCart({ dish, count, excludedIngredients });
+    if (previousState) {
+      editInCart(previousState.suborderDish, updatedState, previousState.date);
+    } else {
+      addToCart(updatedState);
+    }
+
     onClose();
   };
+
+  const restaurant = useRestaurantData(dish.restaurant);
 
   return (
     <div>
@@ -78,9 +94,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                   {dish.name}
                 </Typography>
                 <Typography sx={{ pb: 2 }}>
-                  {/* TODO: pokazanie nazwy restauracji po id */}
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  Restauracja: <Link href='#'>Pyszna Restauracja</Link>
+                  Restauracja: <Link href={routes.restaurantProfile(dish.restaurant)}>{restaurant?.name ?? '...'}</Link>
                 </Typography>
                 <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                   {dish.description}
@@ -113,7 +127,7 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
                 startIcon={<AddIcon />}
                 onClick={handleOrderClick}
               >
-                Dodaj do koszyka
+                {previousState ? 'Zapisz' : 'Dodaj do koszyka'}
               </Button>
             </Grid>
           </Grid>
@@ -121,6 +135,10 @@ const DishPopup = ({ dish, open, onClose }: DishPopupHandlers) => {
       </Modal>
     </div>
   );
+};
+
+DishPopup.defaultProps = {
+  previousState: undefined,
 };
 
 export { DishPopup };

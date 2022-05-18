@@ -6,6 +6,7 @@ export * from './Hero';
 export * from './HomeSteps';
 export * from './LoginForm';
 export * from './MediaCard';
+export * from './OrderStepper';
 export * from './OrderSummary';
 export * from './RegisterAndLoginQuestion';
 export * from './RegisterForm';
