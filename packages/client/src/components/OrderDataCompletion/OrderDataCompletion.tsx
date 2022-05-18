@@ -25,6 +25,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { apiConfiguration, routes } from '../../config';
 import { useShoppingCart } from '../../contexts';
@@ -79,6 +80,7 @@ const OrderDataCompletion = () => {
   const [oldStateAddress, setOldStateAddress] = useState<any>([]);
 
   const [address, setAddressTable] = useState<any>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -127,11 +129,6 @@ const OrderDataCompletion = () => {
     ]);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setDidSubmit(true);
-  };
-
   const handleSelectDeliveryHours = (e) => {
     e.preventDefault();
     setDeliveryHours(e.target.value);
@@ -170,6 +167,29 @@ const OrderDataCompletion = () => {
     if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
     else setStateChangedUser(true);
   }, [name, surname, phoneNumber, email, oldState]);
+
+  const fieldsToCheck = [
+    nameErrorMessage,
+    surnameErrorMessage,
+    emailErrorMessage,
+    phoneNumberErrorMessage,
+    streetErrorMessage,
+    streetNumberErrorMessage,
+    apartmentNumberErrorMessage,
+    floorErrorMessage,
+    cityErrorMessage,
+    deliveryHoursErrorMessage,
+  ];
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (fieldsToCheck.every((field) => field === '')) {
+      if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber, email });
+      if (stateChangedAddress) createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
+      navigate(routes.shoppingCartPayment);
+    } else setDidSubmit(true);
+  };
+
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
@@ -374,18 +394,7 @@ const OrderDataCompletion = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button
-                type='submit'
-                variant='contained'
-                color='secondary'
-                sx={{ m: 10, width: '20%' }}
-                href={routes.shoppingCartPayment}
-                onClick={() => {
-                  if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber, email });
-                  if (stateChangedAddress)
-                    createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
-                }}
-              >
+              <Button type='submit' variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
                 PRZEJDŹ DO PŁATNOŚCI
               </Button>
             </Grid>
