@@ -16,8 +16,16 @@ import {
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
-import { SubOrderDish, useShoppingCart } from '../../contexts';
+import { SubOrder, SubOrderDish, useShoppingCart } from '../../contexts';
 
+interface SubOrderDto {
+  deliveryDate: Date;
+  dishes: {
+    dishId: string;
+    count: number;
+    excludedIngredients: string[];
+  }[];
+}
 interface OrderDishProps {
   orderDish: SubOrderDish;
 }
@@ -42,6 +50,13 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
       alert('error');
     }
   };
+
+  const transform = (subOrder: SubOrder[]) =>
+    subOrder.map((element) => ({
+      ...element,
+      dishes: element.dishes.map((dishEntry) => ({ ...dishEntry, dishId: dishEntry.dish.id })),
+    }));
+
   return (
     <Container fixed>
       <Box sx={{ bgcolor: '#FAFAFA' }}>
@@ -51,7 +66,8 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {console.log(userData)}
+              {/* {(console.log(cart[0]), console.log(cart[1]))} */}
+              {console.log(transform(cart))}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
@@ -103,22 +119,12 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               sx={{ m: 8, width: '20%' }}
               onClick={() => {
                 const deliveryHourEnd = deliveryHourStart + 2;
+
                 userOrder({
                   addressId,
                   hourStart: deliveryHourStart,
                   hourEnd: deliveryHourEnd,
-                  subOrders: [
-                    {
-                      deliveryDate: cart[0].deliveryDate,
-                      dishes: [
-                        {
-                          dishId: cart[0].dishes[0].dish.id,
-                          count: cart[0].dishes[0].count,
-                          excludedIngredients: cart[0].dishes[0].excludedIngredients,
-                        },
-                      ],
-                    },
-                  ],
+                  subOrders: transform(cart),
                   comment,
                 });
               }}
