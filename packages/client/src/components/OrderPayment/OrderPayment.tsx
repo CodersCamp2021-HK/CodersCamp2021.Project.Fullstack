@@ -1,4 +1,4 @@
-import { CreateOrderDto, OrdersApi, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk/src';
+import { CreateOrderDto, OrdersApi, UsersAddressesApi } from '@fullstack/sdk/src';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
@@ -16,20 +16,9 @@ import {
 import { useEffect, useState } from 'react';
 
 import { apiConfiguration } from '../../config';
-import { SubOrder, SubOrderDish, useShoppingCart } from '../../contexts';
+import { SubOrder, useShoppingCart } from '../../contexts';
 
-interface SubOrderDto {
-  deliveryDate: Date;
-  dishes: {
-    dishId: string;
-    count: number;
-    excludedIngredients: string[];
-  }[];
-}
-interface OrderDishProps {
-  orderDish: SubOrderDish;
-}
-const OrderPayment = ({ orderDish }: OrderDishProps) => {
+const OrderPayment = () => {
   const { addressId, deliveryHourStart, userData, address, cart, setAddressId } = useShoppingCart();
   const [comment, setComment] = useState('');
 
@@ -37,17 +26,19 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
     (async () => {
       if (addressId === '') {
         const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
-        setAddressId(getUserAddress.data.at(-1).id);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        setAddressId(getUserAddress.data.at(-1)!.id);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
-      const sth1 = await new OrdersApi(apiConfiguration).create({ createOrderDto: updateData });
-      console.log(sth1);
+      await new OrdersApi(apiConfiguration).create({ createOrderDto: updateData });
     } catch (e) {
-      alert('error');
+      // eslint-disable-next-line no-console
+      console.log(e);
     }
   };
 
@@ -66,8 +57,6 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
                 Podsumowanie
               </Typography>
-              {/* {(console.log(cart[0]), console.log(cart[1]))} */}
-              {console.log(transform(cart))}
               <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
                 Dane do wysyłki
               </Typography>
@@ -119,7 +108,6 @@ const OrderPayment = ({ orderDish }: OrderDishProps) => {
               sx={{ m: 8, width: '20%' }}
               onClick={() => {
                 const deliveryHourEnd = deliveryHourStart + 2;
-
                 userOrder({
                   addressId,
                   hourStart: deliveryHourStart,
