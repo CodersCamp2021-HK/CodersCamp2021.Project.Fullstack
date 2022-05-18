@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { SubOrderDish, useShoppingCart } from '../../contexts';
+import { routes } from '../../config';
+import { SubOrderDish, useRestaurantData, useShoppingCart } from '../../contexts';
 import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
 import { Portion } from './Portion';
@@ -62,6 +63,8 @@ const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
     onClose();
   };
 
+  const restaurant = useRestaurantData(dish.restaurant);
+
   return (
     <div>
       <Modal
@@ -91,9 +94,7 @@ const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
                   {dish.name}
                 </Typography>
                 <Typography sx={{ pb: 2 }}>
-                  {/* TODO: pokazanie nazwy restauracji po id */}
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  Restauracja: <Link href='#'>Pyszna Restauracja</Link>
+                  Restauracja: <Link href={routes.restaurantProfile(dish.restaurant)}>{restaurant?.name ?? '...'}</Link>
                 </Typography>
                 <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                   {dish.description}
