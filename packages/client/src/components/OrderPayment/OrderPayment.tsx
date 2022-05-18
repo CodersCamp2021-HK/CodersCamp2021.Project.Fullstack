@@ -50,7 +50,7 @@ const OrderPayment = () => {
                 <Typography variant='body1'>Warszawska 15/5</Typography>
                 <Typography variant='body1'>01-100 Wrocław</Typography>
                 <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
-                  Dane kontakowe
+                  Dane kontaktowe
                 </Typography>
                 <Typography variant='body1'>jankowalski@gmail.com</Typography>
                 <Typography variant='body1'>600 700 800</Typography>
