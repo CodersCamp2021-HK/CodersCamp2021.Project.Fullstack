@@ -24,6 +24,7 @@ const OrderPayment = () => {
 
   useEffect(() => {
     (async () => {
+      // if do zmiany będzie
       if (addressId === '') {
         try {
           const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
