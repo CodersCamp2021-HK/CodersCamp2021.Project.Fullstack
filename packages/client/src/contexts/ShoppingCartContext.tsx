@@ -1,110 +1,117 @@
-import { AddressDto, DishDto, OrderDishDto, UserDto } from '@fullstack/sdk';
+import { DishDto, OrderDishDto } from '@fullstack/sdk';
 import produce from 'immer';
-import { isEqual } from 'lodash';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 type SubOrderDish = Omit<OrderDishDto, 'dishId'> & { dish: DishDto };
-type UserData = Omit<UserDto, 'id' | 'card'>;
-type Address = Omit<AddressDto, 'id' | 'floor'>;
+
 interface SubOrder {
   deliveryDate: Date;
   dishes: SubOrderDish[];
 }
 
-const ShoppingCartContext = createContext<{
-  cart: SubOrder[];
-  addToCart: (suborderDish: SubOrderDish) => void;
-  selectedDate: Date | null;
-  setSelectedDate: (date: Date | null) => void;
-  userData: UserData | null;
-  setUserData: (data: UserData | null) => void;
-  address: Address | null;
-  setAddress: (address: Address | null) => void;
-  addressId: string;
-  setAddressId: (id: string) => void;
-  deliveryHourStart: string;
-  setDeliveryHourStart: (hourStart: string) => void;
-}>({
-  cart: [],
-  addToCart: () => {},
-  selectedDate: null,
-  setSelectedDate: () => {},
-  userData: {},
-  setUserData: () => {},
-  address: { street: '', streetNumber: '', city: '', postcode: '', apartmentNumber: '' },
-  setAddress: () => {},
-  addressId: '',
-  setAddressId: () => {},
-  deliveryHourStart: '',
-  setDeliveryHourStart: () => {},
+const orderDishKey = (orderDish: SubOrderDish) =>
+  `${orderDish.dish.id}:${JSON.stringify(orderDish.excludedIngredients ?? [])}"`;
+
+const getDayDishes = (draft: SubOrder[], date: Date | null) =>
+  draft.find(({ deliveryDate }) => deliveryDate === date)?.dishes;
+
+const getTargetDish = (dayDishes: SubOrderDish[], suborderDish: SubOrderDish) => {
+  const idx = dayDishes.findIndex((foundDish) => orderDishKey(foundDish) === orderDishKey(suborderDish));
+  return [idx, idx === -1 ? undefined : dayDishes[idx]] as const;
+};
+
+const ShoppingCartContext = createContext({
+  cart: [] as SubOrder[],
+  addToCart: (() => {}) as (suborderDish: SubOrderDish, date?: Date | null) => void,
+  selectedDate: null as Date | null,
+  setSelectedDate: (() => {}) as (date: Date | null) => void,
+  modifyDishCount: (() => {}) as (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => void,
+  removeFromCart: (() => {}) as (suborderDish: SubOrderDish, date: Date) => void,
+  editInCart: (() => {}) as (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => void,
 });
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [address, setAddress] = useState<Address | null>(null);
-  const [addressId, setAddressId] = useState<string>('');
-  const [deliveryHourStart, setDeliveryHourStart] = useState<string>('');
 
   const addToCart = useCallback(
-    (suborderDish: SubOrderDish) =>
+    (suborderDish: SubOrderDish, date: Date | null = selectedDate) =>
       setCart(
         produce((draft) => {
-          if (selectedDate === null) return;
-
-          const suborder = draft.find(({ deliveryDate }) => deliveryDate === selectedDate);
-
-          if (!suborder) {
-            draft.push({ deliveryDate: selectedDate, dishes: [suborderDish] });
+          const dayDishes = getDayDishes(draft, date);
+          if (!dayDishes) {
+            draft.push({ deliveryDate: date as Date, dishes: [suborderDish] });
             return;
           }
 
-          const duplicateDish = suborder.dishes.find(
-            ({ dish, excludedIngredients }) =>
-              dish.id === suborderDish.dish.id && isEqual(excludedIngredients, suborderDish.excludedIngredients),
-          );
-
+          const [, duplicateDish] = getTargetDish(dayDishes, suborderDish);
           if (duplicateDish) {
             duplicateDish.count += suborderDish.count;
-            return;
+          } else {
+            dayDishes.push(suborderDish);
           }
-
-          suborder.dishes.push(suborderDish);
         }),
       ),
     [selectedDate],
   );
 
+  const modifyDishCount = useCallback(
+    (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) =>
+      setCart(
+        produce((draft) => {
+          const dayDishes = getDayDishes(draft, date);
+          if (!dayDishes) return;
+
+          const [, targetDish] = getTargetDish(dayDishes, suborderDish);
+          if (!targetDish) return;
+
+          targetDish.count = modifier(targetDish.count ?? 1);
+        }),
+      ),
+    [],
+  );
+
+  const removeFromCart = useCallback(
+    (suborderDish: SubOrderDish, date: Date) =>
+      setCart(
+        produce((draft) => {
+          const dayDishes = getDayDishes(draft, date);
+          if (!dayDishes) return;
+
+          const [targetIndex, targetDish] = getTargetDish(dayDishes, suborderDish);
+          if (!targetDish) return;
+
+          dayDishes.splice(targetIndex, 1);
+          if (dayDishes.length === 0) {
+            draft.splice(
+              draft.findIndex(({ deliveryDate }) => deliveryDate === date),
+              1,
+            );
+          }
+        }),
+      ),
+    [],
+  );
+
+  const editInCart = useCallback(
+    (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) =>
+      setCart(
+        produce((draft) => {
+          const dayDishes = getDayDishes(draft, date);
+          if (!dayDishes) return;
+
+          const [targetIndex, targetDish] = getTargetDish(dayDishes, oldSuborderDish);
+          if (!targetDish) return;
+
+          dayDishes[targetIndex] = newSuborderDish;
+        }),
+      ),
+    [],
+  );
+
   const value = useMemo(
-    () => ({
-      cart,
-      addToCart,
-      selectedDate,
-      setSelectedDate,
-      userData,
-      setUserData,
-      address,
-      setAddress,
-      addressId,
-      setAddressId,
-      deliveryHourStart,
-      setDeliveryHourStart,
-    }),
-    [
-      cart,
-      addToCart,
-      selectedDate,
-      setSelectedDate,
-      userData,
-      setUserData,
-      address,
-      setAddress,
-      addressId,
-      setAddressId,
-      deliveryHourStart,
-      setDeliveryHourStart,
-    ],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
@@ -112,5 +119,5 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
 
 const useShoppingCart = () => useContext(ShoppingCartContext);
 
-export { ShoppingCartProvider, useShoppingCart };
+export { orderDishKey, ShoppingCartProvider, useShoppingCart };
 export type { SubOrder, SubOrderDish };
