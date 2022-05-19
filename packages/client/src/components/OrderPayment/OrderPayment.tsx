@@ -19,7 +19,9 @@ const OrderPayment = () => {
   const cardNumberErrorMessage = cardNumber.match(CARD_REGEX) ? '' : 'Wpisz poprawny numer karty.';
 
   const [expirationDate, setExpirationDate] = useState('');
-  const expirationDateErrorMessage = expirationDate.match(DATE_REGEX) ? '' : 'Wpisz poprawną datę ważności karty.';
+  const expirationDateErrorMessage = expirationDate.match(DATE_REGEX)
+    ? ''
+    : 'Wpisz poprawną datę ważności karty. Data powinna być w formacie RRRR-MM-DD';
 
   const [securityCode, setSecurityCode] = useState('');
   const securityCodeErrorMessage = securityCode?.match(CODE_REGEX) ? '' : 'Wpisz poprawny kod.';
@@ -33,7 +35,7 @@ const OrderPayment = () => {
       const response = await userApi.findById();
       if (response) setUserData(response);
       if (response.card) {
-        setCardNumber(response.card?.number);
+        setCardNumber(response.card.number);
         setExpirationDate(response.card.expirationDate);
         setSecurityCode(response.card.securityCode);
       }
@@ -110,7 +112,7 @@ const OrderPayment = () => {
                       label='Numer karty'
                       value={cardNumber}
                       error={didSubmit && cardNumberErrorMessage !== ''}
-                      helperText={cardNumberErrorMessage}
+                      helperText={didSubmit && cardNumberErrorMessage}
                       onChange={(e) => {
                         setCardNumber(e.target.value);
                         setCardDataEdited(true);
@@ -124,7 +126,7 @@ const OrderPayment = () => {
                       label='Data ważności'
                       value={expirationDate}
                       error={didSubmit && expirationDateErrorMessage !== ''}
-                      helperText={expirationDateErrorMessage}
+                      helperText={didSubmit && expirationDateErrorMessage}
                       onChange={(e) => {
                         setExpirationDate(e.target.value);
                         setCardDataEdited(true);
@@ -138,7 +140,7 @@ const OrderPayment = () => {
                       label='Kod'
                       value={securityCode}
                       error={didSubmit && securityCodeErrorMessage !== ''}
-                      helperText={securityCodeErrorMessage}
+                      helperText={didSubmit && securityCodeErrorMessage}
                       onChange={(e) => {
                         setSecurityCode(e.target.value);
                         setCardDataEdited(true);
