@@ -1,4 +1,4 @@
-import { CreateOrderDto, OrdersApi } from '@fullstack/sdk/src';
+import { CreateOrderDto, OrdersApi } from '@fullstack/sdk';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
