@@ -1,4 +1,4 @@
-import { CreateOrderDto, OrdersApi, UsersAddressesApi } from '@fullstack/sdk/src';
+import { CreateOrderDto, OrdersApi } from '@fullstack/sdk/src';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Box,
@@ -13,38 +13,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { apiConfiguration } from '../../config';
 import { SubOrder, useShoppingCart } from '../../contexts';
 
 const OrderPayment = () => {
-  const { addressId, deliveryHourStart, userData, address, cart, setAddressId } = useShoppingCart();
+  const { addressId, deliveryHourStart, userData, address, cart } = useShoppingCart();
   const [comment, setComment] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      // if do zmiany będzie
-      if (addressId === '') {
-        try {
-          const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          setAddressId(getUserAddress.data.at(-1)!.id);
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.log(e);
-        }
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await new OrdersApi(apiConfiguration).create({ createOrderDto: updateData });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.error(e);
     }
   };
 

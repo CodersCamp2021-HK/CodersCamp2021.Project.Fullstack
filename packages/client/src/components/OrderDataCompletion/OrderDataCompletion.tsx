@@ -133,16 +133,17 @@ const OrderDataCompletion = () => {
       await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.error(e);
     }
   };
 
   const createUserAddress = async (updateData: CreateAddressDto) => {
     try {
-      await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
+      const getAddressApi = await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
+      setAddressId(getAddressApi.id);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.error(e);
     }
   };
 
