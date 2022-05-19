@@ -16,10 +16,11 @@ import {
 import { useState } from 'react';
 
 import { apiConfiguration } from '../../config';
-import { SubOrder, useShoppingCart } from '../../contexts';
+import { SubOrder, useOrderDataContext, useShoppingCart } from '../../contexts';
 
 const OrderPayment = () => {
-  const { addressId, deliveryHourStart, userData, address, cart } = useShoppingCart();
+  const { cart } = useShoppingCart();
+  const { addressId, deliveryHourStart, userData, address } = useOrderDataContext();
   const [comment, setComment] = useState('');
 
   const userOrder = async (updateData: CreateOrderDto) => {

@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { apiConfiguration, routes } from '../../config';
-import { useShoppingCart } from '../../contexts';
+import { useOrderDataContext } from '../../contexts';
 
 const addressToString = (address: AddressDto) => {
   return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ''}${
@@ -31,7 +31,7 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const { setAddressId, setDeliveryHourStart, setUserData, setAddress, deliveryHourStart } = useShoppingCart();
+  const { setAddressId, setDeliveryHourStart, setUserData, setAddress } = useOrderDataContext();
   const [name, setName] = useState('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
