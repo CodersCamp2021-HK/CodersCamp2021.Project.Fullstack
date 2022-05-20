@@ -149,10 +149,11 @@ const OrderDataCompletion = () => {
     }
   };
 
-  // check if user put new address
+  // check if user put new address,
   useEffect(() => {
     const newAddressTable = [street, streetNumber, apartmentNumber, floor, postcode, city];
     setAddress({ street, postcode, streetNumber, apartmentNumber, city });
+    // checking if address is the same like in checked radio button, control empty click on textfields.
     if (JSON.stringify(oldStateAddress) === JSON.stringify(newAddressTable)) setStateChangedAddress(false);
     else setStateChangedAddress(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
