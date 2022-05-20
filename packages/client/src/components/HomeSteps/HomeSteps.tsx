@@ -8,19 +8,17 @@ import { HomeStep } from './HomeStep';
 const HomeSteps = () => (
   <Stack id='steps' p={{ xs: 4, s: 8, md: 16 }} spacing={8}>
     <HomeStep number={1} title='Wpisz swoje miasto' img={step1}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non aliquet nunc. In hac habitasse platea dictumst.
-      Pellentesque rutrum venenatis velit at maximus. Vestibulum cursus massa vel justo facilisis, vel facilisis metus
-      pharetra. Aliquam laoreet elit dolor, ac interdum est aliquet quis.
+      Wyszukaj swoje miasto powyżej. Obsługujemy aż 18 miast w Polsce! Na pewno znajdziesz restaurację z dowozem w
+      Twojej okolicy.
     </HomeStep>
     <HomeStep flipped number={2} title='Ustal menu i&nbsp;wartości odżywcze' img={step2}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non aliquet nunc. In hac habitasse platea dictumst.
-      Pellentesque rutrum venenatis velit at maximus. Vestibulum cursus massa vel justo facilisis, vel facilisis metus
-      pharetra. Aliquam laoreet elit dolor, ac interdum est aliquet quis.
+      Znajdź pyszne danie i dodaj do koszyka. Przy każdym posiłku podajemy wartości odżywcze, więc bez problemów
+      znajdziesz danie pasujące idealnie do Twojej diety. Z nami odbędziesz podróż po kuchniach świata nie ruszając się
+      z domu.
     </HomeStep>
     <HomeStep number={3} title='Zapłać i&nbsp;czekaj na dostawę' img={step3}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non aliquet nunc. In hac habitasse platea dictumst.
-      Pellentesque rutrum venenatis velit at maximus. Vestibulum cursus massa vel justo facilisis, vel facilisis metus
-      pharetra. Aliquam laoreet elit dolor, ac interdum est aliquet quis.
+      Zapłać za swoje dania wygodnie online. Nasz kurier przywiezie posiłki pod Twoje drzwi w wybranych przez Ciebie
+      godzinach. Smacznego!
     </HomeStep>
   </Stack>
 );
