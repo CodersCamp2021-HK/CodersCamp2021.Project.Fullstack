@@ -128,18 +128,20 @@ const OrderDataCompletion = () => {
     setDeliveryHourStart(e.target.value);
   };
 
+  const userssProfileApi = new UserssProfileApi(apiConfiguration);
   const updateUserProfile = async (updateData: UpdateUserDto) => {
     try {
-      await new UserssProfileApi(apiConfiguration).update({ updateUserDto: updateData });
+      await userssProfileApi.update({ updateUserDto: updateData });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
     }
   };
 
+  const usersAddressesApi = new UsersAddressesApi(apiConfiguration);
   const createUserAddress = async (updateData: CreateAddressDto) => {
     try {
-      const getAddressApi = await new UsersAddressesApi(apiConfiguration).create({ createAddressDto: updateData });
+      const getAddressApi = await usersAddressesApi.create({ createAddressDto: updateData });
       setAddressId(getAddressApi.id);
     } catch (e) {
       // eslint-disable-next-line no-console

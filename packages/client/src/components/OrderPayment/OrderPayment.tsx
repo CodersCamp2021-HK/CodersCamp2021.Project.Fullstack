@@ -23,9 +23,10 @@ const OrderPayment = () => {
   const { addressId, deliveryHourStart, userData, address } = useOrderDataContext();
   const [comment, setComment] = useState('');
 
+  const ordersApi = new OrdersApi(apiConfiguration);
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
-      await new OrdersApi(apiConfiguration).create({ createOrderDto: updateData });
+      await ordersApi.create({ createOrderDto: updateData });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
