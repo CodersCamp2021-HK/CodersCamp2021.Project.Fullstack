@@ -13,6 +13,7 @@ const routes = {
   order: '/order',
   main: '/main',
   registrationSuccess: '/registration-success',
+  restaurantProfile: (id: string) => `/restaurants/${id}`,
 } as const;
 
 export { routes };
