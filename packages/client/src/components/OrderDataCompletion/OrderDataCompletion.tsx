@@ -19,6 +19,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
+import { routes } from '../../config';
+
 const userPersonalInfo = {
   id: '1',
   name: 'Jan',
@@ -315,7 +317,13 @@ const OrderDataCompletion = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button type='submit' variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
+              <Button
+                type='submit'
+                variant='contained'
+                color='secondary'
+                sx={{ m: 10, width: '20%' }}
+                href={routes.shoppingCartPayment}
+              >
                 PRZEJDŹ DO PŁATNOŚCI
               </Button>
             </Grid>
