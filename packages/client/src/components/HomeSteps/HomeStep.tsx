@@ -1,5 +1,7 @@
 import { Grid, Stack, styled, Typography } from '@mui/material';
 
+import { themeBackgroundColor, themeForegroundColor } from '../../config';
+
 interface HomeStepProps {
   number: number;
   title: string;
@@ -9,9 +11,9 @@ interface HomeStepProps {
 }
 
 const StepHeader = styled(Typography)(({ theme }) => ({
-  color: theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.secondary.main,
+  color: themeForegroundColor(theme),
   '&::first-letter': {
-    backgroundColor: theme.palette.mode === 'light' ? theme.palette.secondary.main : theme.palette.primary.dark,
+    backgroundColor: themeBackgroundColor(theme),
     padding: '0.4em 0.8em',
     margin: '-0.4em -0.8em',
     borderRadius: '4rem',

@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import cardImg from '../../assets/placeholder.png';
-import { routes } from '../../config';
+import { routes, themeForegroundColor } from '../../config';
 import { SubOrderDish, useRestaurantData, useShoppingCart } from '../../contexts';
 import { CountSelect } from './CountSelect';
 import { Ingredients } from './Ingredients';
@@ -94,7 +94,10 @@ const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
                   {dish.name}
                 </Typography>
                 <Typography sx={{ pb: 2 }}>
-                  Restauracja: <Link href={routes.restaurantProfile(dish.restaurant)}>{restaurant?.name ?? '...'}</Link>
+                  Restauracja:{' '}
+                  <Link sx={{ color: themeForegroundColor }} href={routes.restaurantProfile(dish.restaurant)}>
+                    {restaurant?.name ?? '...'}
+                  </Link>
                 </Typography>
                 <Typography variant='body1' sx={{ pb: 2 }} textAlign='left'>
                   {dish.description}
@@ -113,7 +116,7 @@ const DishPopup = ({ dish, open, onClose, previousState }: DishPopupProps) => {
               <Typography variant='h6'>Wybierz liczbę dań</Typography>
               <CountSelect count={count} setCount={setCount} />
               <Box justifyContent='right' textAlign='right' justifySelf='right' alignSelf='right'>
-                <Typography variant='h5' color='primary.main'>
+                <Typography variant='h5' color={themeForegroundColor}>
                   {parseFloat(((count * dish.price) / 100).toString()).toFixed(2)}zł
                 </Typography>
               </Box>
