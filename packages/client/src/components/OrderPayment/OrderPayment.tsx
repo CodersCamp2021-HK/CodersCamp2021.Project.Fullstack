@@ -1,7 +1,6 @@
 import { UserDto, UserssProfileApi } from '@fullstack/sdk';
 import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
 import { SetStateAction, useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import NumberFormat from 'react-number-format';
 
 import { apiConfiguration } from '../../config';
