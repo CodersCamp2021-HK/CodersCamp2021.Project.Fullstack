@@ -68,9 +68,9 @@ const OrderDataCompletion = () => {
   const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
 
-  const [stateChangedUser, setStateChangedUser] = useState(() => false);
-  const [stateChangedAddress, setStateChangedAddress] = useState(() => false);
-  const [oldState, setOldState] = useState<string[]>([]);
+  const [stateChangedUser, setStateChangedUser] = useState(false);
+  const [stateChangedAddress, setStateChangedAddress] = useState(false);
+  const [oldUserDataState, setOldUserDataState] = useState<string[]>([]);
   const [oldStateAddress, setOldStateAddress] = useState<string[]>([]);
 
   const [address, setAddressTable] = useState<AddressDto[]>([]);
@@ -83,7 +83,7 @@ const OrderDataCompletion = () => {
       setSurname(getUserData.surname || '');
       setPhoneNumber(getUserData.phoneNumber || '');
       setEmail(getUserData.email || '');
-      setOldState([getUserData.name || '', getUserData.surname || '', getUserData.phoneNumber || '']);
+      setOldUserDataState([getUserData.name || '', getUserData.surname || '', getUserData.phoneNumber || '']);
       const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
       setAddressTable(
         getUserAddress.data.map((e) => ({
@@ -154,16 +154,14 @@ const OrderDataCompletion = () => {
     const newAddressTable = [street, streetNumber, apartmentNumber, floor, postcode, city];
     setAddress({ street, postcode, streetNumber, apartmentNumber, city });
     // checking if address is the same like in checked radio button, control empty click on textfields.
-    if (JSON.stringify(oldStateAddress) === JSON.stringify(newAddressTable)) setStateChangedAddress(false);
-    else setStateChangedAddress(true);
+    setStateChangedAddress(JSON.stringify(oldStateAddress) !== JSON.stringify(newAddressTable));
   }, [street, postcode, streetNumber, floor, apartmentNumber, city, oldStateAddress, stateChangedAddress, setAddress]);
 
   // check if user put new profile data
   useEffect(() => {
-    const newDataTable = [name, surname, phoneNumber, email];
-    if (JSON.stringify(oldState) === JSON.stringify(newDataTable)) setStateChangedUser(false);
-    else setStateChangedUser(true);
-  }, [name, surname, phoneNumber, email, oldState]);
+    const newUserDataTable = [name, surname, phoneNumber, email];
+    setStateChangedUser(JSON.stringify(oldUserDataState) !== JSON.stringify(newUserDataTable));
+  }, [name, surname, phoneNumber, email, oldUserDataState]);
 
   const fieldsToCheck = [
     nameErrorMessage,
