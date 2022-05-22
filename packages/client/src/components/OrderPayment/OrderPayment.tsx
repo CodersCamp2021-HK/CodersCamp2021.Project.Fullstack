@@ -20,7 +20,7 @@ const shortToLongDate = (date: string) => {
 
 const longToShortDate = (date: string) => {
   const [year, month] = date.split('-');
-  return `${month}/${parseInt(year, 10) - 2000}`;
+  return `${month}/${year.slice(-2)}`;
 };
 
 const userApi = new UserssProfileApi(apiConfiguration);
@@ -127,8 +127,8 @@ const OrderPayment = () => {
                       value={cardNumber}
                       error={didSubmit && cardNumberErrorMessage !== ''}
                       helperText={didSubmit && cardNumberErrorMessage}
-                      onChange={(e) => {
-                        setCardNumber(e.target.value);
+                      onChange={(e: { target: { value: string } }) => {
+                        setCardNumber(e.target.value.replace(/\s+/g, ''));
                         setCardDataEdited(true);
                       }}
                     />
@@ -145,7 +145,7 @@ const OrderPayment = () => {
                       value={expirationDate}
                       error={didSubmit && expirationDateErrorMessage !== ''}
                       helperText={didSubmit && expirationDateErrorMessage}
-                      onChange={(e) => {
+                      onChange={(e: { target: { value: SetStateAction<string> } }) => {
                         setExpirationDate(e.target.value);
                         setCardDataEdited(true);
                       }}
@@ -162,7 +162,7 @@ const OrderPayment = () => {
                       value={securityCode}
                       error={didSubmit && securityCodeErrorMessage !== ''}
                       helperText={didSubmit && securityCodeErrorMessage}
-                      onChange={(e) => {
+                      onChange={(e: { target: { value: SetStateAction<string> } }) => {
                         setSecurityCode(e.target.value);
                         setCardDataEdited(true);
                       }}
