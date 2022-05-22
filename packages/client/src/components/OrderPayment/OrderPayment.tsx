@@ -6,9 +6,20 @@ import { apiConfiguration } from '../../config';
 
 const CARD_REGEX =
   /^(?:4[0-9]{12}(?:[0-9]{3})?)|(?:3[47][0-9]{13})|(?:5[1-5][0-9]{14})|(?:6(?:011|5[0-9][0-9])[0-9]{12})|(?:(?:2131|1800|35\d{3})\d{11})|(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
-const DATE_REGEX = /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/;
+const DATE_REGEX = /^(0?[1-9]|1[012])\/(?:[0-9]{2})$/;
 const CODE_REGEX = /^\d{3,4}$/;
 const CHARACTER_LIMIT = 300;
+
+const shortToLongDate = (date: string) => {
+  const [month, year] = date.split('/');
+  const monthLength = new Date(parseInt(year, 10) + 2000, parseInt(month, 10), 0).getDate();
+  return `20${year}-${month}-${monthLength}`;
+};
+
+const longToShortDate = (date: string) => {
+  const [year, month] = date.split('-');
+  return `${month}/${parseInt(year, 10) - 2000}`;
+};
 
 const userApi = new UserssProfileApi(apiConfiguration);
 
@@ -19,9 +30,7 @@ const OrderPayment = () => {
   const cardNumberErrorMessage = cardNumber.match(CARD_REGEX) ? '' : 'Wpisz poprawny numer karty.';
 
   const [expirationDate, setExpirationDate] = useState('');
-  const expirationDateErrorMessage = expirationDate.match(DATE_REGEX)
-    ? ''
-    : 'Wpisz poprawną datę ważności karty. Data powinna być w formacie RRRR-MM-DD';
+  const expirationDateErrorMessage = expirationDate.match(DATE_REGEX) ? '' : 'Wpisz poprawną datę ważności karty.';
 
   const [securityCode, setSecurityCode] = useState('');
   const securityCodeErrorMessage = securityCode?.match(CODE_REGEX) ? '' : 'Wpisz poprawny kod.';
@@ -36,7 +45,7 @@ const OrderPayment = () => {
       if (response) setUserData(response);
       if (response.card) {
         setCardNumber(response.card.number);
-        setExpirationDate(response.card.expirationDate);
+        setExpirationDate(longToShortDate(response.card.expirationDate));
         setSecurityCode(response.card.securityCode);
       }
     };
@@ -51,7 +60,7 @@ const OrderPayment = () => {
     e.preventDefault();
     setDidSubmit(true);
     if (userData && cardDataEdited) {
-      userData.card = { number: cardNumber, expirationDate, securityCode };
+      userData.card = { number: cardNumber, expirationDate: shortToLongDate(expirationDate), securityCode };
       editCardData(userData);
     }
   };
