@@ -1,6 +1,8 @@
 import { UserDto, UserssProfileApi } from '@fullstack/sdk';
 import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import NumberFormat from 'react-number-format';
 
 import { apiConfiguration } from '../../config';
 
@@ -113,7 +115,10 @@ const OrderPayment = () => {
                 </Grid>
                 <Grid item xs={11} xl={11}>
                   <Box>
-                    <TextField
+                    <NumberFormat
+                      customInput={TextField}
+                      format='#### #### #### ####'
+                      mask='_'
                       required
                       sx={{ width: '90%', pr: 0.5, mb: 1 }}
                       size='small'
@@ -127,7 +132,11 @@ const OrderPayment = () => {
                         setCardDataEdited(true);
                       }}
                     />
-                    <TextField
+                    <NumberFormat
+                      customInput={TextField}
+                      format='##/##'
+                      placeholder='MM/YY'
+                      mask={['M', 'M', 'Y', 'Y']}
                       required
                       sx={{ width: '45%', pr: 0.5, mb: 1 }}
                       size='small'
@@ -141,7 +150,10 @@ const OrderPayment = () => {
                         setCardDataEdited(true);
                       }}
                     />
-                    <TextField
+                    <NumberFormat
+                      customInput={TextField}
+                      format='###'
+                      mask='_'
                       required
                       sx={{ width: '45%', pr: 0.5, mb: 1 }}
                       size='small'
