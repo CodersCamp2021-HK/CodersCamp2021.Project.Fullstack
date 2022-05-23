@@ -1,51 +1,39 @@
-## Wgranie danych testowych do bazy (Windows = PS, inne systemy bez znaczenia):
+# CodersCamp 2021 - Projekt Fullstack
+## Zarządzanie bazą danych MongoDB w Dockerze
+Na Windowsie należy skorzystać z PowerShella, na innym systemie operacyjnym z dowolnej dostępnej powłoki. Poradnik zakłada, że na systemie zainstalowany i skonfigurowany jest [Docker](https://docs.docker.com/get-docker/).
 
-#### W przypadku gdy nasz kontener nazywa się coderscamp2021projectfullstack_mongodb_1, należy użyć komend podanych poniżej:
-
-Usunięcie obecnej bazy danych (**UWAŻAĆ!!**):
-
+### Uruchomienie kontenera
 ```bash
-docker exec -it coderscamp2021projectfullstack_mongodb_1 bash -c "mongo dev -u root -p root  --authenticationDatabase admin --eval 'db.dropDatabase()'"
+$ docker-compose up -d
+```
+Wymienione komendy zakładają, że kontener z bazą danych nosi nazwę `coderscamp2021projectfullstack_mongodb_1`. W przypadku innej nazwy należy odpowiednio podmienić `coderscamp2021projectfullstack_mongodb_1` na nazwę naszego kontenera w każdej wykonywanej komendzie. Nazwę kontenera można sprawdzić wykonując komendę `$ docker ps`, lub przeglądając listę kontenerów w Docker Desktop.
 
+### Usunięcie obecnej bazy danych
+⚠️ Ostrożnie, komenda usuwa wszystkie kolekcje i dokumenty z bazy! ⚠️
+```bash
+$ docker exec coderscamp2021projectfullstack_mongodb_1 mongosh dev -u root -p root --authenticationDatabase admin --eval 'db.dropDatabase()'
 ```
 
+### Skopiowanie lokalnych plików z danymi do kontenera
+Przed importem do bazy, pliki z folderu `mongo-seed` należy skopiować do kontenera:
 ```bash
-docker cp .\mongo-seed\addresses.json coderscamp2021projectfullstack_mongodb_1:/tmp/addresses.json;
-docker cp .\mongo-seed\auth.json coderscamp2021projectfullstack_mongodb_1:/tmp/auth.json;
-docker cp .\mongo-seed\dishes.json coderscamp2021projectfullstack_mongodb_1:/tmp/dishes.json;
-docker cp .\mongo-seed\restaurants.json coderscamp2021projectfullstack_mongodb_1:/tmp/restaurants.json;
-docker cp .\mongo-seed\users.json coderscamp2021projectfullstack_mongodb_1:/tmp/users.json;
+# Pojedyncza kolekcja (np. auth):
+$ docker cp ./mongo-seed/auth.json coderscamp2021projectfullstack_mongodb_1:/tmp/auth.json
+
+# Wszystkie kolekcje na raz:
+$ docker cp ./mongo-seed/. coderscamp2021projectfullstack_mongodb_1:/tmp/
 ```
 
+Poprawność skopiowania danych można sprawdzić komendą:
 ```bash
-docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport --uri "mongodb://root:root@localhost:27017/dev?authSource=admin" -c addresses --jsonArray --file /tmp/addresses.json;
-docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c auth --jsonArray --file /tmp/auth.json;
-docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c dishes --jsonArray --file /tmp/dishes.json;
-docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c restaurants --jsonArray --file /tmp/restaurants.json;
-docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c users --jsonArray --file /tmp/users.json
+$ docker exec coderscamp2021projectfullstack_mongodb_1 sh -c "head /tmp/*.json"
 ```
 
-#### W przypadku gdy nasz kontener nazywa się coderscamp2021projectfullstack-mongodb-1, należy użyć komend podanych poniżej:
-
-Usunięcie obecnej bazy danych (**UWAŻAĆ!!**):
-
+### Import danych
 ```bash
-docker exec -it coderscamp2021projectfullstack-mongodb-1 bash -c "mongo dev -u root -p root  --authenticationDatabase admin --eval 'db.dropDatabase()'"
+# Pojedyncza kolekcja (np. addresses):
+$ docker exec coderscamp2021projectfullstack_mongodb_1 mongoimport -u root -p root --authenticationDatabase admin -d dev --jsonArray --upsertFields _id --file /tmp/dishes.json -c dishes
 
-```
-
-```bash
-docker cp .\mongo-seed\addresses.json coderscamp2021projectfullstack-mongodb-1:/tmp/addresses.json;
-docker cp .\mongo-seed\auth.json coderscamp2021projectfullstack-mongodb-1:/tmp/auth.json;
-docker cp .\mongo-seed\dishes.json coderscamp2021projectfullstack-mongodb-1:/tmp/dishes.json;
-docker cp .\mongo-seed\restaurants.json coderscamp2021projectfullstack-mongodb-1:/tmp/restaurants.json;
-docker cp .\mongo-seed\users.json coderscamp2021projectfullstack-mongodb-1:/tmp/users.json;
-```
-
-```bash
-docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri "mongodb://root:root@localhost:27017/dev?authSource=admin" -c addresses --jsonArray --file /tmp/addresses.json;
-docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c auth --jsonArray --file /tmp/auth.json;
-docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c dishes --jsonArray --file /tmp/dishes.json;
-docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c restaurants --jsonArray --file /tmp/restaurants.json;
-docker exec coderscamp2021projectfullstack-mongodb-1 mongoimport --uri 'mongodb://root:root@localhost:27017/dev?authSource=admin' -c users --jsonArray --file /tmp/users.json
+# Wszystkie kolekcje na raz:
+$ docker exec coderscamp2021projectfullstack_mongodb_1 sh -c 'cd /tmp && for FILE in *.json; do mongoimport -u root -p root --authenticationDatabase admin -d dev --jsonArray --upsertFields _id --file "/tmp/$FILE" -c ${FILE%.json}; done'
 ```
