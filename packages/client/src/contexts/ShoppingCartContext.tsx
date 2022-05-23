@@ -23,7 +23,7 @@ const sumAllCartDishes = (cart: SubOrder[]) => {
   if (cart.length !== 0) {
     return cart
       .flatMap((suborder) => suborder.dishes)
-      .flatMap((dish) => dish.count)
+      .map((dish) => dish.count)
       .reduce((prev, curr) => prev + curr);
   }
   return 0;
