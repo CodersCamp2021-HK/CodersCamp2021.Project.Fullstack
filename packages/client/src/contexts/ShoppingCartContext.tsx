@@ -31,7 +31,7 @@ const sumAllCartDishes = (cart: SubOrder[]) => {
 
 const ShoppingCartContext = createContext({
   cart: [] as SubOrder[],
-  dishesSum: {} as number,
+  dishesSum: 0,
   addToCart: (() => {}) as (suborderDish: SubOrderDish, date?: Date | null) => void,
   selectedDate: null as Date | null,
   setSelectedDate: (() => {}) as (date: Date | null) => void,
