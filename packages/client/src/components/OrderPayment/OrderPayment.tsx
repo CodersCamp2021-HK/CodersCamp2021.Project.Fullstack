@@ -133,7 +133,6 @@ const OrderPayment = () => {
                     setComment(e.target.value);
                   }}
                 />
-
                 <Grid container direction='row' alignItems='center'>
                   <Typography variant='h5' color='primary.main' sx={{ mb: 3 }}>
                     Metoda płatności

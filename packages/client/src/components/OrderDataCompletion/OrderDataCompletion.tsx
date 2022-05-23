@@ -388,7 +388,13 @@ const OrderDataCompletion = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button type='submit' variant='contained' color='secondary' sx={{ m: 10, width: '20%' }}>
+              <Button
+                type='submit'
+                variant='contained'
+                color='secondary'
+                sx={{ m: 10, width: '20%' }}
+                href={routes.shoppingCartPayment}
+              >
                 PRZEJDŹ DO PŁATNOŚCI
               </Button>
             </Grid>
