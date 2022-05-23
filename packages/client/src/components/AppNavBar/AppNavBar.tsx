@@ -197,13 +197,13 @@ const AppNavBar = () => {
           title={cart.length === 0 ? <Typography fontSize='1.5rem'>Twój koszyk jest pusty</Typography> : ''}
           placement='bottom-end'
         >
-          <Button variant='contained' color='secondary' sx={{ borderRadius: '50%', ml: 2, p: 2 }}>
+          <Box sx={{ borderRadius: '50%', ml: 2, p: 2, backgroundColor: 'secondary.main' }}>
             <Badge badgeContent={dishesSum} color='primary' invisible={cart.length === 0}>
               <IconButton color='primary' disabled={cart.length === 0} href={routes.shoppingCart} title='Koszyk'>
                 <ShoppingBasketIcon />
               </IconButton>
             </Badge>
-          </Button>
+          </Box>
         </Tooltip>
       </Toolbar>
     </AppBar>
