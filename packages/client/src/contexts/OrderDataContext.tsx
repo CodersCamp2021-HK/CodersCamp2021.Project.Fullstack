@@ -5,8 +5,8 @@ type UserData = Omit<UserDto, 'id' | 'card'>;
 type Address = Omit<AddressDto, 'id' | 'floor'>;
 
 const OrderContext = createContext<{
-  userData: UserData | null;
-  setUserData: (data: UserData | null) => void;
+  userDataContext: UserData | null;
+  setUserDataContext: (data: UserData | null) => void;
   address: Address | null;
   setAddress: (address: Address | null) => void;
   addressId: string;
@@ -14,8 +14,8 @@ const OrderContext = createContext<{
   deliveryHourStart: string;
   setDeliveryHourStart: (hourStart: string) => void;
 }>({
-  userData: {},
-  setUserData: () => {},
+  userDataContext: {},
+  setUserDataContext: () => {},
   address: { street: '', streetNumber: '', city: '', postcode: '', apartmentNumber: '' },
   setAddress: () => {},
   addressId: '',
@@ -25,15 +25,15 @@ const OrderContext = createContext<{
 });
 
 const OrderDataProvider = ({ children }: { children: ReactNode }) => {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userDataContext, setUserDataContext] = useState<UserData | null>(null);
   const [address, setAddress] = useState<Address | null>(null);
   const [addressId, setAddressId] = useState<string>('');
   const [deliveryHourStart, setDeliveryHourStart] = useState<string>('');
 
   const value = useMemo(
     () => ({
-      userData,
-      setUserData,
+      userDataContext,
+      setUserDataContext,
       address,
       setAddress,
       addressId,
@@ -41,7 +41,16 @@ const OrderDataProvider = ({ children }: { children: ReactNode }) => {
       deliveryHourStart,
       setDeliveryHourStart,
     }),
-    [userData, setUserData, address, setAddress, addressId, setAddressId, deliveryHourStart, setDeliveryHourStart],
+    [
+      userDataContext,
+      setUserDataContext,
+      address,
+      setAddress,
+      addressId,
+      setAddressId,
+      deliveryHourStart,
+      setDeliveryHourStart,
+    ],
   );
 
   return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;

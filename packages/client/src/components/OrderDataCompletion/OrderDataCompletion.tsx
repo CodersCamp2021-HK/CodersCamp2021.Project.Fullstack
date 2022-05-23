@@ -31,7 +31,7 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const { setAddressId, setDeliveryHourStart, setUserData, setAddress } = useOrderDataContext();
+  const { setAddressId, setDeliveryHourStart, setUserDataContext, setAddress } = useOrderDataContext();
   const [name, setName] = useState('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
@@ -99,8 +99,8 @@ const OrderDataCompletion = () => {
   }, []);
 
   useEffect(() => {
-    setUserData({ name, surname, phoneNumber, email });
-  }, [name, surname, phoneNumber, email, setUserData]);
+    setUserDataContext({ name, surname, phoneNumber, email });
+  }, [name, surname, phoneNumber, email, setUserDataContext]);
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
