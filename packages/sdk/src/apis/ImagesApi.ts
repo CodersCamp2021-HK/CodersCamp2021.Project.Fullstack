@@ -48,7 +48,7 @@ export class ImagesApi extends runtime.BaseAPI {
    */
   async getImgRaw(
     requestParameters: ImagesApiGetImgRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<object>> {
     if (requestParameters.type === null || requestParameters.type === undefined) {
       throw new runtime.RequiredError(
@@ -86,7 +86,10 @@ export class ImagesApi extends runtime.BaseAPI {
   /**
    * Retrieve a image by id.
    */
-  async getImg(requestParameters: ImagesApiGetImgRequest, initOverrides?: RequestInit): Promise<object> {
+  async getImg(
+    requestParameters: ImagesApiGetImgRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<object> {
     const response = await this.getImgRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -96,7 +99,7 @@ export class ImagesApi extends runtime.BaseAPI {
    */
   async uploadLogoRaw(
     requestParameters: ImagesApiUploadLogoRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<UploadedImageDto>> {
     const queryParameters: any = {};
 
@@ -139,7 +142,7 @@ export class ImagesApi extends runtime.BaseAPI {
    */
   async uploadLogo(
     requestParameters: ImagesApiUploadLogoRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<UploadedImageDto> {
     const response = await this.uploadLogoRaw(requestParameters, initOverrides);
     return await response.value();
@@ -150,7 +153,7 @@ export class ImagesApi extends runtime.BaseAPI {
    */
   async uploadPhotoRaw(
     requestParameters: ImagesApiUploadPhotoRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<UploadedImageDto>> {
     if (requestParameters.dishId === null || requestParameters.dishId === undefined) {
       throw new runtime.RequiredError(
@@ -203,7 +206,7 @@ export class ImagesApi extends runtime.BaseAPI {
    */
   async uploadPhoto(
     requestParameters: ImagesApiUploadPhotoRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<UploadedImageDto> {
     const response = await this.uploadPhotoRaw(requestParameters, initOverrides);
     return await response.value();
@@ -212,9 +215,9 @@ export class ImagesApi extends runtime.BaseAPI {
 
 /**
  * @export
- * @enum {string}
  */
-export enum GetImgTypeEnum {
-  Restaurant = 'restaurant',
-  Dish = 'dish',
-}
+export const GetImgTypeEnum = {
+  Restaurant: 'restaurant',
+  Dish: 'dish',
+} as const;
+export type GetImgTypeEnum = typeof GetImgTypeEnum[keyof typeof GetImgTypeEnum];

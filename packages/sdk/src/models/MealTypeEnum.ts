@@ -15,14 +15,14 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum MealTypeEnum {
-  Niadanie = 'śniadanie',
-  Lunch = 'lunch',
-  Obiad = 'obiad',
-  Kolacja = 'kolacja',
-}
+export const MealTypeEnum = {
+  Niadanie: 'śniadanie',
+  Lunch: 'lunch',
+  Obiad: 'obiad',
+  Kolacja: 'kolacja',
+} as const;
+export type MealTypeEnum = typeof MealTypeEnum[keyof typeof MealTypeEnum];
 
 export function MealTypeEnumFromJSON(json: any): MealTypeEnum {
   return MealTypeEnumFromJSONTyped(json, false);

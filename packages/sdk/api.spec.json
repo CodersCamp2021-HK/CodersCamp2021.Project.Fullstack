@@ -1701,6 +1701,13 @@
             "example": "800500300",
             "description": ""
           },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 64,
+            "example": "user@email.com",
+            "description": "RFC 5322 standard email format"
+          },
           "card": { "$ref": "#/components/schemas/CardDto" }
         },
         "required": ["id"]
@@ -1716,6 +1723,13 @@
             "maxLength": 14,
             "example": "800500300",
             "description": ""
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 64,
+            "example": "user@email.com",
+            "description": "RFC 5322 standard email format"
           },
           "card": { "$ref": "#/components/schemas/CardDto" }
         }

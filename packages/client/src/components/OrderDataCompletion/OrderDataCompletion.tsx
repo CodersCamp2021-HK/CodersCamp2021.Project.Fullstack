@@ -1,4 +1,4 @@
-import { AddressDto } from '@fullstack/sdk';
+import { AddressDto, CreateAddressDto, UpdateUserDto, UsersAddressesApi, UserssProfileApi } from '@fullstack/sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EMAIL as EMAIL_CONST, PHONE_NUMBER as PHONE_NUMBER_CONST } from '@fullstack/server/src/auth/shared/Constants';
 import {
@@ -14,47 +14,15 @@ import {
   Radio,
   RadioGroup,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { themeForegroundColor } from '../../config';
-
-const userPersonalInfo = {
-  id: '1',
-  name: 'Jan',
-  surname: 'Kowalski',
-  phoneNumber: '800500300',
-};
-
-const addresses = [
-  {
-    id: '1',
-    street: 'Słowackiego',
-    streetNumber: '15',
-    apartmentNumber: '1',
-    floor: '1',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-
-  {
-    id: '2',
-    street: 'Sienkiewicza',
-    streetNumber: '5',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-
-  {
-    id: '3',
-    street: 'Sienkiewicza',
-    streetNumber: '5',
-    city: 'Wrocław',
-    postcode: '00-000',
-  },
-];
+import { apiConfiguration, routes, themeForegroundColor } from '../../config';
+import { useOrderDataContext } from '../../contexts';
 
 const addressToString = (address: AddressDto) => {
   return `${address.street} ${address.streetNumber}${address.apartmentNumber ? `/${address.apartmentNumber}` : ''}${
@@ -63,16 +31,17 @@ const addressToString = (address: AddressDto) => {
 };
 
 const OrderDataCompletion = () => {
-  const [name, setName] = useState(userPersonalInfo.name || '');
+  const { setAddressId, setDeliveryHourStart, setUserDataContext, setAddress } = useOrderDataContext();
+  const [name, setName] = useState('');
   const nameErrorMessage = name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{3,35}$/i) ? '' : 'Wpisz poprawne imię.';
 
-  const [surname, setSurname] = useState(userPersonalInfo.surname || '');
+  const [surname, setSurname] = useState('');
   const surnameErrorMessage = surname.match(/^[A-ZĄĆĘŁŃÓŚŹŻ-]{3,35}$/i) ? '' : 'Wpisz poprawne nazwisko.';
 
   const [email, setEmail] = useState('');
   const emailErrorMessage = email.match(EMAIL_CONST.REGEX) ? '' : 'Wpisz poprawny adres email.';
 
-  const [phoneNumber, setPhoneNumber] = useState(userPersonalInfo.phoneNumber || '');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const phoneNumberErrorMessage = phoneNumber.match(PHONE_NUMBER_CONST.REGEX) ? '' : 'Wpisz poprawny numer telefonu.';
 
   const [street, setStreet] = useState('');
@@ -99,6 +68,39 @@ const OrderDataCompletion = () => {
   const [clearAddressRadioButton, setClearAddressRadioButton] = useState(false);
   const [didSubmit, setDidSubmit] = useState(false);
 
+  const [stateChangedUser, setStateChangedUser] = useState(false);
+  const [stateChangedAddress, setStateChangedAddress] = useState(false);
+  const [oldUserDataState, setOldUserDataState] = useState<string[]>([]);
+  const [oldStateAddress, setOldStateAddress] = useState<string[]>([]);
+
+  const [address, setAddressTable] = useState<AddressDto[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const getUserData = await new UserssProfileApi(apiConfiguration).findById();
+      setName(getUserData.name || '');
+      setSurname(getUserData.surname || '');
+      setPhoneNumber(getUserData.phoneNumber || '');
+      setEmail(getUserData.email || '');
+      setOldUserDataState([getUserData.name || '', getUserData.surname || '', getUserData.phoneNumber || '']);
+      const getUserAddress = await new UsersAddressesApi(apiConfiguration).list();
+      setAddressTable(
+        getUserAddress.data.map((e) => ({
+          id: e.id,
+          street: e.street,
+          streetNumber: e.streetNumber,
+          apartmentNumber: e.apartmentNumber,
+          postcode: e.postcode,
+          city: e.city,
+        })),
+      );
+    })();
+  }, []);
+
+  useEffect(() => {
+    setUserDataContext({ name, surname, phoneNumber, email });
+  }, [name, surname, phoneNumber, email, setUserDataContext]);
   const fillAddressForm = (e: string) => {
     const addressObject: AddressDto = JSON.parse(e);
 
@@ -110,11 +112,78 @@ const OrderDataCompletion = () => {
     setFloor(addressObject.floor || '');
     setPostcode(addressObject.postcode);
     setCity(addressObject.city);
+    setOldStateAddress([
+      addressObject.street,
+      addressObject.streetNumber,
+      addressObject.apartmentNumber || '',
+      addressObject.floor || '',
+      addressObject.postcode,
+      addressObject.city,
+    ]);
   };
 
+  const handleSelectDeliveryHours = (e: SelectChangeEvent<string>) => {
+    e.preventDefault();
+    setDeliveryHours(e.target.value);
+    setDeliveryHourStart(e.target.value);
+  };
+
+  const userssProfileApi = new UserssProfileApi(apiConfiguration);
+  const updateUserProfile = async (updateData: UpdateUserDto) => {
+    try {
+      await userssProfileApi.update({ updateUserDto: updateData });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+  };
+
+  const usersAddressesApi = new UsersAddressesApi(apiConfiguration);
+  const createUserAddress = async (updateData: CreateAddressDto) => {
+    try {
+      const getAddressApi = await usersAddressesApi.create({ createAddressDto: updateData });
+      setAddressId(getAddressApi.id);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+  };
+
+  // check if user put new address,
+  useEffect(() => {
+    const newAddressTable = [street, streetNumber, apartmentNumber, floor, postcode, city];
+    setAddress({ street, postcode, streetNumber, apartmentNumber, city });
+    // checking if address is the same like in checked radio button, control empty click on textfields.
+    setStateChangedAddress(JSON.stringify(oldStateAddress) !== JSON.stringify(newAddressTable));
+  }, [street, postcode, streetNumber, floor, apartmentNumber, city, oldStateAddress, stateChangedAddress, setAddress]);
+
+  // check if user put new profile data
+  useEffect(() => {
+    const newUserDataTable = [name, surname, phoneNumber, email];
+    setStateChangedUser(JSON.stringify(oldUserDataState) !== JSON.stringify(newUserDataTable));
+  }, [name, surname, phoneNumber, email, oldUserDataState]);
+
+  const fieldsToCheck = [
+    nameErrorMessage,
+    surnameErrorMessage,
+    emailErrorMessage,
+    phoneNumberErrorMessage,
+    streetErrorMessage,
+    streetNumberErrorMessage,
+    apartmentNumberErrorMessage,
+    floorErrorMessage,
+    cityErrorMessage,
+    deliveryHoursErrorMessage,
+  ];
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setDidSubmit(true);
+
+    if (fieldsToCheck.every((field) => field === '')) {
+      if (stateChangedUser) updateUserProfile({ name, surname, phoneNumber, email });
+      if (stateChangedAddress) createUserAddress({ street, streetNumber, apartmentNumber, floor, postcode, city });
+
+      navigate(routes.shoppingCartPayment);
+    } else setDidSubmit(true);
   };
 
   return (
@@ -136,13 +205,11 @@ const OrderDataCompletion = () => {
                     size='small'
                     value={deliveryHours}
                     error={didSubmit && deliveryHoursErrorMessage !== ''}
-                    onChange={(e) => {
-                      setDeliveryHours(e.target.value);
-                    }}
+                    onChange={handleSelectDeliveryHours}
                   >
-                    <MenuItem value={1}>4:00 - 6:00</MenuItem>
-                    <MenuItem value={2}>6:00 - 8:00</MenuItem>
-                    <MenuItem value={3}>8:00 - 10:00</MenuItem>
+                    <MenuItem value={4}>4:00 - 6:00</MenuItem>
+                    <MenuItem value={6}>6:00 - 8:00</MenuItem>
+                    <MenuItem value={8}>8:00 - 10:00</MenuItem>
                   </Select>
                   {didSubmit && <FormHelperText error>{deliveryHoursErrorMessage}</FormHelperText>}
                 </FormControl>
@@ -157,9 +224,12 @@ const OrderDataCompletion = () => {
                   <RadioGroup
                     aria-labelledby='demo-radio-buttons-group-label'
                     name='radio-buttons-group'
-                    onChange={(e) => fillAddressForm(e.target.value)}
+                    onChange={(e) => {
+                      fillAddressForm(e.target.value);
+                      setAddressId(JSON.parse(e.target.value).id);
+                    }}
                   >
-                    {addresses.map((e) => (
+                    {address.map((e: AddressDto) => (
                       <FormControlLabel
                         key={e.id}
                         value={JSON.stringify(e)}
@@ -208,6 +278,7 @@ const OrderDataCompletion = () => {
                   id='email'
                   size='small'
                   label='Adres email'
+                  value={email}
                   required
                   error={didSubmit && emailErrorMessage !== ''}
                   helperText={emailErrorMessage}

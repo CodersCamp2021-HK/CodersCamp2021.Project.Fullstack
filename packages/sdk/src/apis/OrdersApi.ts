@@ -41,7 +41,7 @@ export class OrdersApi extends runtime.BaseAPI {
    */
   async createRaw(
     requestParameters: OrdersApiCreateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<OrderDto>> {
     if (requestParameters.createOrderDto === null || requestParameters.createOrderDto === undefined) {
       throw new runtime.RequiredError(
@@ -73,7 +73,10 @@ export class OrdersApi extends runtime.BaseAPI {
   /**
    * Create a new order.
    */
-  async create(requestParameters: OrdersApiCreateRequest, initOverrides?: RequestInit): Promise<OrderDto> {
+  async create(
+    requestParameters: OrdersApiCreateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<OrderDto> {
     const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }

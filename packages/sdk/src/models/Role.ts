@@ -15,12 +15,12 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum Role {
-  Partner = 'Partner',
-  User = 'User',
-}
+export const Role = {
+  Partner: 'Partner',
+  User: 'User',
+} as const;
+export type Role = typeof Role[keyof typeof Role];
 
 export function RoleFromJSON(json: any): Role {
   return RoleFromJSONTyped(json, false);

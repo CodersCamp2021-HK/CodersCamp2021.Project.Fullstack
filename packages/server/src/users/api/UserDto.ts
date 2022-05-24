@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 
-import { ApiPhoneNumberProperty } from '../../auth/api/decorators';
+import { ApiEmailProperty, ApiPhoneNumberProperty } from '../../auth/api/decorators';
 import { ApiObjectIdProperty } from '../../shared';
 import { USER_CONSTANTS } from './../database';
 
@@ -51,6 +51,10 @@ class UserDto {
   @Expose()
   @ApiPhoneNumberProperty({ required: false })
   readonly phoneNumber: string;
+
+  @Expose()
+  @ApiEmailProperty({ required: false })
+  readonly email: string;
 
   @Expose()
   @Type(() => CardDto)

@@ -55,7 +55,7 @@ Do przygotowania środowiska dev użyliśmy m.in. [Dockera](https://docs.docker.
 <br/>
 <br/>
 
-#### Instalacja i urochomienie projektu z wykorzystaniem `yarn`
+### Instalacja i uruchomienie projektu z wykorzystaniem `yarn`
 
 ```bash
 yarn install
