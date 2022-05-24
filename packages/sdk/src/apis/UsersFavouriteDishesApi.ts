@@ -50,7 +50,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
    */
   async addRaw(
     requestParameters: UsersFavouriteDishesApiAddRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<FavouriteDishDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -81,7 +81,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
    */
   async add(
     requestParameters: UsersFavouriteDishesApiAddRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<FavouriteDishDto> {
     const response = await this.addRaw(requestParameters, initOverrides);
     return await response.value();
@@ -92,7 +92,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: UsersFavouriteDishesApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<FavouriteDishListDto>> {
     const queryParameters: any = {};
 
@@ -124,7 +124,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
    */
   async list(
     requestParameters: UsersFavouriteDishesApiListRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<FavouriteDishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
@@ -135,7 +135,7 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
    */
   async removeRaw(
     requestParameters: UsersFavouriteDishesApiRemoveRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -164,7 +164,10 @@ export class UsersFavouriteDishesApi extends runtime.BaseAPI {
   /**
    * Delete a dish.
    */
-  async remove(requestParameters: UsersFavouriteDishesApiRemoveRequest, initOverrides?: RequestInit): Promise<void> {
+  async remove(
+    requestParameters: UsersFavouriteDishesApiRemoveRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.removeRaw(requestParameters, initOverrides);
   }
 }

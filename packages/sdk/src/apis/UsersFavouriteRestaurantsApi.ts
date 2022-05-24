@@ -50,7 +50,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async addRaw(
     requestParameters: UsersFavouriteRestaurantsApiAddRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<FavouriteRestaurantDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -84,7 +84,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async add(
     requestParameters: UsersFavouriteRestaurantsApiAddRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<FavouriteRestaurantDto> {
     const response = await this.addRaw(requestParameters, initOverrides);
     return await response.value();
@@ -95,7 +95,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: UsersFavouriteRestaurantsApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<FavouriteRestaurantListDto>> {
     const queryParameters: any = {};
 
@@ -127,7 +127,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async list(
     requestParameters: UsersFavouriteRestaurantsApiListRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<FavouriteRestaurantListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
@@ -138,7 +138,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async removeRaw(
     requestParameters: UsersFavouriteRestaurantsApiRemoveRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -172,7 +172,7 @@ export class UsersFavouriteRestaurantsApi extends runtime.BaseAPI {
    */
   async remove(
     requestParameters: UsersFavouriteRestaurantsApiRemoveRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<void> {
     await this.removeRaw(requestParameters, initOverrides);
   }

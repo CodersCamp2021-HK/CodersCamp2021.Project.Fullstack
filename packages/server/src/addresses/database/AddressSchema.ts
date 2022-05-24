@@ -11,7 +11,7 @@ const ADDRESS_CONSTANTS = Object.freeze({
     MAX_LENGTH: 4,
   }),
   POSTCODE: Object.freeze({ REGEX: /^\d{2}-\d{3}$/ }),
-  APARTMENT_NUMBER: Object.freeze({ REGEX: /^\d{1,3}$/ }),
+  APARTMENT_NUMBER: Object.freeze({ REGEX: /^\d{0,3}$/ }),
   FLOOR: Object.freeze({ REGEX: /^\d{0,2}$/ }),
 });
 

@@ -15,22 +15,22 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum RestaurantTagEnum {
-  FastFood = 'fast food',
-  Wegaska = 'wegańska',
-  Wegetariaska = 'wegetariańska',
-  Kawiarnia = 'kawiarnia',
-  Zdrowa = 'zdrowa',
-  StreetFood = 'street food',
-  Desery = 'desery',
-  Pizza = 'pizza',
-  Burgery = 'burgery',
-  Sushi = 'sushi',
-  Kebab = 'kebab',
-  GlutenFree = 'gluten free',
-}
+export const RestaurantTagEnum = {
+  FastFood: 'fast food',
+  Wegaska: 'wegańska',
+  Wegetariaska: 'wegetariańska',
+  Kawiarnia: 'kawiarnia',
+  Zdrowa: 'zdrowa',
+  StreetFood: 'street food',
+  Desery: 'desery',
+  Pizza: 'pizza',
+  Burgery: 'burgery',
+  Sushi: 'sushi',
+  Kebab: 'kebab',
+  GlutenFree: 'gluten free',
+} as const;
+export type RestaurantTagEnum = typeof RestaurantTagEnum[keyof typeof RestaurantTagEnum];
 
 export function RestaurantTagEnumFromJSON(json: any): RestaurantTagEnum {
   return RestaurantTagEnumFromJSONTyped(json, false);

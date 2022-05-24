@@ -40,6 +40,12 @@ export interface UpdateUserDto {
    */
   phoneNumber?: string;
   /**
+   * RFC 5322 standard email format
+   * @type {string}
+   * @memberof UpdateUserDto
+   */
+  email?: string;
+  /**
    *
    * @type {CardDto}
    * @memberof UpdateUserDto
@@ -59,6 +65,7 @@ export function UpdateUserDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
     name: !exists(json, 'name') ? undefined : json['name'],
     surname: !exists(json, 'surname') ? undefined : json['surname'],
     phoneNumber: !exists(json, 'phoneNumber') ? undefined : json['phoneNumber'],
+    email: !exists(json, 'email') ? undefined : json['email'],
     card: !exists(json, 'card') ? undefined : CardDtoFromJSON(json['card']),
   };
 }
@@ -74,6 +81,7 @@ export function UpdateUserDtoToJSON(value?: UpdateUserDto | null): any {
     name: value.name,
     surname: value.surname,
     phoneNumber: value.phoneNumber,
+    email: value.email,
     card: CardDtoToJSON(value.card),
   };
 }

@@ -39,7 +39,9 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Retrieve a profile by id.
    */
-  async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<PartnerProfileDto>> {
+  async findByIdRaw(
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<runtime.ApiResponse<PartnerProfileDto>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -60,7 +62,7 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Retrieve a profile by id.
    */
-  async findById(initOverrides?: RequestInit): Promise<PartnerProfileDto> {
+  async findById(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<PartnerProfileDto> {
     const response = await this.findByIdRaw(initOverrides);
     return await response.value();
   }
@@ -70,7 +72,7 @@ export class PartnersProfileApi extends runtime.BaseAPI {
    */
   async updateRaw(
     requestParameters: PartnersProfileApiUpdateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.updatePartnerProfileDto === null || requestParameters.updatePartnerProfileDto === undefined) {
       throw new runtime.RequiredError(
@@ -102,7 +104,10 @@ export class PartnersProfileApi extends runtime.BaseAPI {
   /**
    * Update an existing profile.
    */
-  async update(requestParameters: PartnersProfileApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
+  async update(
+    requestParameters: PartnersProfileApiUpdateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.updateRaw(requestParameters, initOverrides);
   }
 }

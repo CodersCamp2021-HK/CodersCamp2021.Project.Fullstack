@@ -65,7 +65,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
    */
   async createRaw(
     requestParameters: PartnersDishesApiCreateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.createDishDto === null || requestParameters.createDishDto === undefined) {
       throw new runtime.RequiredError(
@@ -97,7 +97,10 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Create a new dish.
    */
-  async create(requestParameters: PartnersDishesApiCreateRequest, initOverrides?: RequestInit): Promise<DishDto> {
+  async create(
+    requestParameters: PartnersDishesApiCreateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<DishDto> {
     const response = await this.createRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -107,7 +110,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
    */
   async deleteOneRaw(
     requestParameters: PartnersDishesApiDeleteOneRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -136,7 +139,10 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Delete a dish.
    */
-  async deleteOne(requestParameters: PartnersDishesApiDeleteOneRequest, initOverrides?: RequestInit): Promise<void> {
+  async deleteOne(
+    requestParameters: PartnersDishesApiDeleteOneRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.deleteOneRaw(requestParameters, initOverrides);
   }
 
@@ -145,7 +151,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: PartnersDishesApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
 
@@ -191,7 +197,10 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Retrieve a list of dishes.
    */
-  async list(requestParameters: PartnersDishesApiListRequest = {}, initOverrides?: RequestInit): Promise<DishListDto> {
+  async list(
+    requestParameters: PartnersDishesApiListRequest = {},
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -201,7 +210,7 @@ export class PartnersDishesApi extends runtime.BaseAPI {
    */
   async updateRaw(
     requestParameters: PartnersDishesApiUpdateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -240,7 +249,10 @@ export class PartnersDishesApi extends runtime.BaseAPI {
   /**
    * Update an existing dish.
    */
-  async update(requestParameters: PartnersDishesApiUpdateRequest, initOverrides?: RequestInit): Promise<DishDto> {
+  async update(
+    requestParameters: PartnersDishesApiUpdateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<DishDto> {
     const response = await this.updateRaw(requestParameters, initOverrides);
     return await response.value();
   }
