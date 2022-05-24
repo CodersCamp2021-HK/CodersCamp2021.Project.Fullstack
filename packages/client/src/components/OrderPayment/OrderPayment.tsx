@@ -50,16 +50,19 @@ const OrderPayment = () => {
   const [securityCode, setSecurityCode] = useState('');
   const securityCodeErrorMessage = securityCode?.match(CODE_REGEX) ? '' : 'Wpisz poprawny kod.';
 
+  const [cardDataEdited, setCardDataEdited] = useState(false);
+
   const [didSubmit, setDidSubmit] = useState(false);
   const [userData, setUserData] = useState<UserDto | undefined>();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [modalText, setModalText] = useState('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
   const [modalTitle, setModalTitle] = useState('Zamówienie zostało złożone');
 
-  const [cardDataEdited, setCardDataEdited] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const ordersApi = new OrdersApi(apiConfiguration);
+
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await ordersApi.create({ createOrderDto: updateData });
