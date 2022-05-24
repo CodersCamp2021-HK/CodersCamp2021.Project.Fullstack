@@ -54,8 +54,8 @@ const OrderPayment = () => {
 
   const [didSubmit, setDidSubmit] = useState(false);
   const [userData, setUserData] = useState<UserDto | undefined>();
-  const [modalText, setModalText] = useState('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
-  const [modalTitle, setModalTitle] = useState('Zamówienie zostało złożone');
+  const [modalText, setModalText] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -66,7 +66,9 @@ const OrderPayment = () => {
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await ordersApi.create({ createOrderDto: updateData });
-      clearCart();
+      // clearCart();
+      setModalTitle('Zamówienie zostało złożone');
+      setModalText('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -98,7 +100,7 @@ const OrderPayment = () => {
     await userApi.update({ updateUserDto: user });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDidSubmit(true);
     if (userData && cardDataEdited) {
@@ -106,7 +108,7 @@ const OrderPayment = () => {
       editCardData(userData);
     }
     const deliveryHourEnd = parseInt(deliveryHourStart, 10) + 2;
-    userOrder({
+    await userOrder({
       addressId,
       hourStart: parseInt(deliveryHourStart, 10),
       hourEnd: deliveryHourEnd,
