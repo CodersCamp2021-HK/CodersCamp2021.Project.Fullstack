@@ -57,6 +57,8 @@ const OrderPayment = () => {
   const [modalText, setModalText] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
+  const [disable, setDisable] = useState(false);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -66,12 +68,14 @@ const OrderPayment = () => {
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await ordersApi.create({ createOrderDto: updateData });
-      // clearCart();
+      setDisable(true);
       setModalTitle('Zamówienie zostało złożone');
       setModalText('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
+      // clearCart();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
+      setDisable(false);
       setModalTitle('Ooops, wystąpił błąd');
       setModalText('Prosimy spróbować później...');
     }
@@ -223,7 +227,13 @@ const OrderPayment = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button type='submit' variant='contained' color='secondary' sx={{ m: 8, width: '20%' }}>
+              <Button
+                type='submit'
+                variant='contained'
+                disabled={disable}
+                color='secondary'
+                sx={{ m: 8, width: '20%' }}
+              >
                 ZAPŁAĆ I ZAMÓW
               </Button>
               <Modal
