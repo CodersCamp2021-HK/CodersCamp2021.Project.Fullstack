@@ -1,4 +1,4 @@
-import { LinkProps } from '@mui/material';
+import { LinkProps, Theme } from '@mui/material';
 import { green, lime } from '@mui/material/colors';
 
 import { LinkBehavior } from './linkBehavior';
@@ -118,4 +118,10 @@ const darkTheme = {
   },
 };
 
-export { darkTheme, defaultTheme };
+const themeForegroundColor = ({ palette }: Theme) =>
+  palette.mode === 'light' ? palette.primary.main : palette.secondary.main;
+
+const themeBackgroundColor = ({ palette }: Theme) =>
+  palette.mode === 'light' ? palette.secondary.main : palette.primary.main;
+
+export { darkTheme, defaultTheme, themeBackgroundColor, themeForegroundColor };

@@ -24,7 +24,7 @@ import { useContext, useState } from 'react';
 
 import logo from '../../assets/logo.svg';
 import logoDark from '../../assets/logo_dark.svg';
-import { routes } from '../../config';
+import { routes, themeForegroundColor } from '../../config';
 import { ThemeContext, useAuth, useShoppingCart } from '../../contexts';
 
 const LEFT_PAGES = [
@@ -46,7 +46,7 @@ const RIGHT_PAGES = [
   {
     name: 'Logowanie',
     pathname: routes.userLogin,
-    color: (theme: Theme) => theme.palette.primary.main,
+    color: themeForegroundColor,
   },
   {
     name: 'Rejestracja',
@@ -160,11 +160,7 @@ const AppNavBar = () => {
         <Box sx={{ flexGrow: 1, ml: 8, display: { xs: 'none', md: 'block' } }}>{LEFT_PAGES.map(pageToButton)}</Box>
         {!auth.isLoggedIn && <Box sx={{ display: { xs: 'none', md: 'block' } }}>{RIGHT_PAGES.map(pageToButton)}</Box>}
         <Tooltip title={`tryb ${theme.palette.mode === 'dark' ? 'jasny' : 'ciemny'}`} placement='top'>
-          <IconButton
-            sx={{ ml: 1, color: theme.palette.primary.main }}
-            onClick={colorMode.toggleColorMode}
-            color='inherit'
-          >
+          <IconButton sx={{ ml: 1, color: themeForegroundColor }} onClick={colorMode.toggleColorMode} color='inherit'>
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Tooltip>

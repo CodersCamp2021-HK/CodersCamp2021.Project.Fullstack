@@ -49,7 +49,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
    */
   async findByIdRaw(
     requestParameters: RestaurantsApiFindByIdRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<RestaurantDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -80,7 +80,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
    */
   async findById(
     requestParameters: RestaurantsApiFindByIdRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<RestaurantDto> {
     const response = await this.findByIdRaw(requestParameters, initOverrides);
     return await response.value();
@@ -91,7 +91,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: RestaurantsApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<RestaurantListDto>> {
     const queryParameters: any = {};
 
@@ -135,7 +135,7 @@ export class RestaurantsApi extends runtime.BaseAPI {
    */
   async list(
     requestParameters: RestaurantsApiListRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<RestaurantListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();

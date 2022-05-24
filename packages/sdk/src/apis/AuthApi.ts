@@ -52,7 +52,7 @@ export class AuthApi extends runtime.BaseAPI {
    */
   async loginRaw(
     requestParameters: AuthApiLoginRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.loginDto === null || requestParameters.loginDto === undefined) {
       throw new runtime.RequiredError(
@@ -84,14 +84,17 @@ export class AuthApi extends runtime.BaseAPI {
   /**
    * Store auth token in cookies.
    */
-  async login(requestParameters: AuthApiLoginRequest, initOverrides?: RequestInit): Promise<void> {
+  async login(
+    requestParameters: AuthApiLoginRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.loginRaw(requestParameters, initOverrides);
   }
 
   /**
    * Remove auth token from cookies.
    */
-  async logoutRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+  async logoutRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -112,7 +115,7 @@ export class AuthApi extends runtime.BaseAPI {
   /**
    * Remove auth token from cookies.
    */
-  async logout(initOverrides?: RequestInit): Promise<void> {
+  async logout(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void> {
     await this.logoutRaw(initOverrides);
   }
 
@@ -121,7 +124,7 @@ export class AuthApi extends runtime.BaseAPI {
    */
   async registerAsPartnerRaw(
     requestParameters: AuthApiRegisterAsPartnerRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.registerAsPartnerDto === null || requestParameters.registerAsPartnerDto === undefined) {
       throw new runtime.RequiredError(
@@ -155,7 +158,7 @@ export class AuthApi extends runtime.BaseAPI {
    */
   async registerAsPartner(
     requestParameters: AuthApiRegisterAsPartnerRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<void> {
     await this.registerAsPartnerRaw(requestParameters, initOverrides);
   }
@@ -165,7 +168,7 @@ export class AuthApi extends runtime.BaseAPI {
    */
   async registerAsUserRaw(
     requestParameters: AuthApiRegisterAsUserRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.registerAsUserDto === null || requestParameters.registerAsUserDto === undefined) {
       throw new runtime.RequiredError(
@@ -197,7 +200,10 @@ export class AuthApi extends runtime.BaseAPI {
   /**
    * Create a new user.
    */
-  async registerAsUser(requestParameters: AuthApiRegisterAsUserRequest, initOverrides?: RequestInit): Promise<void> {
+  async registerAsUser(
+    requestParameters: AuthApiRegisterAsUserRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.registerAsUserRaw(requestParameters, initOverrides);
   }
 }

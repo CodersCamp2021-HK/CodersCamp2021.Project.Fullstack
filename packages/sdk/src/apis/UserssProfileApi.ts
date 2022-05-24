@@ -39,7 +39,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Retrieve a user by id.
    */
-  async findByIdRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<UserDto>> {
+  async findByIdRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<UserDto>> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -60,7 +60,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Retrieve a user by id.
    */
-  async findById(initOverrides?: RequestInit): Promise<UserDto> {
+  async findById(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<UserDto> {
     const response = await this.findByIdRaw(initOverrides);
     return await response.value();
   }
@@ -70,7 +70,7 @@ export class UserssProfileApi extends runtime.BaseAPI {
    */
   async updateRaw(
     requestParameters: UserssProfileApiUpdateRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<void>> {
     if (requestParameters.updateUserDto === null || requestParameters.updateUserDto === undefined) {
       throw new runtime.RequiredError(
@@ -102,7 +102,10 @@ export class UserssProfileApi extends runtime.BaseAPI {
   /**
    * Update an existing user.
    */
-  async update(requestParameters: UserssProfileApiUpdateRequest, initOverrides?: RequestInit): Promise<void> {
+  async update(
+    requestParameters: UserssProfileApiUpdateRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<void> {
     await this.updateRaw(requestParameters, initOverrides);
   }
 }

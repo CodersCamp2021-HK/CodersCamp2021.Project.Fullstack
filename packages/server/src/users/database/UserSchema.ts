@@ -64,6 +64,10 @@ class User {
   phoneNumber: string;
 
   @Expose()
+  @Prop()
+  email: string;
+
+  @Expose()
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Address' }] })
   addressId: Address[];
 

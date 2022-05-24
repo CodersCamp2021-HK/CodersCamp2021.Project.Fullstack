@@ -44,7 +44,7 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
    */
   async listRaw(
     requestParameters: RestaurantsDishesApiListRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     if (requestParameters.restaurantId === null || requestParameters.restaurantId === undefined) {
       throw new runtime.RequiredError(
@@ -100,7 +100,10 @@ export class RestaurantsDishesApi extends runtime.BaseAPI {
   /**
    * Retrieve a list of dishes.
    */
-  async list(requestParameters: RestaurantsDishesApiListRequest, initOverrides?: RequestInit): Promise<DishListDto> {
+  async list(
+    requestParameters: RestaurantsDishesApiListRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<DishListDto> {
     const response = await this.listRaw(requestParameters, initOverrides);
     return await response.value();
   }

@@ -15,23 +15,23 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum AllergensEnum {
-  Gluten = 'gluten',
-  Skorupiaki = 'skorupiaki',
-  Jaja = 'jaja',
-  Ryby = 'ryby',
-  Orzechy = 'orzechy',
-  Soja = 'soja',
-  Mleko = 'mleko',
-  Seler = 'seler',
-  Gorczyca = 'gorczyca',
-  NasionaSezamu = 'nasiona sezamu',
-  DwutlenekSiarki = 'dwutlenek siarki',
-  Ubin = 'łubin',
-  Miczaki = 'mięczaki',
-}
+export const AllergensEnum = {
+  Gluten: 'gluten',
+  Skorupiaki: 'skorupiaki',
+  Jaja: 'jaja',
+  Ryby: 'ryby',
+  Orzechy: 'orzechy',
+  Soja: 'soja',
+  Mleko: 'mleko',
+  Seler: 'seler',
+  Gorczyca: 'gorczyca',
+  NasionaSezamu: 'nasiona sezamu',
+  DwutlenekSiarki: 'dwutlenek siarki',
+  Ubin: 'łubin',
+  Miczaki: 'mięczaki',
+} as const;
+export type AllergensEnum = typeof AllergensEnum[keyof typeof AllergensEnum];
 
 export function AllergensEnumFromJSON(json: any): AllergensEnum {
   return AllergensEnumFromJSONTyped(json, false);

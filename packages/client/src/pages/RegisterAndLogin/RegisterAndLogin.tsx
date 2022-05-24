@@ -61,7 +61,7 @@ const RegisterAndLogin = ({ formType }: RegisterAndLoginParams) => {
         sx={{
           width: '45rem',
           margin: '1rem',
-          background: theme.palette.background.default,
+          background: theme.palette.background.paper,
           boxShadow: '20',
           display: 'flex',
           justifyContent: 'center',

@@ -15,30 +15,30 @@
 /**
  *
  * @export
- * @enum {string}
  */
-export enum CuisineTypeEnum {
-  Amerykaska = 'amerykańska',
-  Azjatycka = 'azjatycka',
-  Europejska = 'europejska',
-  Arabska = 'arabska',
-  Chiska = 'chińska',
-  Francuska = 'francuska',
-  Gruziska = 'gruzińska',
-  Grecka = 'grecka',
-  Indyjska = 'indyjska',
-  Woska = 'włoska',
-  Japoska = 'japońska',
-  Ydowska = 'żydowska',
-  Koreaska = 'koreańska',
-  Libaska = 'libańska',
-  Rdziemnomorska = 'śródziemnomorska',
-  Meksykaska = 'meksykańska',
-  Polska = 'polska',
-  Tajska = 'tajska',
-  Turecka = 'turecka',
-  Wietnamska = 'wietnamska',
-}
+export const CuisineTypeEnum = {
+  Amerykaska: 'amerykańska',
+  Azjatycka: 'azjatycka',
+  Europejska: 'europejska',
+  Arabska: 'arabska',
+  Chiska: 'chińska',
+  Francuska: 'francuska',
+  Gruziska: 'gruzińska',
+  Grecka: 'grecka',
+  Indyjska: 'indyjska',
+  Woska: 'włoska',
+  Japoska: 'japońska',
+  Ydowska: 'żydowska',
+  Koreaska: 'koreańska',
+  Libaska: 'libańska',
+  Rdziemnomorska: 'śródziemnomorska',
+  Meksykaska: 'meksykańska',
+  Polska: 'polska',
+  Tajska: 'tajska',
+  Turecka: 'turecka',
+  Wietnamska: 'wietnamska',
+} as const;
+export type CuisineTypeEnum = typeof CuisineTypeEnum[keyof typeof CuisineTypeEnum];
 
 export function CuisineTypeEnumFromJSON(json: any): CuisineTypeEnum {
   return CuisineTypeEnumFromJSONTyped(json, false);

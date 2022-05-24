@@ -50,7 +50,7 @@ export class DishesApi extends runtime.BaseAPI {
    */
   async findDishByIdRaw(
     requestParameters: DishesApiFindDishByIdRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishDto>> {
     if (requestParameters.id === null || requestParameters.id === undefined) {
       throw new runtime.RequiredError(
@@ -79,7 +79,10 @@ export class DishesApi extends runtime.BaseAPI {
   /**
    * Retrieve a dish by id.
    */
-  async findDishById(requestParameters: DishesApiFindDishByIdRequest, initOverrides?: RequestInit): Promise<DishDto> {
+  async findDishById(
+    requestParameters: DishesApiFindDishByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
+  ): Promise<DishDto> {
     const response = await this.findDishByIdRaw(requestParameters, initOverrides);
     return await response.value();
   }
@@ -89,7 +92,7 @@ export class DishesApi extends runtime.BaseAPI {
    */
   async listAllDishesRaw(
     requestParameters: DishesApiListAllDishesRequest,
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<runtime.ApiResponse<DishListDto>> {
     const queryParameters: any = {};
 
@@ -137,7 +140,7 @@ export class DishesApi extends runtime.BaseAPI {
    */
   async listAllDishes(
     requestParameters: DishesApiListAllDishesRequest = {},
-    initOverrides?: RequestInit,
+    initOverrides?: RequestInit | runtime.InitOverideFunction,
   ): Promise<DishListDto> {
     const response = await this.listAllDishesRaw(requestParameters, initOverrides);
     return await response.value();
