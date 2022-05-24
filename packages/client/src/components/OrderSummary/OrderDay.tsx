@@ -1,5 +1,6 @@
 import { styled, Table, TableBody, TableCell, TableRow } from '@mui/material';
 
+import { themeForegroundColor } from '../../config';
 import { orderDishKey, SubOrder } from '../../contexts';
 import { OrderDateHeader } from './OrderDateHeader';
 import { OrderDayFooter } from './OrderDayFooter';
@@ -15,7 +16,7 @@ const OrderDayTable = styled(Table)(({ theme }) => ({
 const OrderColumnNames = () => (
   <TableRow
     sx={{
-      color: ({ palette }) => (palette.mode === 'light' ? palette.primary.main : palette.secondary.main),
+      color: themeForegroundColor,
       textTransform: 'uppercase',
     }}
   >

@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import cardImg from '../../assets/placeholder.png';
+import { themeForegroundColor } from '../../config';
 import { useShoppingCart } from '../../contexts';
 import { DishPopup } from '../DishPopup/DishPopup';
 
@@ -51,7 +52,7 @@ const MediaCard = ({ dish }: MediaCardProps) => {
           {description}
         </Typography>
         <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: '1rem' }}>
-          <Typography mr={1} variant='h5' color='primary.main'>
+          <Typography mr={1} variant='h5' color={themeForegroundColor}>
             {(price / 100).toFixed(2)} zł
           </Typography>
           <Button
