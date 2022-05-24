@@ -28,6 +28,7 @@ const ShoppingCartContext = createContext({
   modifyDishCount: (() => {}) as (suborderDish: SubOrderDish, date: Date, modifier: (prev: number) => number) => void,
   removeFromCart: (() => {}) as (suborderDish: SubOrderDish, date: Date) => void,
   editInCart: (() => {}) as (oldSuborderDish: SubOrderDish, newSuborderDish: SubOrderDish, date: Date) => void,
+  clearCart: () => {},
 });
 
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
@@ -109,9 +110,11 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
     [],
   );
 
+  const clearCart = useCallback(() => setCart([]), []);
+
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart }),
-    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart],
+    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart, clearCart }),
+    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart, clearCart],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;

@@ -37,7 +37,7 @@ const style = {
 
 const userApi = new UserssProfileApi(apiConfiguration);
 const OrderPayment = () => {
-  const { cart } = useShoppingCart();
+  const { cart, clearCart } = useShoppingCart();
   const { addressId, deliveryHourStart, userDataContext, address } = useOrderDataContext();
   const [comment, setComment] = useState('');
 
@@ -236,7 +236,14 @@ const OrderPayment = () => {
                   <Typography id='modal-modal-description' sx={{ mt: 1 }}>
                     {modalText}
                   </Typography>
-                  <Button type='submit' variant='contained' color='secondary' href={routes.home} sx={{ mt: 3 }}>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    href={routes.home}
+                    sx={{ mt: 3 }}
+                    onClick={clearCart}
+                  >
                     Strona główna
                   </Button>
                 </Box>
