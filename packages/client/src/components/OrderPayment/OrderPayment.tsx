@@ -1,9 +1,9 @@
 import { CreateOrderDto, OrdersApi, UserDto, UserssProfileApi } from '@fullstack/sdk';
-import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Grid, Modal, TextField, Typography } from '@mui/material';
 import { SetStateAction, useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 
-import { apiConfiguration } from '../../config';
+import { apiConfiguration, routes } from '../../config';
 import { SubOrder, useOrderDataContext, useShoppingCart } from '../../contexts';
 
 const CARD_REGEX =
@@ -21,6 +21,18 @@ const shortToLongDate = (date: string) => {
 const longToShortDate = (date: string) => {
   const [year, month] = date.split('-');
   return `${month}/${year.slice(-2)}`;
+};
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  textAlign: 'center',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 };
 
 const userApi = new UserssProfileApi(apiConfiguration);
@@ -40,6 +52,11 @@ const OrderPayment = () => {
 
   const [didSubmit, setDidSubmit] = useState(false);
   const [userData, setUserData] = useState<UserDto | undefined>();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [modalText, setModalText] = useState('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
+  const [modalTitle, setModalTitle] = useState('Zamówienie zostało złożone');
 
   const [cardDataEdited, setCardDataEdited] = useState(false);
   const ordersApi = new OrdersApi(apiConfiguration);
@@ -49,6 +66,8 @@ const OrderPayment = () => {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
+      setModalTitle('Ooops, wystąpił błąd');
+      setModalText('Prosimy spróbować później...');
     }
   };
 
@@ -90,6 +109,7 @@ const OrderPayment = () => {
       subOrders: transform(cart),
       comment,
     });
+    handleOpen();
   };
 
   return (
@@ -200,6 +220,24 @@ const OrderPayment = () => {
               <Button type='submit' variant='contained' color='secondary' sx={{ m: 8, width: '20%' }}>
                 ZAPŁAĆ I ZAMÓW
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+              >
+                <Box sx={style}>
+                  <Typography id='modal-modal-title' variant='h5'>
+                    {modalTitle}
+                  </Typography>
+                  <Typography id='modal-modal-description' sx={{ mt: 1 }}>
+                    {modalText}
+                  </Typography>
+                  <Button type='submit' variant='contained' color='secondary' href={routes.home} sx={{ mt: 3 }}>
+                    Strona główna
+                  </Button>
+                </Box>
+              </Modal>
             </Grid>
           </Grid>
         </Box>
