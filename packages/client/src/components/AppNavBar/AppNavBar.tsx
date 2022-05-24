@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Divider,
@@ -16,6 +17,7 @@ import {
   Theme,
   Toolbar,
   Tooltip,
+  Typography,
   useTheme,
 } from '@mui/material';
 import { useContext, useState } from 'react';
@@ -23,7 +25,7 @@ import { useContext, useState } from 'react';
 import logo from '../../assets/logo.svg';
 import logoDark from '../../assets/logo_dark.svg';
 import { routes, themeForegroundColor } from '../../config';
-import { ThemeContext, useAuth } from '../../contexts';
+import { ThemeContext, useAuth, useShoppingCart } from '../../contexts';
 
 const LEFT_PAGES = [
   {
@@ -99,7 +101,7 @@ const AppNavBar = () => {
   const auth = useAuth();
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
-
+  const { cart, dishesSum } = useShoppingCart();
   const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null);
   const [profileMenuAnchorElem, setProfileMenuAnchorElem] = useState<null | HTMLElement>(null);
 
@@ -186,11 +188,19 @@ const AppNavBar = () => {
             </Menu>
           </Box>
         )}
-        <Box sx={{ backgroundColor: theme.palette.secondary.main, borderRadius: '50%', ml: 2 }}>
-          <IconButton href={routes.shoppingCart} sx={{ p: 2 }} title='Koszyk'>
-            <ShoppingBasketIcon color='primary' />
-          </IconButton>
-        </Box>
+
+        <Tooltip
+          title={cart.length === 0 ? <Typography fontSize='1.5rem'>Twój koszyk jest pusty</Typography> : ''}
+          placement='bottom-end'
+        >
+          <Box sx={{ borderRadius: '50%', ml: 2, p: 2, backgroundColor: 'secondary.main' }}>
+            <Badge badgeContent={dishesSum} color='primary' invisible={cart.length === 0}>
+              <IconButton color='primary' disabled={cart.length === 0} href={routes.shoppingCart} title='Koszyk'>
+                <ShoppingBasketIcon />
+              </IconButton>
+            </Badge>
+          </Box>
+        </Tooltip>
       </Toolbar>
     </AppBar>
   );
