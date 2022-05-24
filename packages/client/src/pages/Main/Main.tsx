@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { BasicSelect, Filters, MediaCardsGrid } from '../../components';
 import { CartSummary } from '../../components/CartSummary';
+import { themeForegroundColor } from '../../config';
 import { routes } from '../../config/routes';
 import { FiltersContext } from '../../contexts/FiltersContext';
 
@@ -27,7 +28,11 @@ const Main = () => {
         <Stack mt={6}>
           <Typography variant='h3'>
             Wyszukujesz dania dla:
-            <Typography color='primary' variant='h3' sx={{ fontWeight: 'bold', marginLeft: 2 }} component='span'>
+            <Typography
+              variant='h3'
+              sx={{ fontWeight: 'bold', marginLeft: 2, color: themeForegroundColor }}
+              component='span'
+            >
               {query.get('city') ? query.get('city') : 'wszystkich miast'}
             </Typography>
             {!query.get('city') ? (

@@ -21,7 +21,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { apiConfiguration, routes } from '../../config';
+import { apiConfiguration, routes, themeForegroundColor } from '../../config';
 import { useOrderDataContext } from '../../contexts';
 
 const addressToString = (address: AddressDto) => {
@@ -189,11 +189,11 @@ const OrderDataCompletion = () => {
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
-        <Box sx={{ bgcolor: '#FAFAFA' }}>
+        <Box sx={{ bgcolor: ({ palette }) => palette.background.paper }}>
           <Grid item container spacing={5}>
             <Grid item xs={6} xl={6}>
               <Box marginLeft={5}>
-                <Typography variant='h5' color='primary.main' marginBottom={3}>
+                <Typography variant='h5' color={themeForegroundColor} marginBottom={3}>
                   Godzina dostawy
                 </Typography>
                 <FormControl sx={{ width: '60%' }}>
@@ -217,7 +217,7 @@ const OrderDataCompletion = () => {
             </Grid>
             <Grid item xs={6} xl={6}>
               <Box>
-                <Typography variant='h5' color='primary.main' marginBottom={3}>
+                <Typography variant='h5' color={themeForegroundColor} marginBottom={3}>
                   Adres dostawy
                 </Typography>
                 <FormControl>
@@ -244,7 +244,7 @@ const OrderDataCompletion = () => {
             </Grid>
             <Grid item xs={6} xl={6}>
               <Box marginLeft={5}>
-                <Typography variant='h5' color='primary.main' marginBottom={3}>
+                <Typography variant='h5' color={themeForegroundColor} marginBottom={3}>
                   Informacje podstawowe
                 </Typography>
                 <TextField

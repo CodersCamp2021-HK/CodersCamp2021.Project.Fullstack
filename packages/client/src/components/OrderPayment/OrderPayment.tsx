@@ -3,7 +3,7 @@ import { Box, Button, Container, Divider, Grid, Modal, TextField, Typography } f
 import { SetStateAction, useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 
-import { apiConfiguration, routes } from '../../config';
+import { apiConfiguration, routes, themeForegroundColor } from '../../config';
 import { SubOrder, useOrderDataContext, useShoppingCart } from '../../contexts';
 
 const CARD_REGEX =
@@ -125,20 +125,20 @@ const OrderPayment = () => {
   return (
     <form onSubmit={handleSubmit} noValidate autoComplete='off'>
       <Container fixed>
-        <Box sx={{ bgcolor: '#FAFAFA' }}>
+        <Box sx={{ bgcolor: ({ palette }) => palette.background.paper }}>
           <Grid item container spacing={5}>
             <Grid item xs={6} xl={6}>
               <Box justifyContent='center' textAlign='center' justifySelf='center' alignSelf='center'>
-                <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
+                <Typography variant='h5' color={themeForegroundColor} sx={{ my: 4 }}>
                   Podsumowanie
                 </Typography>
-                <Typography variant='h6' color='primary.main' sx={{ mb: 2 }}>
+                <Typography variant='h6' color={themeForegroundColor} sx={{ mb: 2 }}>
                   Dane do wysyłki
                 </Typography>
                 <Typography variant='body1'>{`${userDataContext?.name} ${userDataContext?.surname}`}</Typography>
                 <Typography variant='body1'>{`${address?.street} ${address?.streetNumber} /${address?.apartmentNumber}`}</Typography>
                 <Typography variant='body1'>{`${address?.postcode} ${address?.city}`}</Typography>
-                <Typography variant='h6' color='primary.main' sx={{ mt: 3, mb: 2 }}>
+                <Typography variant='h6' color={themeForegroundColor} sx={{ mt: 3, mb: 2 }}>
                   Dane kontakowe
                 </Typography>
                 <Typography variant='body1'>{userDataContext?.email}</Typography>
@@ -148,7 +148,7 @@ const OrderPayment = () => {
             <Divider orientation='vertical' flexItem sx={{ borderRightWidth: 4, mt: 4 }} variant='fullWidth' />
             <Grid item xs={5} xl={5}>
               <Box sx={{ ml: 4 }}>
-                <Typography variant='h5' color='primary.main' sx={{ my: 4 }}>
+                <Typography variant='h5' color={themeForegroundColor} sx={{ my: 4 }}>
                   Uwagi do zamówienia
                 </Typography>
                 <TextField
@@ -164,7 +164,7 @@ const OrderPayment = () => {
                   }}
                 />
                 <Grid container direction='row' alignItems='center'>
-                  <Typography variant='h5' color='primary.main' sx={{ mb: 3 }}>
+                  <Typography variant='h5' color={themeForegroundColor} sx={{ mb: 3 }}>
                     Metoda płatności
                   </Typography>
                 </Grid>

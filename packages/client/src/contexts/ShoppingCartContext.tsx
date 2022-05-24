@@ -20,8 +20,19 @@ const getTargetDish = (dayDishes: SubOrderDish[], suborderDish: SubOrderDish) =>
   return [idx, idx === -1 ? undefined : dayDishes[idx]] as const;
 };
 
+const sumAllCartDishes = (cart: SubOrder[]) => {
+  if (cart.length !== 0) {
+    return cart
+      .flatMap((suborder) => suborder.dishes)
+      .map((dish) => dish.count)
+      .reduce((prev, curr) => prev + curr);
+  }
+  return 0;
+};
+
 const ShoppingCartContext = createContext({
   cart: [] as SubOrder[],
+  dishesSum: 0,
   addToCart: (() => {}) as (suborderDish: SubOrderDish, date?: Date | null) => void,
   selectedDate: null as Date | null,
   setSelectedDate: (() => {}) as (date: Date | null) => void,
@@ -34,6 +45,8 @@ const ShoppingCartContext = createContext({
 const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<SubOrder[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const dishesSum = sumAllCartDishes(cart);
 
   const addToCart = useCallback(
     (suborderDish: SubOrderDish, date: Date | null = selectedDate) =>
@@ -113,8 +126,18 @@ const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = useCallback(() => setCart([]), []);
 
   const value = useMemo(
-    () => ({ cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart, clearCart }),
-    [cart, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart, clearCart],
+    () => ({
+      cart,
+      dishesSum,
+      addToCart,
+      selectedDate,
+      setSelectedDate,
+      modifyDishCount,
+      removeFromCart,
+      editInCart,
+      clearCart,
+    }),
+    [cart, dishesSum, addToCart, selectedDate, setSelectedDate, modifyDishCount, removeFromCart, editInCart, clearCart],
   );
 
   return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
