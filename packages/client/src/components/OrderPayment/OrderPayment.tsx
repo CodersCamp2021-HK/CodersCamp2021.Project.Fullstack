@@ -71,7 +71,7 @@ const OrderPayment = () => {
       setDisable(true);
       setModalTitle('Zamówienie zostało złożone');
       setModalText('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
-      // clearCart();
+      clearCart();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
