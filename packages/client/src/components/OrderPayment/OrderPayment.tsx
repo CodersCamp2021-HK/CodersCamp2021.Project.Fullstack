@@ -66,6 +66,7 @@ const OrderPayment = () => {
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await ordersApi.create({ createOrderDto: updateData });
+      clearCart();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -236,14 +237,7 @@ const OrderPayment = () => {
                   <Typography id='modal-modal-description' sx={{ mt: 1 }}>
                     {modalText}
                   </Typography>
-                  <Button
-                    type='submit'
-                    variant='contained'
-                    color='secondary'
-                    href={routes.home}
-                    sx={{ mt: 3 }}
-                    onClick={clearCart}
-                  >
+                  <Button type='submit' variant='contained' color='secondary' href={routes.home} sx={{ mt: 3 }}>
                     Strona główna
                   </Button>
                 </Box>
