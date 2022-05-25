@@ -2,9 +2,10 @@
 
 <div align="center">
 
-[![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://coderscamp2021-hk-fullstack.herokuapp.com/api/)
+[![Demo](https://img.shields.io/badge/-demo-green?logo=github)](https://coderscamp2021-hk-fullstack.herokuapp.com/)
 [![Codecov](https://img.shields.io/codecov/c/github/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack?logo=codecov)](https://app.codecov.io/gh/CodersCamp2021-HK/CodersCamp2021.Project.Fullstack)
 [![Figma](https://img.shields.io/badge/-figJam-violet?logo=figJam)](https://www.figma.com/file/51gzaCTbilz6X9r0PZxmhX/Project.Fullstack?node-id=0%3A1)
+[![Figma](https://img.shields.io/badge/-figma-blue?logo=figma)](https://www.figma.com/file/Cwxh4WHHLxBhhyxJQIgsI9/Project.Fullstack?node-id=10%3A13)
 
 </div>
 
@@ -22,6 +23,7 @@
 
 ### Główne:
 
+- [React](https://pl.reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/docs/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [MongoDB](https://www.mongodb.com/)
@@ -44,6 +46,12 @@
 - Figma
 - PassportJWT
 - REST Client
+- Immer
+- React Router
+- MUI
+- Vite
+- Lodash
+
   <br/>
   <br/>
 
@@ -62,7 +70,7 @@ yarn install
 docker-compose up
 ```
 
-Uruchomienie serwera developerskiego (aplikacja będzie dostępna pod http://localhost:4000/api):
+Uruchomienie serwera developerskiego. Aplikacja będzie dostępna pod adresem lokalnym (front - http://localhost:3000 oraz API - http://localhost:4000/api):
 
 ```bash
 yarn dev
@@ -112,7 +120,7 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
 
 **`User` - użytkownik**
 
-1. Rejestruje się podając email i ustawiając hasło. Użytkownik otrzymuje wiadomość e-mail potwierdzającą rejestrację.
+1. Rejestruje się podając email i ustawiając hasło. Uzupełnione dane są walidowane. Użytkownik otrzymuje wiadomość e-mail potwierdzającą rejestrację.
 
 2. Po rejestracji i zalogowaniu może uzupełnić profil (imię, nazwisko, adres(y), nr telefonu, dane karty) lub zacząć kompletować zamówienie.
 
@@ -120,17 +128,45 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
 
 4. Zamawianie:
 
-   4.1. Złożenie zamówienia jest możliwe po uzupełnieniu danych na profilu.
+   4.1. Użytkownik ze strony głównej wybiera miasto, z którego chce zamówić dania. Złożenie zamówienia jest możliwe po uzupełnieniu danych na profilu.
 
-   4.2. Zamówienie składa się z posiłków rozplanowanych na kilka dni (docelowo 1-7 dni).
+   4.2. Użytkownik przechodzi do strony z widokiem wyszukiwania dań dostępnych dla wybranego miasta. Na tym etapie dokonuje przypisania dania/dań do konretnej daty dostawy.
+   <figure>
+    <img src="./docs/search_view.png" alt="">
+    <figcaption>Widok wyszukiwania dań</figcaption>
+    </figure>
+   
+    W tym widoku użytkownik może dokonać zwiększenie/zmniejszenie ilości oraz usunięcie dania z koszyka. 
 
-   4.3. Użytkownik ustala godzinę, o której codziennie będzie otrzymywał posiłki na dany dzień.
+    Podczas dodawania dań użytkownik może spersonalizować posiłek poprzez usunięcie wybranych składników (wcześniej oznaczonych przez restaurację jako możliwe do usunięcia).
+   
+    Jednocześnie w "podsumowaniu dnia" dynamicznie przeliczane są wartości odżywcze, kalorie oraz cena. Z każdą zmianą widoczna jest także zmiana ilości dań w koszyku.
 
-   4.4. Podczas dodawania dań użytkownik może spersonalizować posiłek poprzez usunięcie wybranych składników (wcześniej oznaczonych przez restaurację jako możliwe do usunięcia).
+    Z bocznego panelu (po lewej stronie) użytkownik może wybrać filtrowanie wyników wyszukiwania ze względu na "Rodzaj dania" lub "Tagi".
+   
+   4.3. Po wyborze zamówienia użytkownik przechodzi do widoku "Podsumowanie" gdzie może zapoznać się z podziałem wybranych dań na dni. Na tym etapie może w dalszym ciągu modyfikować swoje zamówienie. Otrzymuje też informację o całościowej kwocie do zapłaty.
 
-   4.5. Użytkownik otrzymuje wiadomość e-mail potwierdzającą złożenie zamówienia.
+    <figure>
+    <img src="./docs/step1.png" alt="">
+    <figcaption>Krok 1 - "Podsumowanie"</figcaption>
+    </figure>
+
+   4.4. W następnym kroku użytkownik przechodzi do "Uzupełnienia danych" gdzie wybiera godzinę dostawy, uzupełniadane personalne oraz adres dostawy.
+
+    <figure>
+    <img src="./docs/step2.png" alt="">
+    <figcaption>Krok 2 - "Uzupełnij dane"</figcaption>
+    </figure>
+
+   4.5. Ostatnim krokiem jest "Zapłać i zamów" gdzie użytkownik uzupełnia dane do płatności. Użytkownik otrzymuje wiadomość e-mail potwierdzającą złożenie zamówienia.
+
+    <figure>
+    <img src="./docs/step3.png" alt="">
+    <figcaption>Krok 3 - "Zapłać i zamów"</figcaption>
+    </figure>
 
 <br/>
+
 
 ## 📢 Wykonywanie zapytań / testowanie endpointów 📣
 
@@ -165,10 +201,11 @@ Rozszerzenie do VSCode, które pozwala na wykonywanie zapytań z poziomu edytora
 
 **Mentor**: [@htk4](https://github.com/htk4)
 
-Scrum Master: [@mmejer](https://github.com/mmejer)
+Tech Lead: [@mmejer](https://github.com/mmejer)
 
 Project Manager: [@jskrajna](https://github.com/jskrajna)
 
-Tech Lead: [@KamilDudek](https://github.com/KamilDudek)
+Scrum Master: [@tchojnacki](https://github.com/tchojnacki)
 
-Po trochę z każdej roli: [@tchojnacki](https://github.com/tchojnacki)
+[@KamilDudek](https://github.com/KamilDudek)
+
