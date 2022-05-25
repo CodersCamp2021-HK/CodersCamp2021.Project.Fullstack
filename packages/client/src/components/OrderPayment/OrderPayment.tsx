@@ -42,10 +42,10 @@ const OrderPayment = () => {
   const [comment, setComment] = useState('');
 
   const [cardNumber, setCardNumber] = useState('');
-  const cardNumberErrorMessage = cardNumber.match(CARD_REGEX) ? '' : 'Wpisz poprawny numer karty.';
+  const cardNumberErrorMessage = cardNumber?.match(CARD_REGEX) ? '' : 'Wpisz poprawny numer karty.';
 
   const [expirationDate, setExpirationDate] = useState('');
-  const expirationDateErrorMessage = expirationDate.match(DATE_REGEX) ? '' : 'Wpisz poprawną datę ważności karty.';
+  const expirationDateErrorMessage = expirationDate?.match(DATE_REGEX) ? '' : 'Wpisz poprawną datę ważności karty.';
 
   const [securityCode, setSecurityCode] = useState('');
   const securityCodeErrorMessage = securityCode?.match(CODE_REGEX) ? '' : 'Wpisz poprawny kod.';
