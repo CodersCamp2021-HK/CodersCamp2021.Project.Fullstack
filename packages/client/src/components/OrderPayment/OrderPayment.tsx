@@ -1,9 +1,9 @@
 import { CreateOrderDto, OrdersApi, UserDto, UserssProfileApi } from '@fullstack/sdk';
-import { Box, Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Grid, Modal, TextField, Typography } from '@mui/material';
 import { SetStateAction, useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 
-import { apiConfiguration, themeForegroundColor } from '../../config';
+import { apiConfiguration, routes, themeForegroundColor } from '../../config';
 import { SubOrder, useOrderDataContext, useShoppingCart } from '../../contexts';
 
 const CARD_REGEX =
@@ -22,10 +22,22 @@ const longToShortDate = (date: string) => {
   const [year, month] = date.split('-');
   return `${month}/${year.slice(-2)}`;
 };
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  textAlign: 'center',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const userApi = new UserssProfileApi(apiConfiguration);
 const OrderPayment = () => {
-  const { cart } = useShoppingCart();
+  const { cart, clearCart } = useShoppingCart();
   const { addressId, deliveryHourStart, userDataContext, address } = useOrderDataContext();
   const [comment, setComment] = useState('');
 
@@ -38,17 +50,34 @@ const OrderPayment = () => {
   const [securityCode, setSecurityCode] = useState('');
   const securityCodeErrorMessage = securityCode?.match(CODE_REGEX) ? '' : 'Wpisz poprawny kod.';
 
+  const [cardDataEdited, setCardDataEdited] = useState(false);
+
   const [didSubmit, setDidSubmit] = useState(false);
   const [userData, setUserData] = useState<UserDto | undefined>();
+  const [modalText, setModalText] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
-  const [cardDataEdited, setCardDataEdited] = useState(false);
+  const [disable, setDisable] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const ordersApi = new OrdersApi(apiConfiguration);
+
   const userOrder = async (updateData: CreateOrderDto) => {
     try {
       await ordersApi.create({ createOrderDto: updateData });
+      setDisable(true);
+      setModalTitle('Zamówienie zostało złożone');
+      setModalText('Dziękujemy za skorzystanie z naszego serwisu. Smacznego!');
+      clearCart();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
+      setDisable(false);
+      setModalTitle('Ooops, wystąpił błąd');
+      setModalText('Prosimy spróbować później...');
     }
   };
 
@@ -75,7 +104,7 @@ const OrderPayment = () => {
     await userApi.update({ updateUserDto: user });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDidSubmit(true);
     if (userData && cardDataEdited) {
@@ -83,13 +112,14 @@ const OrderPayment = () => {
       editCardData(userData);
     }
     const deliveryHourEnd = parseInt(deliveryHourStart, 10) + 2;
-    userOrder({
+    await userOrder({
       addressId,
       hourStart: parseInt(deliveryHourStart, 10),
       hourEnd: deliveryHourEnd,
       subOrders: transform(cart),
       comment,
     });
+    handleOpen();
   };
 
   return (
@@ -197,9 +227,33 @@ const OrderPayment = () => {
               </Box>
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
-              <Button type='submit' variant='contained' color='secondary' sx={{ m: 8, width: '20%' }}>
+              <Button
+                type='submit'
+                variant='contained'
+                disabled={disable}
+                color='secondary'
+                sx={{ m: 8, width: '20%' }}
+              >
                 ZAPŁAĆ I ZAMÓW
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+              >
+                <Box sx={style}>
+                  <Typography id='modal-modal-title' variant='h5'>
+                    {modalTitle}
+                  </Typography>
+                  <Typography id='modal-modal-description' sx={{ mt: 1 }}>
+                    {modalText}
+                  </Typography>
+                  <Button type='submit' variant='contained' color='secondary' href={routes.home} sx={{ mt: 3 }}>
+                    Strona główna
+                  </Button>
+                </Box>
+              </Modal>
             </Grid>
           </Grid>
         </Box>
