@@ -67,7 +67,7 @@ yarn install
 docker-compose up
 ```
 
-Uruchomienie serwera developerskiego. Aplikacja będzie dostępna pod adresem lokalnym ( front - http://localhost:3000 oraz API - http://localhost:4000/api):
+Uruchomienie serwera developerskiego. Aplikacja będzie dostępna pod adresem lokalnym (front - http://localhost:3000 oraz API - http://localhost:4000/api):
 
 ```bash
 yarn dev
