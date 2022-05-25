@@ -7,7 +7,7 @@ import { SuborderSummary } from './SuborderSummary';
 
 const CartSummary = () => {
   const { cart, selectedDate } = useShoppingCart();
-  const selectedDayOrder = cart.find(({ deliveryDate }) => deliveryDate === selectedDate)?.dishes;
+  const selectedDayOrder = cart.find(({ deliveryDate }) => deliveryDate.getTime() === selectedDate?.getTime())?.dishes;
 
   return (
     <Box
