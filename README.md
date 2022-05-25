@@ -155,7 +155,7 @@ Aby w pełni korzystać z aplikacji, należy założyć konto i się zalogować.
     <figcaption>Krok 2 - "Uzupełnij dane"</figcaption>
     </figure>
 
-   4.5. Otatnim krokiem jest "Zapłać i zamów" gdzie użytkownik uzupełnia dane do płatności. Użytkownik otrzymuje wiadomość e-mail potwierdzającą złożenie zamówienia.
+   4.5. Ostatnim krokiem jest "Zapłać i zamów" gdzie użytkownik uzupełnia dane do płatności. Użytkownik otrzymuje wiadomość e-mail potwierdzającą złożenie zamówienia.
 
     <figure>
     <img src="./docs/step3.png" alt="">
