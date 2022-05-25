@@ -48,6 +48,9 @@
 - REST Client
 - Immer
 - React Router
+- MUI
+- Vite
+- Lodash
 
   <br/>
   <br/>
